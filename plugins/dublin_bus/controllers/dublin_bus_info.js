@@ -55,4 +55,4 @@ var DublinBusInfo = function DublinBusInfo() {
 	};
 }
 
-exports = module.exports = BotCommands;
+exports = module.exports = DublinBusInfo;
