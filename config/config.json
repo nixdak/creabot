@@ -1,0 +1,18 @@
+{
+  "server":        "localhost",
+  "nick":          "DakDak",
+
+  "connectCommands": [
+        {
+            "target": "",
+            "message": ""
+        }
+    ],
+
+  "clientOptions": {
+      "userName":             "creadak",
+      "channels":             ["#bots"],
+      "floodProtection":      true,
+      "floodProtectionDelay": 175
+  }
+}
