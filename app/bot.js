@@ -126,7 +126,7 @@ exports.cmd = function (cmd, mode, channel, cb) {
     commands.push({
         cmd: cmd,
         mode: mode,
-        channel: channel
+        channel: channel,
         callback: cb
     });
 };
