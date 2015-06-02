@@ -1,0 +1,17 @@
+{
+  "name": "creabot",
+  "version": "0.1.0",
+  "description": "Creabot",
+  "main": "app.js",
+  "author": "Creadak <creadak@gmail.com>",
+  "license": "Creative Commons BY-NC-SA 2.0",
+  "dependencies": {
+    "underscore": "latest",
+    "irc": "~0.3.6",
+    "path": "~0.4.9",
+    "irc-colors": "~1.0.3",
+    "plug": "latest",
+    "tabletojson": "latest",
+	  "github": "latest"
+  }
+}
