@@ -15,6 +15,11 @@ function checkUserMode(message, mode) {
  */
 exports.init = function () {
     var self = this;
+
+    // Don't join channels until registered on the server
+    self.registered = false;
+    self.delayedChannels = [];
+
     console.log('Initializing...');
     // init irc client
     console.log('Connecting to ' + config.server + ' as ' + config.nick + '...');
@@ -23,6 +28,8 @@ exports.init = function () {
     // handle connection to server for logging
     client.addListener('registered', function (message) {
         console.log('Connected to server ' + message.server);
+        self.registered = true;
+
         // Send connect commands after joining a server
         if (typeof config.connectCommands !== 'undefined' && config.connectCommands.length > 0) {
             _.each(config.connectCommands, function (cmd) {
@@ -31,6 +38,9 @@ exports.init = function () {
                 }
             });
         }
+
+        // Join delayed channels
+        self.joinChannels(self.delayedChannels);
     });
 
     // handle joins to channels for logging
@@ -117,7 +127,11 @@ exports.init = function () {
 
     self.joinChannel = function (channels) {
         if (typeof channels !== 'undefined') {
-            client.join(channels);
+            if (self.registered) {
+                client.join(channels);
+            } else {
+                self.delayedChannels.concat(channels);
+            }
         }
     };
 };
