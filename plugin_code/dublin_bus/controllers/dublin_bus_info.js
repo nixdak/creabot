@@ -1,7 +1,9 @@
-var tabletojson = require('tabletojson');
+var tabletojson = require('tabletojson')
+	config = require('../config/config.json');
 
 var DublinBusInfo = function DublinBusInfo() {
 	var self = this;
+	self.config = config;
 
 	self.showStopInfo = function (client, message, cmdArgs)
 	{

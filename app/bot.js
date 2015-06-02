@@ -69,9 +69,10 @@ exports.init = function () {
         }
         // build callback options
 
-        if (config.clientOptions.channels.indexOf(to) >= 0) {
-            // public commands
-            _.each(commands, function (c) {
+
+        if (config.nick === to) {
+            // private message commands
+            _.each(msgs, function (c) {
                 if (cmd === c.cmd) {
                     console.log('command: ' + c.cmd);
                     // check user mode
@@ -80,14 +81,18 @@ exports.init = function () {
                     }
                 }
             }, this);
-        } else if (config.nick === to) {
-            // private message commands
-            _.each(msgs, function (c) {
+        } else {
+            // public commands
+            _.each(commands, function (c) {
+                // If the command matches
                 if (cmd === c.cmd) {
-                    console.log('command: ' + c.cmd);
-                    // check user mode
-                    if (checkUserMode(message, c.mode)) {
-                        c.callback(client, message, cmdArgs);
+                    // If the channel matches the command channels or is set to respond on all channels and is
+                    if (c.channel === to || c.channel === 'all') {
+                        console.log('command: ' + c.cmd);
+                        // check user mode
+                        if (checkUserMode(message, c.mode)) {
+                            c.callback(client, message, cmdArgs);
+                        }
                     }
                 }
             }, this);
@@ -117,10 +122,11 @@ exports.init = function () {
  * @param mode User mode that is allowed
  * @param cb Callback function
  */
-exports.cmd = function (cmd, mode, cb) {
+exports.cmd = function (cmd, mode, channel, cb) {
     commands.push({
         cmd: cmd,
         mode: mode,
+        channel: channel
         callback: cb
     });
 };

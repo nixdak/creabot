@@ -11,7 +11,6 @@
 
   "clientOptions": {
       "userName":             "creadak",
-      "channels":             ["#bots"],
       "floodProtection":      true,
       "floodProtectionDelay": 175
   }
