@@ -1,4 +1,4 @@
 {
     "channels": "all",
-    "channelsToJoin": "#DakDakTest #DakDak"
+    "channelsToJoin": ["#DakDakTest", "#DakDak"]
 }

@@ -25,6 +25,32 @@ exports.init = function () {
     console.log('Connecting to ' + config.server + ' as ' + config.nick + '...');
     client = new irc.Client(config.server, config.nick, config.clientOptions);
 
+    self.joinChannel = function (channels) {
+        if (typeof channels !== 'undefined') {
+            if (self.registered) {
+                client.join(channels.join(' '));
+            } else {
+                self.delayedChannels.concat(channels);
+            }
+        }
+    };
+
+    self.setTopic = function (topic) {
+        // ignore if not configured to set topic
+        if (typeof config.setTopic === 'undefined' || !config.setTopic) {
+            return false;
+        }
+
+        // construct new topic
+        var newTopic = topic;
+        if (typeof config.topicBase !== 'undefined') {
+            newTopic = topic + ' ' + config.topicBase;
+        }
+
+        // set it
+        client.send('TOPIC', channel, newTopic);
+    };
+
     // handle connection to server for logging
     client.addListener('registered', function (message) {
         console.log('Connected to server ' + message.server);
@@ -40,7 +66,9 @@ exports.init = function () {
         }
 
         // Join delayed channels
-        self.joinChannels(self.delayedChannels);
+        if (self.delayedChannels.legnth > 0) {
+            self.joinChannels(self.delayedChannels);
+        }
     });
 
     // handle joins to channels for logging
@@ -108,32 +136,6 @@ exports.init = function () {
             }, this);
         }
     });
-
-    self.setTopic = function (topic) {
-        // ignore if not configured to set topic
-        if (typeof config.setTopic === 'undefined' || !config.setTopic) {
-            return false;
-        }
-
-        // construct new topic
-        var newTopic = topic;
-        if (typeof config.topicBase !== 'undefined') {
-            newTopic = topic + ' ' + config.topicBase;
-        }
-
-        // set it
-        client.send('TOPIC', channel, newTopic);
-    };
-
-    self.joinChannel = function (channels) {
-        if (typeof channels !== 'undefined') {
-            if (self.registered) {
-                client.join(channels);
-            } else {
-                self.delayedChannels.concat(channels);
-            }
-        }
-    };
 };
 
 /**
