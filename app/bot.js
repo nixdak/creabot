@@ -126,8 +126,9 @@ exports.init = function () {
             _.each(commands, function (c) {
                 // If the command matches
                 if (cmd === c.cmd) {
-                    // If the channel matches the command channels or is set to respond on all channels and is
-                    if (c.channel === to || c.channel === 'all') {
+                    // If the channel matches the command channels or is set to respond on all channels and is not in the
+                    // commands excluded channels
+                    if ((c.channel.indexOf(to) > -1 || c.channel === 'all') && c.excludes.indexOf(to) === -1) {
                         console.log('command: ' + c.cmd);
                         // check user mode
                         if (checkUserMode(message, c.mode)) {
@@ -146,11 +147,12 @@ exports.init = function () {
  * @param mode User mode that is allowed
  * @param cb Callback function
  */
-exports.cmd = function (cmd, mode, channel, cb) {
+exports.cmd = function (cmd, mode, channel, excludes cb) {
     commands.push({
         cmd: cmd,
         mode: mode,
         channel: channel,
+        exclude: excludes,
         callback: cb
     });
 };

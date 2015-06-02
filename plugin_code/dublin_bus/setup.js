@@ -4,5 +4,5 @@ module.exports = function(app) {
     var dublinBusInfo = new DublinBusInfo();
 
     app.joinChannels(dublinBusInfo.config.channelsToJoin);
-    app.cmd('dbus', '', dublinBusInfo.config.channels, dublinBusInfo.showStopInfo);
+    app.cmd('dbus', '', dublinBusInfo.config.channels, dublinBusInfo.config.channelsToExclude, dublinBusInfo.showStopInfo);
 }
