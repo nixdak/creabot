@@ -30,7 +30,7 @@ exports.init = function () {
             if (self.registered) {
                 client.join(channels.join(' '));
             } else {
-                self.delayedChannels.concat(channels);
+                self.delayedChannels = self.delayedChannels.concat(channels);
             }
         }
     };
