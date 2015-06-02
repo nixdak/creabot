@@ -66,7 +66,7 @@ exports.init = function () {
         }
 
         // Join delayed channels
-        if (self.delayedChannels.legnth > 0) {
+        if (self.delayedChannels.length > 0) {
             self.joinChannels(self.delayedChannels);
         }
     });
