@@ -28,7 +28,9 @@ exports.init = function () {
     self.joinChannels = function (channels) {
         if (typeof channels !== 'undefined') {
             if (self.registered) {
-                client.join(channels.join(' '));
+                channels.forEach(function(channel) {
+                    client.join(channel);
+                });
             } else {
                 self.delayedChannels = self.delayedChannels.concat(channels);
             }
