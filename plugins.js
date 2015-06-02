@@ -3,7 +3,7 @@ module.exports = function(app) {
         plugger = require('plug').create(app);
 
     plugger.on('connect', function(pluginName, pluginData, modulePath) {
-        console.log('Loaded ' + pluginName + 'plugin.');
+        console.log('Loaded ' + pluginName + ' plugin.');
     });
 
     plugger.find(path.resolve(__dirname, 'plugins_enabled'));
