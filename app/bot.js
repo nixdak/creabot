@@ -128,13 +128,14 @@ exports.init = function () {
                 if (cmd === c.cmd) {
                     // If the channel matches the command channels or is set to respond on all channels and is not in the
                     // commands excluded channels
-                    if ((c.channel.indexOf(to) > -1 || c.channel === 'all') {
-                        if (typeof c.exclude === 'undefined' || c.exclude.indexOf(to) === -1)
+                    if (c.channel.indexOf(to) > -1 || c.channel === 'all') {
+                        if (typeof c.exclude === 'undefined' || c.exclude.indexOf(to) === -1) {
                             console.log('command: ' + c.cmd);
                             // check user mode
                             if (checkUserMode(message, c.mode)) {
                                 c.callback(client, message, cmdArgs);
                             }
+                        }
                     }
                 }
             }, this);
