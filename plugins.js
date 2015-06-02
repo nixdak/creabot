@@ -6,5 +6,5 @@ module.exports = function(app) {
         console.log('Loaded ' + pluginName + 'plugin.');
     });
 
-    plugger.find(path.resolve(__dirname, 'plugins'));
+    plugger.find(path.resolve(__dirname, 'plugins_enabled'));
 };
