@@ -25,7 +25,7 @@ exports.init = function () {
     console.log('Connecting to ' + config.server + ' as ' + config.nick + '...');
     client = new irc.Client(config.server, config.nick, config.clientOptions);
 
-    self.joinChannel = function (channels) {
+    self.joinChannels = function (channels) {
         if (typeof channels !== 'undefined') {
             if (self.registered) {
                 client.join(channels.join(' '));
