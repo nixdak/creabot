@@ -113,7 +113,13 @@ exports.init = function () {
 
         // set it
         client.send('TOPIC', channel, newTopic);
-    }
+    };
+
+    self.joinChannel = function (channels) {
+        if (typeof channels !== 'undefined') {
+            client.join(channels);
+        }
+    };
 };
 
 /**
