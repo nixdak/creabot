@@ -147,7 +147,7 @@ exports.init = function () {
  * @param mode User mode that is allowed
  * @param cb Callback function
  */
-exports.cmd = function (cmd, mode, channel, excludes cb) {
+exports.cmd = function (cmd, mode, channel, excludes, cb) {
     commands.push({
         cmd: cmd,
         mode: mode,
