@@ -1,4 +1,4 @@
-var CardsAgainstHumanity = require('./controllers/cards_against_humanity_controller.js');
+var CardsAgainstHumanity = require('./app/controllers/cards_against_humanity_controller.js');
 
 module.exports = function(app) {
     var cardsAgainstHumanity = new CardsAgainstHumanity();
