@@ -52,10 +52,12 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         } else {
             var player = self.game.getPlayer({nick: nick, hostname: hostname});
             if (typeof(player) !== 'undefined') {
+                console.log("player is not undefined");
                 self.game.stop(self.game.getPlayer({nick: nick, hostname: hostname}));
                 self.game = undefined;
             }
         }
+        console.log("Leaving cards_against_humanity.stop");
     };
 
     /**

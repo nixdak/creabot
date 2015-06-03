@@ -37,39 +37,39 @@ var HAIKU = new Card({
  * @constructor
  */
 var Game = function Game(channel, client, config, cmdArgs, dbModels) {
-    var self = this;
+  var self = this;
 
-    // properties
-    self.waitCount = 0; // number of times waited until enough players
-    self.round = 0; // round number
-    self.players = []; // list of players
-    self.playersToAdd = [] // list of players to add after deferring because the game doesn't exist in the database yet
-    self.channel = channel; // the channel this game is running on
-    self.client = client; // reference to the irc client
-    self.config = config; // configuration data
-    self.state = STATES.STARTED; // game state storage
-    self.pauseState = []; // pause state storage
-    self.notifyUsersPending = false;
-    self.pointLimit = 0; // point limit for the game, defaults to 0 (== no limit)
-    self.dbModels = dbModels;
+  // properties
+  self.waitCount = 0; // number of times waited until enough players
+  self.round = 0; // round number
+  self.players = []; // list of players
+  self.playersToAdd = [] // list of players to add after deferring because the game doesn't exist in the database yet
+  self.channel = channel; // the channel this game is running on
+  self.client = client; // reference to the irc client
+  self.config = config; // configuration data
+  self.state = STATES.STARTED; // game state storage
+  self.pauseState = []; // pause state storage
+  self.notifyUsersPending = false;
+  self.pointLimit = 0; // point limit for the game, defaults to 0 (== no limit)
+  self.dbModels = dbModels;
 
-    /*
-     *
-     *  Database functions
-     *
-     */
+  /*
+   *
+   *  Database functions
+   *
+   */
 
-    self.createGameDatabaseRecord = function () {
-        if (self.config.gameOptions.database === true) {
-            // Adding game to database
-            self.dbModels.Game.create({num_rounds: self.round}).then(function (game) {
-                self.dbGame = game;
-                self.playersToAdd.forEach(function (player) {
-                    self.addPlayer(player);
-                });
-            });
-        }
-     };
+  self.createGameDatabaseRecord = function () {
+    if (self.config.gameOptions.database === true) {
+      // Adding game to database
+      self.dbModels.Game.create({num_rounds: self.round}).then(function (game) {
+        self.dbGame = game;
+        self.playersToAdd.forEach(function (player) {
+          self.addPlayer(player);
+        });
+      });
+    }
+  };
 
     self.updateGameDatabaseRecordGameOver = function (limitReached) {
       if (self.config.gameOptions.database === true) {
@@ -864,7 +864,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      * @returns The new player or false if invalid player
      */
     self.addPlayer = function (player) {
-        if (typeof self.dbGame === 'undefined') {
+        if (config.gameOptions.database === true && typeof self.dbGame === 'undefined') {
           self.playersToAdd.push(player);
         } else if (typeof self.getPlayer({nick: player.nick, hostname: player.hostname, isActive: true}) === 'undefined' ) {
             // Returning players
