@@ -276,7 +276,6 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
             self.updateGameDatabaseRecordGameOver(false);
         } else {
             self.updateGameDatabaseRecordGameOver(true);
-          });
         }
 
         // Update points table
