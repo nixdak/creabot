@@ -122,7 +122,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
   };
 
   self.createCardCombo = function (player, cards) {
-    if (self.config.gameOption.database === true) {
+    if (self.config.gameOptions.database === true) {
       self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
         self.updateCardComboTable(dbPlayer.id, playerCards.getCards());
       });
@@ -130,45 +130,48 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
   };
 
   self.updateCardComboTable = function(id, playerCards) {
-    var round = self.dbCurrentRound;
-    var cardString = [];
+    if (self.config.gameOptions.database === true) {
+      var round = self.dbCurrentRound;
+      var cardString = [];
 
-    self.dbModels.Card.findAll({
-      where: {
-        text: {
-          in: _.map(playerCards, function(card) { return card.value; })
+      self.dbModels.Card.findAll({
+        where: {
+          text: {
+            in: _.map(playerCards, function(card) { return card.value; })
+          }
         }
-      }
-    }).then(function (cards) {
-      if (playerCards.length === 1) {
-        cardString = cards[0].id;
-      } else {
-        var cardString = [];
-        playerCards.forEach(function (playerCard) {
-          cards.forEach(function (card) {
-            if (playerCard.value === card.text) {
-              cardString.push(card.id);
-            }
+      }).then(function (cards) {
+        if (playerCards.length === 1) {
+          cardString = cards[0].id;
+        } else {
+          var cardString = [];
+          playerCards.forEach(function (playerCard) {
+            cards.forEach(function (card) {
+              if (playerCard.value === card.text) {
+                cardString.push(card.id);
+              }
+            });
           });
+
+          cardString = cardString.join(',');
+        }
+
+        self.updateOrCreateInstance(self.dbModels.CardCombo,
+          { where: { game_id: self.dbGame.id, player_id: id, question_id: round.question_id } },
+          { game_id: self.dbGame.id, player_id: id, question_id: round.question_id, answer_ids: cardString, winner: false },
+          null
+        );
+
+        // Finally update each of the cards times played count
+        cards.forEach(function (card) {
+          card.update({times_played: card.times_played + 1});
         });
-
-        cardString = cardString.join(',');
-      }
-
-      self.updateOrCreateInstance(self.dbModels.CardCombo,
-        { where: { game_id: self.dbGame.id, player_id: id, question_id: round.question_id } },
-        { game_id: self.dbGame.id, player_id: id, question_id: round.question_id, answer_ids: cardString, winner: false },
-        null
-      );
-
-      // Finally update each of the cards times played count
-      cards.forEach(function (card) {
-        card.update({times_played: card.times_played + 1});
       });
-    });
+    }
   };
 
-    self.createRound = function(question_id) {
+  self.createRound = function(question_id) {
+    if (self.config.gameOptions.database === true) {
       self.dbModels.Round.create({
         game_id: self.dbGame.id,
         round_number: self.round,
@@ -178,83 +181,84 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
       }).then(function (round) {
         self.dbCurrentRound = round;
       });
-    };
-
-    self.setWinnerDatabase = function (round, player) {
-      if (self.config.gameOptions.database === true) {
-        self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
-          round.update({winner_id: dbPlayer.id});
-        });
-      }
-    };
-
-    self.createPlayerDatabaseRecord = function (player) {
-      if (self.config.gameOptions.database === true) {
-        self.updateOrCreateInstance(
-          self.dbModels.Player,
-          {where: {nick: player.nick}},
-          {nick: player.nick, last_game_id: self.dbGame.id},
-          {last_game_id: self.dbGame.id}
-        );
-      }
     }
+  };
 
-    self.updatePlayerDatabaseRecord = function (player) {
-      if (self.config.gameOptions.database === true) {
-        self.updateOrCreateInstance(
-          self.dbModels.Player,
-          {where: {nick: player.nick}},
-          {nick: player.nick, last_game_id: self.dbGame.id},
-          {last_game_id: self.dbGame.id}
-        );
-      }
+  self.setWinnerDatabase = function (round, player) {
+    if (self.config.gameOptions.database === true) {
+      self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
+        round.update({winner_id: dbPlayer.id});
+      });
     }
+  };
 
-    // Game code starts here
-
-    // Add game to database if database is enabled
-    self.createGameDatabaseRecord();
-
-    console.log('Loaded', config.cards.length, 'cards:');
-    var questions = _.filter(config.cards, function(card) {
-      return card.type.toLowerCase() === 'question';
-    });
-    console.log(questions.length, 'questions');
-
-    var answers = _.filter(config.cards, function(card) {
-        return card.type.toLowerCase() === 'answer';
-    });
-    console.log(answers.length, 'answers');
-
-    // init decks
-    self.decks = {
-        question: new Cards(questions),
-        answer: new Cards(answers)
-    };
-    // init discard piles
-    self.discards = {
-        question: new Cards(),
-        answer: new Cards()
-    };
-    // init table slots
-    self.table = {
-        question: null,
-        answer: []
-    };
-    // shuffle decks
-    self.decks.question.shuffle();
-    self.decks.answer.shuffle();
-
-    // parse point limit from configuration file
-    if(typeof config.gameOptions.pointLimit !== 'undefined' && !isNaN(config.gameOptions.pointLimit)) {
-        console.log('Set game point limit to ' + config.gameOptions.pointLimit + ' from config');
-        self.pointLimit = parseInt(config.gameOptions.pointLimit);
+  self.createPlayerDatabaseRecord = function (player) {
+    if (self.config.gameOptions.database === true) {
+      self.updateOrCreateInstance(
+        self.dbModels.Player,
+        {where: {nick: player.nick}},
+        {nick: player.nick, last_game_id: self.dbGame.id},
+        {last_game_id: self.dbGame.id}
+      );
     }
-    // parse point limit from command arguments
-    if(typeof cmdArgs[0] !==  'undefined' && !isNaN(cmdArgs[0])) {
-        console.log('Set game point limit to ' + cmdArgs[0] + ' from arguments');
-        self.pointLimit = parseInt(cmdArgs[0]);
+  };
+
+  self.updatePlayerDatabaseRecord = function (player) {
+    if (self.config.gameOptions.database === true) {
+      self.updateOrCreateInstance(
+        self.dbModels.Player,
+        {where: {nick: player.nick}},
+        {nick: player.nick, last_game_id: self.dbGame.id},
+        {last_game_id: self.dbGame.id}
+      );
     }
+  };
+
+  // Game code starts here
+
+  // Add game to database if database is enabled
+  self.createGameDatabaseRecord();
+
+  console.log('Loaded', config.cards.length, 'cards:');
+  var questions = _.filter(config.cards, function(card) {
+    return card.type.toLowerCase() === 'question';
+  });
+  console.log(questions.length, 'questions');
+
+  var answers = _.filter(config.cards, function(card) {
+      return card.type.toLowerCase() === 'answer';
+  });
+  console.log(answers.length, 'answers');
+
+  // init decks
+  self.decks = {
+    question: new Cards(questions),
+    answer: new Cards(answers)
+  };
+  // init discard piles
+  self.discards = {
+    question: new Cards(),
+    answer: new Cards()
+  };
+  // init table slots
+  self.table = {
+    question: null,
+    answer: []
+  };
+  // shuffle decks
+  self.decks.question.shuffle();
+  self.decks.answer.shuffle();
+
+  // parse point limit from configuration file
+  if(typeof config.gameOptions.pointLimit !== 'undefined' && !isNaN(config.gameOptions.pointLimit)) {
+    console.log('Set game point limit to ' + config.gameOptions.pointLimit + ' from config');
+    self.pointLimit = parseInt(config.gameOptions.pointLimit);
+  }
+  // parse point limit from command arguments
+  if(typeof cmdArgs[0] !==  'undefined' && !isNaN(cmdArgs[0])) {
+    console.log('Set game point limit to ' + cmdArgs[0] + ' from arguments');
+    self.pointLimit = parseInt(cmdArgs[0]);
+  }
 
     /**
      * Stop game
