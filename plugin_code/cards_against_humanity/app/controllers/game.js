@@ -381,7 +381,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
       if(self.pointLimit > 0) {
         var winner = _.findWhere(self.players, {points: self.pointLimit});
           if(winner) {
-            self.say(winner.nick + ' has the limit of ' + self.pointLimit + ' awesome '
+            self.say(winner.nick + ' has the limit of ' + self.pointLimit + ' awesome ' +
               inflection.inflect('points', self.pointLimit) + ' and is the winner of the game! Congratulations!');
             self.stop(null, true);
             return false;
