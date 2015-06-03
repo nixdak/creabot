@@ -59,87 +59,161 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      *
      */
 
-     self.updateOrCreateInstance = function(model, query, createFields, updateFields) {
-       model.findOne(query).then(function (instance) {
-          if (instance === null && createFields !== null) {
-            model.create(createFields);
-          } else if (instance !== null && updateFields !== null) {
-            instance.update(updateFields);
-          }
-       });
-     };
-
-     self.updatePointsDatabaseTable = function() {
-       self.players.forEach(function (player) {
-         self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
-           self.updateOrCreateInstance(
-             self.dbModels.Points,
-             {where: {player_id: dbPlayer.id, game_id: self.dbGame.id}},
-             {player_id: dbPlayer.id, game_id: self.dbGame.id, points: player.points},
-             {points: player.points}
-           )
-         });
-       });
-     };
-
-     self.updateCardComboTable = function(id, playerCards) {
-       var round = self.dbCurrentRound;
-       var cardString = [];
-
-       self.dbModels.Answer.findAll({
-         where: {
-           text: {
-             in: _.map(playerCards, function(card) { return card.value; })
-           }
-          }
-        }).then(function (cards) {
-          if (playerCards.length === 1) {
-            cardString = cards[0].id;
-          } else {
-            var cardString = [];
-            playerCards.forEach(function (playerCard) {
-              cards.forEach(function (card) {
-                if (playerCard.value === card.text) {
-                  cardString.push(card.id);
-                }
-              });
+    self.createGameDatabaseRecord = function (player) {
+        if (self.config.gameOptions.database === true) {
+            // Adding game to database
+            self.dbModels.Game.create({num_rounds: self.round}).then(function (game) {
+                self.dbGame = game;
+                self.playersToAdd.forEach(function (player) {
+                    self.addPlayer(player);
+                });
             });
+        }
+     };
 
-            cardString = cardString.join(',');
-          }
+    self.updateGameDatabaseRecordGameOver = function (limitReached) {
+      if (self.config.gameOptions.database === true) {
+        if (limitReached) {
+          // Get winning player
+          winner = self.getPlayer({points: self.pointLimit});
 
-          self.updateOrCreateInstance(self.dbModels.CardCombo,
-            { where: { game_id: self.dbGame.id, player_id: id, question_id: round.question_id } },
-            { game_id: self.dbGame.id, player_id: id, question_id: round.question_id, answer_ids: cardString, winner: false },
-            null
-          );
-
-          // Finally update each of the cards times played count
-          cards.forEach(function (card) {
-            card.update({times_played: card.times_played + 1});
+          // Get player from database and update the game
+          self.dbModels.Player.findOne({where: {nick: winner.nick}}).then(function (player) {
+              self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: player.id});
+              self.updateGameDatabaseRecordGameOver(true);
           });
-       });
-     };
+        } else {
+          self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: null});
+        }
+      }
+    };
 
-     self.createRound = function(question_id) {
-       self.dbModels.Round.create({
-         game_id: self.dbGame.id,
-         round_number: self.round,
-         num_active_players: _.filter(self.players, function (player) {return player.isActive}).length,
-         total_players: self.players.length,
-         question_id: question_id
-       }).then(function (round) {
-         self.dbCurrentRound = round;
-       });
-     };
+    self.updatePointsDatabaseTable = function() {
+      if (self.config.gameOptions.database === true) {
+        self.players.forEach(function (player) {
+          self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
+            self.updateOrCreateInstance(
+              self.dbModels.Points,
+              {where: {player_id: dbPlayer.id, game_id: self.dbGame.id}},
+              {player_id: dbPlayer.id, game_id: self.dbGame.id, is_active: player.isActive, points: player.points},
+              {points: player.points}
+            )
+          });
+        });
+      }
+    };
 
-    // Adding game to database
-    self.dbModels.Game.create({num_rounds: self.round}).then(function (game) {
-      self.dbGame = game;
-      self.playersToAdd.forEach(function (player) {
-        self.addPlayer(player);
+    self.updateOrCreateInstance = function(model, query, createFields, updateFields) {
+      model.findOne(query).then(function (instance) {
+        if (instance === null && createFields !== null) {
+          model.create(createFields);
+        } else if (instance !== null && updateFields !== null) {
+          instance.update(updateFields);
+        }
       });
-    });
+    };
+
+    self.recordRound = function (cardValue) {
+      if (self.config.gameOptions.database === true) {
+        self.dbModels.Card.findOne({where: {text: card.value}}).then(function (instance) {
+          instance.update({times_played: instance.times_played + 1}).then(function (q) { self.createRound(q.id); });
+        });
+      }
+    }
+
+    self.createCardCombo = function (player, cards) {
+      if (self.config.gameOption.database === true) {
+        self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
+          self.updateCardComboTable(dbPlayer.id, playerCards.getCards());
+        });
+      }
+    }
+
+    self.updateCardComboTable = function(id, playerCards) {
+      var round = self.dbCurrentRound;
+      var cardString = [];
+
+      self.dbModels.Card.findAll({
+        where: {
+          text: {
+            in: _.map(playerCards, function(card) { return card.value; })
+          }
+        }
+      }).then(function (cards) {
+        if (playerCards.length === 1) {
+          cardString = cards[0].id;
+        } else {
+          var cardString = [];
+          playerCards.forEach(function (playerCard) {
+            cards.forEach(function (card) {
+              if (playerCard.value === card.text) {
+                cardString.push(card.id);
+              }
+            });
+          });
+
+          cardString = cardString.join(',');
+        }
+
+        self.updateOrCreateInstance(self.dbModels.CardCombo,
+          { where: { game_id: self.dbGame.id, player_id: id, question_id: round.question_id } },
+          { game_id: self.dbGame.id, player_id: id, question_id: round.question_id, answer_ids: cardString, winner: false },
+          null
+        );
+
+        // Finally update each of the cards times played count
+        cards.forEach(function (card) {
+          card.update({times_played: card.times_played + 1});
+        });
+      });
+    };
+
+    self.createRound = function(question_id) {
+      self.dbModels.Round.create({
+        game_id: self.dbGame.id,
+        round_number: self.round,
+        num_active_players: _.filter(self.players, function (player) {return player.isActive}).length,
+        total_players: self.players.length,
+        question_id: question_id
+      }).then(function (round) {
+        self.dbCurrentRound = round;
+      });
+    };
+
+    self.setWinnerDatabase = function (round, player) {
+      if (self.config.gameOptions.database === true) {
+        self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
+          round.update({winner_id: dbPlayer.id});
+        });
+      }
+    };
+
+    self.createPlayerDatabaseRecord = function (player) {
+      if (self.config.gameOptions.database === true) {
+        self.updateOrCreateInstance(
+          self.dbModels.Player,
+          {where: {nick: player.nick}},
+          {nick: player.nick, last_game_id: self.dbGame.id},
+          {last_game_id: self.dbGame.id}
+        );
+      }
+    }
+
+    self.updatePlayerDatabaseRecord = function (player) {
+      if (self.config.gameOptions.database === true) {
+        self.updateOrCreateInstance(
+          self.dbModels.Player,
+          {where: {nick: player.nick}},
+          {nick: player.nick, last_game_id: self.dbGame.id},
+          {last_game_id: self.dbGame.id}
+        );
+      }
+    }
+
+    // Game code starts here
+
+    // Add game to database if database is enabled
+    self.createGameDatabaseRecord(player);
 
     console.log('Loaded', config.cards.length, 'cards:');
     var questions = _.filter(config.cards, function(card) {
@@ -198,12 +272,10 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
         }
 
         if (pointLimitReached !== true) {
-          self.say('Game has been stopped.');
-          self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: null});
+            self.say('Game has been stopped.');
+            self.updateGameDatabaseRecordGameOver(false);
         } else {
-          winner = self.getPlayer({points: self.pointLimit});
-          self.dbModels.Player.findOne({where: {nick: winner.nick}}).then(function (player) {
-            self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: player.id});
+            self.updateGameDatabaseRecordGameOver(true);
           });
         }
 
@@ -241,111 +313,111 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      * Pause game
      */
     self.pause = function () {
-        // check if game is already paused
-        if (self.state === STATES.PAUSED) {
-            self.say('Game is already paused. Type !resume to begin playing again.');
-            return false;
-        }
+      // check if game is already paused
+      if (self.state === STATES.PAUSED) {
+        self.say('Game is already paused. Type !resume to begin playing again.');
+        return false;
+      }
 
-        // only allow pause if game is in PLAYABLE or PLAYED state
-        if (self.state !== STATES.PLAYABLE && self.state !== STATES.PLAYED) {
-            self.say('The game cannot be paused right now.');
-            return false;
-        }
+      // only allow pause if game is in PLAYABLE or PLAYED state
+      if (self.state !== STATES.PLAYABLE && self.state !== STATES.PLAYED) {
+        self.say('The game cannot be paused right now.');
+        return false;
+      }
 
-        // store state and pause game
-        var now = new Date();
-        self.pauseState.state = self.state;
-        self.pauseState.elapsed = now.getTime() - self.roundStarted.getTime();
-        self.state = STATES.PAUSED;
+      // store state and pause game
+      var now = new Date();
+      self.pauseState.state = self.state;
+      self.pauseState.elapsed = now.getTime() - self.roundStarted.getTime();
+      self.state = STATES.PAUSED;
 
-        self.say('Game is now paused. Type !resume to begin playing again.');
+      self.say('Game is now paused. Type !resume to begin playing again.');
 
-        // clear turn timers
-        clearTimeout(self.turnTimer);
-        clearTimeout(self.winnerTimer);
+      // clear turn timers
+      clearTimeout(self.turnTimer);
+      clearTimeout(self.winnerTimer);
     };
 
     /**
      * Resume game
      */
     self.resume = function () {
-        // make sure game is paused
-        if (self.state !== STATES.PAUSED) {
-            self.say('The game is not paused.');
-            return false;
+      // make sure game is paused
+      if (self.state !== STATES.PAUSED) {
+          self.say('The game is not paused.');
+          return false;
+      }
+
+      // resume game
+      var now = new Date();
+      var newTime = new Date();
+      newTime.setTime(now.getTime() - self.pauseState.elapsed);
+      self.roundStarted = newTime;
+      self.state = self.pauseState.state;
+
+      self.say('Game has been resumed.');
+
+      // resume timers
+      if (self.state === STATES.PLAYED) {
+        // check if czar quit during pause
+        if(self.players.indexOf(self.czar) < 0) {
+          // no czar
+          self.say('The czar quit the game during pause. I will pick the winner on this round.');
+          // select winner
+          self.selectWinner(Math.round(Math.random() * (self.table.answer.length - 1)));
+        } else {
+          self.winnerTimer = setInterval(self.winnerTimerCheck, 10 * 1000);
         }
-
-        // resume game
-        var now = new Date();
-        var newTime = new Date();
-        newTime.setTime(now.getTime() - self.pauseState.elapsed);
-        self.roundStarted = newTime;
-        self.state = self.pauseState.state;
-
-        self.say('Game has been resumed.');
-
-        // resume timers
-        if (self.state === STATES.PLAYED) {
-            // check if czar quit during pause
-            if(self.players.indexOf(self.czar) < 0) {
-                // no czar
-                self.say('The czar quit the game during pause. I will pick the winner on this round.');
-                // select winner
-                self.selectWinner(Math.round(Math.random() * (self.table.answer.length - 1)));
-            } else {
-                self.winnerTimer = setInterval(self.winnerTimerCheck, 10 * 1000);
-            }
-        } else if (self.state === STATES.PLAYABLE) {
-            self.turnTimer = setInterval(self.turnTimerCheck, 10 * 1000);
-        }
+      } else if (self.state === STATES.PLAYABLE) {
+        self.turnTimer = setInterval(self.turnTimerCheck, 10 * 1000);
+      }
     };
 
     /**
      * Start next round
      */
     self.nextRound = function () {
-        clearTimeout(self.stopTimeout);
-        // check if any player reached the point limit
-        if(self.pointLimit > 0) {
-            var winner = _.findWhere(self.players, {points: self.pointLimit});
-            if(winner) {
-                self.say(winner.nick + ' has the limit of ' + self.pointLimit + ' awesome ' +
-                    inflection.inflect('points', self.pointLimit) + ' and is the winner of the game! Congratulations!');
-                self.stop(null, true);
-                return false;
-            }
-        }
-
-        // check that there's enough players in the game
-        if (_.where(self.players, { isActive: true}).length < 3) {
-            self.say('Not enough players to start a round (need at least 3). Waiting for others to join. Stopping in ' +
-                config.gameOptions.roundMinutes + ' ' + inflection.inflect('minutes', config.gameOptions.roundMinutes) + ' if not enough players.');
-            self.state = STATES.WAITING;
-            // stop game if not enough pleyers in however many minutes in the config
-            self.stopTimeout = setTimeout(self.stop, 60 * 1000 * config.gameOptions.roundMinutes);
+      clearTimeout(self.stopTimeout);
+      // check if any player reached the point limit
+      if(self.pointLimit > 0) {
+        var winner = _.findWhere(self.players, {points: self.pointLimit});
+          if(winner) {
+            self.say(winner.nick + ' has the limit of ' + self.pointLimit + ' awesome '
+              inflection.inflect('points', self.pointLimit) + ' and is the winner of the game! Congratulations!');
+            self.stop(null, true);
             return false;
         }
+      }
 
-        self.updatePointsDatabaseTable();
+      // check that there's enough players in the game
+      if (_.where(self.players, { isActive: true}).length < 3) {
+        self.say('Not enough players to start a round (need at least 3). Waiting for others to join. Stopping in ' +
+          config.gameOptions.roundMinutes + ' ' + inflection.inflect('minutes', config.gameOptions.roundMinutes) + ' if not enough players.');
+          self.state = STATES.WAITING;
+          // stop game if not enough pleyers in however many minutes in the config
+          self.stopTimeout = setTimeout(self.stop, 60 * 1000 * config.gameOptions.roundMinutes);
+          return false;
+      }
 
-        self.round++;
-        self.dbGame.update({num_rounds: self.round});
-        console.log('Starting round ', self.round);
+      self.updatePointsDatabaseTable();
 
-        self.setCzar();
-        self.deal();
-        self.say('Round ' + self.round + '! ' + self.czar.nick + ' is the card czar.');
-        self.playQuestion();
+      self.round++;
+      self.dbGame.update({num_rounds: self.round});
+      console.log('Starting round ', self.round);
 
-        // show cards for all players (except czar)
-        _.each(self.players, function (player) {
-            if (player.isCzar !== true && player.isActive === true) {
-                self.showCards(player);
-            }
-        });
+      self.setCzar();
+      self.deal();
+      self.say('Round ' + self.round + '! ' + self.czar.nick + ' is the card czar.');
+      self.playQuestion();
 
-        self.state = STATES.PLAYABLE;
+      // show cards for all players (except czar)
+      _.each(self.players, function (player) {
+        if (player.isCzar !== true && player.isActive === true) {
+          self.showCards(player);
+        }
+      });
+
+      self.state = STATES.PLAYABLE;
     };
 
     /**
@@ -353,31 +425,31 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      * @returns Player The player object who is the new czar
      */
     self.setCzar = function () {
-        if (self.czar) {
-          console.log('Old czar: ' + self.czar.nick);
+      if (self.czar) {
+        console.log('Old czar: ' + self.czar.nick);
 
-          var nextCzar;
+        var nextCzar;
 
-          self.players.forEach(function (player) {
-            console.log(player.nick + ': ' + player.isActive);
-          });
+        self.players.forEach(function (player) {
+          console.log(player.nick + ': ' + player.isActive);
+        });
 
-          for (var i = (self.players.indexOf(self.czar) + 1) % self.players.length; i !== self.players.indexOf(self.czar); i = (i + 1) % self.players.length) {
-            console.log(i + ': ' + self.players[i].nick + ': ' + self.players[i].isActive);
-            if (self.players[i].isActive === true) {
-              nextCzar = i;
-              break;
-            }
+        for (var i = (self.players.indexOf(self.czar) + 1) % self.players.length; i !== self.players.indexOf(self.czar); i = (i + 1) % self.players.length) {
+          console.log(i + ': ' + self.players[i].nick + ': ' + self.players[i].isActive);
+          if (self.players[i].isActive === true) {
+            nextCzar = i;
+            break;
           }
-
-          self.czar = self.players[i];
-        } else {
-          self.czar = _.where(self.players, { isActive: true })[0];
         }
 
-        console.log('New czar:', self.czar.nick);
-        self.czar.isCzar = true;
-        return self.czar;
+        self.czar = self.players[i];
+      } else {
+        self.czar = _.where(self.players, { isActive: true })[0];
+      }
+
+      console.log('New czar:', self.czar.nick);
+      self.czar.isCzar = true;
+      return self.czar;
     };
 
     /**
@@ -465,9 +537,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
         self.table.question = card;
 
         // Record card and round in the database
-        self.dbModels.Question.findOne({where: {text: card.value}}).then(function (instance) {
-          instance.update({times_played: instance.times_played + 1}).then(function (q) { self.createRound(q.id); });
-        });
+        self.recordRound(card.value);
 
         // PM Card to players
         _.each(_.where(self.players, {isCzar: false, isActive: true}), function(player) {
@@ -533,9 +603,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                     self.pm(player.nick, 'You played: ' + self.getFullEntry(self.table.question, playerCards.getCards()));
 
                     // Update card combo table
-                    self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
-                      self.updateCardComboTable(dbPlayer.id, playerCards.getCards());
-                    });
+                    self.createCardCombo(player, playerCards.getCards());
 
                     // show entries if all players have played
                     if (self.checkAllPlayed()) {
@@ -715,38 +783,36 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      * @param player Player who said the command (use null for internal calls, to ignore checking)
      */
     self.selectWinner = function (index, player) {
-        // don't allow if game is paused
-        if (self.state === STATES.PAUSED) {
-            self.say('Game is currently paused.');
-            return false;
+      // don't allow if game is paused
+      if (self.state === STATES.PAUSED) {
+          self.say('Game is currently paused.');
+          return false;
+      }
+
+      // clear winner timer
+      clearInterval(self.winnerTimer);
+
+      var winner = self.table.answer[index];
+      if (self.state === STATES.PLAYED) {
+        if (typeof player !== 'undefined' && player !== self.czar) {
+          client.say(player.nick + ': You are not the card czar. Only the card czar can select the winner');
+        } else if (typeof winner === 'undefined') {
+          self.say('Invalid winner');
+        } else {
+          self.state = STATES.ROUND_END;
+          var owner = winner.cards[0].owner;
+          owner.points++;
+          // announce winner
+          self.say(c.bold('Winner is: ') + owner.nick + ' with "' + self.getFullEntry(self.table.question, winner.getCards()) +
+            '" and gets one awesome point! ' + owner.nick + ' has ' + owner.points + ' awesome ' + inflection.inflect('point', owner.points) + '.');
+
+          var round = self.dbCurrentRound;
+          self.setWinnerDatabase(round, owner);
+
+          self.clean();
+          self.nextRound();
         }
-
-        // clear winner timer
-        clearInterval(self.winnerTimer);
-
-        var winner = self.table.answer[index];
-        if (self.state === STATES.PLAYED) {
-            if (typeof player !== 'undefined' && player !== self.czar) {
-                client.say(player.nick + ': You are not the card czar. Only the card czar can select the winner');
-            } else if (typeof winner === 'undefined') {
-                self.say('Invalid winner');
-            } else {
-                self.state = STATES.ROUND_END;
-                var owner = winner.cards[0].owner;
-                owner.points++;
-                // announce winner
-                self.say(c.bold('Winner is: ') + owner.nick + ' with "' + self.getFullEntry(self.table.question, winner.getCards()) +
-                    '" and gets one awesome point! ' + owner.nick + ' has ' + owner.points + ' awesome ' + inflection.inflect('point', owner.points) + '.');
-
-                var round = self.dbCurrentRound;
-                self.dbModels.Player.findOne({where: {nick: owner.nick}}).then(function (dbPlayer) {
-                  round.update({winner_id: dbPlayer.id});
-                });
-
-                self.clean();
-                self.nextRound();
-            }
-        }
+      }
     };
 
     /**
@@ -823,13 +889,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                 self.nextRound();
             }
 
-            self.updateOrCreateInstance(
-              self.dbModels.Player,
-              {where: {nick: player.nick}},
-              {nick: player.nick, last_game_id: self.dbGame.id},
-              {last_game_id: self.dbGame.id}
-            );
-
+            self.createPlayerDatabaseRecord(player);
             return player;
 
         }
@@ -1074,12 +1134,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
             player.nick = newnick;
         }
 
-        self.updateOrCreateInstance(
-          self.dbModels.Player,
-          {where: {nick: oldnick}},
-          null,
-          {nick: newnick}
-        );
+        self.updatePlayerDatabaseRecord(player);
     };
 
     /**

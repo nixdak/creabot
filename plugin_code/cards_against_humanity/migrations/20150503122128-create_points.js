@@ -17,6 +17,9 @@ module.exports = {
           referencesKey: 'id',
           primaryKey: true
         },
+        is_active: {
+          type: Sequelize.BOOLEAN
+        }
         points: {
           type: Sequelize.INTEGER
         }

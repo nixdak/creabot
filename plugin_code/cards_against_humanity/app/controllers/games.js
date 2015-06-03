@@ -30,7 +30,6 @@ var Games = function Games() {
             var new_game = new Game(channel, client, config, cmdArgs, dbModels);
             self.game = new_game;
             self.game.addPlayer(player);
-
         }
     };
 
