@@ -260,52 +260,53 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      * Stop game
      */
     self.stop = function (player, pointLimitReached) {
-        self.state = STATES.STOPPED;
+      console.log("In game.stop");
+      self.state = STATES.STOPPED;
 
-        if (typeof player !== 'undefined' && player !== null) {
-            self.say(player.nick + ' stopped the game.');
-        }
+      if (typeof player !== 'undefined' && player !== null) {
+        self.say(player.nick + ' stopped the game.');
+      }
 
-        if(self.round > 1) {
-            // show points if played more than one round
-            self.showPoints();
-        }
+      if(self.round > 1) {
+        // show points if played more than one round
+        self.showPoints();
+      }
 
-        if (pointLimitReached !== true) {
-            self.say('Game has been stopped.');
-            self.updateGameDatabaseRecordGameOver(false);
-        } else {
-            self.updateGameDatabaseRecordGameOver(true);
-        }
+      if (pointLimitReached !== true) {
+        self.say('Game has been stopped.');
+        self.updateGameDatabaseRecordGameOver(false);
+      } else {
+        self.updateGameDatabaseRecordGameOver(true);
+      }
 
-        // Update points table
-        self.updatePointsDatabaseTable();
+      // Update points table
+      self.updatePointsDatabaseTable();
 
-        // clear all timers
-        clearTimeout(self.startTimeout);
-        clearTimeout(self.stopTimeout);
-        clearTimeout(self.turnTimer);
-        clearTimeout(self.winnerTimer);
+      // clear all timers
+      clearTimeout(self.startTimeout);
+      clearTimeout(self.stopTimeout);
+      clearTimeout(self.turnTimer);
+      clearTimeout(self.winnerTimer);
 
-        // Remove listeners
-        client.removeListener('part', self.playerPartHandler);
-        client.removeListener('quit', self.playerQuitHandler);
-        client.removeListener('kick' + self.channel, self.playerKickHandler);
-        client.removeListener('nick', self.playerNickChangeHandler);
-        client.removeListener('names'+ self.channel, self.notifyUsersHandler);
+      // Remove listeners
+      client.removeListener('part', self.playerPartHandler);
+      client.removeListener('quit', self.playerQuitHandler);
+      client.removeListener('kick' + self.channel, self.playerKickHandler);
+      client.removeListener('nick', self.playerNickChangeHandler);
+      client.removeListener('names'+ self.channel, self.notifyUsersHandler);
 
-        // Destroy game properties
-        delete self.players;
-        delete self.config;
-        delete self.client;
-        delete self.channel;
-        delete self.round;
-        delete self.decks;
-        delete self.discards;
-        delete self.table;
+      // Destroy game properties
+      delete self.players;
+      delete self.config;
+      delete self.client;
+      delete self.channel;
+      delete self.round;
+      delete self.decks;
+      delete self.discards;
+      delete self.table;
 
-        // set topic
-        self.setTopic(c.bold.yellow('No game is running. Type !start to begin one!'));
+      // set topic
+      self.setTopic(c.bold.yellow('No game is running. Type !start to begin one!'));
     };
 
     /**
@@ -355,7 +356,6 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
       self.state = self.pauseState.state;
 
       self.say('Game has been resumed.');
-
       // resume timers
       if (self.state === STATES.PLAYED) {
         // check if czar quit during pause
