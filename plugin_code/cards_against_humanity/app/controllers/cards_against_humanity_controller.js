@@ -7,6 +7,7 @@ var _ = require('underscore'),
 var CardsAgainstHumanity = function CardsAgainstHumanity() {
     var self = this;
     self.game;
+    self.config = config;
 
     /**
      * Start a game
@@ -27,7 +28,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         } else {
             // init game
             var player = new Player(nick, user, hostname);
-            var new_game = new Game(channel, client, config, cmdArgs, dbModels);
+            var new_game = new Game(channel, client, self.config, cmdArgs, dbModels);
             self.game = new_game;
             self.game.addPlayer(player);
         }
