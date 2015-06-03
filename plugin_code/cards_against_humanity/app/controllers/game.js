@@ -71,102 +71,102 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
     }
   };
 
-    self.updateGameDatabaseRecordGameOver = function (limitReached) {
-      if (self.config.gameOptions.database === true) {
-        if (limitReached) {
-          // Get winning player
-          winner = self.getPlayer({points: self.pointLimit});
+  self.updateGameDatabaseRecordGameOver = function (limitReached) {
+    if (self.config.gameOptions.database === true) {
+      if (limitReached) {
+        // Get winning player
+        winner = self.getPlayer({points: self.pointLimit});
 
-          // Get player from database and update the game
-          self.dbModels.Player.findOne({where: {nick: winner.nick}}).then(function (player) {
-              self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: player.id});
-              self.updateGameDatabaseRecordGameOver(true);
-          });
-        } else {
-          self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: null});
-        }
-      }
-    };
-
-    self.updatePointsDatabaseTable = function() {
-      if (self.config.gameOptions.database === true) {
-        self.players.forEach(function (player) {
-          self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
-            self.updateOrCreateInstance(
-              self.dbModels.Points,
-              {where: {player_id: dbPlayer.id, game_id: self.dbGame.id}},
-              {player_id: dbPlayer.id, game_id: self.dbGame.id, is_active: player.isActive, points: player.points},
-              {points: player.points}
-            )
-          });
+        // Get player from database and update the game
+        self.dbModels.Player.findOne({where: {nick: winner.nick}}).then(function (player) {
+          self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: player.id});
+          self.updateGameDatabaseRecordGameOver(true);
         });
-      }
-    };
-
-    self.updateOrCreateInstance = function(model, query, createFields, updateFields) {
-      model.findOne(query).then(function (instance) {
-        if (instance === null && createFields !== null) {
-          model.create(createFields);
-        } else if (instance !== null && updateFields !== null) {
-          instance.update(updateFields);
-        }
-      });
-    };
-
-    self.recordRound = function (cardValue) {
-      if (self.config.gameOptions.database === true) {
-        self.dbModels.Card.findOne({where: {text: card.value}}).then(function (instance) {
-          instance.update({times_played: instance.times_played + 1}).then(function (q) { self.createRound(q.id); });
-        });
+      } else {
+        self.dbGame.update({ended_at: new Date(), num_rounds: self.round, winner_id: null});
       }
     }
+  };
 
-    self.createCardCombo = function (player, cards) {
-      if (self.config.gameOption.database === true) {
+  self.updatePointsDatabaseTable = function() {
+    if (self.config.gameOptions.database === true) {
+      self.players.forEach(function (player) {
         self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
-          self.updateCardComboTable(dbPlayer.id, playerCards.getCards());
-        });
-      }
-    }
-
-    self.updateCardComboTable = function(id, playerCards) {
-      var round = self.dbCurrentRound;
-      var cardString = [];
-
-      self.dbModels.Card.findAll({
-        where: {
-          text: {
-            in: _.map(playerCards, function(card) { return card.value; })
-          }
-        }
-      }).then(function (cards) {
-        if (playerCards.length === 1) {
-          cardString = cards[0].id;
-        } else {
-          var cardString = [];
-          playerCards.forEach(function (playerCard) {
-            cards.forEach(function (card) {
-              if (playerCard.value === card.text) {
-                cardString.push(card.id);
-              }
-            });
-          });
-
-          cardString = cardString.join(',');
-        }
-
-        self.updateOrCreateInstance(self.dbModels.CardCombo,
-          { where: { game_id: self.dbGame.id, player_id: id, question_id: round.question_id } },
-          { game_id: self.dbGame.id, player_id: id, question_id: round.question_id, answer_ids: cardString, winner: false },
-          null
-        );
-
-        // Finally update each of the cards times played count
-        cards.forEach(function (card) {
-          card.update({times_played: card.times_played + 1});
+          self.updateOrCreateInstance(
+            self.dbModels.Points,
+            {where: {player_id: dbPlayer.id, game_id: self.dbGame.id}},
+            {player_id: dbPlayer.id, game_id: self.dbGame.id, is_active: player.isActive, points: player.points},
+            {points: player.points}
+          )
         });
       });
-    };
+    }
+  };
+
+  self.updateOrCreateInstance = function(model, query, createFields, updateFields) {
+    model.findOne(query).then(function (instance) {
+      if (instance === null && createFields !== null) {
+        model.create(createFields);
+      } else if (instance !== null && updateFields !== null) {
+        instance.update(updateFields);
+      }
+    });
+  };
+
+  self.recordRound = function (cardValue) {
+    if (self.config.gameOptions.database === true) {
+      self.dbModels.Card.findOne({where: {text: cardValue}}).then(function (instance) {
+        instance.update({times_played: instance.times_played + 1}).then(function (q) { self.createRound(q.id); });
+      });
+    }
+  };
+
+  self.createCardCombo = function (player, cards) {
+    if (self.config.gameOption.database === true) {
+      self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
+        self.updateCardComboTable(dbPlayer.id, playerCards.getCards());
+      });
+    }
+  };
+
+  self.updateCardComboTable = function(id, playerCards) {
+    var round = self.dbCurrentRound;
+    var cardString = [];
+
+    self.dbModels.Card.findAll({
+      where: {
+        text: {
+          in: _.map(playerCards, function(card) { return card.value; })
+        }
+      }
+    }).then(function (cards) {
+      if (playerCards.length === 1) {
+        cardString = cards[0].id;
+      } else {
+        var cardString = [];
+        playerCards.forEach(function (playerCard) {
+          cards.forEach(function (card) {
+            if (playerCard.value === card.text) {
+              cardString.push(card.id);
+            }
+          });
+        });
+
+        cardString = cardString.join(',');
+      }
+
+      self.updateOrCreateInstance(self.dbModels.CardCombo,
+        { where: { game_id: self.dbGame.id, player_id: id, question_id: round.question_id } },
+        { game_id: self.dbGame.id, player_id: id, question_id: round.question_id, answer_ids: cardString, winner: false },
+        null
+      );
+
+      // Finally update each of the cards times played count
+      cards.forEach(function (card) {
+        card.update({times_played: card.times_played + 1});
+      });
+    });
+  };
 
     self.createRound = function(question_id) {
       self.dbModels.Round.create({
