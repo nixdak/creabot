@@ -11,20 +11,20 @@ var util = require('util'),
  * @type {{STOPPED: string, STARTED: string, PLAYABLE: string, PLAYED: string, ROUND_END: string, WAITING: string}}
  */
 var STATES = {
-    STOPPED:   'Stopped',
-    STARTED:   'Started',
-    PLAYABLE:  'Playable',
-    PLAYED:    'Played',
-    ROUND_END: 'RoundEnd',
-    WAITING:   'Waiting',
-    PAUSED:    'Paused'
+  STOPPED:   'Stopped',
+  STARTED:   'Started',
+  PLAYABLE:  'Playable',
+  PLAYED:    'Played',
+  ROUND_END: 'RoundEnd',
+  WAITING:   'Waiting',
+  PAUSED:    'Paused'
 };
 
 // TODO: Implement the ceremonial haiku round that ends the game
 var HAIKU = new Card({
-    "draw": 2,
-    "pick": 3,
-    "value": "(Draw 2, Pick 3) Make a haiku."
+  "draw": 2,
+  "pick": 3,
+  "value": "(Draw 2, Pick 3) Make a haiku."
 });
 
 /**
@@ -264,7 +264,6 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      * Stop game
      */
     self.stop = function (player, pointLimitReached) {
-      console.log("In game.stop");
       self.state = STATES.STOPPED;
 
       if (typeof player !== 'undefined' && player !== null) {

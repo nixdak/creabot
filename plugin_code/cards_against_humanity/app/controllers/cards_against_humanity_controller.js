@@ -16,7 +16,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.start = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.start");
         // check if game running on the channel
         var channel = message.args[0],
             nick = message.nick,
@@ -42,7 +41,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.stop = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.stop");
         var channel = message.args[0],
             nick = message.nick,
             hostname = message.host;
@@ -52,12 +50,10 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         } else {
             var player = self.game.getPlayer({nick: nick, hostname: hostname});
             if (typeof(player) !== 'undefined') {
-                console.log("player is not undefined");
                 self.game.stop(self.game.getPlayer({nick: nick, hostname: hostname}));
                 self.game = undefined;
             }
         }
-        console.log("Leaving cards_against_humanity.stop");
     };
 
     /**
@@ -67,7 +63,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
      self.pause = function(client, message, cmdArgs) {
-        console.log("In cards_against_humanity.pause");
          var channel = message.args[0],
             nick = message.nick,
             hostname = message.host;
@@ -89,7 +84,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
      self.resume = function(client, message, cmdArgs) {
-        console.log("In cards_against_humanity.resume");
          var channel = message.args[0],
             nick = message.nick,
             hostname = message.host;
@@ -111,7 +105,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.join = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.join");
         var channel = message.args[0],
             nick = message.nick,
             user = message.user,
@@ -132,7 +125,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.quit = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.quit");
         var channel = message.args[0],
             nick = message.nick,
             hostname = message.host;
@@ -151,7 +143,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.cards = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.cards");
         var channel = message.args[0],
             nick = message.nick,
             hostname = message.host;
@@ -171,7 +162,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.play = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.play");
         // check if everyone has played and end the round
         var channel = message.args[0],
             user = message.user,
@@ -194,7 +184,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.list = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.list");
         var channel = message.args[0];
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
@@ -211,7 +200,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.winner = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.winner");
         var channel = message.args[0],
             nick = message.nick,
             hostname = message.host;
@@ -233,7 +221,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.points = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.points");
         var channel = message.args[0],
             hostname = message.host;
 
@@ -251,7 +238,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.status = function(client, message, cmdArgs) {
-        console.log("In cards_against_humanity.status");
         var channel = message.args[0];
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
@@ -262,7 +248,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     };
 
     self.pick = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.pick");
         // check if everyone has played and end the round
         var channel = message.args[0],
             nick = message.nick,
@@ -286,7 +271,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     };
 
     self.discard = function (client, message, cmdArgs) {
-        console.log("In cards_against_humanity.discard");
         var channel = message.args[0],
             nick = message.nick,
             hostname = message.host;
