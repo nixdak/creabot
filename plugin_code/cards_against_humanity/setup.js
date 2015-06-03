@@ -4,7 +4,7 @@ module.exports = function(app) {
     var cardsAgainstHumanity = new CardsAgainstHumanity();
 
     // Join Channels
-    app.joinChannels(cardsAgainstHumanity.config.pluginOptions.channelsToExcludeToJoin);
+    app.joinChannels(cardsAgainstHumanity.config.pluginOptions.channelsToJoin);
 
     // Register commands
     app.cmd('cards', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.cards);
