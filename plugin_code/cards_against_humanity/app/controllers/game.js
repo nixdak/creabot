@@ -59,7 +59,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
      *
      */
 
-    self.createGameDatabaseRecord = function (player) {
+    self.createGameDatabaseRecord = function () {
         if (self.config.gameOptions.database === true) {
             // Adding game to database
             self.dbModels.Game.create({num_rounds: self.round}).then(function (game) {
@@ -213,7 +213,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
     // Game code starts here
 
     // Add game to database if database is enabled
-    self.createGameDatabaseRecord(player);
+    self.createGameDatabaseRecord();
 
     console.log('Loaded', config.cards.length, 'cards:');
     var questions = _.filter(config.cards, function(card) {
