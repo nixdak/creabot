@@ -13,6 +13,7 @@ module.exports = function(app) {
   app.cmd('j', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.join);
   app.cmd('join', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.join);
   app.cmd('letters', '' countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.letters);
+  app.cmd('list', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.list);
   app.cmd('numbers', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.numbers);
   app.cmd('players', '', countdown.config.pluginOptions.channels, contdown.config.pluginOptions.channelsToExclude, countdown.players);
   app.cmd('quit', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.quit);
