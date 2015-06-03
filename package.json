@@ -12,5 +12,10 @@
     "irc-colors": "~1.0.3",
     "plug": "latest",
     "tabletojson": "latest",
+    "jayschema": "~0.2.7",
+    "inflection": "latest",
+    "sequelize": "latest",
+    "sequelize-cli": "latest",
+    "mariasql": "latest"
   }
 }

@@ -1,0 +1,610 @@
+[
+  {
+    "type": "Question",
+    "value":"I used to be an adventurer like you, then I took a/an %s in the %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"You've got to check out %s Fluxx!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"For the love of GOD, and all that is HOLY, %s!!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"The new Operating System will be called %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Yes, Mr. Death... I'll play you a game! But not chess! My game is %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I cannot preach hate and warfare when I am a disciple of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Call of Duty Modern Warfare 37: War of %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"In brightest day, in blackest night, no %s shall escape my sight.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"My next video turorial covers %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"We found a map Charlie! A map to %s Mountain!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Honey badger don't give a %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Good. Bad. I'm the guy with the %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Hail to the %s, baby.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Shop smart. Shop %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Alright you Primitive Screwheads, listen up! You see this? This... is my %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Every sperm is %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I see you have the machine that goes %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I seek The Holy %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"How will we stop an army of the dead at our castle walls?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Faster than a speeding %s! More powerful than a %s!",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Fighting a never-ending battle for truth, justice, and the American %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Don't make me %s. You wouldn't like me when I'm %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"With great power comes great %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I'm loyal to nothing, General - except the %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Patriotism doesn't automatically equal %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Disguised as %s, mild-mannered %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Able to leap %s in a single bound!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"These aren't the %s you're looking for.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"We're gonna need a bigger %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Beavis and Butthead Do %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I, for one, welcome our new %s overlords.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"You know, there's a million fine looking women in the world, dude. But they don't all bring you %s at work. Most of 'em just %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Teenage Mutant Ninja %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Achy Breaky %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I'm not a %s, but I play one on TV",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"An African or European %s?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Well you can't expect to wield supreme executive power just 'cause some watery tart threw a %s at you!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"\"%s!\" \"It's only a model.\"",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Good night. Sleep well. I'll most likely %s you in the morning.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I am The Dread Pirate %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Do you want me to send you back to where you were, %s in %s?",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I see %s people",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s? We don't need no stinking %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I am not fat! I'm just %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Oh my god! They killed %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"The anxiously awaited new season of Firefly is rumoured to kick off with an action packed scene, featuring River Tam's amazing feats of %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Two by two, hands of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Wendy's %s & Juicy.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I swear by my pretty floral %s, I will %s you.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"At %s, where every day is %s day!",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I HATE it when %s(s) crawl(s) up my %s!",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s. Like a boss!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s's latest music video features a dozen %s on %s.",
+    "keep": "Yes",
+    "draw": 2,
+    "pick": 3,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s. It's not just for breakfast anymore.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"In Soviet %s, %s %ss you.",
+    "keep": "Yes",
+    "draw": 2,
+    "pick": 3,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s. Part of this nutritious breakfast.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s. It's what's for dinner!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Where's the beef?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s. Breakfast of champions!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I %s, therefore I %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Welcome to my secret lair. I call it The Fortress of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"My safeword is %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I like %s, but %s is a hard limit!",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Team %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"We went to a workshop on tantric %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Thou shalt not%s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I am the King of %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"The only good %s is a dead %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"A vote for %s is a vote for %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s is the new %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"Bitches LOVE %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"This year's %s guest of honour is %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"This will be the greatest %scon ever!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"%s at last! %s at last! Thank God almighty, I'm %s at last!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"I have a dream that one day this nation will rise up and live out the true meaning of its creed:",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  },
+  {
+    "type": "Question",
+    "value":"These are my minions of %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Khaos WolfKat expansion"
+  }
+]

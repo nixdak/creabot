@@ -1,0 +1,810 @@
+[
+  {
+    "type": "Question",
+    "value":"Best game of 2013? %s, of course.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"How do you get your dog to stop humping your leg?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s sounds like a great alternative rock band.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s. Everything else is uncivilized.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s? It's a DLC item.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Oh god, I can't believe we ate %s at PAX.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Only in Korea can you see %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"The Holy Trinity: %s, %s, and %s!",
+    "keep": "Yes",
+    "draw": 2,
+    "pick": 3,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"When I was a kid, all we had in Lunchables were three %s and %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"On its last dying breath, %s sent out a cry for help. A bunch of %s heard the cry.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s caused Northernlion to take stupid damage.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s Is the best item in The Binding of Isaac.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Everything's coming up %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Even %s is/are better at video games than Northernlion.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"But that %s has sailed.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Get in my %s zone.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Fuck the haters, this is %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Finding something like %s would turn this run around.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s: The Northernlion Story.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s is/are Northernlion's worst nightmare.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s is the worst item in The Binding of Isaac.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"As always, I will %s you next time!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"\"Hey everybody and welcome to Let's Look At %s!\"",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s? Well, I won't look a gift horse in the mouth on that one.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"More like the Duke of %s, right?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"No one man should have all that %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Let's Look At: %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion's latest novelty Twitter account is @%s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion's refusal to Let's Play %s was probably a good call.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Of all the things that Ryan and Josh have in common, they bond together through their mutual love of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion has been facing ridicule for calling %s a rogue-like.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion always forgets the name of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"I'm in the permanent %s state.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"If sloth %s are wrong I don't want to be right.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"I can do %s and die immediately afterward.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"I don't even see %s anymore; all I see are blondes, brunettes, redheads...",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"JSmithOTI: Total %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Legend has it, the Thug of Porn was arrested for %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Invaded the world of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"It's %s, ya dangus!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Whenever I %s, take a drink.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"We're rolling in %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s was full of leeches.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"What do you give to the CEO of Youtube as a gift?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Dang it, %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Today's trivia topic is %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"My apologies to the %s estate.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"The Youtube chat proved ineffective, so instead we had to communicate via %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Pimp your %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"The stream was going well until %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Travel by %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"This new game is an interesting %s-like-like.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"What interrupted the #NLSS?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Say that to my face one more time and I'll start %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Roguelike? How about %s-like.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"The stream broke when Ryuka stepped on the %s key.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Recently, Northernlion has felt woefully insecure due to %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Krazy Mike lost to %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"The hero of the stream was %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Oh my god, he's using %s magic!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Sometimes, a man's just gotta %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s has invaded!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"One thing Northernlion was right about was %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"What would you do if Ohm really did just die?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"JSmithOTI is referred to as a Scumlord, but his friends call him %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Praise the %s!",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"We're having technical difficulties due to %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"I beat Blue Baby with only %s and %s!",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion has alienated fans of %s by calling them %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion was fired from his teaching job and had to flee South Korea after an incident involving %s and %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion's doctor diagnosed him today with %s, an unfortunate condition that would lead to %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s was indicted on account of %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s: The %s Story.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"And now we're going to be fighting %s on %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Hello everybody, welcome to a new episode of %s plays %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"I'd sacrifice %s at the Altar.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Fox would still be here if not for %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"I wasn't even that drunk! I just had some %s, %s, and %s.",
+    "keep": "Yes",
+    "draw": 2,
+    "pick": 3,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"The only way NL is ever going to make it to Hell in Spelunky is by using %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Welcome back to The Binding of Isaac. Today's challenge run will be based on %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Well there's nothing wrong with %s by any stretch of the imagination.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"This time on %s vs. %s, we're playing %s.",
+    "keep": "Yes",
+    "draw": 2,
+    "pick": 3,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"After winning yet another race, Josh made %s tweet about %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Today on Crusader Kings 2, NL plays King %s the %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"That's the way %s did it, that's the way %s does it, and it''s worked out pretty well so far.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"After Mars, %s is the next furthest planet from the sun.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"What would Ohm do?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Ohmwrecker is known for his MLG online play. What people don't know is that he's also MLG at %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Follow MichaelALFox on Twitter and you can see pictures of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Green loves the new Paranautical Activity item %s, but keeps comparing it to the crossbow.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s is really essential to completing the game.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"The next movie reading will be of %s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"How did Northernlion unite Scotland?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"What gave Ohmwrecker his gaming powers?",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Hello anybody, I am %sPatrol.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"My channel is youtube.com/%s.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"Northernlion's cat Ryuka is known for %s while he records.",
+    "keep": "Yes",
+    "draw": 0,
+    "pick": 1,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"My name is %s and today we'll be checking out %s.",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"It's true that Green9090 is %s, but we must all admit that Ohm is better at %s",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"I have %s, can you %s me?",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  },
+  {
+    "type": "Question",
+    "value":"%s! Get off the %s!",
+    "keep": "Yes",
+    "draw": 1,
+    "pick": 2,
+    "source": "Northernlion"
+  }
+]
