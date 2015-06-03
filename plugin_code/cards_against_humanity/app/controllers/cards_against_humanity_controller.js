@@ -4,7 +4,7 @@ var _ = require('underscore'),
     config = require('../../config/config'),
     dbModels = require('../../models');
 
-var Games = function Games() {
+var CardsAgainstHumanity = function CardsAgainstHumanity() {
     var self = this;
     self.game;
 
@@ -288,4 +288,4 @@ var Games = function Games() {
     };
 };
 
-exports = module.exports = Games;
+exports = module.exports = CardsAgainstHumanity;
