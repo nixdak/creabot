@@ -19,7 +19,7 @@ module.exports = {
         },
         is_active: {
           type: Sequelize.BOOLEAN
-        }
+        },
         points: {
           type: Sequelize.INTEGER
         }
