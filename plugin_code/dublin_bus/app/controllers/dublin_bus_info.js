@@ -1,5 +1,5 @@
 var tabletojson = require('tabletojson')
-  config = require('../config/config.json');
+  config = require('../../config/config.json');
 
 var DublinBusInfo = function DublinBusInfo() {
   var self = this;
