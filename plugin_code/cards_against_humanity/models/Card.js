@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       question: {
         type: DataTypes.BOOLEAN
-      }
+      },
       times_played: {
         type: DataTypes.INTEGER
       }
