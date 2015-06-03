@@ -17,7 +17,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       is_active: {
         type: DataTypes.BOOLEAN
-      }
+      },
       points: {
         type: DataTypes.INTEGER
       }
