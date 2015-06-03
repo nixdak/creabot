@@ -124,7 +124,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
   self.createCardCombo = function (player, cards) {
     if (self.config.gameOptions.database === true) {
       self.dbModels.Player.findOne({where: {nick: player.nick}}).then(function (dbPlayer) {
-        self.updateCardComboTable(dbPlayer.id, cards.getCards());
+        self.updateCardComboTable(dbPlayer.id, cards);
       });
     }
   };
