@@ -9,8 +9,8 @@ var STATES = {
   NUMBERS: 'Numbers',
   CONUNDRUM: 'Conundrum',
   PLAYED: 'Played',
-  PLAYLETTERS: 'Play letters',
-  PLAYNUMBERS: 'Play numbers',
+  PLAY_LETTERS: 'Play letters',
+  PLAY_NUMBERS: 'Play numbers',
   ROUND_END: 'RoundEnd',
   WAITING: 'Waiting',
   SELECTING: 'Selecting'
@@ -156,6 +156,17 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
     }
   };
 
+  /*
+   * Do round end
+   * Check words are in dictionary
+   * Declare round winner
+   * Start 
+   */
+
+  self.roundEnd = function() {
+
+  };
+
   self.setSelector = function() {
     if (self.round === 1) {
       // Set the selector as the player who accepted the challenge
@@ -231,7 +242,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
         self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
         self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
 
-        self.state = STATES.PLAYLETTERS;
+        self.state = STATES.PLAY_LETTERS;
         clearInterval(self.roundTimer);
         self.roundStarted = new Date();
         self.roundTimer = setInterval(self.roundTimerCheck, 5 * 1000);
@@ -251,8 +262,8 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
     console.log('Round elapsed: ' + roundElapsed, now.getTime(), self.roundStarted.getTime());
 
     if (roundElapsed >= timeLimit) {
-      console.log('The round timed out');
       self.say('Time is up!');
+      self.roundEnd();
       // Do something
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
       self.say('10 seconds left!');
