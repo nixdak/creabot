@@ -196,6 +196,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
       self.say(self.challenger.nick + ': Your word was invalid');
     }
 
+    // If challenger played a longer valid word
     if (self.table.answers.challenger.word.length > self.table.answers.challegned.word.length && self.table.answers.challenger.valid) {
       if (self.table.answers.challenger.word.legnth === 9) {
         self.say(self.challenger.nick + ' has won this round and scored 18 points.');
@@ -205,7 +206,9 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
           inflection.inflect('points', self.table.answers.challenger.word.length));
         self.challenger.points += self.table.answers.challenger.word.length;
       }
-    } else if ((self.table.answers.challenged.word.length > self.table.answers.challegner.word.length && self.table.answers.challenged.valid)) {
+    }
+    // If the challenged played a longer valid word
+    else if ((self.table.answers.challenged.word.length > self.table.answers.challegner.word.length && self.table.answers.challenged.valid)) {
       if (self.table.answers.challenged.word.legnth === 9) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
@@ -214,13 +217,17 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
           inflection.inflect('points', self.table.answers.challenged.word.length));
         self.challenged.points += self.table.answers.challenged.word.length;
       }
-    } else if (self.table.answers.challenger.word.length === self.table.answers.challegned.word.length &&
+    } 
+    // Both players played a valid word of the same length
+    else if (self.table.answers.challenger.word.length === self.table.answers.challegned.word.length &&
         (self.table.answers.challenger.valid && self.table.answers.challenged.valid)) {
       self.say('This round was a tie, both players have scored ' + self.table.answers.challegned.word.length +
         inflection.inflect('points', self.table.answers.challegned.word.length));
       self.challenged.points += self.table.answers.challegned.word.length;
       self.challenger.points += self.table.answers.challegner.word.length;
-    } else {
+    }
+    // Neither player played a valid word
+    else {
       self.say('Neither player played a valid word and have scored 0 points');
     }
 
