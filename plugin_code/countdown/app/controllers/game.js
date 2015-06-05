@@ -1,5 +1,6 @@
 var c = require('irc-color'),
     _ = require('underscore'),
+    fs = require('fs'),
     inflection = require('inflection');
 
 var STATES = {
@@ -11,7 +12,8 @@ var STATES = {
   PLAYED: 'Played',
   PLAY_LETTERS: 'Play letters',
   PLAY_NUMBERS: 'Play numbers',
-  ROUND_END: 'RoundEnd',
+  LETTERS_ROUND_END: 'Letters round end',
+  NUMBERS_ROUND_END: 'Numbers round end'
   WAITING: 'Waiting',
   SELECTING: 'Selecting'
 };
@@ -28,6 +30,11 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
   self.idleWaitCount = 0;
   self.challenger = challenger;
   self.challenged;
+
+  console.log('Loading dictionary');
+
+  self.countdown_words = _.filter(fs.readFileSync('../../config/dictionary.txt').toString().split(/[\r\n]/););
+  self.conundrum_words = _.filter(self.countdown_words, function (word) { return word.length === 9; });
 
   console.log('loading alphabet');
 
@@ -109,7 +116,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
       self.say('The game has ended in a tie! Perhaps there\'ll be a rematch?');
     }
 
-    self.stop(null, true);a
+    self.stop(null, true);
   };
 
   /**
@@ -160,11 +167,64 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
    * Do round end
    * Check words are in dictionary
    * Declare round winner
-   * Start 
+   * Start next round
    */
-
   self.roundEnd = function() {
+    if (self.state === STATES.PLAY_LETTERS) {
+      self.state = STATES.LETTERS_ROUND_END;
+      self.letterRoundEnd();
+      self.nextRound();
+    } else if (self.state === STATES.PLAY_NUMBERS) {
+      self.state = STATES.NUMBERS_ROUND_END;
+      self.numberRoundEnd();
+      self.nextRound();
+    } else {
 
+    }
+  };
+
+  self.letterRoundEnd = function() {
+    // Show selections
+    self.say(self.challenger.nick + ' has played: ' + self.table.answers.challenger.word);
+    self.say(self.challenged.nick + ' has played: ' + self.table.answers.challenged.word);
+
+    if (!self.table.answers.challenger.valid) {
+      self.say(self.challenger.nick + ': Your word was invalid.');
+    }
+
+    if (!self.table.answers.challenged.valid) {
+      self.say(self.challenger.nick + ': Your word was invalid');
+    }
+
+    if (self.table.answers.challenger.word.length > self.table.answers.challegned.word.length && self.table.answers.challenger.valid) {
+      if (self.table.answers.challenger.word.legnth === 9) {
+        self.say(self.challenger.nick + ' has won this round and scored 18 points.');
+        self.challenger.points += 18;
+      } else {
+        self.say(self.challenger.nick + ' has won this round and scored ' + self.table.answers.challenger.word.length + 
+          inflection.inflect('points', self.table.answers.challenger.word.length));
+        self.challenger.points += self.table.answers.challenger.word.length;
+      }
+    } else if ((self.table.answers.challenged.word.length > self.table.answers.challegner.word.length && self.table.answers.challenged.valid)) {
+      if (self.table.answers.challenged.word.legnth === 9) {
+        self.say(self.challenged.nick + ' has won this round and scored 18 points.');
+        self.challenged.points += 18;
+      } else {
+        self.say(self.challenged.nick + ' has won this round and scored ' + self.table.answers.challenged.word.length + 
+          inflection.inflect('points', self.table.answers.challenged.word.length));
+        self.challenged.points += self.table.answers.challenged.word.length;
+      }
+    } else if (self.table.answers.challenger.word.length === self.table.answers.challegned.word.length &&
+        (self.table.answers.challenger.valid && self.table.answers.challenged.valid)) {
+      self.say('This round was a tie, both players have scored ' + self.table.answers.challegned.word.length +
+        inflection.inflect('points', self.table.answers.challegned.word.length));
+      self.challenged.points += self.table.answers.challegned.word.length;
+      self.challenger.points += self.table.answers.challegner.word.length;
+    } else {
+      self.say('Neither player played a valid word and have scored 0 points');
+    }
+
+    self.showPoints();
   };
 
   self.setSelector = function() {
@@ -241,6 +301,8 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
         self.say('Letters for this round: ' + self.table.letters.join(' '));
         self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
         self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
+        selp.pm(self.challenger.nick, 'Play a word with !cd [word]');
+        selp.pm(self.challenged.nick, 'Play a word with !cd [word]');
 
         self.state = STATES.PLAY_LETTERS;
         clearInterval(self.roundTimer);

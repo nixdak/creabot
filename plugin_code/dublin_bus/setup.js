@@ -9,4 +9,6 @@ module.exports = function(app) {
     // Add commands
     app.cmd('dbus', '', dublinBusInfo.config.channels, dublinBusInfo.config.channelsToExclude, dublinBusInfo.showStopInfo);
     app.cmd('stop', '', dublinBusInfo.config.channels, dublinBusInfo.config.channelsToExclude, dublinBusInfo.showStopInfo);
+
+    
 }
