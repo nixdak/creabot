@@ -475,10 +475,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.client.say(nick, string);
   };
 
-  // wait for players to join
-  self.startTime = new Date();
-  self.startTimeout = setTimeout(self.nextRound, config.gameOptions.secondsBeforeStart * 1000);
-
   // client listeners
   client.addListener('part', self.playerPartHandler);
   client.addListener('quit', self.playerQuitHandler);
