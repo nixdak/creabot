@@ -13,7 +13,7 @@ var STATES = {
   PLAY_LETTERS: 'Play letters',
   PLAY_NUMBERS: 'Play numbers',
   LETTERS_ROUND_END: 'Letters round end',
-  NUMBERS_ROUND_END: 'Numbers round end'
+  NUMBERS_ROUND_END: 'Numbers round end',
   WAITING: 'Waiting',
   SELECTING: 'Selecting'
 };
