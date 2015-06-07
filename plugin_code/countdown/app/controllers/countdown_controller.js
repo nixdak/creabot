@@ -17,7 +17,7 @@ var Countdown = function Countdown() {
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
       if (!_.contains(challengers, cmdArgs[0])) {
-        client.say('You haven\'t been challenged by ' + cmdArgs[0] '. Challenging...');
+        client.say('You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
         var player = new Player(message.nick, message.user, message.host);
