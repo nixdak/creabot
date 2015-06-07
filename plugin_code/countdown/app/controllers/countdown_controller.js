@@ -31,7 +31,7 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
-    if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs[0] }) {
+    if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs[0] })) {
       self.challenges.push({ challenger: message.nick, challenged: cmdArgs[0] });
       client.say(channel, message.nick: + ' has challenged ' + cmdArgs[0]);
       client.say(channel, cmdArgs[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
