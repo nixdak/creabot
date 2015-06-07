@@ -11,7 +11,7 @@ var Countdown = function Countdown() {
   self.challenges = [];
 
   self.accept = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.states === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       var channel = message.args[0];
       var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
@@ -40,7 +40,7 @@ var Countdown = function Countdown() {
   };
 
   self.join = function (client, message, cmdArgs) {
-    if (!_.isUndefined(self.game) && self.game.states === Game.STATES.WAITING) {
+    if (!_.isUndefined(self.game) && self.game.state === Game.STATES.WAITING) {
       var player = new Player(message.nick, message.user, message.host);
       self.game.addPlayer(player);
       _.without(self.challenges, { challenger: self.game.challenger_nick, challenged: self.game.challenged_nick });
