@@ -32,7 +32,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   console.log('Loading dictionary');
 
-  self.dictionary = require('../../config/dictionary.json')[words];
+  self.dictionary = require('../../config/dictionary.json')['words'];
   self.countdown_words = _.filter(self.dictionary, function (word) { return word.length <= 9; });
   self.conundrum_words = _.filter(self.countdown_words, function (word) { return word.length === 9; });
 
