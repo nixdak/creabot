@@ -54,18 +54,17 @@ var Countdown = function Countdown() {
     var challenges_sent = _.filter(self.challenges, function (challenge) { return challenge.challenger === message.nick; });
     var challenges_received = (self.challenges, function (challenge) { return challenge.challenged === message.nick; });
 
-    challenges_sent = _.map(challenges_sent, function (challenge) { return challenge.challenged; });
-    challenges_received = _.map(challenges_received, function (challenge) { return challenge.challenger === message.nick; });
-
     if (challenges_sent.length < 1 ) {
       client.say(message.args[0], message.nick + ': You have issued no challenges.');
     } else {
+      challenges_sent = _.map(challenges_sent, function (challenge) { return challenge.challenged; });
       client.say(message.args[0], message.nick + ': You have issued challenges to the following players: ' + challenges_sent.join(', ') + '.');
     }
 
     if (challenges_received.length < 1) {
       client.say (message.args[0], message.nick + ': You have received no challenges.');
     } else {
+      challenges_received = _.map(challenges_received, function (challenge) { return challenge.challenger === message.nick; });
       client.say(message.args[0], message.nick + ': You have been challenged by the following players: ' + challenges_reveived.join(', ') + '.');
     }
   };
