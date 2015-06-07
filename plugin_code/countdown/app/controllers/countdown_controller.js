@@ -20,9 +20,8 @@ var Countdown = function Countdown() {
         client.say('You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
-        var player = new Player(message.nick, message.user, message.host);
         self.game = new Game(channel, client, self.config, cmdArgs[0], message.nick);
-        self.game.addPlayer(player);
+        self.game.join(client, message, cmdArgs);
       }
     } else {
       client.say('Sorry, challenges cannot currently be accepted');
