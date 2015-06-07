@@ -54,8 +54,8 @@ var Countdown = function Countdown() {
     var challenges_sent = _.filter(self.challenges, function (challenge) { return challenge.challenger === message.nick; });
     var challenges_received = (self.challenges, function (challenge) { return challenge.challenged === message.nick; });
 
-    challenges_sent = _.map(challenges, function (challenge) { return challenge.challenged; });
-    challenges_received = _.map(challenges, function (challenge) { return challenge.challenger === message.nick; });
+    challenges_sent = _.map(challenges_sent, function (challenge) { return challenge.challenged; });
+    challenges_received = _.map(challenges_received, function (challenge) { return challenge.challenger === message.nick; });
 
     if (challenges_sent.length < 1 ) {
       client.say(message.args[0], message.nick + ': You have issued no challenges.');
