@@ -495,6 +495,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   client.addListener('nick', self.playerNickChangeHandler);
 };
 
-Game.states = STATES;
+Game.STATES = STATES;
 
 exports = module.exports = Game;
