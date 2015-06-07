@@ -1,4 +1,4 @@
-var c = require('irc-color'),
+var c = require('irc-colors'),
     _ = require('underscore'),
     fs = require('fs'),
     inflection = require('inflection');
