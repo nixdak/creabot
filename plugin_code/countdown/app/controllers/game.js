@@ -18,7 +18,7 @@ var STATES = {
   SELECTING: 'Selecting'
 };
 
-var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger) {
+var Game = function Game(channel, client, config, challenger, challenged) {
   var self = this;
 
   self.round = 0; // Round number
@@ -28,12 +28,12 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
   self.state = STATES.STARTED;
   self.dbModels = dbModels;
   self.idleWaitCount = 0;
-  self.challenger = challenger;
-  self.challenged;
+  self.challenger_nick = challenger;
+  self.challenged_nick = challenged;
 
   console.log('Loading dictionary');
 
-  self.countdown_words = _.filter(fs.readFileSync('../../config/dictionary.txt').toString().split(/[\r\n]/););
+  self.countdown_words = _.filter(fs.readFileSync('../../config/dictionary.txt').toString().split(/[\r\n]/));
   self.conundrum_words = _.filter(self.countdown_words, function (word) { return word.length === 9; });
 
   console.log('loading alphabet');
@@ -78,8 +78,8 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
   self.stop = function (player, gameEnded) {
     self.state = STATES.STOPPED;
 
-    if (typeof player !== 'undefined' && player !== null) {
-      self.say(player.nick + ' stopped the game.');
+    if (self.challenger_nick === player || self.challenged_nick === player) {
+      self.say(player + ' stopped the game.');
     }
 
     if (self.round > 1) {
@@ -269,6 +269,82 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
   };
 
   /*
+   * Process letter selection by player
+   */
+  self.letters = function(player, letters) {
+    if (self.selector.nick === player) {
+      if (letters.length !== 9) {
+        self.say("You must provide a selection of 9 consonants or vowels.");
+        return false;
+      }
+
+      letters.forEach(function (letter) {
+        if ('c' === letter.toLowerCase()) {
+          self.table.letters.push(self.consonants.shift().toUpperCase());
+        } else if ('v' === letter.toLowerCase()) {
+          self.table.letters.push(self.vowels.shift().toUpperCase());
+        }
+
+        clearInterval(self.roundTimer);
+        self.say('Letters for this round: ' + self.table.letters.join(' '));
+        self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
+        self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
+        selp.pm(self.challenger.nick, 'Play a word with !cd [word]');
+        selp.pm(self.challenged.nick, 'Play a word with !cd [word]');
+
+        self.state = STATES.PLAY_LETTERS;
+        clearInterval(self.roundTimer);
+        self.roundStarted = new Date();
+        self.roundTimer = setInterval(self.roundTimerCheck, 5 * 1000);
+
+      });
+    } else {
+      self.say(player.nick + ': It isn\'t your turn to choose the letters');
+    }
+  };
+
+  self.validateWord = function (word) {
+    if (word.length <= 2 || word.length > 9) {
+      return false;
+    }
+
+    var letters = _.clone(self.table.letters);
+
+    for (var i = 0; i < word.length; i++) {
+      if _.contains(letters, word[0].toUpperCase()) {
+        letters = _.without(letters, word);
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  self.playLetters = function (player, word) {
+    // If letter is too long/short and uses letters not available to the player
+    if (!self.validateWord(word)) {
+      self.pm(player.nick, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
+    } else {
+      if (self.challenger.nick === player) {
+        if (!_.isUndefined(self.answers.challenger) && self.answers.challenger.word.length > word.length) {
+          self.pm(player.nick, 'The word you are playing is shorter than your previously played word');
+        }
+
+        self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+      } else if (self.challenger.nick === player) {
+        if (!_.isUndefined(self.answers.challenged) && self.answers.challenged.word.length > word.length) {
+          self.pm(player.nick, 'The word you are playing is shorter than your previously played word');
+        }
+
+        self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
+      }
+    }
+
+    self.pm(player, 'You played: ' + word + '. Good luck.');
+  };
+
+  /*
    * Do setup for a numbers round
    */
   self.numbersRound = function () {
@@ -292,36 +368,6 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
   self.conundrumRound = function () {
     // Place holder until I figure out how I'm doing the conundrum
     self.nextRound();
-  };
-
-  /*
-   * Process letter selection by player
-   */
-  self.letters = function(player, letters) {
-    if (self.selector.nick = player.nick) {
-      letters.forEach(function (letter) {
-        if ('c' === letter) {
-          self.table.letters.push(self.consonants.shift().toUpperCase());
-        } else if ('v' === letter) {
-          self.table.letters.push(self.vowels.shift().toUpperCase());
-        }
-
-        clearInterval(self.roundTimer);
-        self.say('Letters for this round: ' + self.table.letters.join(' '));
-        self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-        self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-        selp.pm(self.challenger.nick, 'Play a word with !cd [word]');
-        selp.pm(self.challenged.nick, 'Play a word with !cd [word]');
-
-        self.state = STATES.PLAY_LETTERS;
-        clearInterval(self.roundTimer);
-        self.roundStarted = new Date();
-        self.roundTimer = setInterval(self.roundTimerCheck, 5 * 1000);
-
-      });
-    } else {
-      self.say(player.nick + ': It isn\'t your turn to choose the letters');
-    }
   };
 
   self.roundTimerCheck = function() {
@@ -351,17 +397,21 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
    * @returns The new player or false if invalid player
    */
   self.addPlayer = function (player) {
-    if (player.nick === self.challengerplayer.nick === self.challenged) {
-      self.players.push(player);
-      self.say(player.nick + ' has joined the game.');
-
-      self.nextRound();
-
-      return true;
+    if (player.nick === self.challenger_nick) { 
+      self.challenger = player;
+    } else if (player.nick === self.challenged_nick) {
+      self.challenged = player;
     } else {
-      self.say(player.nick + ': Only ' + self.challenger + ' can join this game.');
+      self.say('Sorry, but you cannot join this game');
       return false;
     }
+
+    self.say(player.nick + ' has joined the game.');
+    self.setVoice(self.channel, player.nick);
+
+    self.nextRound();
+
+    return player;
   };
 
   /**
@@ -370,7 +420,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
   self.findAndRemoveIfPlaying = function (nick) {
     var player = self.getPlayer({nick: nick});
 
-    if (typeof player !== 'undefined') {
+    if (!_.isUndefined(player)) {
       self.removePlayer(player);
     }
   };
@@ -421,7 +471,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
   self.playerNickChangeHandler = function (oldnick, newnick, channels, message) {
     console.log('Player changed nick from ' + oldnick + ' to ' + newnick);
     var player = self.getPlayer({nick: oldnick});
-    if (typeof player !== 'undefined') {
+    if (!_.isUndefined(player)) {
       player.nick = newnick;
     }
   };
