@@ -311,7 +311,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     var letters = _.clone(self.table.letters);
 
     for (var i = 0; i < word.length; i++) {
-      if _.contains(letters, word[0].toUpperCase()) {
+      if (_.contains(letters, word[0].toUpperCase())) {
         letters = _.without(letters, word);
       } else {
         return false;
