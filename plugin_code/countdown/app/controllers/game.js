@@ -493,7 +493,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   client.addListener('quit', self.playerQuitHandler);
   client.addListener('kick'+channel, self.playerKickHandler);
   client.addListener('nick', self.playerNickChangeHandler);
-  client.addListener('names'+channel, self.notifyUsersHandler);
 };
 
 Game.states = STATES;
