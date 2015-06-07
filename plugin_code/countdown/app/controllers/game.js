@@ -26,7 +26,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.client = client;
   self.config = config;
   self.state = STATES.STARTED;
-  self.dbModels = dbModels;
   self.idleWaitCount = 0;
   self.challenger_nick = challenger;
   self.challenged_nick = challenged;
