@@ -99,7 +99,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.client.removeListener('quit', self.playerQuitHandler);
     self.client.removeListener('kick' + self.channel, self.playerKickHandler);
     self.client.removeListener('nick', self.playerNickChangeHandler);
-    self.client.removeListener('names'+ self.channel, self.notifyUsersHandler); 
 
     self.client.unsetModerated(self.channel, [self.challenger.nick, self.challenged.nick]);
   };
@@ -132,22 +131,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     // check that there's enough players in the game and end if we have waited the 
-    if (_.where(self.players, { isActive: true }).length < 2) {
-      if (self.config.gameOptions.maxIdleWaitCount <= self.idleWaitCount) {
-        self.say('Not enough players to start a round. Waiting for ' + _.size(_.where(self.players, { isActive: false})) +
-          ' more to join. Stopping in ' + config.gameOptions.roundMinutes + ' ' +
-          inflection.inflect('minutes', config.gameOptions.roundMinutes) + ' if not enough players.'
-        );
+    if (_.isUndefined(self.challenger)) {
+      self.say('Waiting for ' + self.challenger.nick + '. Stopping in one minute if they don\'t join.');
 
-        self.state = STATES.WAITING;
-        self.idleWaitCount++;
-        // stop game if not enough pleyers in however many minutes in the config
-        self.stopTimeout = setTimeout(self.stop, 60 * 1000 * config.gameOptions.roundMinutes);
-        return false;
-      } else {
-        self.say('Reached the max number of times to wait for players. Stopping the game');
-        self.stop();
-      }
+      self.state = STATES.WAITING;
+      self.idleWaitCount++;
+      // stop game if not enough pleyers in however many minutes in the config
+      self.stopTimeout = setTimeout(self.stop, 60 * 1000 * config.gameOptions.roundMinutes);
+      return false;
     }
 
     self.round++;
