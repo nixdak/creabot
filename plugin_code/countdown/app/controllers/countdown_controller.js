@@ -88,7 +88,6 @@ var Countdown = function Countdown() {
       client.say(message.args[0], 'The select command is not available at the moment');
     }
   };
-  };
 
   self.select = function (client, message, cmdArgs) {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
