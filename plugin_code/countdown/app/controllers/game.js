@@ -95,11 +95,13 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels, challenger)
     clearTimeout(self.roundTimeout);
 
     // Remove listeners
-    client.removeListener('part', self.playerPartHandler);
-    client.removeListener('quit', self.playerQuitHandler);
-    client.removeListener('kick' + self.channel, self.playerKickHandler);
-    client.removeListener('nick', self.playerNickChangeHandler);
-    client.removeListener('names'+ self.channel, self.notifyUsersHandler); 
+    self.client.removeListener('part', self.playerPartHandler);
+    self.client.removeListener('quit', self.playerQuitHandler);
+    self.client.removeListener('kick' + self.channel, self.playerKickHandler);
+    self.client.removeListener('nick', self.playerNickChangeHandler);
+    self.client.removeListener('names'+ self.channel, self.notifyUsersHandler); 
+
+    self.client.unsetModerated(self.channel, [self.challenger.nick, self.challenged.nick]);
   };
 
   /*
