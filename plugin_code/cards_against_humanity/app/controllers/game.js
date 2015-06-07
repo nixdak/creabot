@@ -416,6 +416,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
       _.each(self.players, function (player) {
         if (player.isCzar !== true && player.isActive === true) {
           self.showCards(player);
+          self.pm(player, "Play cards with !cah");
         }
       });
 
@@ -741,7 +742,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                 self.say('The czar has fled the scene. So I will pick the winner on this round.');
                 self.selectWinner(Math.round(Math.random() * (self.table.answer.length - 1)));
             } else {
-                self.say(self.czar.nick + ': Select the winner (!winner <entry number>)');
+                self.say(self.czar.nick + ': Select the winner (!cah <entry number>)');
                 // start turn timer, check every 10 secs
                 clearInterval(self.winnerTimer);
                 self.roundStarted = new Date();
