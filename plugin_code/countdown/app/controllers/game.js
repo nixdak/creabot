@@ -398,7 +398,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     self.say(player.nick + ' has joined the game.');
-    self.setVoice(self.channel, player.nick);
+    self.client.setVoice(self.channel, player.nick);
 
     self.nextRound();
 
