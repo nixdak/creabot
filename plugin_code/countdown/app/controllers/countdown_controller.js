@@ -36,7 +36,7 @@ var Countdown = function Countdown() {
       client.say(channel, message.nick + ': has challenged ' + cmdArgs[0]);
       client.say(channel, cmdArgs[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
-      client.say(channel, message.nick: + ': You have already challenged ' + cmdArgs[0] + '.');
+      client.say(channel, message.nick + ': You have already challenged ' + cmdArgs[0] + '.');
     }
   };
 
