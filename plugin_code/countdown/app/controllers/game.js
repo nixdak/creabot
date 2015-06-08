@@ -235,7 +235,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say('Neither player played a valid word and have scored 0 points');
     }
 
-    _.each(self.table.letters, function (letter) {
+    for (var letter = self.table.letters.pop(); !_.isUndefined(letter); self.table.letters.pop()) {
       if (_.contains(self.vowel_array, letter)) {
         self.vowels.push(letter);
       } else {
@@ -347,8 +347,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       } else {
         if (self.challenger_nick === player) {
           self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+          self.challenger.hasPlayed === true;
         } else if (self.challenged_nick === player) {
           self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
+          self.challenger.hasPlayed === true;
         }
       }
 
@@ -435,8 +437,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say('The game hasn\'t begun yet');
     } else {
       self.say('Round: ' + self.round + '.');
-      self.say(self.challenged.nick + ' has ' + self.challenged.points + ' while ' +
-        self.challenger.nick + ' has ' + self.challenger.points + '.'
+      self.say(self.challenged.nick + ' has ' + self.challenged.points + ' points while ' +
+        self.challenger.nick + ' has ' + self.challenger.points + ' points.'
       );
     }
   };

@@ -83,7 +83,7 @@ var Countdown = function Countdown() {
       var args;
 
       if (_.isUndefined(cmdArgs[0])) {
-        client.say('Please supply arguments to the !cd command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
 
@@ -95,7 +95,7 @@ var Countdown = function Countdown() {
 
       self.game.playLetters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_NUMBERS) {
-      client.say('Numbers rounds not implemented yet!');
+      client.say(message.args[0], 'Numbers rounds not implemented yet!');
     } else {
       client.say(message.args[0], 'The select command is not available at the moment');
     }
@@ -106,7 +106,7 @@ var Countdown = function Countdown() {
       var args;
 
       if (_.isUndefined(cmdArgs[0])) {
-        client.say('Please supply arguments to the !select command');
+        client.say(message.args[0], 'Please supply arguments to the !select command');
         return false;
       }
 
@@ -118,7 +118,7 @@ var Countdown = function Countdown() {
 
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
-      client.say('Numbers rounds not implemented yet!');
+      client.say(message.args[0], 'Numbers rounds not implemented yet!');
     } else {
       client.say(message.args[0], 'The select command is not available at the moment');
     }
