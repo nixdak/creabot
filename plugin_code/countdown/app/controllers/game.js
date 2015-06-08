@@ -379,7 +379,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
           self.challenger.hasPlayed = true;
         } else if (self.challenged_nick === player) {
           self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
-          self.challenger.hasPlayed = true;
+          self.challenged.hasPlayed = true;
         }
       }
 
