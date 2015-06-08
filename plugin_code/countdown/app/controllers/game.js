@@ -210,7 +210,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         }
       }
     } else if (self.state === CONUNDRUM) {
-      self.stop();
+      self.say('No one got the conundrum the answer was ' + self.table.conundrum);
+      self.showWinner();
     }
   };
 
@@ -225,7 +226,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say(self.challenger.nick + ': Your word was invalid.');
     }
 
-    if (self.answers.challenged.valid === false) { 
+    if (self.answers.challenged.valid === false) {
       console.log('Challenged word invalid');
       self.say(self.challenged.nick + ': Your word was invalid');
     }
@@ -442,14 +443,27 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.playConundrum = function(player, word) {
     if (self.challenged_nick === player || self.challenger_nick === player) {
       if (self.challenged_nick === player) {
-        self.challenged.hasBuzzed = true;
-
-        if (self.table.conundrum === word) {
-          self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
-          self.challenged.points += 10;
-        }
-      } else {
-
+        if(!self.challenged.hasBuzzed){
+            if (self.table.conundrum === word) {
+                self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
+                self.challenged.points += 10;
+                self.showWinner();
+            }else{
+                self.say(player + ' has incorrectly guessed the countdown conundrum');
+                self.challenged.hasBuzzed = true;
+            }
+        } else self.say(player + ' has already Buzzed');
+      }else{
+        if(!self.challenger.hasBuzzed){
+            if (self.table.conundrum === word) {
+                self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
+                self.challenger.points += 10;
+                self.showWinner();
+            }else{
+                self.say(self.challenger.nick + ' has incorrectly guessed the countdown conundrum');
+                self.challenger.hasBuzzed = true;
+            }
+        } else self.say(self.challenger.nick + ' has already Buzzed');
       }
     }
   }
