@@ -246,7 +246,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
       } else {
-        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' '
+        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' ' + 
           inflection.inflect('points', self.answers.challenged.word.length));
         self.challenged.points += self.answers.challenged.word.length;
       }
