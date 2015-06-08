@@ -140,7 +140,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     // check that there's enough players in the game and end if we have waited the 
     if (_.isUndefined(self.challenger)) {
       self.say('Waiting for ' + self.challenger_nick + '. Stopping in ' + 
-        self.config.roundOptions.roundMinutes + inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' if they don\'t join.');
+        self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
+        ' if they don\'t join.'
+      );
 
       self.state = STATES.WAITING;
       self.idleWaitCount++;
