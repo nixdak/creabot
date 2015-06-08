@@ -51,7 +51,7 @@ var Countdown = function Countdown() {
 
 
   self.list = function (client, message, cmdArgs) {
-    if (_.size(self.challenges) === 0) {
+    if (self.challenges.length) {
       client.say('No challenges have been issued.');
     } else {
       var challenges_sent = _.filter(self.challenges, function (challenge) { return challenge.challenger === message.nick; });
