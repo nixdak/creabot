@@ -153,6 +153,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     self.round++;
     console.log('Starting round ', self.round);
+    self.challenger.hasPlayed = false;
+    self.challenged.hasPlayed = false;
 
     if (self.config.roundOptions.letters.indexOf(self.round) !== -1) {
       console.log('Letters round');
@@ -175,12 +177,34 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.roundEnd = function() {
     if (self.state === STATES.PLAY_LETTERS) {
       self.state = STATES.LETTERS_ROUND_END;
-      self.letterRoundEnd();
-      self.nextRound();
+
+      if (self.challenger.hasPlayed && self.challenged.hasPlayed) {
+        self.letterRoundEnd();
+        self.nextRound();
+      } else {
+        if (!self.challenger.hasPlayed) {
+          self.say(self.challenger_nick + ' has idled.' + self.challenged_nick + ' wins by default. Stopping the game.');
+          self.stop();
+        } else {
+          self.say(self.challenged_nick + ' has idled.' + self.challenger_nick + ' wins by default. Stopping the game.');
+          self.stop();
+        }
+      }
     } else if (self.state === STATES.PLAY_NUMBERS) {
       self.state = STATES.NUMBERS_ROUND_END;
-      self.numberRoundEnd();
-      self.nextRound();
+
+      if (self.challenger.hasPlayed && self.challenged.hasPlayed) {
+        self.numberRoundEnd();
+        self.nextRound();
+      } else {
+        if (!self.challenger.hasPlayed) {
+          self.say(self.challenger_nick + ' has idled.' + self.challenged_nick + ' wins by default. Stopping the game.');
+          self.stop();
+        } else {
+          self.say(self.challenged_nick + ' has idled.' + self.challenger_nick + ' wins by default. Stopping the game.');
+          self.stop();
+        }
+      }
     } else {
 
     }
