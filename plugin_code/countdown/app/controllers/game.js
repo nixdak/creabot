@@ -377,8 +377,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       for (var i = 0; i < word.length; i++) {
         if (_.contains(letters, word[i].toUpperCase())) {
-          letters.splice(_.indexOf(word[i]), 1);
           console.log(letters);
+          letters.splice(_.indexOf(letters, word[i]), 1);
         } else {
           valid = false;
           break;
