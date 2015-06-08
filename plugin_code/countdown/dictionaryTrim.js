@@ -1,28 +1,16 @@
 var dictionary = require('./config/dictionary.json')['words'];
 var fs = require('fs');
 
-for(var i in dictionary){
+for(var i = 0; i < dictionary.length; i++){
     if(dictionary[i].length <= 2){
         console.log('small: ', i, ' ', dictionary[i]);
         dictionary.splice(i,1);
-        i=i-2;
+        i=i-4;
     }
     if(dictionary[i].length > 9){
         console.log('big: ', i, ' ', dictionary[i]);
         dictionary.splice(i,1);
-        i=i-2;
-    }
-}
-for(var i in dictionary){
-    if(dictionary[i].length <= 2){
-        console.log('small: ', i, ' ', dictionary[i]);
-        dictionary.splice(i,1);
-        i=i-2;
-    }
-    if(dictionary[i].length > 9){
-        console.log('big: ', i, ' ', dictionary[i]);
-        dictionary.splice(i,1);
-        i=i-2;
+        i=i-4;
     }
 }
 
