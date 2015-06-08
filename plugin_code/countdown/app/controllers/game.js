@@ -79,6 +79,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Stop the game
    */
   self.stop = function (player, gameEnded) {
+    console.log('Stopping the game');
     self.state = STATES.STOPPED;
 
     if (self.challenger_nick === player || self.challenged_nick === player) {
@@ -90,7 +91,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     if (gameEnded !== true) {
-      self.say('Game has been stopped.')
+      self.say('Game has been stopped.');
     }
 
     // Clear timeouts
@@ -175,6 +176,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Start next round
    */
   self.roundEnd = function() {
+    clearTimeout(self.roundTimeout);
     if (self.state === STATES.PLAY_LETTERS) {
       self.state = STATES.LETTERS_ROUND_END;
 
@@ -183,10 +185,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.nextRound();
       } else {
         if (!self.challenger.hasPlayed) {
-          self.say(self.challenger_nick + ' has idled.' + self.challenged_nick + ' wins by default. Stopping the game.');
+          self.say(self.challenger_nick + ' has idled. ' + self.challenged_nick + ' wins by default. Stopping the game.');
           self.stop();
         } else {
-          self.say(self.challenged_nick + ' has idled.' + self.challenger_nick + ' wins by default. Stopping the game.');
+          self.say(self.challenged_nick + ' has idled. ' + self.challenger_nick + ' wins by default. Stopping the game.');
           self.stop();
         }
       }
@@ -198,10 +200,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.nextRound();
       } else {
         if (!self.challenger.hasPlayed) {
-          self.say(self.challenger_nick + ' has idled.' + self.challenged_nick + ' wins by default. Stopping the game.');
+          self.say(self.challenger_nick + ' has idled. ' + self.challenged_nick + ' wins by default. Stopping the game.');
           self.stop();
         } else {
-          self.say(self.challenged_nick + ' has idled.' + self.challenger_nick + ' wins by default. Stopping the game.');
+          self.say(self.challenged_nick + ' has idled. ' + self.challenger_nick + ' wins by default. Stopping the game.');
           self.stop();
         }
       }
@@ -371,10 +373,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       } else {
         if (self.challenger_nick === player) {
           self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
-          self.challenger.hasPlayed === true;
+          self.challenger.hasPlayed = true;
         } else if (self.challenged_nick === player) {
           self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
-          self.challenger.hasPlayed === true;
+          self.challenger.hasPlayed = true;
         }
       }
 
