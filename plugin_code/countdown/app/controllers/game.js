@@ -216,10 +216,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   self.letterRoundEnd = function() {
     // Show selections
+    console.log('In letterRoundEnd')
     self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
     self.say(self.challenged.nick + ' has played: ' + self.answers.challenged.word);
 
     if (!self.answers.challenger.valid) {
+      console.log('Challenger word invalid');
       self.say(self.challenger.nick + ': Your word was invalid.');
     }
 
@@ -262,7 +264,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say('Neither player played a valid word and have scored 0 points');
     }
 
-    for (var letter = self.table.letters.pop(); !_.isUndefined(letter); self.table.letters.pop()) {
+    for (var letter = self.table.letters.pop(); !_.isUndefined(letter); letter = self.table.letters.pop()) {
       if (_.contains(self.vowel_array, letter)) {
         self.vowels.push(letter);
       } else {
