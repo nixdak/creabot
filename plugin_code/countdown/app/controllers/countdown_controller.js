@@ -16,7 +16,7 @@ var Countdown = function Countdown() {
       var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
-      if (!_.isUndefined(cmdArgs[0])) {
+      if (_.isUndefined(cmdArgs[0])) {
         client.say(channel, 'Please supply a nick with this command');
       } else if (!_.contains(challengers, cmdArgs[0])) {
         client.say(channel, 'You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
