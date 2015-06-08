@@ -82,7 +82,7 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_LETTERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs)) {
+      if (_.isUndefined(cmdArgs[0])) {
         client.say('Please supply arguments to the !cd command');
         return false;
       }
@@ -105,7 +105,7 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs)) {
+      if (_.isUndefined(cmdArgs[0])) {
         client.say('Please supply arguments to the !select command');
         return false;
       }
