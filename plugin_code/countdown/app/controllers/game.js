@@ -317,11 +317,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.letters = function(player, letters) {
     if (self.selector.nick === player) {
       if (letters.length !== 9) {
-        self.say("You must provide a selection of 9 consonants or vowels.");
+        self.say('You must provide a selection of 9 consonants or vowels.');
         return false;
       }
 
-      if ()
+      if (_.reject(letters, function(letter) { return letter === 'c' || letter === 'v'}).length ) {
+        self.say('Your selection should consist only of the letters c and v');
+        return false;
+      }
 
       letters.forEach(function (letter) {
         if ('c' === letter.toLowerCase()) {
