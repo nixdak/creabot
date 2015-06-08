@@ -339,16 +339,16 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     return true;
   };
 
-  self.playLetters = function (player, word) {
+  self.playLetters = function (player, wordPlayed) {
+    console.log(wordPlayed);
     if (self.challenger_nick === player || self.challenged_nick === player) {
-      // If letter is too long/short and uses letters not available to the player
       if (self.challenger_nick === player) {
-        self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+        self.answers.challenger = { word: wordPlayed, valid: _.contains(self.countdown_words, wordPlayed.toUpperCase()) }; 
       } else if (self.challenged_nick === player) {
-        self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+        self.answers.challenged = { word: wordPlayed, valid: _.contains(self.countdown_words, wordPlayed.toUpperCase()) }; 
       }
 
-      self.pm(player, 'You played: ' + word + '. Good luck.');
+      self.pm(player, 'You played: ' + wordPlayed + '. Good luck.');
       console.log(self.answers);
     }
   };
