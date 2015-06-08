@@ -343,16 +343,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.challenger_nick === player || self.challenged_nick === player) {
       // If letter is too long/short and uses letters not available to the player
       if (self.challenger_nick === player) {
-        if (self.answers.challenger !== {} && self.answers.challenger.word.length > word.length) {
-          self.pm(player, 'The word you are playing is shorter than your previously played word');
-        }
-
         self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
       } else if (self.challenged_nick === player) {
-        if (self.answers.challenged !== {} && self.answers.challenged.word.length > word.length) {
-          self.pm(player, 'The word you are playing is shorter than your previously played word');
-        }
-
         self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
       }
 
