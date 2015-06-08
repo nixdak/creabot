@@ -209,8 +209,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
           self.stop();
         }
       }
-    } else {
-
+    } else if (self.state === CONUNDRUM) {
+      self.stop();
     }
   };
 
@@ -220,18 +220,19 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
     self.say(self.challenged.nick + ' has played: ' + self.answers.challenged.word);
 
-    if (!self.answers.challenger.valid) {
+    if (self.answers.challenger.valid === false) {
       console.log('Challenger word invalid');
       self.say(self.challenger.nick + ': Your word was invalid.');
     }
 
-    if (!self.answers.challenged.valid) {
+    if (self.answers.challenged.valid === false) { 
+      console.log('Challenged word invalid');
       self.say(self.challenger.nick + ': Your word was invalid');
     }
 
     // If challenger played a longer valid word
-    if (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid) {
-      if (self.answers.challenger.word.legnth === 9) {
+    if (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid === true) {
+      if (self.answers.challenger.word.length === 9) {
         self.say(self.challenger.nick + ' has won this round and scored 18 points.');
         self.challenger.points += 18;
       } else {
@@ -241,8 +242,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     }
     // If the challenged played a longer valid word
-    else if ((self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid)) {
-      if (self.answers.challenged.word.legnth === 9) {
+    else if ((self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid === true)) {
+      if (self.answers.challenged.word.length === 9) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
       } else {
@@ -253,7 +254,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     } 
     // Both players played a valid word of the same length
     else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
-        (self.answers.challenger.valid && self.answers.challenged.valid)) {
+        (self.answers.challenger.valid === true && self.answers.challenged.valid === true)) {
       self.say('This round was a tie, both players have scored ' + self.answers.challenged.word.length + ' ' +
         inflection.inflect('points', self.answers.challenged.word.length));
       self.challenged.points += self.answers.challenged.word.length;
@@ -421,9 +422,37 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Do setup for a conundrum round
    */
   self.conundrumRound = function () {
-    // Place holder until I figure out how I'm doing the conundrum
-    self.nextRound();
+    self.state = STATES.LETTERS;
+    self.say('Round ' + self.round + ': Conundrum');
+
+    self.setSelector();
+
+    self.answers.conundrum = self.conundrum_words.shift();
+
+    self.say('Fingers on buzzers for today\'s countdown conundrum');
+    self.say('Use !buzz word to guess the conundrum.');
+    self.say('Conundrum: ' + _.shuffle(self.answers.conundrum).join(''));
+
+    self.state = STATES.CONUNDRUM;
+    clearInterval(self.roundTimer);
+    self.roundStarted = new Date();
+    self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
   };
+
+  self.playConundrum = function(player, word) {
+    if (self.challenged_nick === player || self.challenger_nick === player) {
+      if (self.challenged_nick === player) {
+        self.challenged.hasBuzzed = true;
+
+        if (self.table.conundrum === word) {
+          self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
+          self.challenged.points += 10;
+        }
+      } else {
+
+      }
+    }
+  }
 
   self.roundTimerCheck = function() {
     // Check the time

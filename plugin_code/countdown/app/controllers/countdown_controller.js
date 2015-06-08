@@ -31,6 +31,19 @@ var Countdown = function Countdown() {
     }
   };
 
+  self.buzz = function (client, message, cmdArgs) {
+    if (!_.isUndefined(self.game) || self.game.state === Game.STATES.CONUNDRUM) {
+      if (_.isUndefined(cmdArgs[0])) {
+        client.say(message.args[0], 'Please supply a word to the buzz function');
+        return false;
+      } else {
+        self.game.playConundrum(message.nick, cmdArgs[0]);
+      }
+    } else {
+      client.say(message.args[0], 'Sorry, the !buzz command is not available right now');
+    }
+  };
+
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
     if (_.isUndefined(cmdArgs[0])) {
