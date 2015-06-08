@@ -83,7 +83,7 @@ var Countdown = function Countdown() {
       if (cmdArgs.length > 1) {
         args = cmdArgs.join('');
       } else {
-        args = cmdArgs;
+        args = cmdArgs[0];
       }
 
       self.game.playLetters(message.nick, args);

@@ -339,16 +339,28 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     return true;
   };
 
-  self.playLetters = function (player, wordPlayed) {
-    console.log(wordPlayed);
+  self.playLetters = function (player, word) {
     if (self.challenger_nick === player || self.challenged_nick === player) {
-      if (self.challenger_nick === player) {
-        self.answers.challenger = { word: wordPlayed, valid: _.contains(self.countdown_words, wordPlayed.toUpperCase()) }; 
-      } else if (self.challenged_nick === player) {
-        self.answers.challenged = { word: wordPlayed, valid: _.contains(self.countdown_words, wordPlayed.toUpperCase()) }; 
+      // If letter is too long/short and uses letters not available to the player
+      if (!self.validateWord(word)) {
+        self.pm(player, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
+      } else {
+        if (self.challenger.nick === player) {
+          if (self.answers.challenger !== {} && self.answers.challenger.word.length > word.length) {
+            self.pm(player, 'The word you are playing is shorter than your previously played word');
+          }
+
+          self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+        } else if (self.challenged.nick === player) {
+          if (self.answers.challenged !== {} && self.answers.challenged.word.length > word.length) {
+            self.pm(player, 'The word you are playing is shorter than your previously played word');
+          }
+
+          self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
+        }
       }
 
-      self.pm(player, 'You played: ' + wordPlayed + '. Good luck.');
+      self.pm(player, 'You played: ' + word + '. Good luck.');
       console.log(self.answers);
     }
   };
