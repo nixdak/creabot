@@ -30,6 +30,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.challenger_nick = challenger;
   self.challenged_nick = challenged;
 
+  console.log(self.channel);
+
   console.log('Loading dictionary');
 
   self.dictionary = require('../../config/dictionary.json')['words'];
@@ -388,10 +390,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * @returns The new player or false if invalid player
    */
   self.addPlayer = function (player) {
+    console.log('Adding player')
     if (player.nick === self.challenger_nick) { 
       self.challenger = player;
+      console.log('Adding challenger');
     } else if (player.nick === self.challenged_nick) {
       self.challenged = player;
+      consol.log('Adding challenged')
     } else {
       self.say('Sorry, but you cannot join this game');
       return false;
@@ -480,6 +485,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   client.addListener('quit', self.playerQuitHandler);
   client.addListener('kick'+channel, self.playerKickHandler);
   client.addListener('nick', self.playerNickChangeHandler);
+
+  self.say('Game setup complete');
 };
 
 Game.STATES = STATES;
