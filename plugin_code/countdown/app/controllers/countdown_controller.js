@@ -52,7 +52,7 @@ var Countdown = function Countdown() {
 
   self.list = function (client, message, cmdArgs) {
     if (self.challenges.length === 0) {
-      client.say('No challenges have been issued.');
+      client.say(message.args[0], 'No challenges have been issued.');
     } else {
       var challenges_sent = _.filter(self.challenges, function (challenge) { return challenge.challenger === message.nick; });
       var challenges_received = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
