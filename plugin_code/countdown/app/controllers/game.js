@@ -363,6 +363,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   self.playLetters = function (player, word) {
+    word = word.toUpperCase();
     if (self.challenger_nick === player || self.challenged_nick === player) {
       // If letter is too long/short and uses letters not available to the player
       if (word.length <= 2 || word.length > 9) {
@@ -377,6 +378,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       for (var i = 0; i < word.length; i++) {
         if (_.contains(letters, word[i].toUpperCase())) {
           letters.splice(_.indexOf(word[i]), 1);
+          console.log(letters);
         } else {
           valid = false;
           break;
@@ -385,6 +387,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       if (valid !== true) {
         self.pm(player, 'Your word must not reuse any letters more than they appear, and must only use letters that have been slected for this round');
+        return false;
       } else {
         if (self.challenger_nick === player) {
           self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
