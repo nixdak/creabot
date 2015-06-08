@@ -253,7 +253,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.setSelector();
 
     self.say(self.selector.nick + ' will choose the letters for this round.');
-    self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !letters ccvcvccvv');
+    self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !select  ccvcvccvv');
     self.say(self.selector.nick + ': Where c is a consonant and v is a vowel.');
 
     clearInterval(self.roundTimer);

@@ -102,7 +102,7 @@ var Countdown = function Countdown() {
         args = cmdArgs;
       }
 
-      self.game.playLetters(message.nick, args);
+      self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
       client.say('Numbers rounds not implemented yet!');
     } else {
