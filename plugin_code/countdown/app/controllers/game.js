@@ -430,6 +430,15 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     return player;
   };
 
+  self.showPoints = function () {
+    if (self.round === 0 ) {
+      self.say('The game hasn\'t begun yet');
+    } else {
+      self.say('Round: ' + self.round + '.');
+      self.say(self.challenged.nick + ' has ' + self.challenged.points + ' while ' + self.challeneger.nick + ' has ' + self.challenger.points + '.');
+    }
+  };
+
   /**
    * Helper function for the handlers below
    */
