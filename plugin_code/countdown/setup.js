@@ -22,5 +22,5 @@ module.exports = function(app) {
   app.cmd('stop', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.stop);
 
   // Private commands
-  app.cmd('cd', '', countdown.play);
+  app.msg('cd', '', countdown.play);
 };
