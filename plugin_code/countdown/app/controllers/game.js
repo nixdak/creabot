@@ -212,7 +212,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     }
     // If the challenged played a longer valid word
-    else if ((self.answers.challenged.word.length > self.answers.challegner.word.length && self.answers.challenged.valid)) {
+    else if ((self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid)) {
       if (self.answers.challenged.word.legnth === 9) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
@@ -223,12 +223,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     } 
     // Both players played a valid word of the same length
-    else if (self.answers.challenger.word.length === self.answers.challegned.word.length &&
+    else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
         (self.answers.challenger.valid && self.answers.challenged.valid)) {
-      self.say('This round was a tie, both players have scored ' + self.answers.challegned.word.length +
-        inflection.inflect('points', self.answers.challegned.word.length));
-      self.challenged.points += self.answers.challegned.word.length;
-      self.challenger.points += self.answers.challegner.word.length;
+      self.say('This round was a tie, both players have scored ' + self.answers.challenged.word.length +
+        inflection.inflect('points', self.answers.challenged.word.length));
+      self.challenged.points += self.answers.challenged.word.length;
+      self.challenger.points += self.answers.challenger.word.length;
     }
     // Neither player played a valid word
     else {
