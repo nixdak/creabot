@@ -68,7 +68,7 @@ var Countdown = function Countdown() {
         client.say (message.args[0], message.nick + ': You have received no challenges.');
       } else {
         challenges_received = _.map(challenges_received, function (challenge) { return challenge.challenger === message.nick; });
-        client.say(message.args[0], message.nick + ': You have been challenged by the following players: ' + challenges_reveived.join(', ') + '.');
+        client.say(message.args[0], message.nick + ': You have been challenged by the following players: ' + challenges_received.join(', ') + '.');
       }
     }
   };
