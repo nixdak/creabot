@@ -29,6 +29,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.idleWaitCount = 0;
   self.challenger_nick = challenger;
   self.challenged_nick = challenged;
+  self.vowel_array = ['A', 'E', 'I', 'O', 'U'];
 
   console.log(self.channel);
 
@@ -230,6 +231,17 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say('Neither player played a valid word and have scored 0 points');
     }
 
+    _.each(self.table.letters, function (letter) {
+      if (_.contains(self.vowel_array, letter)) {
+        self.vowels.push(letter);
+      } else {
+        self.consonants.push(letter);
+      }
+    });
+
+    self.vowels= _.shuffle(_.shuffle(self.vowels));
+    self.consonants = _.shuffle(_.shuffle(self.consonants));
+
     self.showPoints();
   };
 
@@ -286,8 +298,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say('Letters for this round: ' + self.table.letters.join(' '));
         self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
         self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-        selp.pm(self.challenger.nick, 'Play a word with !cd [word]');
-        selp.pm(self.challenged.nick, 'Play a word with !cd [word]');
+        self.pm(self.challenger.nick, 'Play a word with !cd [word]');
+        self.pm(self.challenged.nick, 'Play a word with !cd [word]');
 
         self.state = STATES.PLAY_LETTERS;
         clearInterval(self.roundTimer);
