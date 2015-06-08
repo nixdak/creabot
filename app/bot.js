@@ -53,22 +53,6 @@ exports.init = function () {
         client.send('TOPIC', channel, newTopic);
     };
 
-    self.setModerated = function (channel) {
-        client.send('MODE ' + channel + ' +m');
-    };
-
-    self.setVoice = function (channel, nick) {
-        client.send('MODE ' + channel + ' +v ' + nick);
-    };
-
-    self.unsetModerated = function (channel, nicks) {
-        client.send('MODE ' + channel + ' -m');
-
-        nicks.forEach(function (nick) {
-            client.send('MODE ' + channel + ' -v ' + nick);
-        });
-    };
-
     // handle connection to server for logging
     client.addListener('registered', function (message) {
         console.log('Connected to server ' + message.server);

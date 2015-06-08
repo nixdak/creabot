@@ -480,13 +480,28 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.client.say(nick, string);
   };
 
+  self.setModerated = function (channel) {
+    self.client.send('MODE ' + channel + ' +m');
+  };
+
+  self.setVoice = function (channel, nick) {
+    self.client.send('MODE ' + channel + ' +v ' + nick);
+  };
+
+  self.unsetModerated = function (channel, nicks) {
+    self.client.send('MODE ' + channel + ' -m');
+
+    nicks.forEach(function (nick) {
+      self.client.send('MODE ' + channel + ' -v ' + nick);
+    });
+  };
+
   // client listeners
   client.addListener('part', self.playerPartHandler);
   client.addListener('quit', self.playerQuitHandler);
   client.addListener('kick'+channel, self.playerKickHandler);
   client.addListener('nick', self.playerNickChangeHandler);
 
-  self.say('Game setup complete');
 };
 
 Game.STATES = STATES;
