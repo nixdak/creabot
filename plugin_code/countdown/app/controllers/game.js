@@ -195,7 +195,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say(self.challenger.nick + ': Your word was invalid.');
     }
 
-    if (!self.answers.letters.challenged.valid) {
+    if (!self.answers.challenged.valid) {
       self.say(self.challenger.nick + ': Your word was invalid');
     }
 
@@ -323,7 +323,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     var letters = _.clone(self.table.letters);
 
     for (var i = 0; i < word.length; i++) {
-      if (_.contains(letters, word[0].toUpperCase())) {
+      if (_.contains(letters, word[i].toUpperCase())) {
         letters = _.without(letters, word);
       } else {
         return false;
