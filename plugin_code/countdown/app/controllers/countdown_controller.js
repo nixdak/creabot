@@ -48,7 +48,7 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.WAITING) {
       var player = new Player(message.nick, message.user, message.host);
       self.game.addPlayer(player);
-      self.challenges = _.reject(self.challenges function(challenge) {
+      self.challenges = _.reject(self.challenges, function(challenge) {
         return challenge.challenger === self.game.challenger_nick && challenge.challenged === self.game.challenged_nick;
       });
     } else {
