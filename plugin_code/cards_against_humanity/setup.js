@@ -21,6 +21,8 @@ module.exports = function(app) {
   app.cmd('status', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.status);
   app.cmd('start', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.start)
   app.cmd('stop', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.stop);
+  app.cmd('ping', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.list);
+  app.cmd('help', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.help);
 
   // Private commands
   app.msg('cah', '', cardsAgainstHumanity.pick);

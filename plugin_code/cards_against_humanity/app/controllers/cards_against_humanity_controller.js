@@ -287,6 +287,16 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             }
         }
     };
+
+    self.help = function (client, message, cmdArgs) {
+        var channel = message.args[0],
+            nick = message.nick,
+            hostname = message.host;
+
+        client.say(nick, '!start, !cards, !join, !cah #, !stop, !pause, !resume, !status, !discard #, !join, !list, !players, !points, !quit, !ping');
+
+    };
+    
 };
 
 exports = module.exports = CardsAgainstHumanity;
