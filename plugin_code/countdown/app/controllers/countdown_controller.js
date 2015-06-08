@@ -125,7 +125,7 @@ var Countdown = function Countdown() {
   };
 
   self.stop = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(message.args[0], 'No game running to stop.'); 
     } else {
       self.game.stop(message.nick, false);
