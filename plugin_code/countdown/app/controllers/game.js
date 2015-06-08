@@ -331,26 +331,28 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   self.playLetters = function (player, word) {
-    // If letter is too long/short and uses letters not available to the player
-    if (!self.validateWord(word)) {
-      self.pm(player.nick, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
-    } else {
-      if (self.challenger.nick === player) {
-        if (!_.isUndefined(self.answers.challenger) && self.answers.challenger.word.length > word.length) {
-          self.pm(player.nick, 'The word you are playing is shorter than your previously played word');
-        }
+    if (self.challenger_nick === player || self.challenged_nick === player) {
+      // If letter is too long/short and uses letters not available to the player
+      if (!self.validateWord(word)) {
+        self.pm(player, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
+      } else {
+        if (self.challenger.nick === player) {
+          if (!_.isUndefined(self.answers.challenger) && self.answers.challenger.word.length > word.length) {
+            self.pm(player, 'The word you are playing is shorter than your previously played word');
+          }
 
-        self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
-      } else if (self.challenger.nick === player) {
-        if (!_.isUndefined(self.answers.challenged) && self.answers.challenged.word.length > word.length) {
-          self.pm(player.nick, 'The word you are playing is shorter than your previously played word');
-        }
+          self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+        } else if (self.challenger.nick === player) {
+          if (!_.isUndefined(self.answers.challenged) && self.answers.challenged.word.length > word.length) {
+            self.pm(player, 'The word you are playing is shorter than your previously played word');
+          }
 
-        self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
+          self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
+        }
       }
-    }
 
-    self.pm(player, 'You played: ' + word + '. Good luck.');
+      self.pm(player, 'You played: ' + word + '. Good luck.');
+    }
   };
 
   /*
