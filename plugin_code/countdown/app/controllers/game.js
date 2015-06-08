@@ -356,6 +356,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
 
       self.pm(player, 'You played: ' + word + '. Good luck.');
+      console.log(self.answers);
     }
   };
 
