@@ -274,7 +274,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     clearInterval(self.roundTimer);
     self.roundStarted = new Date();
-    self.roundTimer = setInterval(self.roundTimerCheck, 5 * 1000);
+    self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
   };
 
   /*
@@ -305,7 +305,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.state = STATES.PLAY_LETTERS;
       clearInterval(self.roundTimer);
       self.roundStarted = new Date();
-      self.roundTimer = setInterval(self.roundTimerCheck, 5 * 1000);
+      self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
 
     } else {
       self.say(player.nick + ': It isn\'t your turn to choose the letters');
@@ -341,13 +341,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             self.pm(player, 'The word you are playing is shorter than your previously played word');
           }
 
-          self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+          self.answers.letters.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
         } else if (self.challenger.nick === player) {
           if (!_.isUndefined(self.answers.challenged) && self.answers.challenged.word.length > word.length) {
             self.pm(player, 'The word you are playing is shorter than your previously played word');
           }
 
-          self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
+          self.answers.letters.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
         }
       }
 
@@ -370,7 +370,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     clearInterval(self.roundTimer);
     self.selectionStarted = new Date();
-    self.selectionTimer = setInterval(self.roundTimerCheck, 5 * 1000);
+    self.selectionTimer = setInterval(self.roundTimerCheck, 10 * 1000);
   };
  
   /*
