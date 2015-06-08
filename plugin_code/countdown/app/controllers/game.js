@@ -190,6 +190,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say(self.challenged_nick + ' has idled. ' + self.challenger_nick + ' wins by default. Stopping the game.');
         self.stop();
       } else {
+        console.log('In the round end else statement');
         self.letterRoundEnd();
         self.nextRound();
       }
@@ -389,7 +390,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Do setup for a numbers round
    */
   self.numbersRound = function () {
-    self.state = STATES.LETTERS;
+    self.state = STATES.NUMBERS;
     self.say('Round ' + self.round + ': Numbers');
 
     self.setSelector();
