@@ -345,17 +345,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       if (!self.validateWord(word)) {
         self.pm(player, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
       } else {
-        if (self.challenger.nick === player) {
-          if (self.answers.challenger !== {} && self.answers.challenger.word.length > word.length) {
-            self.pm(player, 'The word you are playing is shorter than your previously played word');
-          }
-
+        if (self.challenger_nick === player) {
           self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
-        } else if (self.challenged.nick === player) {
-          if (self.answers.challenged !== {} && self.answers.challenged.word.length > word.length) {
-            self.pm(player, 'The word you are playing is shorter than your previously played word');
-          }
-
+        } else if (self.challenged_nick === player) {
           self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
         }
       }
