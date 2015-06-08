@@ -96,7 +96,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     // Clear timeouts
     clearTimeout(self.stopTimeout);
-    clearTimeout(self.roundTimeout);
+    clearInterval(self.roundTimeout);
 
     // Remove listeners
     self.client.removeListener('part', self.playerPartHandler);
@@ -176,7 +176,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Start next round
    */
   self.roundEnd = function() {
-    clearTimeout(self.roundTimeout);
+    clearInterval(self.roundTimeout);
     if (self.state === STATES.PLAY_LETTERS) {
       self.state = STATES.LETTERS_ROUND_END;
 
