@@ -48,7 +48,7 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.WAITING) {
       var player = new Player(message.nick, message.user, message.host);
       self.game.addPlayer(player);
-      _.without(self.challenges, { challenger: self.game.challenger_nick, challenged: self.game.challenged_nick });
+      self.challenges = _.without(self.challenges, { challenger: self.game.challenger_nick, challenged: self.game.challenged_nick });
     } else {
       client.say(message.args[0], 'Unable to join at the moment.');
     }
