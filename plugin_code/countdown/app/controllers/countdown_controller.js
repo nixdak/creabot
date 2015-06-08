@@ -84,7 +84,7 @@ var Countdown = function Countdown() {
         args = cmdArgs;
       }
 
-      self.game.letters(message.nick, args);
+      self.game.playLetters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_NUMBERS) {
       client.say('Numbers rounds not implemented yet!');
     } else {
