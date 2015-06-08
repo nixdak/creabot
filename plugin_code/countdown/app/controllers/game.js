@@ -200,7 +200,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     // If challenger played a longer valid word
-    if (self.answers.challenger.word.length > self.answers.challegned.word.length && self.answers.challenger.valid) {
+    if (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid) {
       if (self.answers.challenger.word.legnth === 9) {
         self.say(self.challenger.nick + ' has won this round and scored 18 points.');
         self.challenger.points += 18;
