@@ -321,6 +321,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
 
+      if ()
+
       letters.forEach(function (letter) {
         if ('c' === letter.toLowerCase()) {
           self.table.letters.push(self.consonants.shift().toUpperCase());
@@ -331,10 +333,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       clearInterval(self.roundTimer);
       self.say('Letters for this round: ' + self.table.letters.join(' '));
-      self.say(self.config.roundOptions.roundMinutes + inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'); 
+      self.say(self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
+        ' on the clock'
+      ); 
       
       self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-      self.pm(self.challenger.nick, self.config.roundOptions.roundMinutes + 
+      self.pm(self.challenger.nick, self.config.roundOptions.roundMinutes + ' ' +
         inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
       );
       self.pm(self.challenger.nick, 'Play a word with !cd [word]');
@@ -355,29 +359,29 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
   };
 
-  self.validateWord = function (word) {
-    if (word.length <= 2 || word.length > 9) {
-      return false;
-    }
-
-    var letters = _.clone(self.table.letters);
-
-    for (var i = 0; i < word.length; i++) {
-      if (_.contains(letters, word[i].toUpperCase())) {
-        letters = _.without(letters, word);
-      } else {
-        return false;
-      }
-    }
-
-    return true;
-  };
-
   self.playLetters = function (player, word) {
     if (self.challenger_nick === player || self.challenged_nick === player) {
       // If letter is too long/short and uses letters not available to the player
-      if (!self.validateWord(word)) {
+      if (word.length <= 2 || word.length > 9) {
         self.pm(player, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
+        return false;
+      }
+
+      // Make sure the player didn't reuse any letters
+      var letters = _.clone(self.table.letters);
+      var valid = true;
+
+      for (var i = 0; i < word.length; i++) {
+        if (_.contains(letters, word[i].toUpperCase())) {
+          letters.splice(_.indexOf(word[i]), 1);
+        } else {
+          valid = false;
+          break;
+        }
+      }
+
+      if (valid !== true) {
+        self.pm(player, 'Your word must not reuse any letters more than they appear, and must only use letters that have been slected for this round');
       } else {
         if (self.challenger_nick === player) {
           self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
@@ -424,7 +428,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     console.log('Round elapsed: ' + roundElapsed, now.getTime(), self.roundStarted.getTime());
 
     if (roundElapsed >= timeLimit) {
-      self.say('Time is up!');
+      self.say('DO DO DO D-D-DOOOO');
       self.roundEnd();
       // Do something
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
