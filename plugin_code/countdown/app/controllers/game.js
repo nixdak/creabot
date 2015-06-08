@@ -183,17 +183,15 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       console.log(self.challenger.hasPlayed);
       console.log(self.challenged.hasPlayed);
 
-      if (self.challenger.hasPlayed && self.challenged.hasPlayed) {
+      if (!self.challenger.hasPlayed) {
+        self.say(self.challenger_nick + ' has idled. ' + self.challenged_nick + ' wins by default. Stopping the game.');
+        self.stop();
+      } else if (!self.challenged.hasPlayed) {
+        self.say(self.challenged_nick + ' has idled. ' + self.challenger_nick + ' wins by default. Stopping the game.');
+        self.stop();
+      } else {
         self.letterRoundEnd();
         self.nextRound();
-      } else {
-        if (!self.challenger.hasPlayed) {
-          self.say(self.challenger_nick + ' has idled. ' + self.challenged_nick + ' wins by default. Stopping the game.');
-          self.stop();
-        } else {
-          self.say(self.challenged_nick + ' has idled. ' + self.challenger_nick + ' wins by default. Stopping the game.');
-          self.stop();
-        }
       }
     } else if (self.state === STATES.PLAY_NUMBERS) {
       self.state = STATES.NUMBERS_ROUND_END;
@@ -217,7 +215,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   self.letterRoundEnd = function() {
     // Show selections
-    console.log(self.answers);
     self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
     self.say(self.challenged.nick + ' has played: ' + self.answers.challenged.word);
 
