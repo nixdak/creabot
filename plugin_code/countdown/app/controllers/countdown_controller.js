@@ -55,7 +55,7 @@ var Countdown = function Countdown() {
       client.say('No challenges have been issued.');
     } else {
       var challenges_sent = _.filter(self.challenges, function (challenge) { return challenge.challenger === message.nick; });
-      var challenges_received = (self.challenges, function (challenge) { return challenge.challenged === message.nick; });
+      var challenges_received = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
 
       if (challenges_sent.length < 1 ) {
         client.say(message.args[0], message.nick + ': You have issued no challenges.');
