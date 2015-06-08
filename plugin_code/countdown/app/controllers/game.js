@@ -188,6 +188,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   self.letterRoundEnd = function() {
     // Show selections
+    console.log(self.answers);
     self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
     self.say(self.challenged.nick + ' has played: ' + self.answers.challenged.word);
 
