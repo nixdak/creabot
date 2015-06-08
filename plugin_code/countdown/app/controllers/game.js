@@ -243,7 +243,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     });
 
-    self.vowels= _.shuffle(_.shuffle(self.vowels));
+    self.answers = {
+      challenger: {},
+      challenged: {}
+    };
+
+    self.vowels = _.shuffle(_.shuffle(self.vowels));
     self.consonants = _.shuffle(_.shuffle(self.consonants));
 
     self.showPoints();
@@ -337,18 +342,18 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.playLetters = function (player, word) {
     if (self.challenger_nick === player || self.challenged_nick === player) {
       // If letter is too long/short and uses letters not available to the player
-      if (self.challenger.nick === player) {
-        if (!_.isUndefined(self.answers.challenger) && self.answers.challenger.word.length > word.length) {
+      if (self.challenger_nick === player) {
+        if (self.answers.challenger !== {} && self.answers.challenger.word.length > word.length) {
           self.pm(player, 'The word you are playing is shorter than your previously played word');
         }
 
-        self.answers['challenger'] = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
-      } else if (self.challenger.nick === player) {
-        if (!_.isUndefined(self.answers.challenged) && self.answers.challenged.word.length > word.length) {
+        self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+      } else if (self.challenger_nick === player) {
+        if (self.answers.challenger !== {} && self.answers.challenged.word.length > word.length) {
           self.pm(player, 'The word you are playing is shorter than your previously played word');
         }
 
-        self.answers['challenged'] = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+        self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
       }
 
       self.pm(player, 'You played: ' + word + '. Good luck.');
