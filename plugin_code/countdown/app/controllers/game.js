@@ -102,7 +102,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.client.removeListener('kick' + self.channel, self.playerKickHandler);
     self.client.removeListener('nick', self.playerNickChangeHandler);
 
-    self.client.unsetModerated(self.channel, [self.challenger.nick, self.challenged.nick]);
+    self.unsetModerated([self.challenger.nick, self.challenged.nick]);
   };
 
   /*
@@ -403,7 +403,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     self.say(player.nick + ' has joined the game.');
-    self.client.setVoice(self.channel, player.nick);
+    self.setVoice(player.nick);
 
     self.nextRound();
 
@@ -480,19 +480,19 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.client.say(nick, string);
   };
 
-  self.setModerated = function (channel) {
-    self.client.send('MODE ' + channel + ' +m');
+  self.setModerated = function () {
+    self.client.send('MODE ' + self.channel + ' +m');
   };
 
-  self.setVoice = function (channel, nick) {
-    self.client.send('MODE ' + channel + ' +v ' + nick);
+  self.setVoice = function (nick) {
+    self.client.send('MODE ' + self.channel + ' +v ' + nick);
   };
 
-  self.unsetModerated = function (channel, nicks) {
-    self.client.send('MODE ' + channel + ' -m');
+  self.unsetModerated = function (nicks) {
+    self.client.send('MODE ' + self.channel + ' -m');
 
     nicks.forEach(function (nick) {
-      self.client.send('MODE ' + channel + ' -v ' + nick);
+      self.client.send('MODE ' + self.channel + ' -v ' + nick);
     });
   };
 
