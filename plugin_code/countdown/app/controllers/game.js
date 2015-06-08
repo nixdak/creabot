@@ -138,9 +138,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.showWinner();
     }
 
-    // check that there's enough players in the game and end if we have waited the 
+    // check that there's enough players in the game and end if we have waited the
     if (_.isUndefined(self.challenger)) {
-      self.say('Waiting for ' + self.challenger_nick + '. Stopping in ' + 
+      self.say('Waiting for ' + self.challenger_nick + '. Stopping in ' +
         self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
         ' if they don\'t join.'
       );
@@ -226,7 +226,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     if (!self.answers.challenged.valid) {
-      self.say(self.challenger.nick + ': Your word was invalid');
+      self.say(self.challenged.nick + ': Your word was invalid');
     }
 
     // If challenger played a longer valid word
@@ -246,11 +246,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
       } else {
-        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' ' + 
+        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' ' +
           inflection.inflect('points', self.answers.challenged.word.length));
         self.challenged.points += self.answers.challenged.word.length;
       }
-    } 
+    }
     // Both players played a valid word of the same length
     else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
         (self.answers.challenger.valid && self.answers.challenged.valid)) {
@@ -338,8 +338,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say('Letters for this round: ' + self.table.letters.join(' '));
       self.say(self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
         ' on the clock'
-      ); 
-      
+      );
+
       self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
       self.pm(self.challenger.nick, self.config.roundOptions.roundMinutes + ' ' +
         inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
@@ -348,7 +348,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
       self.pm(self.challenged.nick, 'Play a word with !cd [word]');
-      self.pm(self.challenged.nick, self.config.roundOptions.roundMinutes + 
+      self.pm(self.challenged.nick, self.config.roundOptions.roundMinutes + ' ' +
         inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
       );
 
@@ -390,7 +390,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       } else {
         if (self.challenger_nick === player) {
-          self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+          self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
           self.challenger.hasPlayed = true;
         } else if (self.challenged_nick === player) {
           self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
@@ -416,7 +416,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !letters ccvcvccvv');
     self.say(self.selector.nick + ': Where c is a consonant and v is a vowel.');
   };
- 
+
   /*
    * Do setup for a conundrum round
    */
@@ -463,7 +463,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.addPlayer = function (player) {
     console.log('Adding player')
-    if (player.nick === self.challenger_nick) { 
+    if (player.nick === self.challenger_nick) {
       self.challenger = player;
       console.log('Adding challenger');
     } else if (player.nick === self.challenged_nick) {
