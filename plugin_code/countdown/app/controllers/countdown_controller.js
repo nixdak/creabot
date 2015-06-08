@@ -16,8 +16,10 @@ var Countdown = function Countdown() {
       var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
-      if (!_.contains(challengers, cmdArgs[0])) {
-        client.say('You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
+      if (!_.isUndefined(cmdArgs[0])) {
+        client.say(channel, 'Please supply a nick with this command');
+      } else if (!_.contains(challengers, cmdArgs[0])) {
+        client.say(channel, 'You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
         self.game = new Game(channel, client, self.config, cmdArgs[0], message.nick);
