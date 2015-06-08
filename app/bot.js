@@ -1,7 +1,8 @@
 var _ = require('underscore'),
     irc = require('irc'),
     c = require('irc-colors'),
-    config = require('../config/config.json'),
+    env = process.env.NODE_ENV || 'development',
+    config = require('../config/config.json')[env],
     client,
     commands = [],
     msgs = [];
