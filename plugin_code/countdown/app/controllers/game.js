@@ -293,20 +293,20 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         } else if ('v' === letter.toLowerCase()) {
           self.table.letters.push(self.vowels.shift().toUpperCase());
         }
-
-        clearInterval(self.roundTimer);
-        self.say('Letters for this round: ' + self.table.letters.join(' '));
-        self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-        self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-        self.pm(self.challenger.nick, 'Play a word with !cd [word]');
-        self.pm(self.challenged.nick, 'Play a word with !cd [word]');
-
-        self.state = STATES.PLAY_LETTERS;
-        clearInterval(self.roundTimer);
-        self.roundStarted = new Date();
-        self.roundTimer = setInterval(self.roundTimerCheck, 5 * 1000);
-
       });
+
+      clearInterval(self.roundTimer);
+      self.say('Letters for this round: ' + self.table.letters.join(' '));
+      self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
+      self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
+      self.pm(self.challenger.nick, 'Play a word with !cd [word]');
+      self.pm(self.challenged.nick, 'Play a word with !cd [word]');
+
+      self.state = STATES.PLAY_LETTERS;
+      clearInterval(self.roundTimer);
+      self.roundStarted = new Date();
+      self.roundTimer = setInterval(self.roundTimerCheck, 5 * 1000);
+
     } else {
       self.say(player.nick + ': It isn\'t your turn to choose the letters');
     }
