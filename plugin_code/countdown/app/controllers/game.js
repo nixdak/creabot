@@ -241,7 +241,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       } else {
         self.consonants.push(letter);
       }
-    });
+    }
 
     self.answers = {
       challenger: {},
