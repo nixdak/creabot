@@ -102,7 +102,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.client.removeListener('kick' + self.channel, self.playerKickHandler);
     self.client.removeListener('nick', self.playerNickChangeHandler);
 
-    self.unsetModerated([self.challenger.nick, self.challenged.nick]);
+    self.unsetModerated([self.challenged.nick]);
+
+    if (!_.isUndefined(self.challenger)) {
+      self.unsetModerated([self.challenger.nick]);
+    }
   };
 
   /*
