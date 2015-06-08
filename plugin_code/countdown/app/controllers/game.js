@@ -254,7 +254,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     // Both players played a valid word of the same length
     else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
         (self.answers.challenger.valid && self.answers.challenged.valid)) {
-      self.say('This round was a tie, both players have scored ' + self.answers.challenged.word.length +
+      self.say('This round was a tie, both players have scored ' + self.answers.challenged.word.length + ' ' +
         inflection.inflect('points', self.answers.challenged.word.length));
       self.challenged.points += self.answers.challenged.word.length;
       self.challenger.points += self.answers.challenger.word.length;
@@ -307,7 +307,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.setSelector();
 
     self.say(self.selector.nick + ' will choose the letters for this round.');
-    self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !select  ccvcvccvv');
+    self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !select ccvcvccvv');
     self.say(self.selector.nick + ': Where c is a consonant and v is a vowel.');
   };
 
@@ -331,10 +331,19 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       clearInterval(self.roundTimer);
       self.say('Letters for this round: ' + self.table.letters.join(' '));
+      self.say(self.config.roundOptions.roundMinutes + inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'); 
+      
       self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-      self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
+      self.pm(self.challenger.nick, self.config.roundOptions.roundMinutes + 
+        inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
+      );
       self.pm(self.challenger.nick, 'Play a word with !cd [word]');
+
+      self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
       self.pm(self.challenged.nick, 'Play a word with !cd [word]');
+      self.pm(self.challenged.nick, self.config.roundOptions.roundMinutes + 
+        inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
+      );
 
       self.state = STATES.PLAY_LETTERS;
       clearInterval(self.roundTimer);
@@ -396,10 +405,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.say(self.selector.nick + ' will choose the letters for this round.');
     self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !letters ccvcvccvv');
     self.say(self.selector.nick + ': Where c is a consonant and v is a vowel.');
-
-    clearInterval(self.roundTimer);
-    self.selectionStarted = new Date();
-    self.selectionTimer = setInterval(self.roundTimerCheck, 10 * 1000);
   };
  
   /*
@@ -424,10 +429,20 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       // Do something
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
       self.say('10 seconds left!');
+      self.pm(self.challenger_nick, '10 seconds left');
+      self.pm(self.challenged_nick, '10 seconds left');
+    } else if (roundElapsed >= timeLimit - (20 * 1000) && roundElapsed < timeLimit - (10 * 1000)) {
+      self.say('20 seconds left!');
+      self.pm(self.challenged_nick, '20 seconds left');
+      self.pm(self.challenger_nick, '20 seconds left');
     } else if (roundElapsed >= timeLimit - (30 * 1000) && roundElapsed < timeLimit - (20 * 1000)) {
       self.say('30 seconds left!');
+      self.pm(self.challenged_nick, '30 seconds left');
+      self.pm(self.challenger_nick, '30 seconds left');
     } else if (roundElapsed >= timeLimit - (60 * 1000) && roundElapsed < timeLimit - (50 * 1000)) {
       self.say('1 minute left!');
+      self.pm(self.challenger_nick, '1 minute left');
+      self.pm(self.challenged_nick, '1 minute left');
     }
   };
 
