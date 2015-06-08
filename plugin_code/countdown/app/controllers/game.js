@@ -345,13 +345,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             self.pm(player, 'The word you are playing is shorter than your previously played word');
           }
 
-          self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
+          self.answers['challenger'] = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
         } else if (self.challenger.nick === player) {
           if (!_.isUndefined(self.answers.challenged) && self.answers.challenged.word.length > word.length) {
             self.pm(player, 'The word you are playing is shorter than your previously played word');
           }
 
-          self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
+          self.answers['challenged'] = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) }; 
         }
       }
 
