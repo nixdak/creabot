@@ -235,7 +235,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say(self.challenger.nick + ' has won this round and scored 18 points.');
         self.challenger.points += 18;
       } else {
-        self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + 
+        self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + ' ' +
           inflection.inflect('points', self.answers.challenger.word.length));
         self.challenger.points += self.answers.challenger.word.length;
       }
@@ -246,7 +246,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
       } else {
-        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + 
+        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' '
           inflection.inflect('points', self.answers.challenged.word.length));
         self.challenged.points += self.answers.challenged.word.length;
       }
@@ -309,10 +309,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.say(self.selector.nick + ' will choose the letters for this round.');
     self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !select  ccvcvccvv');
     self.say(self.selector.nick + ': Where c is a consonant and v is a vowel.');
-
-    clearInterval(self.roundTimer);
-    self.roundStarted = new Date();
-    self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
   };
 
   /*
