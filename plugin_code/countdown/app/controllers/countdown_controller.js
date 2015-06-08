@@ -97,9 +97,9 @@ var Countdown = function Countdown() {
       var args;
 
       if (cmdArgs.length > 1) {
-        args = cmdArgs.join('');
-      } else {
         args = cmdArgs;
+      } else {
+        args = cmdArgs.split('');
       }
 
       self.game.letters(message.nick, args);
