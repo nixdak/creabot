@@ -431,12 +431,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Process number selection by player
    */
   self.number = function(player, numbers) {
-   if (self.selector.nick === player) {
-    if (numbers.length !== 6) {
-      self.say('You must provide a selection of 6 numbers.');
-      return false;
+    if (self.selector.nick === player) {
+      if (numbers.length !== 6) {
+        self.say('You must provide a selection of 6 numbers.');
+        return false;
+      }
     }
-
     if (_.reject(numbers, function(number) { return number === 'l' || number === 's'}).length ) {
       self.say('Your selection should consist only of the letters l and s');
       return false;
