@@ -134,8 +134,16 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.nextRound = function () {
     clearTimeout(self.stopTimeout);
     // If it is the conundrum round and this method is called, the game is over
-    if (self.config.roundOptions.conundrum === self.round) {
+    if (self.config.roundOptions.conundrum === self.round && self.challenged.points !== self.challenger.points) {
       self.showWinner();
+    }else{
+      if(self.config.roundOptions.conundrum === self.round){
+        self.round++;
+        console.log('Starting round ', self.round);
+        self.challenger.hasPlayed = false;
+        self.challenged.hasPlayed = false;
+        self.conundrumRound();
+      }
     }
 
     // check that there's enough players in the game and end if we have waited the
@@ -211,7 +219,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     } else if (self.state === STATES.CONUNDRUM) {
       self.say('No one got the conundrum. The answer was ' + self.table.conundrum);
-      self.showWinner();
+      self.nextRound();
     }
   };
 
@@ -420,6 +428,32 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   /*
+   * Process number selection by player
+   */
+  self.number = function(player, numbers) {
+   if (self.selector.nick === player) {
+    if (numbers.length !== 6) {
+      self.say('You must provide a selection of 6 numbers.');
+      return false;
+    }
+
+    if (_.reject(numbers, function(number) { return number === 'l' || number === 's'}).length ) {
+      self.say('Your selection should consist only of the letters l and s');
+      return false;
+    }
+
+    numbers.forEach(function (number) {
+      if ('l' === number.toLowerCase()) {
+        self.table.numbers.push(self.large.shift());
+      } else if ('s' === number.toLowerCase()) {
+        self.table.numbers.push(self.small.shift());
+      }
+    });
+
+    clearInterval(self.roundTimer);
+  }
+
+  /*
    * Do setup for a conundrum round
    */
   self.conundrumRound = function () {
@@ -448,7 +482,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             if (self.table.conundrum === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenged.points += 10;
-                self.showWinner();
+                self.nextRound();
             }else{
                 self.say(player + ' has incorrectly guessed the countdown conundrum');
                 self.challenged.hasBuzzed = true;
@@ -459,7 +493,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             if (self.table.conundrum === word) {
                 self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenger.points += 10;
-                self.showWinner();
+                self.nextRound();
             }else{
                 self.say(self.challenger.nick + ' has incorrectly guessed the countdown conundrum');
                 self.challenger.hasBuzzed = true;
