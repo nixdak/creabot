@@ -325,7 +325,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
 
-      if (_.reject(letters, function(letter) { return letter === 'c' || letter === 'v'}).length ) {
+      if (_.reject(letters, function(letter) { return letter === 'c' || letter === 'v'}).length === 0) {
         self.say('Your selection should consist only of the letters c and v');
         return false;
       }
@@ -431,8 +431,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
     }
-    if (_.reject(numbers, function(number) { return number === 'l' || number === 's'}).length ) {
+
+    if (_.reject(numbers, function(number) { return number === 'l' || number === 's'}).length !== 0) {
       self.say('Your selection should consist only of the letters l and s');
+      return false;
+    }
+
+    if (_.filter(numbers, function(number) {}).length > 4) {
+      self.say('Your selection should have a maximum of 4 large numbers');
       return false;
     }
 
