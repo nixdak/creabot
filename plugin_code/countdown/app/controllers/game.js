@@ -210,7 +210,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         }
       }
     } else if (self.state === STATES.CONUNDRUM) {
-      self.say('No one got the conundrum the answer was ' + self.table.conundrum);
+      self.say('No one got the conundrum. The answer was ' + self.table.conundrum);
       self.showWinner();
     }
   };
@@ -445,7 +445,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       word = word.toUpperCase();
       if (self.challenged_nick === player) {
         if(!self.challenged.hasBuzzed){
-            if (self.table.conundrum === word) {
+            if (self.table.conundrum_words === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenged.points += 10;
                 self.showWinner();
@@ -456,7 +456,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         } else self.say(player + ' has already Buzzed');
       }else{
         if(!self.challenger.hasBuzzed){
-            if (self.table.conundrum === word) {
+            if (self.table.conundrum_words === word) {
                 self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenger.points += 10;
                 self.showWinner();
