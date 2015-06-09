@@ -37,7 +37,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   self.dictionary = require('../../config/dictionary.json')['words'];
   self.countdown_words = _.filter(self.dictionary, function (word) { return word.length <= 9; });
-  self.conundrum_words = _.filter(self.countdown_words, function (word) { return word.length === 9; });
+  self.conundrum_words = _.shuffle(_.filter(self.countdown_words, function (word) { return word.length === 9; }));
 
   console.log('loading alphabet');
 
@@ -428,11 +428,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     self.setSelector();
 
-    self.answers.conundrum = self.conundrum_words.shift();
+    self.table.conundrum = self.conundrum_words.shift();
 
     self.say('Fingers on buzzers for today\'s countdown conundrum');
     self.say('Use !buzz word to guess the conundrum.');
-    self.say('Conundrum: ' + _.shuffle(self.answers.conundrum).join(''));
+    self.say('Conundrum: ' + _.shuffle(self.table.conundrum).join(''));
 
     self.state = STATES.CONUNDRUM;
     clearInterval(self.roundTimer);
@@ -445,7 +445,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       word = word.toUpperCase();
       if (self.challenged_nick === player) {
         if(!self.challenged.hasBuzzed){
-            if (self.table.conundrum_words === word) {
+            if (self.table.conundrum === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenged.points += 10;
                 self.showWinner();
@@ -456,7 +456,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         } else self.say(player + ' has already Buzzed');
       }else{
         if(!self.challenger.hasBuzzed){
-            if (self.table.conundrum_words === word) {
+            if (self.table.conundrum === word) {
                 self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenger.points += 10;
                 self.showWinner();
