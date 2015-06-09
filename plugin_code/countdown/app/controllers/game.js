@@ -209,7 +209,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
           self.stop();
         }
       }
-    } else if (self.state === CONUNDRUM) {
+    } else if (self.state === STATES.CONUNDRUM) {
       self.say('No one got the conundrum the answer was ' + self.table.conundrum);
       self.showWinner();
     }
