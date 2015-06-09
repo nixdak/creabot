@@ -414,9 +414,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     self.setSelector();
 
-    self.say(self.selector.nick + ' will choose the letters for this round.');
-    self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !letters ccvcvccvv');
-    self.say(self.selector.nick + ': Where c is a consonant and v is a vowel.');
+    self.say(self.selector.nick + ' will choose the Numbers for this round.');
+    self.say(self.selector.nick + ': Choose the Numbers for this round with a command similar to: !select lslsss');
+    self.say(self.selector.nick + ': Where l is a large number and s is a small number.');
   };
 
   /*
@@ -442,6 +442,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   self.playConundrum = function(player, word) {
     if (self.challenged_nick === player || self.challenger_nick === player) {
+      word = word.toUpperCase();
       if (self.challenged_nick === player) {
         if(!self.challenged.hasBuzzed){
             if (self.table.conundrum === word) {
@@ -625,7 +626,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   // client listeners
   client.addListener('part', self.playerPartHandler);
   client.addListener('quit', self.playerQuitHandler);
-  client.addListener('kick'+channel, self.playerKickHandler);
+  client.addListener('kick'+ channel, self.playerKickHandler);
   client.addListener('nick', self.playerNickChangeHandler);
 
 };
