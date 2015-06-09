@@ -32,7 +32,7 @@ var Countdown = function Countdown() {
   };
 
   self.buzz = function (client, message, cmdArgs) {
-    if (!_.isUndefined(self.game) || self.game.state === Game.STATES.CONUNDRUM) {
+    if (!_.isUndefined(self.game) && self.game.state === Game.STATES.CONUNDRUM) {
       if (_.isUndefined(cmdArgs[0])) {
         client.say(message.args[0], 'Please supply a word to the buzz function');
         return false;
@@ -140,7 +140,7 @@ var Countdown = function Countdown() {
 
   self.stop = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
-      client.say(message.args[0], 'No game running to stop.'); 
+      client.say(message.args[0], 'No game running to stop.');
     } else {
       self.game.stop(message.nick, false);
       self.game = undefined;
