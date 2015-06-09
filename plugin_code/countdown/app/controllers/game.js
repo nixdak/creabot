@@ -86,7 +86,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say(player + ' stopped the game.');
     }
 
-    if (self.round > 1) {
+    if (self.round > 1 && gameEnded !== true) {
       self.showPoints();
     }
 
