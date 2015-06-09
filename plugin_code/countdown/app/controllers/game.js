@@ -80,7 +80,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.stop = function (player, gameEnded) {
     console.log('Stopping the game');
-    self.state = STATES.STOPPED;
 
     if (self.challenger_nick === player || self.challenged_nick === player) {
       self.say(player + ' stopped the game.');
@@ -89,7 +88,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.round > 1 && gameEnded !== true) {
       self.showPoints();
     }
+    if (self.state === STATES.conundrum && gameEnded !== true){
+      self.say('No one got the conundrum. The answer was ' + self.table.conundrum);
+    }
 
+    self.state = STATES.STOPPED;
     if (gameEnded !== true) {
       self.say('Game has been stopped.');
     }
@@ -457,10 +460,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Do setup for a conundrum round
    */
   self.conundrumRound = function () {
-    self.state = STATES.LETTERS;
     self.say('Round ' + self.round + ': Conundrum');
-
-    self.setSelector();
 
     self.table.conundrum = self.conundrum_words.shift();
 
