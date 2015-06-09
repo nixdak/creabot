@@ -137,10 +137,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.nextRound = function () {
     clearTimeout(self.stopTimeout);
     // If it is the conundrum round and this method is called, the game is over
-    if (self.config.roundOptions.conundrum === self.round && self.challenged.points !== self.challenger.points) {
+    if (self.state === STATES.CONUNDRUM && self.challenged.points !== self.challenger.points) {
       self.showWinner();
     }else{
-      if(self.config.roundOptions.conundrum === self.round){
+      if(self.state === STATES.CONUNDRUM){
         self.round++;
         console.log('Starting round ', self.round);
         self.challenger.hasPlayed = false;
@@ -221,7 +221,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         }
       }
     } else if (self.state === STATES.CONUNDRUM) {
-      self.say('No one got the conundrum. The answer was ' + self.table.conundrum);
       self.nextRound();
     }
   };
