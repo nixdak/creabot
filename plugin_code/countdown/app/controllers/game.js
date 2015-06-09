@@ -460,7 +460,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Do setup for a conundrum round
    */
   self.conundrumRound = function () {
-    self.say('Round ' + self.round + ': Conundrum');
+    if(0 <= (self.challenged.points - self.challenger.points) && (self.challenged.points - self.challenger.points) <= 10){
+      self.say('Round ' + self.round + ': Crucial Conundrum');
+    }else if (0 <= (self.challenger.points - self.challenged.points) && (self.challenger.points - self.challenged.points) <= 10) {
+      self.say('Round ' + self.round + ': Crucial Conundrum');
+    }else{
+      self.say('Round ' + self.round + ': Conundrum');
+    }
 
     self.table.conundrum = self.conundrum_words.shift();
 
@@ -506,7 +512,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.roundTimerCheck = function() {
     // Check the time
     var now = new Date();
-    var timeLimit = 60 * 1000 * self.config.roundOptions.roundMinutes;
+    if (self.state === STATES.conundrum){
+      var timeLimit = 30 * 1000 * self.config.roundOptions.roundMinutes;
+    }else {
+      var timeLimit = 60 * 1000 * self.config.roundOptions.roundMinutes;
+    }
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed: ' + roundElapsed, now.getTime(), self.roundStarted.getTime());
