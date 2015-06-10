@@ -136,18 +136,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.nextRound = function () {
     clearTimeout(self.stopTimeout);
-    // If it is the conundrum round and this method is called, the game is over
-    if (self.state === STATES.CONUNDRUM && self.challenged.points !== self.challenger.points) {
-      self.showWinner();
-    }else{
-      if(self.state === STATES.CONUNDRUM){
-        self.round++;
-        console.log('Starting round ', self.round);
-        self.challenger.hasPlayed = false;
-        self.challenged.hasPlayed = false;
-        self.conundrumRound();
-      }
-    }
 
     // check that there's enough players in the game and end if we have waited the
     if (_.isUndefined(self.challenger)) {
@@ -221,7 +209,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         }
       }
     } else if (self.state === STATES.CONUNDRUM) {
-      self.nextRound();
+      if (self.challenged.points !== self.challenger.points){
+        self.showWinner();
+      }else{
+        self.nextRound();
+      }
     }
   };
 
@@ -511,11 +503,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.roundTimerCheck = function() {
     // Check the time
     var now = new Date();
-    if (self.state === STATES.conundrum){
-      var timeLimit = 30 * 1000 * self.config.roundOptions.roundMinutes;
-    }else {
-      var timeLimit = 60 * 1000 * self.config.roundOptions.roundMinutes;
-    }
+    var timeLimit = 60 * 1000 * self.config.roundOptions.roundMinutes;
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed: ' + roundElapsed, now.getTime(), self.roundStarted.getTime());
