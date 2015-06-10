@@ -569,6 +569,15 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   /**
+   * Find player
+   * @param search
+   * @returns {*}
+   */
+  self.getPlayer = function (search) {
+      return _.findWhere(self.players, search);
+  };
+
+  /**
    * Helper function for the handlers below
    */
   self.findAndRemoveIfPlaying = function (nick) {

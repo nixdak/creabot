@@ -146,8 +146,8 @@ var Countdown = function Countdown() {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(message.args[0], 'No game running to stop.');
     } else {
-      var player = self.game.getPlayer({nick: nick, hostname: hostname});
-      if (typeof(player) !== 'undefined') {
+      var player = self.game.getPlayer({nick: nick});
+      if (!_.isUndefined(player)) {
         self.game.stop(message.nick, false);
         self.game = undefined;
       }
