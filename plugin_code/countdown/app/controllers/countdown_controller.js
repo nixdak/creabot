@@ -139,11 +139,18 @@ var Countdown = function Countdown() {
   };
 
   self.stop = function (client, message, cmdArgs) {
+    var channel = message.args[0],
+        nick = message.nick,
+        hostname = message.host;
+
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(message.args[0], 'No game running to stop.');
     } else {
-      self.game.stop(message.nick, false);
-      self.game = undefined;
+      var player = self.game.getPlayer({nick: nick, hostname: hostname});
+      if (typeof(player) !== 'undefined') {
+        self.game.stop(message.nick, false);
+        self.game = undefined;
+      }
     }
   };
 };
