@@ -574,7 +574,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * @returns {*}
    */
   self.getPlayer = function (search) {
-      return _.findWhere(self.players, search);
+      if (self.challenger_nick === search){return self.challenger_nick;}
+      if (self.challenged_nick === serach){return self.challenged_nick;}
   };
 
   /**
