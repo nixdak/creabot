@@ -2,7 +2,16 @@ var _ = require('underscore'),
     Game = require('./game'),
     Player = require('../models/player'),
     config = require('../../config/config'),
-    dbModels = require('../../models');
+    dbModels = require('../../models'),
+    fs = require('fs'),
+    util = require('util'),
+    log_file = fs.createWriteStream(__dirname + './debug.log', {flags : 'w'}),
+    log_stdout = process.stdout;
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
 
 var CardsAgainstHumanity = function CardsAgainstHumanity() {
     var self = this;
@@ -296,7 +305,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         client.say(nick, '!start, !cards, !join, !cah #, !stop, !pause, !resume, !status, !discard #, !join, !list, !players, !points, !quit, !ping');
 
     };
-    
+
 };
 
 exports = module.exports = CardsAgainstHumanity;

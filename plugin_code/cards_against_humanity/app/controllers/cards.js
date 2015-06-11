@@ -1,5 +1,14 @@
 var _ = require('underscore'),
-    Card = require('../models/card');
+    Card = require('../models/card'),
+    fs = require('fs'),
+    util = require('util'),
+    log_file = fs.createWriteStream(__dirname + './debug.log', {flags : 'w'}),
+    log_stdout = process.stdout;
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};;
 
 var Cards = function Cards(cards) {
     var self = this;
