@@ -81,8 +81,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.stop = function (player, gameEnded) {
     console.log('Stopping the game');
 
-    if (self.challenger_nick === player || self.challenged_nick === player) {
+    if (self.challenger.nick === player || self.challenged.nick === player) {
       self.say(player + ' stopped the game.');
+    } else {
+      return false;
     }
 
     if (self.round > 1 && gameEnded !== true) {
@@ -139,7 +141,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     // check that there's enough players in the game and end if we have waited the
     if (_.isUndefined(self.challenger)) {
-      self.say('Waiting for ' + self.challenger_nick + '. Stopping in ' +
+      self.say('Waiting for ' + self.challenger.nick + '. Stopping in ' +
         self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
         ' if they don\'t join.'
       );
@@ -183,10 +185,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       console.log(self.challenged.hasPlayed);
 
       if (!self.challenger.hasPlayed) {
-        self.say(self.challenger_nick + ' has idled. ' + self.challenged_nick + ' wins by default. Stopping the game.');
+        self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
         self.stop();
       } else if (!self.challenged.hasPlayed) {
-        self.say(self.challenged_nick + ' has idled. ' + self.challenger_nick + ' wins by default. Stopping the game.');
+        self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
         self.stop();
       } else {
         console.log('In the round end else statement');
@@ -201,10 +203,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.nextRound();
       } else {
         if (!self.challenger.hasPlayed) {
-          self.say(self.challenger_nick + ' has idled. ' + self.challenged_nick + ' wins by default. Stopping the game.');
+          self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
           self.stop();
         } else {
-          self.say(self.challenged_nick + ' has idled. ' + self.challenger_nick + ' wins by default. Stopping the game.');
+          self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
           self.stop();
         }
       }
@@ -368,7 +370,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   self.playLetters = function (player, word) {
     word = word.toUpperCase();
-    if (self.challenger_nick === player || self.challenged_nick === player) {
+    if (self.challenger.nick === player || self.challenged.nick === player) {
       // If letter is too long/short and uses letters not available to the player
       if (word.length <= 2 || word.length > 9) {
         self.pm(player, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
@@ -393,10 +395,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.pm(player, 'Your word must not reuse any letters more than they appear, and must only use letters that have been slected for this round');
         return false;
       } else {
-        if (self.challenger_nick === player) {
+        if (self.challenger.nick === player) {
           self.answers.challenger = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
           self.challenger.hasPlayed = true;
-        } else if (self.challenged_nick === player) {
+        } else if (self.challenged.nick === player) {
           self.answers.challenged = { word: word, valid: _.contains(self.countdown_words, word.toUpperCase()) };
           self.challenged.hasPlayed = true;
         }
@@ -478,9 +480,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   self.playConundrum = function(player, word) {
-    if (self.challenged_nick === player || self.challenger_nick === player) {
+    if (self.challenged.nick === player || self.challenger.nick === player) {
       word = word.toUpperCase();
-      if (self.challenged_nick === player) {
+      if (self.challenged.nick === player) {
         if(!self.challenged.hasBuzzed){
             if (self.table.conundrum === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
@@ -520,20 +522,20 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       // Do something
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
       self.say('10 seconds left!');
-      self.pm(self.challenger_nick, '10 seconds left');
-      self.pm(self.challenged_nick, '10 seconds left');
+      self.pm(self.challenger.nick, '10 seconds left');
+      self.pm(self.challenged.nick, '10 seconds left');
     } else if (roundElapsed >= timeLimit - (20 * 1000) && roundElapsed < timeLimit - (10 * 1000)) {
       self.say('20 seconds left!');
-      self.pm(self.challenged_nick, '20 seconds left');
-      self.pm(self.challenger_nick, '20 seconds left');
+      self.pm(self.challenger.nick, '20 seconds left');
+      self.pm(self.challenged.nick, '20 seconds left');
     } else if (roundElapsed >= timeLimit - (30 * 1000) && roundElapsed < timeLimit - (20 * 1000)) {
       self.say('30 seconds left!');
-      self.pm(self.challenged_nick, '30 seconds left');
-      self.pm(self.challenger_nick, '30 seconds left');
+      self.pm(self.challenger.nick, '30 seconds left');
+      self.pm(self.challenged.nick, '30 seconds left');
     } else if (roundElapsed >= timeLimit - (60 * 1000) && roundElapsed < timeLimit - (50 * 1000)) {
       self.say('1 minute left!');
-      self.pm(self.challenger_nick, '1 minute left');
-      self.pm(self.challenged_nick, '1 minute left');
+      self.pm(self.challenger.nick, '1 minute left');
+      self.pm(self.challenged.nick, '1 minute left');
     }
   };
 
@@ -544,10 +546,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.addPlayer = function (player) {
     console.log('Adding player')
-    if (player.nick === self.challenger_nick) {
+    if (player.nick === self.challenger.nick) {
       self.challenger = player;
       console.log('Adding challenger');
-    } else if (player.nick === self.challenged_nick) {
+    } else if (player.nick === self.challenged.nick) {
       self.challenged = player;
       console.log('Adding challenged')
     } else {
@@ -575,23 +577,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   /**
-   * Find player
-   * @param search
-   * @returns {*}
-   */
-  self.getPlayer = function (search) {
-      if (self.challenger_nick === search){return self.challenger_nick;}
-      if (self.challenged_nick === serach){return self.challenged_nick;}
-  };
-
-  /**
    * Helper function for the handlers below
    */
   self.findAndRemoveIfPlaying = function (nick) {
-    var player = self.getPlayer({nick: nick});
+    if (self.challenger.nick === nick || self.challenged.nick === nick) {
 
-    if (!_.isUndefined(player)) {
-      self.removePlayer(player);
     }
   };
 
@@ -639,11 +629,31 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * @param message
    */
   self.playerNickChangeHandler = function (oldnick, newnick, channels, message) {
-    console.log('Player changed nick from ' + oldnick + ' to ' + newnick);
-    var player = self.getPlayer({nick: oldnick});
-    if (!_.isUndefined(player)) {
-      player.nick = newnick;
+    if (!_.isUndefined(self.challenger)) {
+      if (self.challenger.nick === oldnick) {
+        self.challenger.nick === newnick;
+        return true;
+      }
+    } else {
+      if (self.challenger_nick === oldnick) {
+        self.challenger_nick === new nick;
+        return true
+      }
     }
+
+    if (!_.isUndefined(self.challneged)) {
+      if (self.challenged.nick === oldnick) {
+        self.challenged.nick === newnick;
+        return true;
+      }
+    } else {
+      if (self.challenged_nick === oldnick) {
+        self.challenged_nick === new nick;
+        return true;
+      }
+    }
+
+    return false;
   };
 
   self.say = function (string) {
