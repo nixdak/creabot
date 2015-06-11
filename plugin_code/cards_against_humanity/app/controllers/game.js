@@ -416,7 +416,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
       _.each(self.players, function (player) {
         if (player.isCzar !== true && player.isActive === true) {
           self.showCards(player);
-          self.pm(player, "Play cards with !cah");
+          self.pm(player.nick, "Play cards with !cah");
         }
       });
 
