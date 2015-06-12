@@ -2,24 +2,8 @@ var _ = require('underscore'),
     Game = require('./game'),
     Player = require('../models/player'),
     config = require('../../config/config'),
-    dbModels = require('../../models'),
-    fs = require('fs'),
-    util = require('util');
+    dbModels = require('../../models');
 
-fs.open(../../logs/debug.log, "wx", function (err, fd) {
-  // handle error
-  fs.close(fd, function (err) {
-    // handle error
-  });
-});
-var log_file = fs.createWriteStream(__dirname + '../../logs/debug.log', {flags : 'w'}),
-    log_stdout = process.stdout;
-
-
-console.log = function(d) { //
-  log_file.write(util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
-};
 
 var CardsAgainstHumanity = function CardsAgainstHumanity() {
     var self = this;

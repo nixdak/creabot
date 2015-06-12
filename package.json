@@ -16,6 +16,8 @@
     "inflection": "latest",
     "sequelize": "latest",
     "sequelize-cli": "latest",
-    "mariasql": "latest"
+    "mariasql": "latest",
+    "fs": "latest",
+    "util": "latest",
   }
 }
