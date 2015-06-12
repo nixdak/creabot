@@ -5,8 +5,11 @@ var _ = require('underscore'),
     dbModels = require('../../models'),
     fs = require('fs'),
     util = require('util'),
-    log_file = fs.createWriteStream(__dirname + './debug.log', {flags : 'w'}),
+    touch = require("touch");
+    touch(../../logs/debug.log);
+var log_file = fs.createWriteStream(__dirname + '../../logs/debug.log', {flags : 'w'}),
     log_stdout = process.stdout;
+
 
 console.log = function(d) { //
   log_file.write(util.format(d) + '\n');
