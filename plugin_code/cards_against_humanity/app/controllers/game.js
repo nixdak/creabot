@@ -71,8 +71,8 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
     }
   };
 
-  self.updateGameDatabaseRecordGameOver = function (limitReached) {
-    if (self.config.gameOptions.database === true) {
+  self.updateGameDatabaseRecordGameOver = function (limitReached, config) {
+    if (config.gameOptions.database === true) {
       if (limitReached) {
         // Get winning player
         winner = self.getPlayer({points: self.pointLimit});
@@ -277,9 +277,9 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
 
       if (pointLimitReached !== true) {
         self.say('Game has been stopped.');
-        self.updateGameDatabaseRecordGameOver(false);
+        self.updateGameDatabaseRecordGameOver(false, self.config);
       } else {
-        self.updateGameDatabaseRecordGameOver(true);
+        self.updateGameDatabaseRecordGameOver(true, self.config);
       }
 
       // Update points table
