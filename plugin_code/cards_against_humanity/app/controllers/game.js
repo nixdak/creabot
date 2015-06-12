@@ -6,9 +6,14 @@ var util = require('util'),
     Cards = require('../controllers/cards'),
     Card = require('../models/card'),
     fs = require('fs'),
-    util = require('util'),
-    touch = require("touch");
-    touch(../../logs/debug.log);
+    util = require('util');
+
+fs.open(../../logs/debug.log, "wx", function (err, fd) {
+  // handle error
+  fs.close(fd, function (err) {
+    // handle error
+  });
+});
 var log_file = fs.createWriteStream(__dirname + '../../logs/debug.log', {flags : 'w'}),
     log_stdout = process.stdout;
 
