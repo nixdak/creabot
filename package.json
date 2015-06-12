@@ -16,6 +16,7 @@
     "inflection": "latest",
     "sequelize": "latest",
     "sequelize-cli": "latest",
-    "mariasql": "latest"
+    "mariasql": "latest",
+    "nodemon": "latest"
   }
 }
