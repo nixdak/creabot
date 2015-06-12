@@ -8,6 +8,7 @@ var util = require('util'),
     fs = require('fs'),
     util = require('util'),
     log_file = fs.createWriteStream('../../../logs/CAHdebug.log', {flags : 'a'}),
+    log_file = fs.createWriteStream('../../logs/debug.log', {flags : 'a'}),
     log_stdout = process.stdout;
 
 console.log = function(d) {
