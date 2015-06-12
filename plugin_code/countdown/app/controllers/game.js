@@ -439,7 +439,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       return false;
     }
 
-    if (_.filter(numbers, function(number) {}).length > 4) {
+    if (_.filter(numbers, function(number) { return number === 'l' }).length > 4) {
       self.say('Your selection should have a maximum of 4 large numbers');
       return false;
     }
