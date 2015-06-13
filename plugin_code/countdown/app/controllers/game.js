@@ -1,7 +1,8 @@
 var c = require('irc-colors'),
     _ = require('underscore'),
     fs = require('fs'),
-    inflection = require('inflection');
+    inflection = require('inflection'),
+    mathjs = require('mathjs');
 
 var STATES = {
   STOPPED: 'Stopped',
@@ -30,6 +31,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.challenger = challenger;
   self.challenged = challenged;
   self.vowel_array = ['A', 'E', 'I', 'O', 'U'];
+  self.valid_numbers_characters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ' ', '+', '-', '*', '/', '(', ')'];
 
   console.log(self.channel);
 
@@ -337,14 +339,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   /*
    * Process letter selection by player
    */
-  self.letters = function(player, letters) {
+  self.letters = function (player, letters) {
     if (self.selector.nick === player) {
       if (letters.length !== 9) {
         self.say('You must provide a selection of 9 consonants or vowels.');
         return false;
       }
 
-      if (_.reject(letters, function(letter) { return letter === 'c' || letter === 'v'}).length !== 0) {
+      if (_.reject(letters, function (letter) { return letter === 'c' || letter === 'v'}).length !== 0) {
         self.say('Your selection should consist only of the letters c and v');
         return false;
       }
@@ -450,7 +452,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   /*
    * Process number selection by player
    */
-  self.number = function(player, numbers) {
+  self.number = function (player, numbers) {
     if (self.selector.nick === player) {
       if (numbers.length !== 6) {
         self.say('You must provide a selection of 6 numbers.');
@@ -458,12 +460,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     }
 
-    if (_.reject(numbers, function(number) { return number === 'l' || number === 's'}).length !== 0) {
+    if (_.reject(numbers, function (number) { return number === 'l' || number === 's'}).length !== 0) {
       self.say('Your selection should consist only of the letters l and s');
       return false;
     }
 
-    if (_.filter(numbers, function(number) { return number === 'l' }).length > 4) {
+    if (_.filter(numbers, function (number) { return number === 'l' }).length > 4) {
       self.say('Your selection should have a maximum of 4 large numbers');
       return false;
     }
@@ -478,6 +480,48 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     clearInterval(self.roundTimer);
   }
+
+  self.playNumbers = function (player, expression) {
+    if (self.challenger.nick === player || self.challenged.nick === player) {
+      // If the expression uses invalid characters
+      if (_.reject(expression, function (number) { return _.contains(self.vaild_numbers_characters, number) === true; }).length !== 0) {
+        self.pm(player, 'Your maths contains illegal characters');
+        return false;
+      }
+
+      // If the expression uses numbers that are not in the selected numbers or reuses numbers
+      var numbers = _.clone(self.table.numbers);
+      var valid = true;
+      var playerNumbers = numbers.match(/\d+/g);
+
+      for (var i = 0; i < playerNumbers.length; i++) {
+        if (_.contains(numbers, playerNumbers[i])) {
+          console.log(numbers);
+          letters.splice(_.indexOf(numbers, playerNumbers[i]), 1);
+        } else {
+          valid = false;
+          break;
+        }
+      }
+
+      if (valid !== true) {
+        self.pm(player, 'Your expression must only use selected numbers and must not reuse numbers more times than they appear');
+        return false;
+      }
+
+      // If the expression isn't a whole number or isn't positive
+      if (mathjs.eval(expression) <= 0) {
+        self.pm(player, 'Your expression result in a positive number. Your expression result is :' + math.eval(expression))
+      }
+
+
+      if (self.challenger.nick === player) {
+        self.answers.challenger = { expression: expression, value: mathjs.eval(expression) };
+      } else if (self.challenged.nick === player) {
+        self.answers.challenged = { expression: expression, value: mathjs.eval(expression) };
+      }
+    }
+  };
 
   /*
    * Do setup for a conundrum round

@@ -17,6 +17,7 @@
     "sequelize": "latest",
     "sequelize-cli": "latest",
     "mariasql": "latest",
-    "nodemon": "latest"
+    "nodemon": "latest",
+    "mathjs": "latest"
   }
 }
