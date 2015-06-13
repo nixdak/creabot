@@ -27,8 +27,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.config = config;
   self.state = STATES.STARTED;
   self.idleWaitCount = 0;
-  self.challenger_nick = challenger;
-  self.challenged_nick = challenged;
+  self.challenger = challenger;
+  self.challenged = challenged;
   self.vowel_array = ['A', 'E', 'I', 'O', 'U'];
 
   console.log(self.channel);
@@ -81,7 +81,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.stop = function (player, gameEnded) {
     console.log('Stopping the game');
 
-    if (self.challenger_nick === player || self.challenged_nick === player) {
+    if (self.challenger.nick === player || self.challenged.nick === player) {
       self.say(player + ' stopped the game.');
     } else {
       return false;
@@ -140,8 +140,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     clearTimeout(self.stopTimeout);
 
     // check that there's enough players in the game and end if we have waited the
-    if (_.isUndefined(self.challenger)) {
-      self.say('Waiting for ' + self.challenger_nick + '. Stopping in ' +
+    if (self.challenger.isJoined === false;) {
+      self.say('Waiting for ' + self.challenger.nick + '. Stopping in ' +
         self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
         ' if they don\'t join.'
       );
@@ -569,11 +569,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.addPlayer = function (player) {
     console.log('Adding player')
-    if (self.challenger_nick === player.nick) {
-      self.challenger = player;
+    if (self.challenger.nick === player.nick) {
+      self.challenger.joined = true;
       console.log('Adding challenger');
-    } else if (self.challenged_nick === player.nick) {
-      self.challenged = player;
+    } else if (self.challenged.nick === player.nick) {
+      self.challenged.joined = true;
       console.log('Adding challenged')
     } else {
       self.say('Sorry, but you cannot join this game');
@@ -671,28 +671,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * @param message
    */
   self.playerNickChangeHandler = function (oldnick, newnick, channels, message) {
-    if (!_.isUndefined(self.challenger)) {
-      if (self.challenger.nick === oldnick) {
-        self.challenger.nick === newnick;
-        return true;
-      }
-    } else {
-      if (self.challenger_nick === oldnick) {
-        self.challenger_nick === new nick;
-        return true
-      }
-    }
-
-    if (!_.isUndefined(self.challenged)) {
-      if (self.challenged.nick === oldnick) {
-        self.challenged.nick === newnick;
-        return true;
-      }
-    } else {
-      if (self.challenged_nick === oldnick) {
-        self.challenged_nick === new nick;
-        return true;
-      }
+    if (self.challenger.nick === oldnick) {
+      self.challenger.nick === newnick;
+      return true;
+    } else if (self.challenged.nick === oldnick) {
+      self.challenged.nick === newnick;
+      return true;
     }
 
     return false;

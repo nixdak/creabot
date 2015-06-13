@@ -23,8 +23,9 @@ var Countdown = function Countdown() {
         self.challenge(client, message, cmdArgs);
       } else {
         self.game = new Game(channel, client, self.config, cmdArgs[0], message.nick);
-        var player = new Player(message.nick, message.user, message.host);
-        self.game.addPlayer(player);
+        var challenged = new Player(message.nick, message.user, message.host);
+        var challenged = new Player(message.nick, message.user, message.host);
+        
       }
     } else {
       client.say('Sorry, challenges cannot currently be accepted');
