@@ -327,7 +327,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
 
-      if (_.reject(letters, function(letter) { return letter === 'c' || letter === 'v'}).length === 0) {
+      if (_.reject(letters, function(letter) { return letter === 'c' || letter === 'v'}).length !== 0) {
         self.say('Your selection should consist only of the letters c and v');
         return false;
       }
