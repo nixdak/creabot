@@ -570,10 +570,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.addPlayer = function (player) {
     console.log('Adding player: ' + player.nickx);
     if (self.challenger.nick === player.nick) {
-      self.challenger.joined = true;
+      self.challenger.hasJoined = true;
       console.log('Adding challenger');
     } else if (self.challenged.nick === player.nick) {
-      self.challenged.joined = true;
+      self.challenged.hasJoined = true;
       console.log('Adding challenged')
     } else {
       self.say('Sorry, but you cannot join this game');
