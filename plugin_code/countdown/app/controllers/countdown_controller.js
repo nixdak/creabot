@@ -24,7 +24,7 @@ var Countdown = function Countdown() {
       } else {
         var challenger = new Player(cmdArgs[0]);
         var challenged = new Player(message.nick);
-        self.game = new Game(channel, client, self.config, cmdArgs[0], message.nick, challenger, challenged);
+        self.game = new Game(channel, client, self.config, challenger, challenged);
         self.game.addPlayer(challenged);
       }
     } else {
