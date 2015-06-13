@@ -568,7 +568,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * @returns The new player or false if invalid player
    */
   self.addPlayer = function (player) {
-    console.log('Adding player')
+    console.log('Adding player: ' + player.nick);
     if (self.challenger.nick === player.nick) {
       self.challenger.joined = true;
       console.log('Adding challenger');
