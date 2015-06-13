@@ -181,7 +181,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Declare round winner
    * Start next round
    */
-  self.roundEnd = function() {
+  self.roundEnd = function () {
     clearInterval(self.roundTimer);
     if (self.state === STATES.PLAY_LETTERS) {
       self.state = STATES.LETTERS_ROUND_END;
@@ -224,7 +224,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
   };
 
-  self.letterRoundEnd = function() {
+  self.letterRoundEnd = function () {
     // Show selections
     console.log('In letterRoundEnd')
     self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
@@ -308,7 +308,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.showPoints();
   };
 
-  self.setSelector = function() {
+  self.setSelector = function () {
     if (self.round === 1) {
       // Set the selector as the player who accepted the challenge
       self.challenged.selectRound = true;
@@ -547,7 +547,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
   };
 
-  self.playConundrum = function(player, word) {
+  self.playConundrum = function (player, word) {
     if (self.challenged.nick === player || self.challenger.nick === player) {
       word = word.toUpperCase();
       if (self.challenged.nick === player) {
@@ -576,7 +576,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
   }
 
-  self.roundTimerCheck = function() {
+  self.roundTimerCheck = function () {
     // Check the time
     var now = new Date();
     var timeLimit = 60 * 1000 * self.config.roundOptions.roundMinutes;
