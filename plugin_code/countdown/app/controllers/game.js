@@ -592,12 +592,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.challenger.nick === player) {
       if (self.challenger.isLocked !== true) {
         self.say(player + ' has locked in their answer');
-        self.challenger.isLocked === true;
+        self.challenger.isLocked = true;
       }
     } else if (self.challenged.nick === player) {
       if (self.challenger.isLocked !== true) {
         self.say(player + ' has locked in their answer');
-        self.challenged.isLocked === true;
+        self.challenged.isLocked = true;
       }
     }
 
