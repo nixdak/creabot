@@ -380,7 +380,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
 
     } else {
-      self.say(player.nick + ': It isn\'t your turn to choose the letters');
+      self.say(player + ': It isn\'t your turn to choose the letters');
     }
   };
 
@@ -389,7 +389,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.challenger.nick === player || self.challenged.nick === player) {
 
       if ((self.challenger.nick === player && self.challenger.isLocked === true) || 
-          (self.challenged.nick === player && self.challenger.isLocked === true)) {
+          (self.challenged.nick === player && self.challenged.isLocked === true)) {
         self.pm(player, "You cannot play anymore words as you have locked in your answer for this round");
         return false;
       }
