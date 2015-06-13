@@ -265,6 +265,20 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.challenged.points += self.answers.challenged.word.length;
       self.challenger.points += self.answers.challenger.word.length;
     }
+    //if challenger is not valid and challenged is and they have same length
+    else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
+        (self.answers.challenger.valid !== true && self.answers.challenged.valid === true)) {
+      self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' ' +
+        inflection.inflect('points', self.answers.challenged.word.length));
+      self.challenged.points += self.answers.challenged.word.length;
+    }
+    //if challenged is not valid and challenger is and they have same length
+    else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
+        (self.answers.challenged.valid !== true && self.answers.challenger.valid === true)) {
+      self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + ' ' +
+        inflection.inflect('points', self.answers.challenger.word.length));
+      self.challenger.points += self.answers.challenger.word.length;
+    }
     // Neither player played a valid word
     else {
       self.say('Neither player played a valid word and have scored 0 points');
