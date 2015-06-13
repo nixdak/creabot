@@ -36,8 +36,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   console.log('Loading dictionary');
 
   self.dictionary = require('../../config/dictionary.json')['words'];
+  self.conundrums = requirerequire('../../config/conundrums.json')['words'];
   self.countdown_words = _.filter(self.dictionary, function (word) { return word.length <= 9; });
-  self.conundrum_words = _.shuffle(_.filter(self.countdown_words, function (word) { return word.length === 9; }));
+  self.conundrum_words = _.shuffle(_.map(self.conundrums, function (word) { return word.toUpperCase(); }));
 
   console.log('loading alphabet');
 
@@ -329,7 +330,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.setSelector();
 
     self.say(self.selector.nick + ' will choose the letters for this round.');
-    self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !select ccvcvccvv');
+    self.say(self.selector.nick + ': Choose the letters for this round with a command similar to: !cd ccvcvccvv');
     self.say(self.selector.nick + ': Where c is a consonant and v is a vowel.');
   };
 
