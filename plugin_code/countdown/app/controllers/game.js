@@ -672,10 +672,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.playerNickChangeHandler = function (oldnick, newnick, channels, message) {
     if (self.challenger.nick === oldnick) {
-      self.challenger.nick === newnick;
+      self.challenger.nick = newnick;
       return true;
     } else if (self.challenged.nick === oldnick) {
-      self.challenged.nick === newnick;
+      self.challenged.nick = newnick;
       return true;
     }
 
