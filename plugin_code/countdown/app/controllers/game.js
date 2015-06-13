@@ -546,10 +546,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.addPlayer = function (player) {
     console.log('Adding player')
-    if (player.nick === self.challenger.nick) {
+    if (self.challenger.nick === player) {
       self.challenger = player;
       console.log('Adding challenger');
-    } else if (player.nick === self.challenged.nick) {
+    } else if (self.challenged.nick === player) {
       self.challenged = player;
       console.log('Adding challenged')
     } else {
