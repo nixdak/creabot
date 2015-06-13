@@ -13,6 +13,7 @@ var Player = function Player(nick, user, hostname) {
   self.selectRound = false;
   self.hasSelected = false;
   self.hasBuzzed = false;
+  self.isLocked = false;
 };
 
 module.exports = exports = Player;

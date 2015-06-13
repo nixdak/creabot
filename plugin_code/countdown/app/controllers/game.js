@@ -156,7 +156,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.round++;
     console.log('Starting round ', self.round);
     self.challenger.hasPlayed = false;
+    self.challenger.isLocked = false;
     self.challenged.hasPlayed = false;
+    self.challenged.isLocked = false;
 
     if (self.config.roundOptions.letters.indexOf(self.round) !== -1) {
       console.log('Letters round');
@@ -385,6 +387,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.playLetters = function (player, word) {
     word = word.toUpperCase();
     if (self.challenger.nick === player || self.challenged.nick === player) {
+
+      if ((self.challenger.nick === player && self.challenger.isLocked === true) || 
+           self.challenged.nick === player && self.challenger.isLocked === true)) {
+        self.pm(player, "You cannot play anymore words as you have locked in your answer for this round");
+        return false;
+      }
+
       // If letter is too long/short and uses letters not available to the player
       if (word.length <= 2 || word.length > 9) {
         self.pm(player, 'Your word must be between 3 and 9 letters long and only use the characters available for this round.');
@@ -579,6 +588,25 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     return player;
   };
 
+  self.lock = function (player) {
+    if (self.challenger.nick === player) {
+      if (self.challenger.isLocked !== true) {
+        self.say(player + ' has locked in their answer');
+        self.challenger.isLocked === true;
+      }
+    } else if (self.challenged.nick === player) {
+      if (self.challenger.isLocked !== true) {
+        self.say(player + ' has locked in their answer');
+        self.challenged.isLocked === true;
+      }
+    }
+
+    if (self.challenger.isLocked && self.challenged.isLocked) {
+      self.say('Both players have locked their answers. Ending the round');
+      self.roundEnd();
+    }
+  };
+
   self.showPoints = function () {
     if (self.round === 0 ) {
       self.say('The game hasn\'t begun yet');
@@ -655,7 +683,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     }
 
-    if (!_.isUndefined(self.challneged)) {
+    if (!_.isUndefined(self.challenged)) {
       if (self.challenged.nick === oldnick) {
         self.challenged.nick === newnick;
         return true;

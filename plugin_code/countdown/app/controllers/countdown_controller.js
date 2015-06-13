@@ -92,6 +92,14 @@ var Countdown = function Countdown() {
     }
   };
 
+  self.lock = function (client, message, cmdArgs) {
+    if (!_.isUndefined(self.game) && (self.game.state === Game.STATES.PLAY_LETTERS || self.game.state === Game.STATES.PLAY_NUMBERS)) {
+      self.game.lock(message.nick);
+    } else {
+      client.say(message.args[0], 'The lock command is not available right now');
+    }
+  };
+
   self.play = function (client, message, cmdArgs) {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_LETTERS) {
       var args;
