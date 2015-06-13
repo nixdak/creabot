@@ -81,7 +81,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.stop = function (player, gameEnded) {
     console.log('Stopping the game');
 
-    if (self.challenger.nick === player || self.challenged.nick === player) {
+    if (self.challenger_nick === player || self.challenged_nick === player) {
       self.say(player + ' stopped the game.');
     } else {
       return false;
