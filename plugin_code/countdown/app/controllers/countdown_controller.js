@@ -22,10 +22,10 @@ var Countdown = function Countdown() {
         client.say(channel, 'You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
-        self.game = new Game(channel, client, self.config, cmdArgs[0], message.nick);
         var challenged = new Player(message.nick, message.user, message.host);
         var challenged = new Player(message.nick, message.user, message.host);
-        
+        self.game = new Game(channel, client, self.config, cmdArgs[0], message.nick, challenger, challenged);
+        self.game.addPlayer(challenged);
       }
     } else {
       client.say('Sorry, challenges cannot currently be accepted');
