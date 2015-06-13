@@ -5,8 +5,6 @@ var Player = function Player(nick, user, hostname, joined) {
 
   self.id = _.uniqueId('player');
   self.nick = nick;
-  self.user = user;
-  self.hostname = hostname;
   self.hasJoined = false;
   self.hasPlayed = false;
   self.points = 0;
