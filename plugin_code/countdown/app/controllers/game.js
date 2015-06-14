@@ -542,7 +542,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   /*
    * Process number selection by player
    */
-  self.number = function (player, numbers) {
+  self.numbers = function (player, numbers) {
     if (self.selector.nick === player) {
       if (numbers.length !== 6) {
         self.say('You must provide a selection of 6 numbers.');
