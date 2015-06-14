@@ -597,8 +597,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.playNumbers = function (player, expression) {
     if (self.challenger.nick === player || self.challenged.nick === player) {
       // If the expression uses invalid characters
-      if (_.reject(expression, function (number) { return _.contains(self.vaild_numbers_characters, number) === true; }).length !== 0) {
-        console.log(_.reject(expression, function (number) { return _.contains(self.vaild_numbers_characters, number) === true; }));
+      if (_.reject(expression, function (number) { return _.contains(self.valid_numbers_characters, number) === true; }).length !== 0) {
         self.pm(player, 'Your maths contains illegal characters');
         return false;
       }
