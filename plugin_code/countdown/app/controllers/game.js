@@ -570,12 +570,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.table.target = Math.floor(Math.random() * 899) + 100;
 
       clearInterval(self.roundTimer);
-      self.say('Numbers for this round: ' + self.table.letters.join(' ') + ' and the target is: ' + self.table.target);
+      self.say('Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
       self.say(self.config.roundOptions.numbersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) +
         ' on the clock'
       );
 
-      self.pm(self.challenger.nick, 'Numbers for this round: ' + self.table.letters.join(' ') + ' and the target is: ' + self.table.target);
+      self.pm(self.challenger.nick, 'Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
       self.pm(self.challenger.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
         inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
       );
@@ -587,7 +587,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
       );
 
-      self.state = STATES.PLAY_LETTERS;
+      self.state = STATES.PLAY_NUMBERS;
       clearInterval(self.roundTimer);
       self.roundStarted = new Date();
       self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
@@ -700,23 +700,21 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       } else {
         timeLimit = 60 * 1000 * 2;
       }
-    }
-
-    if (self.state === STATES.PLAY_NUMBERS) {
+    } else if (self.state === STATES.PLAY_NUMBERS) {
       if (!_.isUndefined(self.config.roundOptions.numbersRoundMinutes)) {
         timeLimit = 60 * 1000 * self.config.roundOptions.numbersRoundMinutes;
       } else {
         timeLimit = 60 * 1000 * 5;
       }
-    }
-
-    if (self.state === STATES.CONUNDRUM) {
+    } else  if (self.state === STATES.CONUNDRUM) {
       if (!_.isUndefined(self.config.roundOptions.conundrumRoundMinutes)) {
         timeLimit = 60 * 1000 * self.config.roundOptions.conundrumRoundMinutes;
       } else {
         timeLimit = 60 * 1000 * 2;
       }
     }
+
+    console.log(timeLimit);
 
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
