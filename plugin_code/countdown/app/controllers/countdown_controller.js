@@ -16,13 +16,13 @@ var Countdown = function Countdown() {
       var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
-      if (_.isUndefined(cmdArgs[0])) {
+      if (_.isUndefined(cmdArgs)) {
         client.say(channel, 'Please supply a nick with this command');
-      } else if (!_.contains(challengers, cmdArgs[0])) {
+      } else if (!_.contains(challengers, cmdArgs)) {
         client.say(channel, 'You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
-        var challenger = new Player(cmdArgs[0]);
+        var challenger = new Player(cmdArgs);
         var challenged = new Player(message.nick);
         self.game = new Game(channel, client, self.config, challenger, challenged);
         self.game.addPlayer(challenged);
@@ -34,7 +34,7 @@ var Countdown = function Countdown() {
 
   self.buzz = function (client, message, cmdArgs) {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.CONUNDRUM) {
-      if (_.isUndefined(cmdArgs[0])) {
+      if (_.isUndefined(cmdArgs)) {
         client.say(message.args[0], 'Please supply a word to the buzz function');
         return false;
       } else {
@@ -47,7 +47,7 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
-    if (_.isUndefined(cmdArgs[0])) {
+    if (_.isUndefined(cmdArgs)) {
       client.say(channel, 'Please supply a nick with this command');
     } else if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs[0] })) {
       self.challenges.push({ challenger: message.nick, challenged: cmdArgs[0] });
@@ -105,21 +105,17 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_LETTERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs[0])) {
+      if (_.isUndefined(cmdArgs)) {
         client.say(message.args[0], 'Please supply arguments to the !cd command.');
         return false;
       }
 
-      if (cmdArgs.length > 1) {
-        args = cmdArgs.join('');
-      } else {
-        args = cmdArgs[0];
-      }
+      args = cmdArgs.split(' ').join('');
 
       self.game.playLetters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_NUMBERS) {
-      if (_.isUndefined(cmdArgs[0])) {
-        client.say(message.args[0], 'Please supply arguments to the !cd command.');
+      if (_.isUndefined(cmdArgs)) {
+        client.say(message.args, 'Please supply arguments to the !cd command.');
         return false;
       }
 
@@ -133,22 +129,18 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs[0])) {
+      if (_.isUndefined(cmdArgs)) {
         client.say(message.args[0], 'Please supply arguments to the !select command');
         return false;
       }
 
-      if (cmdArgs.length > 1) {
-        args = cmdArgs;
-      } else {
-        args = cmdArgs[0].split('');
-      }
+      args = cmdArgs.split('');
 
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs[0])) {
+      if (_.isUndefined(cmdArgs)) {
         client.say(message.args[0], 'Please supply arguments to the !select command');
         return false;
       }
