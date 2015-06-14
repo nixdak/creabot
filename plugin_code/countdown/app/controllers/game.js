@@ -157,6 +157,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     self.round++;
+    self.showPoints();
     console.log('Starting round ', self.round);
     self.challenger.hasPlayed = false;
     self.challenger.isLocked = false;
@@ -304,8 +305,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     self.vowels = _.shuffle(_.shuffle(self.vowels));
     self.consonants = _.shuffle(_.shuffle(self.consonants));
-
-    self.showPoints();
   };
 
   self.numberRoundEnd = function () {
@@ -391,8 +390,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     self.small = _.shuffle(_.shuffle(self.small));
     self.large = _.shuffle(_.shuffle(self.large));
-
-    self.showPoints();
   };
 
   self.setSelector = function () {
@@ -784,11 +781,30 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
   };
 
+  /*
+   * Set the channel topic
+   */
+  self.setTopic = function (topic) {
+    // ignore if not configured to set topic
+    if (typeof config.gameOptions.setTopic === 'undefined' || !config.gameOptions.setTopic) {
+      return false;
+    }
+
+    // construct new topic
+    var newTopic = topic;
+    if (typeof config.gameOptions.topicBase !== 'undefined') {
+      newTopic = topic + ' ' + config.gameOptions.topicBase;
+    }
+
+    // set it
+    client.send('TOPIC', channel, newTopic);
+  };
+
   self.showPoints = function () {
     if (self.round === 0 ) {
       self.say('The game hasn\'t begun yet');
     } else {
-      self.say('Round ' + self.round + ': ' + self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick + 
+      self.setTopic('Round ' + self.round + ': ' + self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick + 
         ' has ' + self.challenger.points + ' points.'
       );
     }
