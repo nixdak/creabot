@@ -778,7 +778,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.challenger.isLocked = true;
       }
     } else if (self.challenged.nick === player) {
-      if (self.challenger.isLocked !== true) {
+      if (self.challenged.isLocked !== true) {
         self.say(player + ' has locked in their answer');
         self.challenged.isLocked = true;
       }
