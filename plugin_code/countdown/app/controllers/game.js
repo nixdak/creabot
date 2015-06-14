@@ -355,7 +355,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.challenged.points += 5;
       }
     } else if (challenged_difference === challenger_difference) {
-      if (self.answers.challenger.value === self.table.target && self.answer.challenged === self.table.target) {
+      if (self.answers.challenger.value === self.table.target && self.answers.challenged === self.table.target) {
         self.say(self.challenged.nick + ' hit the target of ' + self.table.target + ' with ' + self.answers.challenged.expression);
         self.say(self.challenger.nick + ' hit the target of ' + self.table.target + ' with ' + self.answers.challenger.expression);
         self.say('Both players have hit the target and scored 10 points.');
