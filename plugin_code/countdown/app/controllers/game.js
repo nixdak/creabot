@@ -38,7 +38,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   console.log('Loading dictionary');
 
   self.dictionary = require('../../config/dictionary.json')['words'];
-  self.conundrums = requirerequire('../../config/conundrums.json')['words'];
+  self.conundrums = require('../../config/conundrums.json')['words'];
   self.countdown_words = _.filter(self.dictionary, function (word) { return word.length <= 9; });
   self.conundrum_words = _.shuffle(_.map(self.conundrums, function (word) { return word.toUpperCase(); }));
 
@@ -65,10 +65,16 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.vowels = _.shuffle(_.shuffle(self.vowels));
   self.consonants = _.shuffle(_.shuffle(self.consonants));
 
+  console.log('Loading numbers');
+
+  self.small = _.shuffle(_.shuffle(self.config.numberOptions.small));
+  self.large = _.shuffle(_.shuffle(self.config.numberOptions.large));
+
   // Selections
   self.table = {
     letters: [],
     numbers: [],
+    target: 0,
     conundrum: null
   };
 
@@ -145,14 +151,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     // check that there's enough players in the game and end if we have waited the
     if (self.challenger.hasJoined === false) {
       self.say('Waiting for ' + self.challenger.nick + '. Stopping in ' +
-        self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
+        self.config.gameOptions.minutesBeforeStart + ' ' + inflection.inflect('minute', self.config.gameOptions.minutesBeforeStart) +
         ' if they don\'t join.'
       );
 
       self.state = STATES.WAITING;
       self.idleWaitCount++;
       // stop game if not enough pleyers in however many minutes in the config
-      self.stopTimeout = setTimeout(self.stop, 60 * 1000 * config.gameOptions.roundMinutes);
+      self.stopTimeout = setTimeout(self.stop, 60 * 1000 * self.config.gameOptions.minutesBeforeStart);
       return false;
     }
 
@@ -308,6 +314,92 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.showPoints();
   };
 
+  self.numberRoundEnd = function () {
+    var challenger_difference = Math.max(self.table.target, self.answers.challenger.value) - Math.min(self.table.target, self.answers.challenger.value);
+    var challenged_difference = Math.max(self.table.target, self.answers.challenged.value) - Math.min(self.table.target, self.answers.challenged.value)
+
+    if (challenged_difference > 10 && challenger_difference > 10) {
+      self.say('No player has gotten within 10 of the target and no points have been awarded');
+    } else if (challenger_difference < challenged_difference) {
+      if (self.answers.challenger.value === self.table.target) {
+        self.say(self.challenger.nick + ' has hit the target of ' + self.table.target + ' with ' + self.answers.challenger.expression + 
+          ' and receives 10 points.'
+        );
+        self.challenger.points += 10;
+      } else if (challenger_difference <= 5) {
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+          self.answers.challenger.value + 'and receives 7 points.'
+        );
+        self.challenger.points += 7;
+      } else if (challenger_difference <= 10) {
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+          self.answers.challenger.value + 'and receives 5 points.'
+        );
+        self.challenger.points += 5;
+      }
+    } else if (challenged_difference < challenger_difference) {
+      if (self.answers.challenged.value === self.table.target) {
+        self.say(self.challenged.nick + ' has hit the target of ' + self.table.target + ' with ' + self.answers.challenged.expression + 
+          ' and receives 10 points.'
+        );
+        self.challenged.points += 10;
+      } else if (challenged_difference <= 5) {
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+          self.answers.challenged.value + 'and receives 7 points.'
+        );
+        self.challenged.points += 7;
+      } else if (challenged_difference <= 10) {
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+          self.answers.challenged.value + 'and receives 5 points.'
+        );
+        self.challenged.points += 5;
+      }
+    } else if (challenged_difference === challenger_difference) {
+      if (self.answers.challenger.value === self.table.target && self.answer.challenged === self.table.target) {
+        self.say(self.challenged.nick + ' hit the target of ' + self.table.target + ' with ' + self.answers.challenged.expression);
+        self.say(self.challenger.nick + ' hit the target of ' + self.table.target + ' with ' + self.answers.challenger.expression);
+        self.say('Both players have hit the target and scored 10 points.');
+        self.challenger.points += 10;
+      } else if (challenged_difference <= 5 && challenger_difference <= 5) {
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+          self.answers.challenged.value + 'and receives 7 points.'
+        );
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+          self.answers.challenger.value + 'and receives 7 points.'
+        );
+        self.challenged.points += 7;
+        self.challenger.points += 7;
+      } else if (challenged_difference <= 10 && challenger_difference <= 10) {
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+          self.answers.challenged.value + 'and receives 5 points.'
+        );
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+          self.answers.challenger.value + 'and receives 5 points.'
+        );
+        self.challenged.points += 5;
+        self.challenger.points += 5;
+      }
+    }
+
+    for (var number = self.table.numbers.pop(); !_.isUndefined(number); number = self.table.numbers.pop()) {
+      if (_.contains(self.config.numberOptiions.small)) {
+        self.small.push(number);
+      } else {
+        self.large.push(number);
+      }
+    }
+
+    self.answers = {
+      challenger: {},
+      challenged: {}
+    }
+
+    self.small = _.shuffle(_.shuffle(self.small));
+    self.large = _.shuffle(_.shuffle(self.large));
+
+    self.showPoints();
+  };
+
   self.setSelector = function () {
     if (self.round === 1) {
       // Set the selector as the player who accepted the challenge
@@ -361,7 +453,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       clearInterval(self.roundTimer);
       self.say('Letters for this round: ' + self.table.letters.join(' '));
-      self.say(self.config.roundOptions.roundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
+      self.say(self.config.roundOptions.lettersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
         ' on the clock'
       );
 
@@ -382,8 +474,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.roundStarted = new Date();
       self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
 
-    } else {
-      self.say(player + ': It isn\'t your turn to choose the letters');
     }
   };
 
@@ -458,28 +548,51 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say('You must provide a selection of 6 numbers.');
         return false;
       }
-    }
 
-    if (_.reject(numbers, function (number) { return number === 'l' || number === 's'}).length !== 0) {
-      self.say('Your selection should consist only of the letters l and s');
-      return false;
-    }
-
-    if (_.filter(numbers, function (number) { return number === 'l' }).length > 4) {
-      self.say('Your selection should have a maximum of 4 large numbers');
-      return false;
-    }
-
-    numbers.forEach(function (number) {
-      if ('l' === number.toLowerCase()) {
-        self.table.numbers.push(self.large.shift());
-      } else if ('s' === number.toLowerCase()) {
-        self.table.numbers.push(self.small.shift());
+      if (_.reject(numbers, function (number) { return number === 'l' || number === 's'}).length !== 0) {
+        self.say('Your selection should consist only of the letters l and s');
+        return false;
       }
-    });
 
-    clearInterval(self.roundTimer);
-  }
+      if (_.filter(numbers, function (number) { return number === 'l' }).length > 4) {
+        self.say('Your selection should have a maximum of 4 large numbers');
+        return false;
+      }
+
+      numbers.forEach(function (number) {
+        if ('l' === number.toLowerCase()) {
+          self.table.numbers.push(self.large.shift());
+        } else if ('s' === number.toLowerCase()) {
+          self.table.numbers.push(self.small.shift());
+        }
+      });
+
+      self.table.target = Math.floor(Math.random() * 899) + 100;
+
+      clearInterval(self.roundTimer);
+      self.say('Numbers for this round: ' + self.table.letters.join(' ') + ' and the target is: ' + self.table.target);
+      self.say(self.config.roundOptions.numbersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) +
+        ' on the clock'
+      );
+
+      self.pm(self.challenger.nick, 'Numbers for this round: ' + self.table.letters.join(' ') + ' and the target is: ' + self.table.target);
+      self.pm(self.challenger.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
+        inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
+      );
+      self.pm(self.challenger.nick, 'Play an equation with !cd [equation]');
+
+      self.pm(self.challenged.nick, 'Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
+      self.pm(self.challenged.nick, 'Play an equation with !cd [equation]');
+      self.pm(self.challenged.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
+        inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
+      );
+
+      self.state = STATES.PLAY_LETTERS;
+      clearInterval(self.roundTimer);
+      self.roundStarted = new Date();
+      self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
+    } 
+  };
 
   self.playNumbers = function (player, expression) {
     if (self.challenger.nick === player || self.challenged.nick === player) {
@@ -513,7 +626,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       if (mathjs.eval(expression) <= 0) {
         self.pm(player, 'Your expression result in a positive number. Your expression result is :' + math.eval(expression))
       }
-
 
       if (self.challenger.nick === player) {
         self.answers.challenger = { expression: expression, value: mathjs.eval(expression) };
@@ -579,7 +691,33 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.roundTimerCheck = function () {
     // Check the time
     var now = new Date();
-    var timeLimit = 60 * 1000 * self.config.roundOptions.roundMinutes;
+
+    var timeLimit;
+
+    if (self.state === STATES.PLAY_LETTERS) {
+      if (!_.isUndefined(self.config.roundOptions.lettersRoundMinutes)) {
+        timeLimit = 60 * 1000 * self.config.roundOptions.lettersRoundMinutes;
+      } else {
+        timeLimit = 60 * 1000 * 2;
+      }
+    }
+
+    if (self.state === STATES.PLAY_NUMBERS) {
+      if (!_.isUndefined(self.config.roundOptions.numbersRoundMinutes)) {
+        timeLimit = 60 * 1000 * self.config.roundOptions.numbersRoundMinutes;
+      } else {
+        timeLimit = 60 * 1000 * 5;
+      }
+    }
+
+    if (self.state === STATES.CONUNDRUM) {
+      if (!_.isUndefined(self.config.roundOptions.conundrumRoundMinutes)) {
+        timeLimit = 60 * 1000 * self.config.roundOptions.conundrumRoundMinutes;
+      } else {
+        timeLimit = 60 * 1000 * 2;
+      }
+    }
+
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed: ' + roundElapsed, now.getTime(), self.roundStarted.getTime());
@@ -656,9 +794,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.round === 0 ) {
       self.say('The game hasn\'t begun yet');
     } else {
-      self.say('Round: ' + self.round + '.');
-      self.say(self.challenged.nick + ' has ' + self.challenged.points + ' points while ' +
-        self.challenger.nick + ' has ' + self.challenger.points + ' points.'
+      self.say('Round: ' + self.round + ': ' + self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick + 
+        ' has ' + self.challenger.points + ' points.'
       );
     }
   };
