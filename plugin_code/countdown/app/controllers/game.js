@@ -677,7 +677,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
                 self.say(self.challenger.nick + ' has incorrectly guessed the countdown conundrum');
                 self.challenger.hasBuzzed = true;
             }
-        } else self.say(self.challenger.nick + ' has already Buzzed');
+        } else {
+          self.say(self.challenger.nick + ' has already Buzzed');
+        }
       }
     }
   }
