@@ -99,14 +99,18 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.round > 1 && gameEnded !== true) {
       self.showPoints();
     }
+
     if (self.state === STATES.conundrum && gameEnded !== true){
       self.say('No one got the conundrum. The answer was ' + self.table.conundrum);
     }
 
     self.state = STATES.STOPPED;
+
     if (gameEnded !== true) {
       self.say('Game has been stopped.');
     }
+
+    self.setTopic('No game running!');
 
     // Clear timeouts
     clearTimeout(self.stopTimeout);
@@ -219,7 +223,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     } else if (self.state === STATES.CONUNDRUM) {
       if (self.challenged.points !== self.challenger.points){
         self.showWinner();
-      }else{
+      } else {
         self.nextRound();
       }
     }
