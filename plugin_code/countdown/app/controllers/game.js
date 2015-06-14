@@ -605,7 +605,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       // If the expression uses numbers that are not in the selected numbers or reuses numbers
       var numbers = _.clone(self.table.numbers);
       var valid = true;
-      var playerNumbers = numbers.match(/\d+/g);
+      var playerNumbers = expression.match(/\d+/g);
 
       for (var i = 0; i < playerNumbers.length; i++) {
         if (_.contains(numbers, playerNumbers[i])) {
