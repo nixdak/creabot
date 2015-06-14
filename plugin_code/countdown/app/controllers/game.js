@@ -610,7 +610,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       for (var i = 0; i < playerNumbers.length; i++) {
         if (_.contains(numbers, playerNumbers[i])) {
           console.log(numbers);
-          letters.splice(_.indexOf(numbers, playerNumbers[i]), 1);
+          numbers.splice(_.indexOf(numbers, playerNumbers[i]), 1);
         } else {
           valid = false;
           break;
