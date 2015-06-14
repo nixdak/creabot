@@ -134,7 +134,7 @@ var Countdown = function Countdown() {
         return false;
       }
 
-      args = cmdArgs.split(' ').join(' ');
+      args = cmdArgs.replace(/\s/g, '').split('');
 
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
@@ -145,7 +145,7 @@ var Countdown = function Countdown() {
         return false;
       }
 
-      args = cmdArgs.split(' ').join(' ');
+      args = cmdArgs.replace(/\s/g, '').split('');
 
       self.game.numbers(message.nick, args);
     } else {
