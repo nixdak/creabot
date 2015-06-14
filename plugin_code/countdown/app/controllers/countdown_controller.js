@@ -19,7 +19,7 @@ var Countdown = function Countdown() {
       if (_.isUndefined(cmdArgs)) {
         client.say(channel, 'Please supply a nick with this command');
       } else if (!_.contains(challengers, cmdArgs)) {
-        client.say(channel, 'You haven\'t been challenged by ' + cmdArgs[0] + '. Challenging...');
+        client.say(channel, 'You haven\'t been challenged by ' + cmdArgs + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
         var challenger = new Player(cmdArgs);
@@ -38,7 +38,7 @@ var Countdown = function Countdown() {
         client.say(message.args[0], 'Please supply a word to the buzz function');
         return false;
       } else {
-        self.game.playConundrum(message.nick, cmdArgs[0]);
+        self.game.playConundrum(message.nick, cmdArgs);
       }
     } else {
       client.say(message.args[0], 'Sorry, the !buzz command is not available right now');
@@ -49,12 +49,12 @@ var Countdown = function Countdown() {
     var channel = message.args[0];
     if (_.isUndefined(cmdArgs)) {
       client.say(channel, 'Please supply a nick with this command');
-    } else if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs[0] })) {
-      self.challenges.push({ challenger: message.nick, challenged: cmdArgs[0] });
-      client.say(channel, message.nick + ': has challenged ' + cmdArgs[0]);
-      client.say(channel, cmdArgs[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
+    } else if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs })) {
+      self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
+      client.say(channel, message.nick + ': has challenged ' + cmdArgs);
+      client.say(channel, cmdArgs + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
-      client.say(channel, message.nick + ': You have already challenged ' + cmdArgs[0] + '.');
+      client.say(channel, message.nick + ': You have already challenged ' + cmdArgs + '.');
     }
   };
 
@@ -134,7 +134,7 @@ var Countdown = function Countdown() {
         return false;
       }
 
-      args = cmdArgs.split('');
+      args = cmdArgs.split(' ').join(' ');
 
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
@@ -145,11 +145,7 @@ var Countdown = function Countdown() {
         return false;
       }
 
-      if (cmdArgs.length > 1) {
-        args = cmdArgs;
-      } else {
-        args = cmdArgs[0].split('');
-      }
+      args = cmdArgs.split(' ').join(' ');
 
       self.game.numbers(message.nick, args);
     } else {
