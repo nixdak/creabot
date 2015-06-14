@@ -97,7 +97,7 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && (self.game.state === Game.STATES.PLAY_LETTERS || self.game.state === Game.STATES.PLAY_NUMBERS)) {
       self.game.lock(message.nick);
     } else {
-      client.say(message.args[0], 'The lock command is not available right now');
+      client.say(message.args[0], 'The lock command is not available right now.');
     }
   };
 
@@ -106,7 +106,7 @@ var Countdown = function Countdown() {
       var args;
 
       if (_.isUndefined(cmdArgs[0])) {
-        client.say(message.args[0], 'Please supply arguments to the !cd command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command.');
         return false;
       }
 
@@ -118,9 +118,14 @@ var Countdown = function Countdown() {
 
       self.game.playLetters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_NUMBERS) {
-      client.say(message.args[0], 'Numbers rounds not implemented yet!');
+      if (_.isUndefined(cmdArgs[0])) {
+        client.say(message.args[0], 'Please supply arguments to the !cd command.');
+        return false;
+      }
+
+      self.game.playNumbers(message.nick, cmdArgs);
     } else {
-      client.say(message.args[0], 'The select command is not available at the moment');
+      client.say(message.args[0], 'The !cd command is not available at the moment');
     }
   };
 
@@ -141,7 +146,20 @@ var Countdown = function Countdown() {
 
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
-      client.say(message.args[0], 'Numbers rounds not implemented yet!');
+      var args;
+
+      if (_.isUndefined(cmdArgs[0])) {
+        client.say(message.args[0], 'Please supply arguments to the !select command');
+        return false;
+      }
+
+      if (cmdArgs.length > 1) {
+        args = cmdArgs;
+      } else {
+        args = cmdArgs[0].split('');
+      }
+
+      self.game.numbers(message.nick, args);
     } else {
       client.say(message.args[0], 'The select command is not available at the moment');
     }

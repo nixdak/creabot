@@ -102,12 +102,7 @@ exports.init = function () {
         }
         var cmd = cmdArr[1].toLowerCase();
         // parse arguments
-        var cmdArgs = [];
-        if (cmdArr.length > 2) {
-            cmdArgs = _.map(cmdArr[2].match(/(\w+)\s?/gi), function (str) {
-                return str.trim();
-            });
-        }
+        var cmdArgs = cmdArr[2];
 
         // build callback options
         if (config.nick === to) {
