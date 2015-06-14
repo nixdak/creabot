@@ -635,17 +635,15 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    * Do setup for a conundrum round
    */
   self.conundrumRound = function () {
-    if(0 <= (self.challenged.points - self.challenger.points) && (self.challenged.points - self.challenger.points) <= 10){
-      self.say('Round ' + self.round + ': Crucial Conundrum');
-    }else if (0 <= (self.challenger.points - self.challenged.points) && (self.challenger.points - self.challenged.points) <= 10) {
-      self.say('Round ' + self.round + ': Crucial Conundrum');
-    }else{
-      self.say('Round ' + self.round + ': Conundrum');
-    }
+    self.say('Round ' + self.round + ': Conundrum');
 
     self.table.conundrum = self.conundrum_words.shift();
 
-    self.say('Fingers on buzzers for today\'s countdown conundrum');
+    if (Math.max(self.challenger.points, self.challenged.points) - Math.min(self.challenger.points, self.challenged.points) <= 10){
+      self.say('Fingers on buzzers for today\'s crucial countdown conundrum');
+    } else {
+      self.say('Fingers on buzzers for today\'s countdown conundrum');
+    }
     self.say('Use !buzz word to guess the conundrum.');
     self.say('Conundrum: ' + _.shuffle(self.table.conundrum).join(''));
 
@@ -663,7 +661,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             if (self.table.conundrum === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenged.points += 10;
-                self.nextRound();
+                self.roundEnd();
             }else{
                 self.say(player + ' has incorrectly guessed the countdown conundrum');
                 self.challenged.hasBuzzed = true;
@@ -674,7 +672,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             if (self.table.conundrum === word) {
                 self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenger.points += 10;
-                self.nextRound();
+                self.roundEnd();
             }else{
                 self.say(self.challenger.nick + ' has incorrectly guessed the countdown conundrum');
                 self.challenger.hasBuzzed = true;
