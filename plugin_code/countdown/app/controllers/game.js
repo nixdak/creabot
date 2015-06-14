@@ -632,7 +632,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.challenger.hasPlayed = true;
       } else if (self.challenged.nick === player) {
         self.answers.challenged = { expression: expression, value: mathjs.eval(expression) };
-        self.challenger.hasPlayed = true;
+        self.challenged.hasPlayed = true;
       }
 
       self.pm(player, 'You have submitted ' + expression + '. Your result is ' + mathjs.eval(expression));
