@@ -383,7 +383,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     }
 
     for (var number = self.table.numbers.pop(); !_.isUndefined(number); number = self.table.numbers.pop()) {
-      if (_.contains(self.config.numberOptions.small)) {
+      if (_.contains(self.config.numberOptions.small, number)) {
         self.small.push(number);
       } else {
         self.large.push(number);
