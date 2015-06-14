@@ -795,7 +795,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.round === 0 ) {
       self.say('The game hasn\'t begun yet');
     } else {
-      self.say('Round: ' + self.round + ': ' + self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick + 
+      self.say('Round ' + self.round + ': ' + self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick + 
         ' has ' + self.challenger.points + ' points.'
       );
     }
