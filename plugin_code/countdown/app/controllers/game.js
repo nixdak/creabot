@@ -598,6 +598,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.challenger.nick === player || self.challenged.nick === player) {
       // If the expression uses invalid characters
       if (_.reject(expression, function (number) { return _.contains(self.vaild_numbers_characters, number) === true; }).length !== 0) {
+        console.log(_.reject(expression, function (number) { return _.contains(self.vaild_numbers_characters, number) === true; }));
         self.pm(player, 'Your maths contains illegal characters');
         return false;
       }
@@ -713,8 +714,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         timeLimit = 60 * 1000 * 2;
       }
     }
-
-    console.log(timeLimit);
 
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
