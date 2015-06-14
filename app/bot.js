@@ -103,6 +103,7 @@ exports.init = function () {
         var cmd = cmdArr[1].toLowerCase();
         // parse arguments
         var cmdArgs = cmdArr[2];
+        console.log(cmdArr);
 
         // build callback options
         if (config.nick === to) {
