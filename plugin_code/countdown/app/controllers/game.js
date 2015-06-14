@@ -328,12 +328,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.challenger.points += 10;
       } else if (challenger_difference <= 5) {
         self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
-          self.answers.challenger.value + 'and receives 7 points.'
+          self.answers.challenger.value + ' and receives 7 points.'
         );
         self.challenger.points += 7;
       } else if (challenger_difference <= 10) {
         self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
-          self.answers.challenger.value + 'and receives 5 points.'
+          self.answers.challenger.value + ' and receives 5 points.'
         );
         self.challenger.points += 5;
       }
@@ -345,12 +345,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.challenged.points += 10;
       } else if (challenged_difference <= 5) {
         self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
-          self.answers.challenged.value + 'and receives 7 points.'
+          self.answers.challenged.value + ' and receives 7 points.'
         );
         self.challenged.points += 7;
       } else if (challenged_difference <= 10) {
         self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
-          self.answers.challenged.value + 'and receives 5 points.'
+          self.answers.challenged.value + ' and receives 5 points.'
         );
         self.challenged.points += 5;
       }
@@ -360,21 +360,22 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.say(self.challenger.nick + ' hit the target of ' + self.table.target + ' with ' + self.answers.challenger.expression);
         self.say('Both players have hit the target and scored 10 points.');
         self.challenger.points += 10;
+        self.challenged.points += 10;
       } else if (challenged_difference <= 5 && challenger_difference <= 5) {
         self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
-          self.answers.challenged.value + 'and receives 7 points.'
+          self.answers.challenged.value + ' and receives 7 points.'
         );
         self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
-          self.answers.challenger.value + 'and receives 7 points.'
+          self.answers.challenger.value + ' and receives 7 points.'
         );
         self.challenged.points += 7;
         self.challenger.points += 7;
       } else if (challenged_difference <= 10 && challenger_difference <= 10) {
         self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
-          self.answers.challenged.value + 'and receives 5 points.'
+          self.answers.challenged.value + ' and receives 5 points.'
         );
         self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
-          self.answers.challenger.value + 'and receives 5 points.'
+          self.answers.challenger.value + ' and receives 5 points.'
         );
         self.challenged.points += 5;
         self.challenger.points += 5;
