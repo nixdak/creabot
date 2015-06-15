@@ -196,10 +196,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       if (!self.challenger.hasPlayed) {
         self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
-        self.stop();
+        self.stop(null, false);;
       } else if (!self.challenged.hasPlayed) {
         self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
-        self.stop();
+        self.stop(null, false);;
       } else {
         console.log('In the round end else statement');
         self.letterRoundEnd();
@@ -214,10 +214,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       } else {
         if (!self.challenger.hasPlayed) {
           self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
-          self.stop();
+          self.stop(null, false);;
         } else {
           self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
-          self.stop();
+          self.stop(null, false);;
         }
       }
     } else if (self.state === STATES.CONUNDRUM) {
@@ -319,34 +319,34 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say('No player has gotten within 10 of the target and no points have been awarded');
     } else if (challenger_difference < challenged_difference) {
       if (self.answers.challenger.value === self.table.target) {
-        self.say(self.challenger.nick + ' has hit the target of ' + self.table.target + ' with ' + self.answers.challenger.expression + 
+        self.say(self.challenger.nick + ' has hit the target of ' + self.table.target + ' with ' + self.answers.challenger.expression +
           ' and receives 10 points.'
         );
         self.challenger.points += 10;
       } else if (challenger_difference <= 5) {
-        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' +
           self.answers.challenger.value + ' and receives 7 points.'
         );
         self.challenger.points += 7;
       } else if (challenger_difference <= 10) {
-        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' +
           self.answers.challenger.value + ' and receives 5 points.'
         );
         self.challenger.points += 5;
       }
     } else if (challenged_difference < challenger_difference) {
       if (self.answers.challenged.value === self.table.target) {
-        self.say(self.challenged.nick + ' has hit the target of ' + self.table.target + ' with ' + self.answers.challenged.expression + 
+        self.say(self.challenged.nick + ' has hit the target of ' + self.table.target + ' with ' + self.answers.challenged.expression +
           ' and receives 10 points.'
         );
         self.challenged.points += 10;
       } else if (challenged_difference <= 5) {
-        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' +
           self.answers.challenged.value + ' and receives 7 points.'
         );
         self.challenged.points += 7;
       } else if (challenged_difference <= 10) {
-        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' +
           self.answers.challenged.value + ' and receives 5 points.'
         );
         self.challenged.points += 5;
@@ -359,19 +359,19 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.challenger.points += 10;
         self.challenged.points += 10;
       } else if (challenged_difference <= 5 && challenger_difference <= 5) {
-        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' +
           self.answers.challenged.value + ' and receives 7 points.'
         );
-        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' +
           self.answers.challenger.value + ' and receives 7 points.'
         );
         self.challenged.points += 7;
         self.challenger.points += 7;
       } else if (challenged_difference <= 10 && challenger_difference <= 10) {
-        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' + 
+        self.say(self.challenged.nick + ' has gotten within ' + challenged_difference + ' of the target with ' + self.answers.challenged.expression + ' = ' +
           self.answers.challenged.value + ' and receives 5 points.'
         );
-        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' + 
+        self.say(self.challenger.nick + ' has gotten within ' + challenger_difference + ' of the target with ' + self.answers.challenger.expression + ' = ' +
           self.answers.challenger.value + ' and receives 5 points.'
         );
         self.challenged.points += 5;
@@ -454,14 +454,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       );
 
       self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-      self.pm(self.challenger.nick, self.config.roundOptions.roundMinutes + ' ' +
+      self.pm(self.challenger.nick, self.config.roundOptions.lettersRoundMinutes + ' ' +
         inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
       );
       self.pm(self.challenger.nick, 'Play a word with !cd [word]');
 
       self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
       self.pm(self.challenged.nick, 'Play a word with !cd [word]');
-      self.pm(self.challenged.nick, self.config.roundOptions.roundMinutes + ' ' +
+      self.pm(self.challenged.nick, self.config.roundOptions.lettersRoundMinutes + ' ' +
         inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
       );
 
@@ -477,7 +477,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     word = word.toUpperCase();
     if (self.challenger.nick === player || self.challenged.nick === player) {
 
-      if ((self.challenger.nick === player && self.challenger.isLocked === true) || 
+      if ((self.challenger.nick === player && self.challenger.isLocked === true) ||
           (self.challenged.nick === player && self.challenged.isLocked === true)) {
         self.pm(player, "You cannot play anymore words as you have locked in your answer for this round");
         return false;
@@ -587,7 +587,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       clearInterval(self.roundTimer);
       self.roundStarted = new Date();
       self.roundTimer = setInterval(self.roundTimerCheck, 10 * 1000);
-    } 
+    }
   };
 
   self.playNumbers = function (player, expression) {
@@ -808,7 +808,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.round === 0 ) {
       self.say('The game hasn\'t begun yet');
     } else {
-      self.setTopic('Round ' + self.round + ': ' + self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick + 
+      self.setTopic('Round ' + self.round + ': ' + self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick +
         ' has ' + self.challenger.points + ' points.'
       );
     }
