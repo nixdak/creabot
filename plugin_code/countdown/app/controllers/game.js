@@ -158,6 +158,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       return false;
     }
 
+    if(self.challenger.hasIdled === 3 || self.challenged.hasIdled === 3){
+      self.say('You have idled to many times');
+      self.stop();
+    }
+
     self.round++;
     self.showPoints();
     console.log('Starting round ', self.round);
@@ -193,16 +198,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       console.log(self.challenged.hasPlayed);
 
       if (!self.challenger.hasPlayed) {
-        self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
-        self.stop(null, false);
+        self.say(self.challenger.nick + ' has idled.');
+        self.challenger.hasIdled++;
       } else if (!self.challenged.hasPlayed) {
-        self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
-        self.stop(null, false);
-      } else {
-        console.log('In the round end else statement');
-        self.letterRoundEnd();
-        self.nextRound();
+        self.say(self.challenged.nick + ' has idled.');
+        self.challenged.hasIdled++;
       }
+      self.letterRoundEnd();
+      self.nextRound();
     } else if (self.state === STATES.PLAY_NUMBERS) {
       self.state = STATES.NUMBERS_ROUND_END;
 
@@ -211,11 +214,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.nextRound();
       } else {
         if (!self.challenger.hasPlayed) {
-          self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
-          self.stop(null, false);
+          self.say(self.challenger.nick + ' has idled.');
+          self.stop();
         } else {
-          self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
-          self.stop(null, false);
+          self.say(self.challenged.nick + ' has idled.');
+          self.stop();
         }
       }
     } else if (self.state === STATES.CONUNDRUM) {
@@ -233,18 +236,19 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
     self.say(self.challenged.nick + ' has played: ' + self.answers.challenged.word);
 
-    if (self.answers.challenger.valid === false) {
+    if (self.challenger.hasPlayed && self.answers.challenger.valid === false) {
       console.log('Challenger word invalid');
       self.say(self.challenger.nick + ': Your word was invalid.');
     }
 
-    if (self.answers.challenged.valid === false) {
+    if (self.Challenged.hasPlayed && self.answers.challenged.valid === false) {
       console.log('Challenged word invalid');
       self.say(self.challenged.nick + ': Your word was invalid');
     }
 
     // If challenger played a longer valid word
-    if (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid === true) {
+    else if ((!self.challenged.hasPlayed && self.answers.challenger.valid === true) ||
+        (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid === true)) {
       if (self.answers.challenger.word.length === 9) {
         self.say(self.challenger.nick + ' has won this round and scored 18 points.');
         self.challenger.points += 18;
@@ -255,7 +259,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     }
     // If the challenged played a longer valid word
-    else if ((self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid === true)) {
+    else if ((!self.challenger.hasPlayed && self.answers.challenged.valid === true) ||
+        (self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid === true)) {
       if (self.answers.challenged.word.length === 9) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
