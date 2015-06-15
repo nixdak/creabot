@@ -251,64 +251,96 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.letterRoundEnd = function () {
     // Show selections
     console.log('In letterRoundEnd')
-    self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
-    self.say(self.challenged.nick + ' has played: ' + self.answers.challenged.word);
 
-    if (self.challenger.hasPlayed && self.answers.challenger.valid === false) {
-      console.log('Challenger word invalid');
-      self.say(self.challenger.nick + ': Your word was invalid.');
+    if (self.challenger.hasPlayed === true) {
+      self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
     }
 
-    if (self.challenged.hasPlayed && self.answers.challenged.valid === false) {
-      console.log('Challenged word invalid');
-      self.say(self.challenged.nick + ': Your word was invalid');
+    if (self.challenged.hasPlayed === true) {
+      self.say(self.challenged.nick + ' has played: ' + self.answers.challenged.word);
     }
 
-    // If challenger played a longer valid word
-    else if (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid === true) {
-      if (self.answers.challenger.word.length === 9) {
-        self.say(self.challenger.nick + ' has won this round and scored 18 points.');
+    // If both words are valid
+    if (self.answers.challenger.valid === true && self.answers.challenged.valid === true) {
+      // If both words are the same length
+      if (self.answers.challenger.word.length === self.answers.challenged.word.length) {
+        // If word is 9 characters
+        if (self.answers.challenger.word.length === 9) {
+          self.say('Both players have scored 18 points this round.');
+          self.challenger.points += 18;
+          self.challenged.points += 18;
+        }
+        // If word is less than 9 characters
+        else {
+          self.say('Both players have scored ' + self.answers.challenger.word.length + ' points this round.');
+          self.challenger.points += self.answer.challenger.word.length;
+          self.challenged.points += self.answer.challenged.word.length;
+        }
+      }
+      // If challenger word is longer
+      else if (self.answers.challenger.word.length > self.answers.challenged.word.length) {
+        // If word is 9 characters
+        if (self.answers.challenger.word.legnth === 9) {
+          self.say(self.challenger.nick + ' has won this round and scored 18 points/');
+          self.challenger.points += 18;
+        }
+        // If word is less than 9 characters
+        else {
+          self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + ' points.');
+          self.challenger.points += self.answers.challenger.word.length;
+        }
+      }
+      // If challenged word is longer
+      else if (self.answers.challenged.word.length > self.answers.challenger.word.length) {
+        // If word is 9 characters
+        if (self.answers.challenged.word.legnth === 9) {
+          self.say(self.challenged.nick + ' has won this round and scored 18 points/');
+          self.challenged.points += 18;
+        }
+        // If word is less than 9 characters
+        else {
+          self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' points.');
+          self.challenged.points += self.answers.challenged.word.length;
+        }
+      }
+    }
+    // If challenger word is valid
+    else if (self.answers.challenger.valid === true) {
+      if (self.challenged.hasPlayed === true && self.answers.challenged.valid === false) {
+        console.log('Challenged word invalid');
+        self.say(self.challenged.nick + ': Your word was invalid');
+      }
+        
+      // If word is 9 characters
+      if (self.answers.challenger.word.legnth === 9) {
+        self.say(self.challenger.nick + ' has won this round and scored 18 points/');
         self.challenger.points += 18;
-      } else {
-        self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + ' ' +
-          inflection.inflect('points', self.answers.challenger.word.length));
+      }
+      // If word is less than 9 characters
+      else {
+        self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + ' points.');
         self.challenger.points += self.answers.challenger.word.length;
       }
     }
-    // If the challenged played a longer valid word
-    else if (self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid === true) {
-      if (self.answers.challenged.word.length === 9) {
-        self.say(self.challenged.nick + ' has won this round and scored 18 points.');
+    // If challenged word is valid
+    else if (self.answers.challenged.valid === true) {
+      if (self.challenger.hasPlayed === true && self.answers.challenger.valid === false) {
+        console.log('Challenger word invalid');
+        self.say(self.challenger.nick + ': Your word was invalid.');
+      }
+
+      // If word is 9 characters
+      if (self.answers.challenged.word.legnth === 9) {
+        self.say(self.challenged.nick + ' has won this round and scored 18 points/');
         self.challenged.points += 18;
-      } else {
-        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' ' +
-          inflection.inflect('points', self.answers.challenged.word.length));
+      }
+      // If word is less than 9 characters
+      else {
+        self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' points.');
         self.challenged.points += self.answers.challenged.word.length;
       }
     }
-    // Both players played a valid word of the same length
-    else if ((self.answers.challenger.word.length === self.answers.challenged.word.length) &&
-        (self.answers.challenger.valid === true && self.answers.challenged.valid === true)) {
-      self.say('This round was a tie, both players have scored ' + self.answers.challenged.word.length + ' ' +
-        inflection.inflect('points', self.answers.challenged.word.length));
-      self.challenged.points += self.answers.challenged.word.length;
-      self.challenger.points += self.answers.challenger.word.length;
-    }
-    //if challenger is not valid and challenged is and they have same length
-    else if ((self.answers.challenger.word.length === self.answers.challenged.word.length) &&
-        (self.answers.challenger.valid !== true && self.answers.challenged.valid === true)) {
-      self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' ' +
-        inflection.inflect('points', self.answers.challenged.word.length));
-      self.challenged.points += self.answers.challenged.word.length;
-    }
-    //if challenged is not valid and challenger is and they have same length
-    else if ((self.answers.challenger.word.length === self.answers.challenged.word.length) &&
-        (self.answers.challenged.valid !== true && self.answers.challenger.valid === true)) {
-      self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + ' ' +
-        inflection.inflect('points', self.answers.challenger.word.length));
-      self.challenger.points += self.answers.challenger.word.length;
-    }
-    // Neither player played a valid word
+    // If neither word is valid
     else {
       self.say('Neither player played a valid word and have scored 0 points');
     }
