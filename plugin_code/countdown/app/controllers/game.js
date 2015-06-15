@@ -196,8 +196,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       console.log(self.challenger.hasPlayed);
       console.log(self.challenged.hasPlayed);
-
-      if (!self.challenger.hasPlayed) {
+      if (!self.challenger.hasPlayed && !self.challenged.hasPlayed){
+        self.say('Both players have idled');
+        self.challenger.hasIdled++;
+        self.challenged.hasIdled++;
+      }
+      else if (!self.challenger.hasPlayed) {
         self.say(self.challenger.nick + ' has idled.');
         self.challenger.hasIdled++;
       } else if (!self.challenged.hasPlayed) {
