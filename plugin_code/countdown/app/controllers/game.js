@@ -92,8 +92,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     if (self.challenger.nick === player || self.challenged.nick === player) {
       self.say(player + ' stopped the game.');
-    } else {
-      return false;
     }
 
     if (self.round > 1 && gameEnded !== true) {
