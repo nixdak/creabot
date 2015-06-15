@@ -197,9 +197,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     if (!self.challenger.hasPlayed && !self.challenged.hasPlayed && self.state !== STATES.CONUNDRUM){
       self.say('Both players have idled');
-      self.challenger.hasIdled++;
-      self.challenged.hasIdled++;
-      self.nextRound();
+      self.idle();
     } else if (self.state === STATES.PLAY_LETTERS) {
       self.state = STATES.LETTERS_ROUND_END;
       if (!self.challenger.hasPlayed) {
@@ -233,6 +231,47 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.nextRound();
       }
     }
+  };
+
+  self.idle = function () {
+    self.challenger.hasIdled++;
+    self.challenged.hasIdled++;
+    if (self.state === STATES.PLAY_LETTERS) {
+      self.state = STATES.LETTERS_ROUND_END;
+      for (var letter = self.table.letters.pop(); !_.isUndefined(letter); letter = self.table.letters.pop()) {
+        if (_.contains(self.vowel_array, letter)) {
+          self.vowels.push(letter);
+        } else {
+          self.consonants.push(letter);
+        }
+      }
+
+      self.answers = {
+        challenger: {},
+        challenged: {}
+      };
+
+      self.vowels = _.shuffle(_.shuffle(self.vowels));
+      self.consonants = _.shuffle(_.shuffle(self.consonants));
+    } else if (self.state === STATES.PLAY_NUMBERS) {
+      self.state = STATES.NUMBERS_ROUND_END;
+      for (var number = self.table.numbers.pop(); !_.isUndefined(number); number = self.table.numbers.pop()) {
+        if (_.contains(self.config.numberOptions.small, number)) {
+          self.small.push(number);
+        } else {
+          self.large.push(number);
+        }
+      }
+
+      self.answers = {
+        challenger: {},
+        challenged: {}
+      }
+
+      self.small = _.shuffle(_.shuffle(self.small));
+      self.large = _.shuffle(_.shuffle(self.large));
+    }
+    self.nextRound();
   };
 
   self.letterRoundEnd = function () {
