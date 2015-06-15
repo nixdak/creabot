@@ -54,7 +54,7 @@
       "minutesBeforeStart": 2,
       "roundMinutes": 2,
       "database": true,
-      "maxIdleWaitCount": 2
+      "maxIdleCount": 3
     },
 
     "pluginOptions": {

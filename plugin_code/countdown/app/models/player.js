@@ -13,7 +13,7 @@ var Player = function Player(nick, user, hostname, joined) {
   self.hasSelected = false;
   self.hasBuzzed = false;
   self.isLocked = false;
-  self.hasIdled = 0;
+  self.idleCount = 0;
 };
 
 module.exports = exports = Player;

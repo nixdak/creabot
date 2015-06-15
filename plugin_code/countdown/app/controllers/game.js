@@ -152,15 +152,23 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       );
 
       self.state = STATES.WAITING;
-      self.idleWaitCount++;
       // stop game if not enough pleyers in however many minutes in the config
       self.stopTimeout = setTimeout(self.stop, 60 * 1000 * self.config.gameOptions.minutesBeforeStart);
       return false;
     }
 
-    if(self.challenger.hasIdled === self.config.gameOptions.maxIdleWaitCount || self.challenged.hasIdled === self.config.gameOptions.maxIdleWaitCount){
-      self.say('You have idled to many times');
+    if (self.challenger.idleCount === self.config.gameOptions.maxIdleCount && self.challenged.idleCount === self.config.gameOptions.maxIdleCount) {
+      self.say('Both players have idled too many times. Neither player wins');
       self.stop();
+      return false;
+    } else if(self.challenger.idleCount === self.config.gameOptions.maxIdleCount) {
+      self.say(self.challenger.nick + ' has idled too many times. ' + self.challenger.nick + ' has won by default.');
+      self.stop();
+      return false; 
+    } else if (self.challenged.idleCount === self.config.gameOptions.maxIdleCount) {
+      self.say(self.challenged.nick + ' has idled too many times. ' + self.challenged.nick + ' has won by default.');
+      self.stop();
+      return false;
     }
 
     self.round++;
@@ -195,34 +203,42 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     console.log(self.challenger.hasPlayed);
     console.log(self.challenged.hasPlayed);
 
-    if (!self.challenger.hasPlayed && !self.challenged.hasPlayed && self.state !== STATES.CONUNDRUM){
-      self.say('Both players have idled');
-      self.idle();
-    } else if (self.state === STATES.PLAY_LETTERS) {
+    if (self.challenger.hasPlayed !== true) {
+      self.say(self.challenger.nick + ' has idled.');
+      self.challenger.idleCount++;
+    }
+
+    if (self.challenged.hasPlayed !== true) {
+      self.say(self.challenged.nick + ' has idled.');
+      self.challenged.idleCount++;
+    }
+
+    if (self.state === STATES.PLAY_LETTERS) {
       self.state = STATES.LETTERS_ROUND_END;
-      if (!self.challenger.hasPlayed) {
-        self.say(self.challenger.nick + ' has idled.');
-        self.challenger.hasIdled++;
-      } else if (!self.challenged.hasPlayed) {
-        self.say(self.challenged.nick + ' has idled.');
-        self.challenged.hasIdled++;
+
+      if (self.challenger.hasPlayed !== true) {
+        self.answers.challenger = { word: self.table.letters.join(''), valid: false };
       }
+
+      if (self.challenged.hasPlayed !== true) {
+        self.answers.challenged = { word: self.table.letters.join(''), valid: false };
+      }
+
       self.letterRoundEnd();
       self.nextRound();
     } else if (self.state === STATES.PLAY_NUMBERS) {
       self.state = STATES.NUMBERS_ROUND_END;
-      if (self.challenger.hasPlayed && self.challenged.hasPlayed) {
-        self.numberRoundEnd();
-        self.nextRound();
-      } else {
-        if (!self.challenger.hasPlayed) {
-          self.say(self.challenger.nick + ' has idled.');
-          self.idle();
-        } else {
-          self.say(self.challenged.nick + ' has idled.');
-          self.idle();
-        }
+
+      if (self.challenger.hasPlayed !== true) {
+        self.answers.challenger = { value: self.table.target + 20 };
       }
+
+      if (self.challenged.hasPlayed !== true) {
+        self.answers.challenged = { value: self.table.target + 20 };
+      }
+
+      self.numberRoundEnd();
+      self.nextRound();
     } else if (self.state === STATES.CONUNDRUM) {
       if (self.challenged.points !== self.challenger.points){
         self.showWinner();
@@ -230,51 +246,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.nextRound();
       }
     }
-  };
-
-  self.idle = function () {
-    if (!self.challenger.hasPlayed){
-      self.challenger.hasIdled++;
-    }
-    if (!self.challenged.hasPlayed){
-      self.challenged.hasIdled++;
-    }
-    if (self.state === STATES.PLAY_LETTERS) {
-      self.state = STATES.LETTERS_ROUND_END;
-      for (var letter = self.table.letters.pop(); !_.isUndefined(letter); letter = self.table.letters.pop()) {
-        if (_.contains(self.vowel_array, letter)) {
-          self.vowels.push(letter);
-        } else {
-          self.consonants.push(letter);
-        }
-      }
-
-      self.answers = {
-        challenger: {},
-        challenged: {}
-      };
-
-      self.vowels = _.shuffle(_.shuffle(self.vowels));
-      self.consonants = _.shuffle(_.shuffle(self.consonants));
-    } else if (self.state === STATES.PLAY_NUMBERS) {
-      self.state = STATES.NUMBERS_ROUND_END;
-      for (var number = self.table.numbers.pop(); !_.isUndefined(number); number = self.table.numbers.pop()) {
-        if (_.contains(self.config.numberOptions.small, number)) {
-          self.small.push(number);
-        } else {
-          self.large.push(number);
-        }
-      }
-
-      self.answers = {
-        challenger: {},
-        challenged: {}
-      }
-
-      self.small = _.shuffle(_.shuffle(self.small));
-      self.large = _.shuffle(_.shuffle(self.large));
-    }
-    self.nextRound();
   };
 
   self.letterRoundEnd = function () {
@@ -288,14 +259,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say(self.challenger.nick + ': Your word was invalid.');
     }
 
-    if (self.Challenged.hasPlayed && self.answers.challenged.valid === false) {
+    if (self.challenged.hasPlayed && self.answers.challenged.valid === false) {
       console.log('Challenged word invalid');
       self.say(self.challenged.nick + ': Your word was invalid');
     }
 
     // If challenger played a longer valid word
-    else if ((!self.challenged.hasPlayed && self.answers.challenger.valid === true) ||
-        (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid === true)) {
+    else if (self.answers.challenger.word.length > self.answers.challenged.word.length && self.answers.challenger.valid === true) {
       if (self.answers.challenger.word.length === 9) {
         self.say(self.challenger.nick + ' has won this round and scored 18 points.');
         self.challenger.points += 18;
@@ -306,8 +276,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     }
     // If the challenged played a longer valid word
-    else if ((!self.challenger.hasPlayed && self.answers.challenged.valid === true) ||
-        (self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid === true)) {
+    else if (self.answers.challenged.word.length > self.answers.challenger.word.length && self.answers.challenged.valid === true) {
       if (self.answers.challenged.word.length === 9) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points.');
         self.challenged.points += 18;
@@ -318,7 +287,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
     }
     // Both players played a valid word of the same length
-    else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
+    else if ((self.answers.challenger.word.length === self.answers.challenged.word.length) &&
         (self.answers.challenger.valid === true && self.answers.challenged.valid === true)) {
       self.say('This round was a tie, both players have scored ' + self.answers.challenged.word.length + ' ' +
         inflection.inflect('points', self.answers.challenged.word.length));
@@ -326,14 +295,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.challenger.points += self.answers.challenger.word.length;
     }
     //if challenger is not valid and challenged is and they have same length
-    else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
+    else if ((self.answers.challenger.word.length === self.answers.challenged.word.length) &&
         (self.answers.challenger.valid !== true && self.answers.challenged.valid === true)) {
       self.say(self.challenged.nick + ' has won this round and scored ' + self.answers.challenged.word.length + ' ' +
         inflection.inflect('points', self.answers.challenged.word.length));
       self.challenged.points += self.answers.challenged.word.length;
     }
     //if challenged is not valid and challenger is and they have same length
-    else if (self.answers.challenger.word.length === self.answers.challenged.word.length &&
+    else if ((self.answers.challenger.word.length === self.answers.challenged.word.length) &&
         (self.answers.challenged.valid !== true && self.answers.challenger.valid === true)) {
       self.say(self.challenger.nick + ' has won this round and scored ' + self.answers.challenger.word.length + ' ' +
         inflection.inflect('points', self.answers.challenger.word.length));
