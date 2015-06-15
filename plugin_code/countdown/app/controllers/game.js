@@ -668,6 +668,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
 
+      try {
+        mathjs.eval(expression);
+      } catch (ex) {
+        self.pm(player, 'Your expression has some invalid syntax, please check and resubmit.');
+        return false;
+      }
+
       // If the expression isn't a whole number or isn't positive
       if (mathjs.eval(expression) <= 0) {
         self.pm(player, 'Your expression result in a positive number. Your expression result is :' + math.eval(expression))
