@@ -158,7 +158,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       return false;
     }
 
-    if(self.challenger.hasIdled === 3 || self.challenged.hasIdled === 3){
+    if(self.challenger.hasIdled === self.config.gameOptions.maxIdleWaitCount || self.challenged.hasIdled === self.config.gameOptions.maxIdleWaitCount){
       self.say('You have idled to many times');
       self.stop();
     }
@@ -191,17 +191,18 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.roundEnd = function () {
     clearInterval(self.roundTimer);
-    if (self.state === STATES.PLAY_LETTERS) {
-      self.state = STATES.LETTERS_ROUND_END;
 
-      console.log(self.challenger.hasPlayed);
-      console.log(self.challenged.hasPlayed);
-      if (!self.challenger.hasPlayed && !self.challenged.hasPlayed){
-        self.say('Both players have idled');
-        self.challenger.hasIdled++;
-        self.challenged.hasIdled++;
-      }
-      else if (!self.challenger.hasPlayed) {
+    console.log(self.challenger.hasPlayed);
+    console.log(self.challenged.hasPlayed);
+
+    if (!self.challenger.hasPlayed && !self.challenged.hasPlayed && self.state !== STATES.CONUNDRUM){
+      self.say('Both players have idled');
+      self.challenger.hasIdled++;
+      self.challenged.hasIdled++;
+      self.nextRound();
+    } else if (self.state === STATES.PLAY_LETTERS) {
+      self.state = STATES.LETTERS_ROUND_END;
+      if (!self.challenger.hasPlayed) {
         self.say(self.challenger.nick + ' has idled.');
         self.challenger.hasIdled++;
       } else if (!self.challenged.hasPlayed) {
