@@ -115,7 +115,7 @@ var Countdown = function Countdown() {
       self.game.playLetters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_NUMBERS) {
       if (_.isUndefined(cmdArgs)) {
-        client.say(message.args, 'Please supply arguments to the !cd command.');
+        client.say(message.args[0], 'Please supply arguments to the !cd command.');
         return false;
       }
 

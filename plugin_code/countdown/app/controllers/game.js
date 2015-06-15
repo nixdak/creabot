@@ -643,16 +643,23 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
   self.playNumbers = function (player, expression) {
     if (self.challenger.nick === player || self.challenged.nick === player) {
+      // If the expression uses no numbers
+      var playerNumbers = expression.match(/\d+/g);
+
+      if (playerNumbers === null) {
+        self.pm(player, 'Your expression does not contain any numbers');
+        return false;
+      }
+
       // If the expression uses invalid characters
       if (_.reject(expression, function (number) { return _.contains(self.valid_numbers_characters, number) === true; }).length !== 0) {
-        self.pm(player, 'Your maths contains illegal characters');
+        self.pm(player, 'Your expression contains illegal characters');
         return false;
       }
 
       // If the expression uses numbers that are not in the selected numbers or reuses numbers
       var numbers = _.clone(self.table.numbers);
       var valid = true;
-      var playerNumbers = expression.match(/\d+/g);
 
       for (var i = 0; i < playerNumbers.length; i++) {
         if (_.contains(numbers, playerNumbers[i])) {
