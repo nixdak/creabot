@@ -211,17 +211,16 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.nextRound();
     } else if (self.state === STATES.PLAY_NUMBERS) {
       self.state = STATES.NUMBERS_ROUND_END;
-
       if (self.challenger.hasPlayed && self.challenged.hasPlayed) {
         self.numberRoundEnd();
         self.nextRound();
       } else {
         if (!self.challenger.hasPlayed) {
           self.say(self.challenger.nick + ' has idled.');
-          self.stop();
+          self.idle();
         } else {
           self.say(self.challenged.nick + ' has idled.');
-          self.stop();
+          self.idle();
         }
       }
     } else if (self.state === STATES.CONUNDRUM) {
@@ -234,8 +233,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   self.idle = function () {
-    self.challenger.hasIdled++;
-    self.challenged.hasIdled++;
+    if (!self.challenger.hasPlayed){
+      self.challenger.hasIdled++;
+    }
+    if (!self.challenged.hasPlayed){
+      self.challenged.hasIdled++;
+    }
     if (self.state === STATES.PLAY_LETTERS) {
       self.state = STATES.LETTERS_ROUND_END;
       for (var letter = self.table.letters.pop(); !_.isUndefined(letter); letter = self.table.letters.pop()) {
