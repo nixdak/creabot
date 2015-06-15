@@ -196,10 +196,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       if (!self.challenger.hasPlayed) {
         self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
-        self.stop(null, false);;
+        self.stop(null, false);
       } else if (!self.challenged.hasPlayed) {
         self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
-        self.stop(null, false);;
+        self.stop(null, false);
       } else {
         console.log('In the round end else statement');
         self.letterRoundEnd();
@@ -214,10 +214,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       } else {
         if (!self.challenger.hasPlayed) {
           self.say(self.challenger.nick + ' has idled. ' + self.challenged.nick + ' wins by default. Stopping the game.');
-          self.stop(null, false);;
+          self.stop(null, false);
         } else {
           self.say(self.challenged.nick + ' has idled. ' + self.challenger.nick + ' wins by default. Stopping the game.');
-          self.stop(null, false);;
+          self.stop(null, false);
         }
       }
     } else if (self.state === STATES.CONUNDRUM) {
