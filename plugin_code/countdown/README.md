@@ -18,6 +18,7 @@ This plugin allows you to play the popular British TV gameshow Countdown over IR
 
 ### Private Commands
 * **!cd [word|maths expression]** - Play a word or maths expression for the current round.
+* **!lock** - Locks your answer in, and if both players !lock the current round will end.
 
 All of these commands are case insensitive and are trimmed for whitespace so "!j" and "    !J" will work the same
 
