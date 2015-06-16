@@ -157,14 +157,14 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       return false;
     }
 
-    if (self.challenger.idleCount === self.config.gameOptions.maxIdleCount && self.challenged.idleCount === self.config.gameOptions.maxIdleCount) {
+    if (self.challenger.idleCount === self.config.gameOptions.maxIdleCount && self.challenged.idleCount === self.config.gameOptions.maxIdleCount ) {
       self.say('Both players have idled too many times. Neither player wins');
       self.stop();
       return false;
     } else if(self.challenger.idleCount === self.config.gameOptions.maxIdleCount) {
       self.say(self.challenger.nick + ' has idled too many times. ' + self.challenger.nick + ' has won by default.');
       self.stop();
-      return false; 
+      return false;
     } else if (self.challenged.idleCount === self.config.gameOptions.maxIdleCount) {
       self.say(self.challenged.nick + ' has idled too many times. ' + self.challenged.nick + ' has won by default.');
       self.stop();
@@ -203,12 +203,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     console.log(self.challenger.hasPlayed);
     console.log(self.challenged.hasPlayed);
 
-    if (self.challenger.hasPlayed !== true) {
+    if (self.challenger.hasPlayed !== true && self.state !== STATES.CONUNDRUM) {
       self.say(self.challenger.nick + ' has idled.');
       self.challenger.idleCount++;
     }
 
-    if (self.challenged.hasPlayed !== true) {
+    if (self.challenged.hasPlayed !== true && self.state !== STATES.CONUNDRUM) {
       self.say(self.challenged.nick + ' has idled.');
       self.challenged.idleCount++;
     }
@@ -310,7 +310,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         console.log('Challenged word invalid');
         self.say(self.challenged.nick + ': Your word was invalid');
       }
-        
+
       // If word is 9 characters
       if (self.answers.challenger.word.legnth === 9) {
         self.say(self.challenger.nick + ' has won this round and scored 18 points/');
