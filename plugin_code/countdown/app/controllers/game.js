@@ -273,8 +273,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         // If word is less than 9 characters
         else {
           self.say('Both players have scored ' + self.answers.challenger.word.length + ' points this round.');
-          self.challenger.points += self.answer.challenger.word.length;
-          self.challenged.points += self.answer.challenged.word.length;
+          self.challenger.points += self.answers.challenger.word.length;
+          self.challenged.points += self.answers.challenged.word.length;
         }
       }
       // If challenger word is longer
@@ -582,7 +582,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     self.setSelector();
 
     self.say(self.selector.nick + ' will choose the Numbers for this round.');
-    self.say(self.selector.nick + ': Choose the Numbers for this round with a command similar to: !select lslsss');
+    self.say(self.selector.nick + ': Choose the Numbers for this round with a command similar to: !cd lslsss');
     self.say(self.selector.nick + ': Where l is a large number and s is a small number.');
   };
 
