@@ -15,7 +15,6 @@ module.exports = function(app) {
   app.cmd('list', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.list);
   app.cmd('lock', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.lock);
   app.cmd('quit', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.stop);
-  app.cmd('select', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.select);
   app.cmd('cd', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.select);
   app.cmd('stop', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.stop);
 
