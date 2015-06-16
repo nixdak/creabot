@@ -273,8 +273,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         // If word is less than 9 characters
         else {
           self.say('Both players have scored ' + self.answers.challenger.word.length + ' points this round.');
-          self.challenger.points += self.answer.challenger.word.length;
-          self.challenged.points += self.answer.challenged.word.length;
+          self.challenger.points += self.answers.challenger.word.length;
+          self.challenged.points += self.answers.challenged.word.length;
         }
       }
       // If challenger word is longer
