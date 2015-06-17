@@ -729,7 +729,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.challenged.nick === player || self.challenger.nick === player) {
       word = word.toUpperCase();
       if (self.challenged.nick === player) {
-        if(!self.challenged.hasBuzzed){
+        if(self.challenged.hasBuzzed === false){
             if (self.table.conundrum === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenged.points += 10;
@@ -740,7 +740,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             }
         } else self.say(player + ' has already Buzzed');
       }else{
-        if(!self.challenger.hasBuzzed){
+        if(self.challenger.hasBuzzed === false){
             if (self.table.conundrum === word) {
                 self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenger.points += 10;
