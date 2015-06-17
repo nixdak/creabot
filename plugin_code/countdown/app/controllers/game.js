@@ -708,13 +708,16 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     self.table.conundrum = self.conundrum_words.shift();
 
+    self.challenger.hasBuzzed = false;
+    self.challenged.hasBuzzed = false;
+
     if (Math.max(self.challenger.points, self.challenged.points) - Math.min(self.challenger.points, self.challenged.points) <= 10){
       self.say('Fingers on buzzers for today\'s crucial countdown conundrum');
     } else {
       self.say('Fingers on buzzers for today\'s countdown conundrum');
     }
     self.say('Use !buzz word to guess the conundrum.');
-    self.say('Conundrum: ' + _.shuffle(self.table.conundrum).join(''));
+    self.say('Conundrum: ' + _.shuffle(self.table.conundrum).join(' '));
 
     self.state = STATES.CONUNDRUM;
     clearInterval(self.roundTimer);
