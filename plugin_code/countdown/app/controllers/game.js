@@ -642,6 +642,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   };
 
   self.playNumbers = function (player, expression) {
+    console.log('Expression: ' + expression);
     if (self.challenger.nick === player || self.challenged.nick === player) {
       // If the expression uses no numbers
       var playerNumbers = expression.match(/\d+/g);
