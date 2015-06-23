@@ -32,6 +32,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.challenged = challenged;
   self.vowel_array = ['A', 'E', 'I', 'O', 'U'];
   self.valid_numbers_characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '+', '-', '*', '/', '(', ')'];
+  self.conundrumAns = false;
 
   console.log(self.channel);
 
@@ -240,6 +241,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.numberRoundEnd();
       self.nextRound();
     } else if (self.state === STATES.CONUNDRUM) {
+      if (self.conundrumAns !== true) {
+         self.say('No one got the conundrum. The answer was ' + self.table.conundrum);
+         self.conundrumAns = false;
+      } 
       if (self.challenged.points !== self.challenger.points){
         self.showWinner();
       } else {
@@ -734,6 +739,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             if (self.table.conundrum === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenged.points += 10;
+                self.conundrumAns = true;
                 self.roundEnd();
             }else{
                 self.say(player + ' has incorrectly guessed the countdown conundrum');
@@ -745,6 +751,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             if (self.table.conundrum === word) {
                 self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenger.points += 10;
+                self.conundrumAns = true;
                 self.roundEnd();
             }else{
                 self.say(self.challenger.nick + ' has incorrectly guessed the countdown conundrum');
