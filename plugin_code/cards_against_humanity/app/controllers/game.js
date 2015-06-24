@@ -275,7 +275,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
       self.showPoints();
     }
 
-    if (pointLimitReached !== true) {go
+    if (pointLimitReached !== true) {
       self.say('Game has been stopped.');
       self.updateGameDatabaseRecordGameOver(false, self.config);
     } else {
