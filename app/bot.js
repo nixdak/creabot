@@ -1,7 +1,8 @@
 var _ = require('underscore'),
     irc = require('irc'),
     c = require('irc-colors'),
-    config = require('../config/config.json'),
+    env = process.env.NODE_ENV || 'development',
+    config = require('../config/config.json')[env],
     client,
     commands = [],
     msgs = [];
@@ -101,15 +102,10 @@ exports.init = function () {
         }
         var cmd = cmdArr[1].toLowerCase();
         // parse arguments
-        var cmdArgs = [];
-        if (cmdArr.length > 2) {
-            cmdArgs = _.map(cmdArr[2].match(/(\w+)\s?/gi), function (str) {
-                return str.trim();
-            });
-        }
+        var cmdArgs = cmdArr[2];
+        console.log(cmdArr);
+
         // build callback options
-
-
         if (config.nick === to) {
             // private message commands
             _.each(msgs, function (c) {

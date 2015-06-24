@@ -1,17 +1,37 @@
 {
-  "server":        "localhost",
-  "nick":          "DakDak",
+  "production": {
+    "server":        "localhost",
+    "nick":          "DakDak",
 
-  "connectCommands": [
-        {
-            "target": "",
-            "message": ""
-        }
-    ],
+    "connectCommands": [
+          {
+              "target": "",
+              "message": ""
+          }
+      ],
 
-  "clientOptions": {
-      "userName":             "creadak",
-      "floodProtection":      true,
-      "floodProtectionDelay": 175
+    "clientOptions": {
+        "userName":             "creadak",
+        "floodProtection":      true,
+        "floodProtectionDelay": 175
+    }
+  },
+
+  "development": {
+    "server":        "localhost",
+    "nick":          "DakDak1",
+
+    "connectCommands": [
+          {
+              "target": "",
+              "message": ""
+          }
+      ],
+
+    "clientOptions": {
+        "userName":             "creadak",
+        "floodProtection":      true,
+        "floodProtectionDelay": 175
+    }
   }
 }

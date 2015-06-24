@@ -24,4 +24,4 @@ module.exports = function(app) {
 
   // Private commands
   app.msg('cah', '', cardsAgainstHumanity.pick);
-}
+};
