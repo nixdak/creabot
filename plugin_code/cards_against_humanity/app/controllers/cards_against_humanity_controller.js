@@ -22,7 +22,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             user = message.user,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -49,7 +49,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -75,7 +75,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -100,7 +100,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -126,7 +126,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             user = message.user,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -149,7 +149,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -171,7 +171,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -195,7 +195,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             user = message.user,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -218,7 +218,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     self.list = function (client, message, cmdArgs) {
         var channel = message.args[0];
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -240,7 +240,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -264,7 +264,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         var channel = message.args[0],
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -284,7 +284,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     self.status = function(client, message, cmdArgs) {
         var channel = message.args[0];
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -301,7 +301,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
@@ -327,7 +327,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             nick = message.nick,
             hostname = message.host;
 
-        if (!_.isUndefined(cmdArgs)) {
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
         }
 
