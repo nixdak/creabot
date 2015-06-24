@@ -10,7 +10,7 @@ var DublinBusInfo = function DublinBusInfo() {
   {
     var url = 'http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=view&searchquery=';
 
-    if (_.isUndefined(cmdArgs) !== true) {
+    if (!_.isUndefined(cmdArgs)) {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
     }
 
