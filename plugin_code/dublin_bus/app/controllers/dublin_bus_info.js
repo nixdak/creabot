@@ -1,5 +1,6 @@
-var tabletojson = require('tabletojson')
-  config = require('../../config/config.json');
+var _ = require('underscore'),
+    tabletojson = require('tabletojson'),
+    config = require('../../config/config.json');
 
 var DublinBusInfo = function DublinBusInfo() {
   var self = this;
@@ -8,6 +9,7 @@ var DublinBusInfo = function DublinBusInfo() {
   self.showStopInfo = function (client, message, cmdArgs)
   {
     var url = 'http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=view&searchquery=';
+    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
 
     if (cmdArgs.length < 1 || isNaN(cmdArgs[0])) {
       client.say(message.args[0], message.nick + ': Please supply a stop number.');
