@@ -1,4 +1,4 @@
-var _ = require('underscore'),
+var _ = require('underscore'),j
     Game = require('./game'),
     Player = require('../models/player'),
     env = process.env.NODE_ENV || 'development',

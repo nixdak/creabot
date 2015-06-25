@@ -20,8 +20,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         var channel = message.args[0],
             nick = message.nick,
             user = message.user,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game !== 'undefined' && self.game.state !== Game.STATES.STOPPED) {
             // game exists
@@ -44,8 +47,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     self.stop = function (client, message, cmdArgs) {
         var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -67,8 +73,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      self.pause = function(client, message, cmdArgs) {
          var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -89,8 +98,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      self.resume = function(client, message, cmdArgs) {
          var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -112,8 +124,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         var channel = message.args[0],
             nick = message.nick,
             user = message.user,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             self.start(client, message, cmdArgs);
@@ -132,8 +147,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     self.quit = function (client, message, cmdArgs) {
         var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -151,8 +169,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     self.cards = function (client, message, cmdArgs) {
         var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -172,8 +193,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         // check if everyone has played and end the round
         var channel = message.args[0],
             user = message.user,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -192,8 +216,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.list = function (client, message, cmdArgs) {
-        var channel = message.args[0],
+        var channel = message.args[0];
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -211,8 +238,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     self.winner = function (client, message, cmdArgs) {
         var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -232,8 +262,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      */
     self.points = function (client, message, cmdArgs) {
         var channel = message.args[0],
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -249,8 +282,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
      * @param cmdArgs
      */
     self.status = function(client, message, cmdArgs) {
-        var channel = message.args[0],
+        var channel = message.args[0];
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -263,8 +299,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
         // check if everyone has played and end the round
         var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED){
             client.say(channel, 'No game running. Start the game by typing !start.');
@@ -286,8 +325,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     self.discard = function (client, message, cmdArgs) {
         var channel = message.args[0],
             nick = message.nick,
-            hostname = message.host,
+            hostname = message.host;
+
+        if (cmdArgs !== '') {
             cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+        }
 
         if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
             client.say(channel, 'No game running. Start the game by typing !start');
