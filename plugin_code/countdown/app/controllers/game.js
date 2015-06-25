@@ -93,10 +93,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     if (self.challenger.nick === player || self.challenged.nick === player) {
       self.say(player + ' stopped the game.');
+    }else{
+      return false;
     }
 
     if (self.round > 1 && gameEnded !== true) {
-      self.showPoints();
+      self.say(self.challenged.nick + ' has ' + self.challenged.points + ' points while ' + self.challenger.nick +
+        ' has ' + self.challenger.points + ' points.');
     }
 
     if (self.state === STATES.conundrum && gameEnded !== true){
@@ -128,10 +131,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.showWinner = function () {
     if (self.challenger.points > self.challenged.points) {
       self.say(self.challenger.nick + ' has won the game with ' + self.challenger.points + ' ' +
-        inflection.inflect('point', self.challenger.points) + '!' + ' Congratulations!');
+        inflection.inflect('point', self.challenger.points) + '! While ' + self.challenged.nick + ' got ' + self.challenged.points + ' ' +
+          inflection.inflect('point', self.challenged.points) + ' Congratulations!');
     } else if (self.challenged.points > self.challenger.points) {
       self.say(self.challenged.nick + ' has won the game with ' + self.challenged.points + ' ' +
-        inflection.inflect('point', self.challenged.points) + '!' + ' Congratulations!');
+        inflection.inflect('point', self.challenged.points) + '! While ' + self.challenger.nick + ' got ' + self.challenger.points + ' ' +
+          inflection.inflect('point', self.challenger.points) +  ' Congratulations!');
     } else {
       self.say('The game has ended in a tie! Perhaps there\'ll be a rematch?');
     }
@@ -204,12 +209,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     console.log(self.challenger.hasPlayed);
     console.log(self.challenged.hasPlayed);
 
-    if (self.challenger.hasPlayed !== true && self.state !== STATES.CONUNDRUM) {
+    if (self.challenger.hasPlayed !== true && self.state !== STATES.CONUNDRUM && self.challenger.isLocked !== true) {
       self.say(self.challenger.nick + ' has idled.');
       self.challenger.idleCount++;
     }
 
-    if (self.challenged.hasPlayed !== true && self.state !== STATES.CONUNDRUM) {
+    if (self.challenged.hasPlayed !== true && self.state !== STATES.CONUNDRUM && self.challenged.isLocked !== true) {
       self.say(self.challenged.nick + ' has idled.');
       self.challenged.idleCount++;
     }
@@ -244,7 +249,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       if (self.conundrumAns !== true) {
          self.say('No one got the conundrum. The answer was ' + self.table.conundrum);
          self.conundrumAns = false;
-      } 
+      }
       if (self.challenged.points !== self.challenger.points){
         self.showWinner();
       } else {
