@@ -209,12 +209,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     console.log(self.challenger.hasPlayed);
     console.log(self.challenged.hasPlayed);
 
-    if (self.challenger.hasPlayed !== true && self.state !== STATES.CONUNDRUM) {
+    if (self.challenger.hasPlayed !== true && self.state !== STATES.CONUNDRUM && self.challenger.isLocked !== true) {
       self.say(self.challenger.nick + ' has idled.');
       self.challenger.idleCount++;
     }
 
-    if (self.challenged.hasPlayed !== true && self.state !== STATES.CONUNDRUM) {
+    if (self.challenged.hasPlayed !== true && self.state !== STATES.CONUNDRUM && self.challenged.isLocked !== true) {
       self.say(self.challenged.nick + ' has idled.');
       self.challenged.idleCount++;
     }
