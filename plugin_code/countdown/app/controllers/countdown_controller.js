@@ -49,7 +49,7 @@ var Countdown = function Countdown() {
     var channel = message.args[0];
     if (_.isUndefined(cmdArgs)) {
       client.say(channel, 'Please supply a nick with this command');
-    } else if (client.client.nick === cmdArgs) {
+    } else if (client.nick === cmdArgs) {
       self.say(channel, 'You can\'t challenge the bot');
     }else if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs })) {
       self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
