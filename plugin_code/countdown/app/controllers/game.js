@@ -93,8 +93,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     if (self.challenger.nick === player || self.challenged.nick === player) {
       self.say(player + ' stopped the game.');
-    }else{
-      return false;
     }
 
     if (self.round > 1 && gameEnded !== true) {
@@ -130,9 +128,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
    */
   self.showWinner = function () {
     if (self.challenger.points > self.challenged.points) {
-      self.say(self.challenger.nick + ' has won the game with ' + self.challenger.points + ' ' +
-        inflection.inflect('point', self.challenger.points) + '! While ' + self.challenged.nick + ' got ' + self.challenged.points + ' ' +
-          inflection.inflect('point', self.challenged.points) + ' Congratulations!');
+      self.say(self.challenger.nick + ' has won the game with ' + self.challenger.points + ' ' + inflection.inflect('point', self.challenger.points) + '! While ' + self.challenged.nick + ' got ' + self.challenged.points + ' ' + inflection.inflect('point', self.challenged.points) + ' Congratulations!');
     } else if (self.challenged.points > self.challenger.points) {
       self.say(self.challenged.nick + ' has won the game with ' + self.challenged.points + ' ' +
         inflection.inflect('point', self.challenged.points) + '! While ' + self.challenger.nick + ' got ' + self.challenger.points + ' ' +
@@ -140,8 +136,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     } else {
       self.say('The game has ended in a tie! Perhaps there\'ll be a rematch?');
     }
-
-    self.stop();
+    self.stop(null, true);
   };
 
   /**
