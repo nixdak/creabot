@@ -141,7 +141,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.say('The game has ended in a tie! Perhaps there\'ll be a rematch?');
     }
 
-    self.stop(null, true);
+    self.stop();
   };
 
   /**
