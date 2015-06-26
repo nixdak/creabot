@@ -51,6 +51,8 @@ var Countdown = function Countdown() {
       client.say(channel, 'Please supply a nick with this command');
     } else if (client.nick.toLowerCase() === cmdArgs.toLowerCase()) {
       client.say(channel, 'You can\'t challenge the bot');
+    } else if (message.nick.toLowerCase() === cmdArgs.toLowerCase()){
+      client.say(channel, 'You can\'t challenge yourself');
     }else if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs })) {
       self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
       client.say(channel, message.nick + ': has challenged ' + cmdArgs);
