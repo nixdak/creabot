@@ -93,7 +93,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     if (self.challenger.nick === player || self.challenged.nick === player) {
       self.say(player + ' stopped the game.');
-    } else if (player !== '') {//check if its null
+    } else if (!_.isUndefined(player)) {//check if its null
       return false;
     }
 
