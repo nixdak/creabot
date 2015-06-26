@@ -18,7 +18,7 @@ var Countdown = function Countdown() {
 
       if (_.isUndefined(cmdArgs)) {
         client.say(channel, 'Please supply a nick with this command');
-      } else if (!_.contains(challengers, cmdArgs)) {
+      } else if (!_.contains(challengers.toLowerCase(), cmdArgs.toLowerCase())) {
         client.say(channel, 'You haven\'t been challenged by ' + cmdArgs + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
@@ -54,7 +54,7 @@ var Countdown = function Countdown() {
     } else if (message.nick.toLowerCase() === cmdArgs.toLowerCase()){
       client.say(channel, 'You can\'t challenge yourself');
     }else if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs })) {
-      self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
+      self.challenges.push({ challenger: message.nick.toLowerCase(), challenged: cmdArgs.toLowerCase() });
       client.say(channel, message.nick + ': has challenged ' + cmdArgs);
       client.say(channel, cmdArgs + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
