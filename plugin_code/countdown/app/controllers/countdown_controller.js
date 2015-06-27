@@ -16,7 +16,7 @@ var Countdown = function Countdown() {
       var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
-      if (_.isUndefined(cmdArgs)) {
+      if (cmdArgs === '') {
         client.say(channel, 'Please supply a nick with this command');
       } else if (!_.contains(challengers.toLowerCase(), cmdArgs.toLowerCase())) {
         client.say(channel, 'You haven\'t been challenged by ' + cmdArgs + '. Challenging...');
@@ -47,7 +47,7 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
-    if (_.isUndefined(cmdArgs)) {
+    if (cmdArgs === '') {
       client.say(channel, 'Please supply a nick with this command');
     } else if (client.nick.toLowerCase() === cmdArgs.toLowerCase()) {
       client.say(channel, 'You can\'t challenge the bot');
@@ -109,7 +109,7 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_LETTERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs)) {
+      if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !cd command.');
         return false;
       }
@@ -133,7 +133,7 @@ var Countdown = function Countdown() {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs)) {
+      if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !select command');
         return false;
       }
@@ -144,7 +144,7 @@ var Countdown = function Countdown() {
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
       var args;
 
-      if (_.isUndefined(cmdArgs)) {
+      if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !select command');
         return false;
       }
