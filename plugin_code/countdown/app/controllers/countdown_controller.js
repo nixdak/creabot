@@ -17,7 +17,13 @@ var Countdown = function Countdown() {
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
       if (cmdArgs === '') {
-        client.say(channel, 'Please supply a nick with this command');
+        if (challengers.length === 1) {
+          var challenger = new Player(challengers[0]);
+          var challenged = new Player(message.nick);
+          self.game = Game(channel, client, self.config, challenger, challenged);
+        } else {
+          self.list(client, message, cmdArgs);
+        }
       } else if (!_.contains(challengers.toLowerCase(), cmdArgs.toLowerCase())) {
         client.say(channel, 'You haven\'t been challenged by ' + cmdArgs + '. Challenging...');
         self.challenge(client, message, cmdArgs);
@@ -53,7 +59,9 @@ var Countdown = function Countdown() {
       client.say(channel, 'You can\'t challenge the bot');
     } else if (message.nick.toLowerCase() === cmdArgs.toLowerCase()){
       client.say(channel, 'You can\'t challenge yourself');
-    }else if (!_.contains(self.challeneges, { challenger: message.nick, challenged: cmdArgs })) {
+    } else if (_.contains(self.challenges, {challenger: cmdArgs, challenged: message.nick})) {
+      self.accept(client, message, cmdArgs)
+    } else if (!_.contains(self.challenges, { challenger: message.nick, challenged: cmdArgs })) {
       self.challenges.push({ challenger: message.nick.toLowerCase(), challenged: cmdArgs.toLowerCase() });
       client.say(channel, message.nick + ': has challenged ' + cmdArgs);
       client.say(channel, cmdArgs + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
