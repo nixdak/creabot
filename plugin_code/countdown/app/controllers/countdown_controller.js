@@ -21,6 +21,7 @@ var Countdown = function Countdown() {
           var challenger = new Player(challengers[0]);
           var challenged = new Player(message.nick);
           self.game = Game(channel, client, self.config, challenger, challenged);
+          self.game.addPlayer(challenged);
         } else {
           self.list(client, message, cmdArgs);
         }
