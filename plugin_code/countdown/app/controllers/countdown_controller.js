@@ -54,7 +54,7 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
-    var challengers = _.filter(self.challenges, function (challenge) {return challenge.}
+    
     if (cmdArgs === '') {
       client.say(channel, 'Please supply a nick with this command');
     } else if (client.nick.toLowerCase() === cmdArgs.toLowerCase()) {
