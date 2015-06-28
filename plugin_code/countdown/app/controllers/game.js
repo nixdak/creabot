@@ -91,10 +91,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
   self.stop = function (player, gameEnded) {
     console.log('Stopping the game');
 
+    // If a particular player ended the game output say so
     if (self.challenger.nick === player || self.challenged.nick === player) {
       self.say(player + ' stopped the game.');
-    } else if (!_.isUndefined(player)) {//check if its null
-      return false;
     }
 
     if (self.round > 1 && gameEnded !== true) {
