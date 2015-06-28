@@ -13,7 +13,7 @@ var Countdown = function Countdown() {
   self.accept = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       var channel = message.args[0];
-      var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged === message.nick; });
+      var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
       if (cmdArgs === '') {
@@ -25,7 +25,7 @@ var Countdown = function Countdown() {
         } else {
           self.list(client, message, cmdArgs);
         }
-      } else if (!_.contains(challengers.toLowerCase(), cmdArgs.toLowerCase())) {
+      } else if (!_.contains(challengers, cmdArgs.toLowerCase())) {
         client.say(channel, 'You haven\'t been challenged by ' + cmdArgs + '. Challenging...');
         self.challenge(client, message, cmdArgs);
       } else {
@@ -54,16 +54,17 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
+    var challengers = _.filter(self.challenges, function (challenge) {return challenge.}
     if (cmdArgs === '') {
       client.say(channel, 'Please supply a nick with this command');
     } else if (client.nick.toLowerCase() === cmdArgs.toLowerCase()) {
       client.say(channel, 'You can\'t challenge the bot');
     } else if (message.nick.toLowerCase() === cmdArgs.toLowerCase()){
       client.say(channel, 'You can\'t challenge yourself');
-    } else if (_.contains(self.challenges, {challenger: cmdArgs, challenged: message.nick})) {
+    } else if (_.contains(self.challenges, { challenger: cmdArgs.toLowerCase(), challenged: message.nick.toLowerCase() })) {
       self.accept(client, message, cmdArgs)
-    } else if (!_.contains(self.challenges, { challenger: message.nick, challenged: cmdArgs })) {
-      self.challenges.push({ challenger: message.nick.toLowerCase(), challenged: cmdArgs.toLowerCase() });
+    } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: cmdArgs.toLowerCase() })) {
+      self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
       client.say(channel, message.nick + ': has challenged ' + cmdArgs);
       client.say(channel, cmdArgs + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
