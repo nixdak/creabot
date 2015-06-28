@@ -174,7 +174,7 @@ var Countdown = function Countdown() {
 
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(message.args[0], 'No game running to stop.');
-    } else if (self.challenger.nick === message.nick || self.challenged.nick === message.nick) {
+    } else if (self.game.challenger.nick === message.nick || self.game.challenged.nick === message.nick) {
       self.game.stop(message.nick, false);
     } else {
       client.say(channel, 'Only the players can stop the game');
