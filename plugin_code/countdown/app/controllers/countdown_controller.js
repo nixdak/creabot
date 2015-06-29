@@ -61,7 +61,7 @@ var Countdown = function Countdown() {
       client.say(channel, 'You can\'t challenge the bot');
     } else if (message.nick.toLowerCase() === cmdArgs.toLowerCase()){
       client.say(channel, 'You can\'t challenge yourself');
-    } else if (_.contains(self.challenges, { challenger: cmdArgs.toLowerCase(), challenged: message.nick.toLowerCase() })) {
+    } else if (!_.isUndefined(_.findWhere(self.challenges, { challenger: cmdArgs.toLowerCase(), challenged: message.nick.toLowerCase() }))) {
       self.accept(client, message, cmdArgs)
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: cmdArgs.toLowerCase() })) {
       self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
