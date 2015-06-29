@@ -54,7 +54,7 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
-    
+
     if (cmdArgs === '') {
       client.say(channel, 'Please supply a nick with this command');
     } else if (client.nick.toLowerCase() === cmdArgs.toLowerCase()) {
@@ -174,8 +174,10 @@ var Countdown = function Countdown() {
 
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(message.args[0], 'No game running to stop.');
-    } else {
+    } else if (self.game.challenger.nick === message.nick || self.game.challenged.nick === message.nick) {
       self.game.stop(message.nick, false);
+    } else {
+      client.say(channel, 'Only the players can stop the game');
     }
   };
 };
