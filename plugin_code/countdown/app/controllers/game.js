@@ -744,19 +744,19 @@ var Game = function Game(channel, client, config, challenger, challenged) {
                 self.challenged.points += 10;
                 self.conundrumAns = true;
                 self.roundEnd();
-            } else{
+            } else {
               // Make sure the player didn't reuse any letters
-              var letters = _.clone(self.table.conundrum.split());
+              var letters = _.clone(self.table.conundrum.split(''));
               var valid = true;
 
               for (var i = 0; i < word.length; i++) {
-                  if (_.contains(letters, word[i].toUpperCase())) {
-                    console.log(letters);
-                    letters.splice(_.indexOf(letters, word[i]), 1);
-                  } else {
-                    valid = false;
-                    break;
-                  }
+                if (_.contains(letters, word[i].toUpperCase())) {
+                  console.log(letters);
+                  letters.splice(_.indexOf(letters, word[i]), 1);
+                } else {
+                  valid = false;
+                  break;
+                }
               }
 
               if (valid === true && _.contains(self.conundrum_words, word)) {
@@ -777,9 +777,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
                 self.challenger.points += 10;
                 self.conundrumAns = true;
                 self.roundEnd();
-            }else{
+            } else {
               // Make sure the player didn't reuse any letters
-              var letters = _.clone(self.table.conundrum.split());
+              var letters = _.clone(self.table.conundrum.split(''));
               var valid = true;
 
               for (var i = 0; i < word.length; i++) {
