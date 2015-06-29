@@ -744,21 +744,63 @@ var Game = function Game(channel, client, config, challenger, challenged) {
                 self.challenged.points += 10;
                 self.conundrumAns = true;
                 self.roundEnd();
-            } else{
+            } else {
+              // Make sure the player didn't reuse any letters
+              var letters = _.clone(self.table.conundrum.split(''));
+              var valid = true;
+
+              for (var i = 0; i < word.length; i++) {
+                if (_.contains(letters, word[i].toUpperCase())) {
+                  console.log(letters);
+                  letters.splice(_.indexOf(letters, word[i]), 1);
+                } else {
+                  valid = false;
+                  break;
+                }
+              }
+
+              if (valid === true && _.contains(self.conundrum_words, word)) {
+                self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
+                self.challenged.points += 10;
+                self.conundrumAns = true;
+                self.roundEnd();
+              } else {
                 self.say(player + ' has incorrectly guessed the countdown conundrum');
                 self.challenged.hasBuzzed = true;
+              }
             }
         } else self.say(player + ' has already Buzzed');
       } else{
         if(self.challenger.hasBuzzed === false){
-            if (self.table.conundrum === word || _.contains(self.conundrum_words, word) === true) {
-                self.say(self.challenger.nick + ' has correctly guessed the countdown conundrum and scored 10 points');
+            if (self.table.conundrum === word) {
+                self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenger.points += 10;
                 self.conundrumAns = true;
                 self.roundEnd();
-            }else{
-                self.say(self.challenger.nick + ' has incorrectly guessed the countdown conundrum');
+            } else {
+              // Make sure the player didn't reuse any letters
+              var letters = _.clone(self.table.conundrum.split(''));
+              var valid = true;
+
+              for (var i = 0; i < word.length; i++) {
+                if (_.contains(letters, word[i].toUpperCase())) {
+                  console.log(letters);
+                  letters.splice(_.indexOf(letters, word[i]), 1);
+                } else {
+                  valid = false;
+                  break;
+                }
+              }
+
+              if (valid === true && _.contains(self.conundrum_words, word)) {
+                self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
+                self.challenger.points += 10;
+                self.conundrumAns = true;
+                self.roundEnd();
+              } else {
+                self.say(player + ' has incorrectly guessed the countdown conundrum');
                 self.challenger.hasBuzzed = true;
+              }
             }
         } else {
           self.say(self.challenger.nick + ' has already Buzzed');
