@@ -77,7 +77,7 @@ var Countdown = function Countdown() {
       var player = new Player(message.nick, message.user, message.host);
       self.game.addPlayer(player);
       self.challenges = _.reject(self.challenges, function(challenge) {
-        return challenge.challenger === self.game.challenger_nick && challenge.challenged === self.game.challenged_nick;
+        return challenge.challenger === self.game.challenger.nick && challenge.challenged === self.game.challenged.nick;
       });
     } else {
       client.say(message.args[0], 'Unable to join at the moment.');
