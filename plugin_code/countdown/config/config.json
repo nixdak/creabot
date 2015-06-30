@@ -45,7 +45,8 @@
       "conundrum": 15,
       "lettersRoundMinutes": 2,
       "numbersRoundMinutes": 5,
-      "conundrumRoundMinutes": 2
+      "conundrumRoundMinutes": 2,
+      "secondsBeforeConundrum": 15
     },
 
     "gameOptions": {
@@ -111,7 +112,8 @@
       "conundrum": 15,
       "lettersRoundMinutes": 2,
       "numbersRoundMinutes": 5,
-      "conundrumRoundMinutes": 2
+      "conundrumRoundMinutes": 2,
+      "secondsBeforeConundrum": 15
     },
 
     "gameOptions": {

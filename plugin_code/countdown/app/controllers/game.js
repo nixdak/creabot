@@ -115,6 +115,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     // Clear timeouts
     clearTimeout(self.stopTimeout);
+    clearTimeout(self.conundrumTimeout);
     clearInterval(self.roundTimer);
 
     // Remove listeners
@@ -191,7 +192,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.numbersRound();
     } else {
       console.log('Conundrum round');
-      self.conundrumRound();
+      self.say('Starting conundrum in ' + self.config.roundOptions.secondsBeforeConundrum + ' ' + 
+        inflection.inflect('second', self.config.roundOptions.secondsBeforeConundrum)
+      );
+      self.conundrumTimeout = setTimeout(self.conundrumRound, self.config.roundOptions.secondsBeforeConundrum * 1000);
     }
   };
 
