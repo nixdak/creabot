@@ -192,8 +192,10 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.numbersRound();
     } else {
       console.log('Conundrum round');
-      self.say('Starting countdown in 15 seconds');
-      self.conundrumTimeout = setTimeout(self.conundrumRound, 15 * 1000);
+      self.say('Starting conundrum in ' + self.config.roundOptions.secondsBeforeConundrum + ' ' + 
+        inflection.inflect('second', self.config.roundOptions.secondsBeforeConundrum)
+      );
+      self.conundrumTimeout = setTimeout(self.conundrumRound, self.config.roundOptions.secondsBeforeConundrum * 1000);
     }
   };
 
