@@ -79,6 +79,12 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     conundrum: null
   };
 
+  // Discards
+  self.discards = {
+    consonants: [],
+    vowels: []
+  }
+
   // Answers
   self.answers = {
     challenged: {},
@@ -359,9 +365,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
     for (var letter = self.table.letters.pop(); !_.isUndefined(letter); letter = self.table.letters.pop()) {
       if (_.contains(self.vowel_array, letter)) {
-        self.vowels.push(letter);
+        self.discards.vowels.push(letter);
       } else {
-        self.consonants.push(letter);
+        self.discards.consonants.push(letter);
       }
     }
 
@@ -369,9 +375,6 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       challenger: {},
       challenged: {}
     };
-
-    self.vowels = _.shuffle(_.shuffle(self.vowels));
-    self.consonants = _.shuffle(_.shuffle(self.consonants));
   };
 
   self.numberRoundEnd = function () {
@@ -500,6 +503,16 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       if (_.reject(letters, function (letter) { return letter === 'c' || letter === 'v'}).length !== 0) {
         self.say('Your selection should consist only of the letters c and v');
         return false;
+      }
+
+      if (self.vowels.length < 9) {
+        self.vowels.concat = self.vowels.concat(_.shuffle(self.discards.vowels));
+        self.discards.vowels = [];
+      }
+
+      if (self.consonants.legnth < 9) {
+        self.consonants = self.consonants.concat(_.shuffle(self.discards.consonants));
+        self.discards.consonants = [];
       }
 
       letters.forEach(function (letter) {
