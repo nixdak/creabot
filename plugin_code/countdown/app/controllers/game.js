@@ -198,7 +198,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       self.numbersRound();
     } else {
       console.log('Conundrum round');
-      self.say('Starting conundrum in ' + self.config.roundOptions.secondsBeforeConundrum + ' ' + 
+      self.say('Starting conundrum in ' + self.config.roundOptions.secondsBeforeConundrum + ' ' +
         inflection.inflect('second', self.config.roundOptions.secondsBeforeConundrum)
       );
       self.conundrumTimeout = setTimeout(self.conundrumRound, self.config.roundOptions.secondsBeforeConundrum * 1000);
@@ -311,8 +311,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       // If challenged word is longer
       else if (self.answers.challenged.word.length > self.answers.challenger.word.length) {
         // If word is 9 characters
-        if (self.answers.challenged.word.legnth === 9) {
-          self.say(self.challenged.nick + ' has won this round and scored 18 points/');
+        if (self.answers.challenged.word.length === 9) {
+          self.say(self.challenged.nick + ' has won this round and scored 18 points.');
           self.challenged.points += 18;
         }
         // If word is less than 9 characters
@@ -330,8 +330,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
 
       // If word is 9 characters
-      if (self.answers.challenger.word.legnth === 9) {
-        self.say(self.challenger.nick + ' has won this round and scored 18 points/');
+      if (self.answers.challenger.word.length === 9) {
+        self.say(self.challenger.nick + ' has won this round and scored 18 points.');
         self.challenger.points += 18;
       }
       // If word is less than 9 characters
