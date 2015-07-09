@@ -822,6 +822,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         } else {
           self.say(self.challenger.nick + ' has already Buzzed');
         }
+
+        if (self.challenger.hasBuzzed && self.challenged.hasBuzzed) {
+        self.say('Both players have buzzed. Ending the round');
+        self.roundEnd();
+        }
       }
     }
   }
