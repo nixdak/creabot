@@ -138,11 +138,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
     if (self.challenger.points > self.challenged.points) {
       self.say(self.challenger.nick + ' has won the game with ' + self.challenger.points + ' ' +
         inflection.inflect('point', self.challenger.points) + '! While ' + self.challenged.nick + ' got ' + self.challenged.points + ' ' +
-          inflection.inflect('point', self.challenged.points) + ' Congratulations!');
+          inflection.inflect('point', self.challenged.points) + '! Congratulations!');
     } else if (self.challenged.points > self.challenger.points) {
       self.say(self.challenged.nick + ' has won the game with ' + self.challenged.points + ' ' +
         inflection.inflect('point', self.challenged.points) + '! While ' + self.challenger.nick + ' got ' + self.challenger.points + ' ' +
-          inflection.inflect('point', self.challenger.points) +  ' Congratulations!');
+          inflection.inflect('point', self.challenger.points) +  '! Congratulations!');
     } else {
       self.say('The game has ended in a tie! Perhaps there\'ll be a rematch?');
     }
