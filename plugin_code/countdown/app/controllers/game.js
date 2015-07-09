@@ -505,6 +505,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
 
+      if ((cmdArgs.count('v') < 3) {
+        self.say('You must have 3 or more vovels');
+        return false;
+      }
+
       if (self.vowels.length < 9) {
         self.vowels.concat = self.vowels.concat(_.shuffle(self.discards.vowels));
         self.discards.vowels = [];
@@ -821,6 +826,11 @@ var Game = function Game(channel, client, config, challenger, challenged) {
             }
         } else {
           self.say(self.challenger.nick + ' has already Buzzed');
+        }
+
+        if (self.challenger.hasBuzzed && self.challenged.hasBuzzed) {
+        self.say('Both players have buzzed. Ending the round');
+        self.roundEnd();
         }
       }
     }
