@@ -505,9 +505,8 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
 
-      if ((cmdArgs.count('v') < 3) {
-        self.say('You must have 3 or more vovels');
-        return false;
+      if (_.reject(letters, function (letter) { return letter === 'c' }).legnth < self.config.roundOptions.minimumVowels ) {
+        self.say('You must have ' + self.config.roundOptions.minimumVowels + ' or more vowels');
       }
 
       if (self.vowels.length < 9) {
