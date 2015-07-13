@@ -7,6 +7,6 @@ module.exports = function(app) {
     app.joinChannels(redbrickCommittee.config.channelsToJoin);
 
     // Add commands
-    app.cmd('cmt', '', redbrickCommtitee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showCommitteeInfo);
+    app.cmd('cmt', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showCommitteeInfo);
     app.cmd('reload', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.reload);
 }
