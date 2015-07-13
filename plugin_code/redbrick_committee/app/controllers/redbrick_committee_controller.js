@@ -1,6 +1,6 @@
 var _ = require('underscore'),
     env = process.env.NODE_ENV || 'development',
-    config = require('../../config/config.json')[env]
+    config = require('../../config/config.json')[env],
     committee = require('../../config/committee.json');
 
 var RedbrickCommittee = function RedbrickCommittee() {
