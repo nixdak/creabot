@@ -71,4 +71,4 @@ var RedbrickCommittee = function RedbrickCommittee() {
   };
 };
 
-exports = module.exports 
+exports = module.exports = RedbrickCommittee;
