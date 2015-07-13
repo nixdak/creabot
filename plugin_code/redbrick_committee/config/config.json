@@ -1,5 +1,13 @@
 {
+  "production": {
     "channels": [ "#DakDak" ],
     "channelsToExclude": [],
     "channelsToJoin": [ "#DakDak" ]
+  },
+
+  "development": {
+    "channels": [ "#DakDak" ],
+    "channelsToExclude": [],
+    "channelsToJoin": [ "#DakDak" ]
+  },  
 }
