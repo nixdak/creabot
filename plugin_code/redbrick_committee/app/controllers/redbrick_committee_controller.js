@@ -62,14 +62,14 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
 
     // Show helpdesk
-    var helpdesk = _.find(self.committee, { role: 'Helpdesk' });
+    var helpdesk = _.filter(self.committee, { role: 'Helpdesk' });
     if (!_.isUndefined(helpdesk)) {
       var helpdesk_string = _.map(helpdesk, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(nick, 'Helpdesk: ' + helpdesk_string);
     }
 
     // Show admins
-    var admins = _.find(self.committee, { role: 'System Administrator' });
+    var admins = _.filter(self.committee, { role: 'System Administrator' });
     if (!_.isUndefined(admins)) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(nick, 'System Administrators: ' + admins_string);
