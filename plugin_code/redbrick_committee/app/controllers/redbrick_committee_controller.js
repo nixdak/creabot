@@ -15,43 +15,50 @@ var RedbrickCommittee = function RedbrickCommittee() {
     // Show chairperson
     var chairperson = _.find(self.committee, { role: 'Chairperson' });
     if (!_.isUndefined(chairperson)) {
-      client.say(nick, 'Chairperson: %s (%s)', chairperson.name, chairperson.nick);
+      chair_string = chairperson.name + ' (' + chairperson.nick + ')';
+      client.say(nick, 'Chairperson: ' + chair_string);
     }
 
     // Show secretary
     var secretary = _.find(self.committee, { role: 'Secretary' });
     if (!_.isUndefined(secretary)) {
-      client.say(nick, 'Secretary: %s (%s)', secretary.name, secretary.nick);
+      secretary_string = secretary.name + ' (' + secretary.nick + ')';
+      client.say(nick, 'Secretary: ' + secretary_string);
     }
 
     // Show treasurer
     var treasurer = _.find(self.committee, { role: 'Treasurer' });
     if (!_.isUndefined(treasurer)) {
-      client.say(nick, 'Treasurer: %s (%s)', treasurer.name, treasurer.nick);
+      treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
+      client.say(nick, 'Treasurer: ' + treasurer_string);
     }
 
     // Show public relations officer
     var pro = _.find(self.committee, { role: 'Public Relations Officer' });
     if (!_.isUndefined(pro)) {
-      client.say(nick, 'Public Relations Officer: %s (%s)', pro.name, pro.nick);
+      pro_string = pro.name + ' (' + pro.nick + ')';
+      client.say(nick, 'Public Relations Officer: ' + pro_string);
     }
 
     // Show Events officer
     var events = _.find(self.committee, { role: 'Events Officer' });
     if (!_.isUndefined(events)) {
-      client.say(nick, 'Events Officer: %s (%s)', events.name, events.nick);
+      events_string = events.name + ' (' + events.nick + ')';
+      client.say(nick, 'Events Officer: ' + events_string);
     }
 
     // Show first year rep
     var first_year_rep = _.find(self.committee, { role: 'First Year Representative' });
     if (!_.isUndefined(first_year_rep)) {
-      client.say(nick, 'First Year Representative: %s (%s)', first_year_rep.name, first_year_rep.nick);
+      fyr_string = first_year_rep.name + ' (' + first_year_rep.nick + ')';
+      client.say(nick, 'First Year Representative: ' + fyr_string);
     }
 
     // Show webmaster
     var webmaster = _.find(self.committee, { role: 'Webmaster' });
     if (!_.isUndefined(first_year_rep)) {
-      client.say(nick, 'Webmaster: %s (%s)', webmaster.name, webmaster.nick);
+      webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
+      client.say(nick, 'Webmaster: ' + webmaster_string);
     }
 
     // Show helpdesk
@@ -62,7 +69,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
 
     // Show admins
-    var admins = _.find(self.committee, { role: 'System Administrators' });
+    var admins = _.find(self.committee, { role: 'System Administrator' });
     if (!_.isUndefined(admins)) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(nick, 'System Administrators: %s', admins_string);
