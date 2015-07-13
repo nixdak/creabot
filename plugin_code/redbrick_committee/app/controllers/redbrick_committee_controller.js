@@ -9,7 +9,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
   self.config = config;
   self.committee = committee;
 
-  var showComitteeInfo = function(client, message, cmdArgs) {
+  var showCommitteeInfo = function(client, message, cmdArgs) {
     var nick = message.nick;
 
     // Show chairperson
