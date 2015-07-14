@@ -760,7 +760,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       word = word.toUpperCase();
       if (self.challenged.nick === player) {
         if(self.challenged.hasBuzzed === false){
-            if (self.table.conundrum === word || _.contains(self.conundrum_words, word) === true) {
+            if (self.table.conundrum === word) {
                 self.say(player + ' has correctly guessed the countdown conundrum and scored 10 points');
                 self.challenged.points += 10;
                 self.conundrumAns = true;
