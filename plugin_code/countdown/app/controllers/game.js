@@ -715,7 +715,13 @@ var Game = function Game(channel, client, config, challenger, challenged) {
 
       // If the expression isn't a whole number or isn't positive
       if (mathjs.eval(expression) <= 0) {
-        self.pm(player, 'Your expression results in a negative number. Your expression result is :' + mathjs.eval(expression))
+        self.pm(player, 'Your expression results in a negative number. Your expression result is:' + mathjs.eval(expression));
+        return false;
+      }
+      
+      if (mathjs.eval(expression) % 1 !== 0) {
+        self.pm(player, 'Your expression does not result in a whole number. Your expression result is: ' + mathjs.eval(expression));
+        return false;
       }
 
       if (self.challenger.nick === player) {
