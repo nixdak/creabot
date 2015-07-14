@@ -56,7 +56,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
     // Show webmaster
     var webmaster = _.find(self.committee, { role: 'Webmaster' });
-    if (!_.isUndefined(first_year_rep)) {
+    if (!_.isUndefined(webmaster)) {
       webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
       client.say(nick, 'Webmaster: ' + webmaster_string);
     }
