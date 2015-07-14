@@ -298,7 +298,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       // If challenger word is longer
       else if (self.answers.challenger.word.length > self.answers.challenged.word.length) {
         // If word is 9 characters
-        if (self.answers.challenger.word.legnth === 9) {
+        if (self.answers.challenger.word.length === 9) {
           self.say(self.challenger.nick + ' has won this round and scored 18 points/');
           self.challenger.points += 18;
         }
@@ -348,7 +348,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
       }
 
       // If word is 9 characters
-      if (self.answers.challenged.word.legnth === 9) {
+      if (self.answers.challenged.word.length === 9) {
         self.say(self.challenged.nick + ' has won this round and scored 18 points/');
         self.challenged.points += 18;
       }
@@ -505,8 +505,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         return false;
       }
 
-      if (_.reject(letters, function (letter) { return letter === 'c' }).legnth < self.config.roundOptions.minimumVowels ) {
+      if (_.reject(letters, function (letter) { return letter === 'c' }).length < self.config.roundOptions.minimumVowels ) {
         self.say('You must have ' + self.config.roundOptions.minimumVowels + ' or more vowels');
+        return false;
       }
 
       if (self.vowels.length < 9) {
@@ -514,7 +515,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.discards.vowels = [];
       }
 
-      if (self.consonants.legnth < 9) {
+      if (self.consonants.length < 9) {
         self.consonants = self.consonants.concat(_.shuffle(self.discards.consonants));
         self.discards.consonants = [];
       }
