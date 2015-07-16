@@ -54,21 +54,27 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
+    var args = cmdArgs.split(" ", 3);
 
-    if (cmdArgs === '') {
+    if (args[0] === '') {
       client.say(channel, 'Please supply a nick with this command');
-    } else if (client.nick.toLowerCase() === cmdArgs.toLowerCase()) {
+    } else if (client.nick.toLowerCase() === args[0].toLowerCase()) {
       client.say(channel, 'You can\'t challenge the bot');
-    } else if (message.nick.toLowerCase() === cmdArgs.toLowerCase()){
+    } else if (message.nick.toLowerCase() === args[0].toLowerCase()){
       client.say(channel, 'You can\'t challenge yourself');
-    } else if (!_.isUndefined(_.findWhere(self.challenges, { challenger: cmdArgs.toLowerCase(), challenged: message.nick.toLowerCase() }))) {
-      self.accept(client, message, cmdArgs)
-    } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: cmdArgs.toLowerCase() })) {
-      self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
-      client.say(channel, message.nick + ': has challenged ' + cmdArgs);
-      client.say(channel, cmdArgs + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
+    } else if (!_.isUndefined(_.findWhere(self.challenges, { challenger: args[0].toLowerCase(), challenged: message.nick.toLowerCase() }))) {
+      self.accept(client, message, args[0])
+    } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
+      if (args.length === 1){
+        self.challenges.push({ challenger: message.nick, challenged: args[0], mode = normal });
+        client.say(channel, message.nick + ': has challenged ' + args[0]);
+      } else (if args[1] === 'quick'){
+        self.challenges.push({ challenger: message.nick, challenged: args[0], mode = quick });
+        client.say(channel, message.nick + ': has challenged ' + args[0] + ' to a quick game');
+      }
+      client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
-      client.say(channel, message.nick + ': You have already challenged ' + cmdArgs + '.');
+      client.say(channel, message.nick + ': You have already challenged ' + args[0] + '.');
     }
   };
 
