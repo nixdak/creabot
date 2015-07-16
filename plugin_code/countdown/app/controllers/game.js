@@ -19,7 +19,7 @@ var STATES = {
   SELECTING: 'Selecting'
 };
 
-var Game = function Game(channel, client, config, challenger, challenged) {
+var Game = function Game(channel, client, config, challenger, challenged, quick) {
   var self = this;
 
   self.round = 0; // Round number
@@ -719,7 +719,7 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         self.pm(player, 'Your expression results in a negative number. Your expression result is:' + mathjs.eval(expression));
         return false;
       }
-      
+
       if (mathjs.eval(expression) % 1 !== 0) {
         self.pm(player, 'Your expression does not result in a whole number. Your expression result is: ' + mathjs.eval(expression));
         return false;
@@ -867,7 +867,9 @@ var Game = function Game(channel, client, config, challenger, challenged) {
         timeLimit = 60 * 1000 * 2;
       }
     }
-
+    if (quick === true){
+      timeLimit /= 2;
+    }
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed: ' + roundElapsed, now.getTime(), self.roundStarted.getTime());
