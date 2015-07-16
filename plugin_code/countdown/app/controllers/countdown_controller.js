@@ -14,13 +14,15 @@ var Countdown = function Countdown() {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       var channel = message.args[0];
       var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
+      var mode = _.map(challengers, function (challenge) { return challenge.mode; });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
       if (cmdArgs === '') {
         if (challengers.length === 1) {
           var challenger = new Player(challengers[0]);
           var challenged = new Player(message.nick);
-          self.game = new Game(channel, client, self.config, challenger, challenged);
+          var quick = mode[0];
+          self.game = new Game(channel, client, self.config, challenger, challenged, quick);
           self.game.addPlayer(challenged);
         } else {
           self.list(client, message, cmdArgs);
@@ -31,7 +33,8 @@ var Countdown = function Countdown() {
       } else {
         var challenger = new Player(cmdArgs);
         var challenged = new Player(message.nick);
-        self.game = new Game(channel, client, self.config, challenger, challenged);
+        var quick = false;
+        self.game = new Game(channel, client, self.config, challenger, challenged, quick);
         self.game.addPlayer(challenged);
       }
     } else {
@@ -66,10 +69,10 @@ var Countdown = function Countdown() {
       self.accept(client, message, args[0])
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       if (args.length === 1){
-        self.challenges.push({ challenger: message.nick, challenged: args[0], mode = normal });
+        self.challenges.push({ challenger: message.nick, challenged: args[0], quick = false });
         client.say(channel, message.nick + ': has challenged ' + args[0]);
       } else (if args[1] === 'quick'){
-        self.challenges.push({ challenger: message.nick, challenged: args[0], mode = quick });
+        self.challenges.push({ challenger: message.nick, challenged: args[0], quick = true });
         client.say(channel, message.nick + ': has challenged ' + args[0] + ' to a quick game');
       }
       client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
