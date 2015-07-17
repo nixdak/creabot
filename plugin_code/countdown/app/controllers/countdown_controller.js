@@ -189,6 +189,23 @@ var Countdown = function Countdown() {
       client.say(channel, 'Only the players can stop the game');
     }
   };
+
+  self.reload = function (client, message, cmdArgs) {
+    var channel = message.args[0],
+        nick = message.nick,
+        hostname = message.host;
+
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
+      if (nick.toLowerCase() === client.userName.toLowerCase()) { // need to make this configurable
+        delete require.cache[require.resolve('../../config/config.json')];
+        config = require('../../config/config.json')[env];
+      } else {
+        client.say('You do not have permission to use this command');
+      }
+    } else {
+      client.say('Please wait till the game is stopped');
+    }
+  }
 };
 
 exports = module.exports = Countdown;
