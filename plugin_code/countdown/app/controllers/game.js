@@ -173,11 +173,11 @@ var Game = function Game(channel, client, config, challenger, challenged, quick)
       self.stop();
       return false;
     } else if(self.challenger.idleCount === self.config.gameOptions.maxIdleCount) {
-      self.say(self.challenger.nick + ' has idled too many times. ' + self.challenger.nick + ' has won by default.');
+      self.say(self.challenger.nick + ' has idled too many times. ' + self.challenged.nick + ' has won by default.');
       self.stop();
       return false;
     } else if (self.challenged.idleCount === self.config.gameOptions.maxIdleCount) {
-      self.say(self.challenged.nick + ' has idled too many times. ' + self.challenged.nick + ' has won by default.');
+      self.say(self.challenged.nick + ' has idled too many times. ' + self.challenger.nick + ' has won by default.');
       self.stop();
       return false;
     }
@@ -505,7 +505,7 @@ var Game = function Game(channel, client, config, challenger, challenged, quick)
         return false;
       }
 
-      if (_.reject(letters, function (letter) { return letter === 'c' }).length < self.config.roundOptions.minimumVowels ) {
+      if (_.reject(letter2, function (letter) { return letter === 'c' }).length < self.config.roundOptions.minimumVowels ) {
         self.say('You must have ' + self.config.roundOptions.minimumVowels + ' or more vowels');
         return false;
       }
