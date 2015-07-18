@@ -15,6 +15,10 @@ var Uno = function Uno () {
 
   };
 
+  self.end = function (client, message, cmdArgs) {
+
+  };
+
   self.join = function (client, message, cmdArgs) {
 
   };
