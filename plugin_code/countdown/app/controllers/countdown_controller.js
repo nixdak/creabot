@@ -69,10 +69,10 @@ var Countdown = function Countdown() {
       self.accept(client, message, args[0])
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       if (args.length === 1){
-        self.challenges.push({ challenger: message.nick, challenged: args[0], quick = false });
+        self.challenges.push({ challenger: message.nick, challenged: args[0], quick: false });
         client.say(channel, message.nick + ': has challenged ' + args[0]);
       } else (if args[1] === 'quick'){
-        self.challenges.push({ challenger: message.nick, challenged: args[0], quick = true });
+        self.challenges.push({ challenger: message.nick, challenged: args[0], quick: true });
         client.say(channel, message.nick + ': has challenged ' + args[0] + ' to a quick game');
       }
       client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
