@@ -13,8 +13,8 @@ var Countdown = function Countdown() {
   self.accept = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       var channel = message.args[0];
-      var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
       var mode = _.map(challengers, function (challenge) { return challenge.mode; });
+      var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
       if (cmdArgs === '') {
