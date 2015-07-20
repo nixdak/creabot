@@ -17,14 +17,8 @@ var Deck = function Deck(deck) {
     self.cards = _.shuffle(_.shuffle(self.cards));
   };
 
-  self.deal = function (deck, number) {
-    if (_.isUndefined(number)) {
-      number = 1;
-    }
-
-    for (int i = 0; i < number; i++) {
-      deck.addCard(self.cards.pop());
-    }
+  self.deal = function (deck) {
+    deck.addCard(self.cards.pop());
   }
 
   self.addCard = function (card) {
