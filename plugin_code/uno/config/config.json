@@ -4,9 +4,9 @@
     },
 
     "pluginOptions": {
-      "channels": ["#CountdownDev"],
+      "channels": ["#UnoDev"],
       "channelsToExclude": [],
-      "channelsToJoin": ["#CountdownDev"]
+      "channelsToJoin": ["#UnoDev"]
     }
   },
 
@@ -15,9 +15,9 @@
     },
 
     "pluginOptions": {
-      "channels": ["#Countdown"],
+      "channels": ["#Uno"],
       "channelsToExclude": [],
-      "channelsToJoin": ["#Countdown"]
+      "channelsToJoin": ["#Uno"]
     }
   }
 }
