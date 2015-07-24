@@ -94,7 +94,7 @@ var Game = function (channel, client, config, cmdArgs) {
       return true;
     }
 
-    for (int i = (self.players.indexOf(self.currentPlayer) + 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
+    for (var i = (self.players.indexOf(self.currentPlayer) + 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
       if (self.players[i].isActive === true) {
         self.currentPlayer = self.players[i];
         self.currentPlayer.turn = true;
