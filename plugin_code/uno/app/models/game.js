@@ -103,7 +103,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.nextTurn = function() {
-    var winner = _.filter(self.players, function (player) { return player.deck.numCards() === 0})[0];
+    var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
 
     if (!_.isUndefined(winner)) {
       self.say(winner.nick + ' has played all their cards and won the game! Congratulations!');
