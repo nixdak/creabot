@@ -27,7 +27,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.deck.shuffle();
 
-  if (!_.isUndefined(self.config.gameOptions.pointLimit) && !.isNaN(self.config.gameOptions.pointLimit)) {
+  if (!_.isUndefined(self.config.gameOptions.pointLimit) && !isNaN(self.config.gameOptions.pointLimit)) {
     console.log('Setting pointLimit to ' + self.config.gameOptions.pointLimit + ' from config');
     self.pointLimit = self.config.gameOptions.pointLimit;
   }
