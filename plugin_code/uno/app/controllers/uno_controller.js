@@ -6,6 +6,7 @@ var _ = require('underscore'),
 
 var Uno = function Uno () {
   var self = this;
+  self.config = config;
 
   self.challenge = function (client, message, cmdArgs) {
 
@@ -32,7 +33,7 @@ var Uno = function Uno () {
     }
 
     if (_.isUndefined(self.game)) {
-      self.game = new Game(message.args[0], client, config, cmdArgs);
+      self.game = new Game(message.args[0], client, self.config, cmdArgs);
     }
 
     var player = new Player(message.nick, message.user, message.host);
