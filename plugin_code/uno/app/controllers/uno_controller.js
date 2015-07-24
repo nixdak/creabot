@@ -1,6 +1,6 @@
 var _ = require('underscore'),
     Game = require('../models/game'),
-    Player = require('../models/Player'),
+    Player = require('../models/player'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env];
 
