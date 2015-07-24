@@ -1,0 +1,23 @@
+{
+  "development": {
+    "gameOptions": {
+    },
+
+    "pluginOptions": {
+      "channels": ["#CountdownDev"],
+      "channelsToExclude": [],
+      "channelsToJoin": ["#CountdownDev"]
+    }
+  },
+
+  "production": {
+    "gameOptions": {
+    },
+
+    "pluginOptions": {
+      "channels": ["#Countdown"],
+      "channelsToExclude": [],
+      "channelsToJoin": ["#Countdown"]
+    }
+  }
+}
