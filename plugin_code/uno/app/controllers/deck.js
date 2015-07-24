@@ -34,7 +34,7 @@ var Deck = function Deck(deck) {
     return card;
   };
 
-  self.pickCard(index) {
+  self.pickCard = function (index) {
     var card = self.cards[index];
     self.removeCard(card);
     return card;
