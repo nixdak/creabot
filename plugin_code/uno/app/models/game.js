@@ -83,7 +83,7 @@ var Game = function (channel, client, config, cmdArgs) {
         self.deck.shuffle();
       }
 
-      self.deck.deal(player.deck);
+      self.deck.deal(player.hand);
     }
   };
 
