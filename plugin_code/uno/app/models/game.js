@@ -76,7 +76,7 @@ var Game = function (channel, client, config, cmdArgs) {
   }
 
   self.deal = function (player, number) {
-    for (int i = 0; i < number; i++) {
+    for (var i = 0; i < number; i++) {
       if (self.deck.numCards() === 0) {
         self.deck = self.discard;
         self.discard = new Deck(false);
