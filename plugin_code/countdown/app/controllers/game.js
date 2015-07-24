@@ -19,7 +19,7 @@ var STATES = {
   SELECTING: 'Selecting'
 };
 
-var Game = function Game(channel, client, config, challenger, challenged, quick) {
+var Game = function Game(channel, client, config, challenger, challenged, lettersTime, numbersTime, conundrumsTime ) {
   var self = this;
 
   self.round = 0; // Round number
@@ -30,6 +30,9 @@ var Game = function Game(channel, client, config, challenger, challenged, quick)
   self.idleWaitCount = 0;
   self.challenger = challenger;
   self.challenged = challenged;
+  self.lettersTime = lettersTime;
+  self.numbersTime = numbersTime;
+  self.conundrumsTime = conundrumsTime;
   self.vowel_array = ['A', 'E', 'I', 'O', 'U'];
   self.valid_numbers_characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '+', '-', '*', '/', '(', ')'];
   self.conundrumAns = false;
@@ -849,27 +852,31 @@ var Game = function Game(channel, client, config, challenger, challenged, quick)
     var timeLimit;
 
     if (self.state === STATES.PLAY_LETTERS) {
-      if (!_.isUndefined(self.config.roundOptions.lettersRoundMinutes)) {
+      if (!_.isUndefined(self.lettersTime)){
+        timeLimit = 60 * 1000 * self.lettersTime;
+      } else if (!_.isUndefined(self.config.roundOptions.lettersRoundMinutes)) {
         timeLimit = 60 * 1000 * self.config.roundOptions.lettersRoundMinutes;
       } else {
         timeLimit = 60 * 1000 * 2;
       }
     } else if (self.state === STATES.PLAY_NUMBERS) {
-      if (!_.isUndefined(self.config.roundOptions.numbersRoundMinutes)) {
+      if (!_.isUndefined(self.numbersTime)){
+        timeLimit = 60 * 1000 * self.numbersTime;
+      } else if (!_.isUndefined(self.config.roundOptions.numbersRoundMinutes)) {
         timeLimit = 60 * 1000 * self.config.roundOptions.numbersRoundMinutes;
       } else {
         timeLimit = 60 * 1000 * 5;
       }
     } else  if (self.state === STATES.CONUNDRUM) {
-      if (!_.isUndefined(self.config.roundOptions.conundrumRoundMinutes)) {
+      if (!_.isUndefined(self.conundrumsTime)){
+        timeLimit = 60 * 1000 * self.conundrumsTime;
+      } else if (!_.isUndefined(self.config.roundOptions.conundrumRoundMinutes)) {
         timeLimit = 60 * 1000 * self.config.roundOptions.conundrumRoundMinutes;
       } else {
         timeLimit = 60 * 1000 * 2;
       }
     }
-    if (quick === true){
-      timeLimit /= 2;
-    }
+
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed: ' + roundElapsed, now.getTime(), self.roundStarted.getTime());
