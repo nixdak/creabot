@@ -54,6 +54,10 @@ var Game = function (channel, client, config, cmdArgs) {
     client.removeListener('kick' + self.channel, self.playerKickHandler);
     client.removeListener('nick', self.playerNickChangeHandler);
 
+    // Clear timeouts and intervals
+    clearTimeout(self.startTimeout);
+
+    // Delete Game properties
     delete self.players;
     delete self.channel;
     delete self.client;
