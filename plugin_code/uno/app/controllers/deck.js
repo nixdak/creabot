@@ -4,6 +4,7 @@ var _ = require('underscore'),
 
 var Deck = function Deck(deck) {
   var self = this;
+  self.cards = [];
 
   if (deck === true) {
     _.each(cards, function (card) {
