@@ -73,12 +73,14 @@ var Countdown = function Countdown() {
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       for (var i = 1; i < args.length; i++) {
         var arg = args[i].split(':');
-        if (arg[0].toLowerCase() === 'letters'){
-          letterTime = arg[1];
-        } else if (arg[0].toLowerCase() === 'numbers') {
-          numberTime = args[1];
-        } else if (arg[0].toLowerCase() === 'conundrum'){
-          conundrumTime = arg[1];
+        if (_.contains(self.valid_numbers_characters, args[1]) === true; }) {
+          if (arg[0].toLowerCase() === 'letters'){
+            letterTime = arg[1];
+          } else if (arg[0].toLowerCase() === 'numbers') {
+            numberTime = args[1];
+          } else if (arg[0].toLowerCase() === 'conundrum'){
+            conundrumTime = arg[1];
+          }
         }
       }
       self.challenges.push({ challenger: message.nick, challenged: args[0], letter: letterTime, number: numberTime, conundrum: conundrumTime});
