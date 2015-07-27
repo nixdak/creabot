@@ -103,13 +103,21 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
+  self.turnTimer = function() {
+
+  };
+
   self.showCards = function (player) {
     if (player.isActive) {
-      self.pm('Working on it!');
+      _.each(player.hand.getCards(), functiom (card) { self.pm });
     }
   };
 
   self.nextTurn = function() {
+    if (!_.isUndefined(self.turnTimeout) {
+      clearTimeout(self.turnTimeout);
+    }
+
     var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
 
     if (!_.isUndefined(winner)) {

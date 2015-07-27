@@ -41,6 +41,10 @@ var Deck = function Deck(deck) {
     return card;
   };
 
+  self.getCards = function () {
+    return self.cards;
+  };
+
   self.numCards = function () {
     return self.cards.length;
   };
