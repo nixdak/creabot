@@ -13,16 +13,22 @@ var Countdown = function Countdown() {
   self.accept = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       var channel = message.args[0];
-      var mode = _.map(challengers, function (challenge) { return challenge.mode; });
       var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
       var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
+
+      var games = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
+      var letterTimes = _.map(games, function (challenge) { return challenge.letterTime; });
+      var numberTimes = _.map(games, function (challenge) { return challenge.numberTime; });
+      var conundrumTimes = _.map(games, function (challenge) { return challenge.conundrumTime; });
 
       if (cmdArgs === '') {
         if (challengers.length === 1) {
           var challenger = new Player(challengers[0]);
           var challenged = new Player(message.nick);
-          var quick = mode[0];
-          self.game = new Game(channel, client, self.config, challenger, challenged, quick);
+          var letterTime = letterTimes[0];
+          var numberTime = numberTimes[0];
+          var conundrumTime = conundrumTimes[0];
+          self.game = new Game(channel, client, self.config, challenger, challenged, letterTime, numberTime, conundrumTime);
           self.game.addPlayer(challenged);
         } else {
           self.list(client, message, cmdArgs);
@@ -33,8 +39,10 @@ var Countdown = function Countdown() {
       } else {
         var challenger = new Player(cmdArgs);
         var challenged = new Player(message.nick);
-        var quick = false;
-        self.game = new Game(channel, client, self.config, challenger, challenged, quick);
+        var letterTime = self.config.roundOptions.lettersRoundMinutes;
+        var numberTime = self.config.roundOptions.lettersRoundMinutes;
+        var conundrumTime = self.config.roundOptions.lettersRoundMinutes;
+        self.game = new Game(channel, client, self.config, challenger, challenged, letterTime, numberTime, conundrumTime);
         self.game.addPlayer(challenged);
       }
     } else {
@@ -69,7 +77,7 @@ var Countdown = function Countdown() {
     } else if (message.nick.toLowerCase() === args[0].toLowerCase()){
       client.say(channel, 'You can\'t challenge yourself');
     } else if (!_.isUndefined(_.findWhere(self.challenges, { challenger: args[0].toLowerCase(), challenged: message.nick.toLowerCase() }))) {
-      self.accept(client, message, args[0])
+      self.accept(client, message, args[0])//move accept in here
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       for (var i = 1; i < args.length; i++) {
         var arg = args[i].split(':');
