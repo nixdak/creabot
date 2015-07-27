@@ -49,8 +49,6 @@ var Uno = function Uno () {
   };
 
   self.start = function (client, message, cmdArgs) {
-    var channel = message.args[0];
-
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
       return false;
     }
@@ -59,11 +57,15 @@ var Uno = function Uno () {
   };
 
   self.stop = function (client, message, cmdArgs) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
+      return false;
+    }
 
+    self.game.stop(message.nick);
   };
 
   self.uno = function (client, message, cmdArgs) {
-
+    var chanel = message.args[0];
   };
 }; 
 
