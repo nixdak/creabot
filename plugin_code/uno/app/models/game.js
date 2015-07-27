@@ -108,8 +108,13 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.showCards = function (player) {
+    var cardString = 'Your cards are: ';
     if (player.isActive) {
-      _.each(player.hand.getCards(), function (card) { self.pm(player.nick, card.toString()) });
+      _.each(player.hand.getCards(), function (card, index) { 
+        cardString += c.bold('[' + index + ']') + card.toString();
+      });
+
+      self.pm(player.nick, cardString);
     }
   };
 
