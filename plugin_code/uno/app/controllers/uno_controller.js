@@ -51,7 +51,7 @@ var Uno = function Uno () {
   self.start = function (client, message, cmdArgs) {
     var channel = message.args[0];
 
-    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.WAITING) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
       return false;
     }
 
