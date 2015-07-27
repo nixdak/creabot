@@ -162,10 +162,11 @@ var Game = function (channel, client, config, cmdArgs) {
   self.addPlayer = function (player) {
     var alreadyPlayer = self.getPlayer({ nick: player.nick, user: player.user, hostname: player.hostname });
 
-    if (_.isUndefined(alreadyPlayer)) {
-      self.players.push(player);
+    if (!_.isUndefined(alreadyPlayer)) {
+      return false;
     }
 
+    self.players.push(player);
     self.say(player.nick + ' has joined the game!');
 
     if (self.state === STATES.WAITING && _.where(self.players, { isActive: true }).length === 10) {
