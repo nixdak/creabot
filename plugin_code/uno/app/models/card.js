@@ -93,6 +93,8 @@ var Card = function Card(card) {
         cardString = c.bold.brown(cardString);
         break;
     }
+
+    return cardString;
   }
 }
 
