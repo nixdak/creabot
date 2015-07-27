@@ -507,9 +507,14 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
         self.say('Your selection should consist only of the letters c and v');
         return false;
       }
-
-      if (_.reject(letter2, function (letter) { return letter === 'c' }).length < self.config.roundOptions.minimumVowels ) {
+      //check minimum Vowels
+      if (_.reject(letters, function (letter) { return letter === 'v' }).length < self.config.roundOptions.minimumVowels ) {
         self.say('You must have ' + self.config.roundOptions.minimumVowels + ' or more vowels');
+        return false;
+      }
+      //check minimum constant
+      if (_.reject(letters, function (letter) { return letter === 'c' }).length < self.config.roundOptions.minimumConstant ) {
+        self.say('You must have ' + self.config.roundOptions.minimumConstant + ' or more constant');
         return false;
       }
 
