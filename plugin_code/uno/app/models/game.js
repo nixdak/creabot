@@ -111,7 +111,7 @@ var Game = function (channel, client, config, cmdArgs) {
     var cardString = 'Your cards are: ';
     if (player.isActive) {
       _.each(player.hand.getCards(), function (card, index) { 
-        cardString += c.bold('[' + index + '] ') + card.toString();
+        cardString += c.bold(' [' + index + '] ') + card.toString();
       });
 
       self.pm(player.nick, cardString);

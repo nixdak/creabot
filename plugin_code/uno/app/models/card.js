@@ -69,10 +69,10 @@ var Card = function Card(card) {
         cardString = self.color + ' Draw Two';
         break;
       case 'Wild':
-        cardString = self.color + ' Wild';
+        cardString = 'Wild';
         break;
       case 'Wild Draw Four':
-        cardString = self.color + ' Wild Draw Four';
+        cardString = 'Wild Draw Four';
         break;
     }
 
