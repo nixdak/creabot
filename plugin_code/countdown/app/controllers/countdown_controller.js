@@ -82,7 +82,7 @@ var Countdown = function Countdown() {
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       for (var i = 1; i < args.length; i++) {
         var arg = args[i].split(':');
-        if (_.contains(valid_numbers, args[1]) === true) {
+        if (_.contains(valid_numbers, arg[1]) === true) {
           if (arg[0].toLowerCase() === 'letters'){
             letterTime = arg[1];
           } else if (arg[0].toLowerCase() === 'numbers') {
@@ -209,22 +209,6 @@ var Countdown = function Countdown() {
     }
   };
 
-  self.reload = function (client, message, cmdArgs) {
-    var channel = message.args[0],
-        nick = message.nick,
-        hostname = message.host;
-
-    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
-      if (nick.toLowerCase() === client.userName.toLowerCase()) { // need to make this configurable
-        delete require.cache[require.resolve('../../config/config.json')];
-        config = require('../../config/config.json')[env];
-      } else {
-        client.say('You do not have permission to use this command');
-      }
-    } else {
-      client.say('Please wait till the game is stopped');
-    }
-  }
 };
 
 exports = module.exports = Countdown;

@@ -508,12 +508,12 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
         return false;
       }
       //check minimum Vowels
-      if (_.reject(letters, function (letter) { return letter === 'v' }).length < self.config.roundOptions.minimumVowels ) {
+      if (_.reject(letters, function (letter) { return letter === 'c' }).length < self.config.roundOptions.minimumVowels ) {
         self.say('You must have ' + self.config.roundOptions.minimumVowels + ' or more vowels');
         return false;
       }
       //check minimum constant
-      if (_.reject(letters, function (letter) { return letter === 'c' }).length < self.config.roundOptions.minimumConstant ) {
+      if (_.reject(letters, function (letter) { return letter === 'v' }).length < self.config.roundOptions.minimumConstant ) {
         self.say('You must have ' + self.config.roundOptions.minimumConstant + ' or more constant');
         return false;
       }
