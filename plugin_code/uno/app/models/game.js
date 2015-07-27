@@ -119,7 +119,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (self.turn === 0) {
-      showCards();
+      self.showCards();
     }
 
     self.turn += 1;
