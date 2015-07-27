@@ -57,8 +57,7 @@
       "minutesBeforeStart": 2,
       "roundMinutes": 2,
       "database": true,
-      "maxIdleCount": 3,
-      "challenges": []
+      "maxIdleCount": 3
     },
 
     "pluginOptions": {
@@ -125,8 +124,7 @@
       "notifyUsers":   false,
       "minutesBeforeStart": 2,
       "database": true,
-      "maxIdleCount": 3,
-      "challenges": []
+      "maxIdleCount": 3
     },
 
     "pluginOptions": {
