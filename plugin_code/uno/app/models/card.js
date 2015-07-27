@@ -56,40 +56,40 @@ var Card = function Card(card) {
     var cardString = '';
 
     switch (self.type) {
-      case: 'Number':
+      case 'Number':
         cardString = self.color + ' ' + self.value;
         break;
-      case: 'Skip':
+      case 'Skip':
         cardString = self.color + ' Skip';
         break;
-      case: 'Reverse':
+      case 'Reverse':
         cardString = self.color + ' Reverse';
         break;
-      case: 'Draw Two':
+      case 'Draw Two':
         cardString = self.color + ' Draw Two';
         break;
-      case: 'Wild':
+      case 'Wild':
         cardString = self.color + ' Wild';
         break;
-      case: 'Wild Draw Four':
+      case 'Wild Draw Four':
         cardStrign = self.color + ' Wild Draw Four';
         break;
     }
 
     switch (self.color) {
-      case: 'yellow':
+      case 'yellow':
         cardString = c.bold.yellow(cardString);
         break;
-      case: 'green':
+      case 'green':
         cardString = c.bold.green(cardString);
         break;
-      case: 'blue':
+      case 'blue':
         cardString = c.bold.blue(cardString);
         break;
-      case: 'red':
+      case 'red':
         cardString = c.bold.red(cardString);
         break;
-      case: 'wild':
+      case 'wild':
         cardString = c.bold.brown(cardString);
         break;
     }
