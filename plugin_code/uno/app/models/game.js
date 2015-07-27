@@ -107,7 +107,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.showCards = function (player) {
-    var cardString = 'Your cards are: ';
+    var cardString = 'Your cards are:';
     if (player.isActive) {
       _.each(player.hand.getCards(), function (card, index) { 
         cardString += c.bold(' [' + index + '] ') + card.toString();
@@ -141,6 +141,8 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.start = function (nick) {
+    clearTimeout(self.startTimeout);
+
     if (_.isUndefined(self.getPlayer({nick: nick}))) {
       self.say(nick + ': Only players may start the game. !j to get in on the fun.');
       return false;

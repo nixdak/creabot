@@ -90,7 +90,7 @@ var Card = function Card(card) {
         cardString = c.bold.red(cardString);
         break;
       case 'Wild':
-        cardString = c.bold.silver(cardString);
+        cardString = c.bold.rainbow(cardString);
         break;
     }
 
