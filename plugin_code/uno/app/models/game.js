@@ -10,7 +10,6 @@ var STATES = {
   PLAYABLE: 'Playable',
   PLAYED: 'Played',
   TURN_END: 'Turn End',
-  WAITING: 'Waiting',
 };
 
 var Game = function (channel, client, config, cmdArgs) {
