@@ -104,8 +104,8 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.showCards = function (player) {
-    if (_.isUndefined(player)) {
-      
+    if (player.isActive) {
+      player.pm('Working on it!');
     }
   };
 
@@ -119,7 +119,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (self.turn === 0) {
-      self.showCards();
+      _.each(self.players, function (player) { self.showCards(player) });
     }
 
     self.turn += 1;
