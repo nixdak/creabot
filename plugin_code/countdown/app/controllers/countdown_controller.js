@@ -8,7 +8,7 @@ var Countdown = function Countdown() {
   var self = this;
   self.game;
   self.config = config;
-  self.challenges = [];
+  self.challenges = config.gameOptions.challenges;
 
   self.accept = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
