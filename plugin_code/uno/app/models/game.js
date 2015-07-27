@@ -24,6 +24,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.pointLimit = 0;
   self.deck = new Deck(true);
   self.discard = new Deck(false);
+  self.turn = 0;
 
   self.deck.shuffle();
 
@@ -102,6 +103,12 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
+  self.showCards = function (player) {
+    if (_.isUndefined(player)) {
+      
+    }
+  };
+
   self.nextTurn = function() {
     var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
 
@@ -110,7 +117,15 @@ var Game = function (channel, client, config, cmdArgs) {
       self.stop(null, true);
       return false
     }
+
+    if (self.turn === 0) {
+      showCards();
+    }
+
+    self.turn += 1;
     self.setPlayer();
+    self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
+    self.turnTimeout = setInterval(self.turnTimer, 10 * 1000);
   };
 
   self.start = function (nick) {
