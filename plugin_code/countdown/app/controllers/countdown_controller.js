@@ -66,6 +66,7 @@ var Countdown = function Countdown() {
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
     var args = cmdArgs.split(" ", 6);
+    var valid_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     var letterTime = self.config.roundOptions.lettersRoundMinutes;
     var numberTime = self.config.roundOptions.lettersRoundMinutes;
     var conundrumTime = self.config.roundOptions.lettersRoundMinutes;
@@ -81,7 +82,7 @@ var Countdown = function Countdown() {
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       for (var i = 1; i < args.length; i++) {
         var arg = args[i].split(':');
-        if (_.contains(self.valid_numbers_characters, args[1]) === true; }) {
+        if (_.contains(valid_numbers, args[1]) === true; }) {
           if (arg[0].toLowerCase() === 'letters'){
             letterTime = arg[1];
           } else if (arg[0].toLowerCase() === 'numbers') {
