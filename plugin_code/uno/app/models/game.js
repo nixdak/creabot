@@ -105,7 +105,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.showCards = function (player) {
     if (player.isActive) {
-      player.pm('Working on it!');
+      self.pm('Working on it!');
     }
   };
 
