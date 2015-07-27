@@ -114,7 +114,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.nextTurn = function() {
-    if (!_.isUndefined(self.turnTimeout) {
+    if (!_.isUndefined(self.turnTimeout)) {
       clearTimeout(self.turnTimeout);
     }
 
