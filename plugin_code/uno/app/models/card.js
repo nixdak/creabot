@@ -77,19 +77,19 @@ var Card = function Card(card) {
     }
 
     switch (self.color) {
-      case 'yellow':
+      case 'Yellow':
         cardString = c.bold.yellow(cardString);
         break;
-      case 'green':
+      case 'Green':
         cardString = c.bold.green(cardString);
         break;
-      case 'blue':
+      case 'Blue':
         cardString = c.bold.blue(cardString);
         break;
-      case 'red':
+      case 'Red':
         cardString = c.bold.red(cardString);
         break;
-      case 'wild':
+      case 'Wild':
         cardString = c.bold.silver(cardString);
         break;
     }
