@@ -109,7 +109,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.showCards = function (player) {
     if (player.isActive) {
-      _.each(player.hand.getCards(), function (card) { self.pm(player.nick, 'working on it') });
+      _.each(player.hand.getCards(), function (card) { self.pm(player.nick, card.toString()) });
     }
   };
 
