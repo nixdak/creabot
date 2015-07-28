@@ -68,8 +68,8 @@ var Countdown = function Countdown() {
     var args = cmdArgs.split(" ", 6);
     var valid_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     var letterTime = self.config.roundOptions.lettersRoundMinutes;
-    var numberTime = self.config.roundOptions.lettersRoundMinutes;
-    var conundrumTime = self.config.roundOptions.lettersRoundMinutes;
+    var numberTime = self.config.roundOptions.numbersRoundMinutes;
+    var conundrumTime = self.config.roundOptions.conundrumsRoundMinutes;
 
     if (args[0] === '') {
       client.say(channel, 'Please supply a nick with this command');
@@ -82,19 +82,22 @@ var Countdown = function Countdown() {
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       for (var i = 1; i < args.length; i++) {
         var arg = args[i].split(':');
-        if (_.contains(valid_numbers, arg[1]) === true) {
-          if (arg[0].toLowerCase() === 'letters'){
-            letterTime = arg[1];
+        if (_.reject(arg[1], function (number) { return _.contains(valid_numbers, number) === true; }).length !== 0){
+          client.say(channel, 'The ' + arg[0] + 'isnt valid')
+        }else {
+          if (arg[0].toLowerCase() === 'letters') {
+            letterTime = arg[1]/60;
           } else if (arg[0].toLowerCase() === 'numbers') {
-            numberTime = args[1];
-          } else if (arg[0].toLowerCase() === 'conundrum'){
-            conundrumTime = arg[1];
+            numberTime = arg[1]/60;
+          } else if (arg[0].toLowerCase() === 'conundrum') {
+            conundrumTime = arg[1]/60;
           }
         }
       }
       self.challenges.push({ challenger: message.nick, challenged: args[0], letter: letterTime, number: numberTime, conundrum: conundrumTime});
       client.say(channel, message.nick + ': has challenged ' + args[0]);
       client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
+      client.say(channel, 'letters:' + letterTime + ' numbers:' + numberTime + ' conundrum: ' + conundrumTime);
     } else {
       client.say(channel, message.nick + ': You have already challenged ' + args[0] + '.');
     }
