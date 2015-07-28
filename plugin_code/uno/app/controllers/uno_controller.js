@@ -45,7 +45,11 @@ var Uno = function Uno () {
   };
 
   self.score = function (client, message, cmdArgs) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
+      return false;
+    }
 
+    self.game.showScores();
   };
 
   self.start = function (client, message, cmdArgs) {
@@ -65,7 +69,13 @@ var Uno = function Uno () {
   };
 
   self.uno = function (client, message, cmdArgs) {
-    var chanel = message.args[0];
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
+      return false;
+    }
+
+    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+
+    self.game.uno(message.nick, cmdArgs);
   };
 }; 
 
