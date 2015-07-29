@@ -541,21 +541,34 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
 
       clearInterval(self.roundTimer);
       self.say('Letters for this round: ' + self.table.letters.join(' '));
-      self.say(self.config.roundOptions.lettersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
-        ' on the clock'
-      );
+      if (!_.isUndefined(self.lettersTime)){
+        self.say(self.lettersTime*60 + ' ' + inflection.inflect('second', self.lettersTime*60) +
+        ' on the clock');
+      } else {
+        self.say(self.config.roundOptions.lettersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.roundMinutes) +
+        ' on the clock');
+      }
 
       self.pm(self.challenger.nick, 'Letters for this round: ' + self.table.letters.join(' '));
-      self.pm(self.challenger.nick, self.config.roundOptions.lettersRoundMinutes + ' ' +
-        inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
-      );
+      if (!_.isUndefined(self.lettersTime)){
+        self.pm(self.challenger.nick, self.lettersTime*60 + ' ' + inflection.inflect('second', self.lettersTime*60) +
+        ' on the clock');
+      } else {
+        self.pm(self.challenger.nick, self.config.roundOptions.lettersRoundMinutes + ' ' +
+          inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock');
+      }
       self.pm(self.challenger.nick, 'Play a word with !cd [word]');
 
       self.pm(self.challenged.nick, 'Letters for this round: ' + self.table.letters.join(' '));
       self.pm(self.challenged.nick, 'Play a word with !cd [word]');
-      self.pm(self.challenged.nick, self.config.roundOptions.lettersRoundMinutes + ' ' +
-        inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
-      );
+      if (!_.isUndefined(self.lettersTime)){
+        self.pm(self.challenged.nick, self.lettersTime*60 + ' ' + inflection.inflect('second', self.lettersTime*60) +
+          ' on the clock');
+      } else {
+        self.pm(self.challenged.nick, self.config.roundOptions.lettersRoundMinutes + ' ' +
+          inflection.inflect('minute', self.config.roundOptions.roundMinutes) + ' on the clock'
+        );
+      }
 
       self.state = STATES.PLAY_LETTERS;
       clearInterval(self.roundTimer);
@@ -659,21 +672,36 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
 
       clearInterval(self.roundTimer);
       self.say('Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
-      self.say(self.config.roundOptions.numbersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) +
-        ' on the clock'
-      );
+      if (!_.isUndefined(self.numberTime)){
+        self.say(self.numberTime*60 + ' ' + inflection.inflect('second', self.numberTime*60) +
+          ' on the clock');
+      } else {
+        self.say(self.config.roundOptions.numbersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) +
+          ' on the clock'
+        );
+      }
 
       self.pm(self.challenger.nick, 'Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
-      self.pm(self.challenger.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
-        inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
-      );
+      if (!_.isUndefined(self.numberTime)){
+        self.pm(self.challenger.nick, self.numberTime*60 + ' ' + inflection.inflect('second', self.numberTime*60) +
+          ' on the clock');
+      } else {
+        self.pm(self.challenger.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
+          inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
+        );
+      }
       self.pm(self.challenger.nick, 'Play an equation with !cd [equation]');
 
       self.pm(self.challenged.nick, 'Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
+      if (!_.isUndefined(self.numberTime)){
+        self.pm(self.challenged.nick, self.numberTime*60 + ' ' + inflection.inflect('second', self.numberTime*60) +
+          ' on the clock');
+      } else {
+        self.pm(self.challenged.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
+          inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
+        );
+      }
       self.pm(self.challenged.nick, 'Play an equation with !cd [equation]');
-      self.pm(self.challenged.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
-        inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) + ' on the clock'
-      );
 
       self.state = STATES.PLAY_NUMBERS;
       clearInterval(self.roundTimer);
