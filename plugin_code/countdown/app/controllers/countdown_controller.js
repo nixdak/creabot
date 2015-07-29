@@ -174,24 +174,24 @@ var Countdown = function Countdown() {
       var args;
 
       if (cmdArgs === '') {
-        client.say(message.args[0], 'Please supply arguments to the !select command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
 
       args = cmdArgs.replace(/\s/g, '').split('');
 
-      self.game.letters(message.nick, args);
+      self.game.letters(message.nick, args.toLowerCase());
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
       var args;
 
       if (cmdArgs === '') {
-        client.say(message.args[0], 'Please supply arguments to the !select command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
 
       args = cmdArgs.replace(/\s/g, '').split('');
 
-      self.game.numbers(message.nick, args);
+      self.game.numbers(message.nick, args.toLowerCase());
     } else {
       client.say(message.args[0], 'The select command is not available at the moment');
     }
