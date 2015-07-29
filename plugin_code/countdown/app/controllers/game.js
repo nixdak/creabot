@@ -36,6 +36,9 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
   self.vowel_array = ['A', 'E', 'I', 'O', 'U'];
   self.valid_numbers_characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '+', '-', '*', '/', '(', ')'];
   self.conundrumAns = false;
+  self.lettersTime = lettersTime;
+  self.numbersTime = numbersTime;
+  self.conundrumsTime = conundrumsTime;
 
   console.log(self.channel);
 
