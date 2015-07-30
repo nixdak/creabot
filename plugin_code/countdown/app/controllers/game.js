@@ -38,7 +38,7 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
   self.conundrumAns = false;
 
   console.log(self.channel);
-  self.say('letters: ' + letterTime*60 + ' numbers: ' + numberTime*60 + ' conundrum: ' + conundrumTime*60);
+  self.say('letters: ' + self.letterTime*60 + ' numbers: ' + self.numberTime*60 + ' conundrum: ' + self.conundrumTime*60);
 
   console.log('Loading dictionary');
 
