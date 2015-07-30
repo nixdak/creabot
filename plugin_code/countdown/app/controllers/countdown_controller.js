@@ -69,7 +69,7 @@ var Countdown = function Countdown() {
     var valid_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     var letterTime = self.config.roundOptions.lettersRoundMinutes;
     var numberTime = self.config.roundOptions.numbersRoundMinutes;
-    var conundrumTime = self.config.roundOptions.conundrumsRoundMinutes;
+    var conundrumTime = self.config.roundOptions.conundrumRoundMinutes;
 
     if (args[0] === '') {
       client.say(channel, 'Please supply a nick with this command');
@@ -89,7 +89,7 @@ var Countdown = function Countdown() {
           } else if (arg[0].toLowerCase() === 'numbers') {
             numberTime = self.config.roundOptions.numbersRoundMinutes;
           } else if (arg[0].toLowerCase() === 'conundrum') {
-            conundrumTime = self.config.roundOptions.conundrumsRoundMinutes;
+            conundrumTime = self.config.roundOptions.conundrumRoundMinutes;
           }
         }else {
           if (arg[0].toLowerCase() === 'letters') {
