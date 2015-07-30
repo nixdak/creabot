@@ -38,10 +38,11 @@ var Countdown = function Countdown() {
       } else {
         var challenger = new Player(cmdArgs);
         var challenged = new Player(message.nick);
-        var letterTime = self.config.roundOptions.lettersRoundMinutes;
-        var numberTime = self.config.roundOptions.lettersRoundMinutes;
-        var conundrumTime = self.config.roundOptions.lettersRoundMinutes;
+        var letterTime = letterTimes[0];
+        var numberTime = numberTimes[0];
+        var conundrumTime = conundrumTimes[0];
         self.game = new Game(channel, client, self.config, challenger, challenged, letterTime, numberTime, conundrumTime);
+        client.say(channel, 'letters: ' + letterTime*60 + ' numbers: ' + numberTime*60 + ' conundrum: ' + conundrumTime*60);
         self.game.addPlayer(challenged);
       }
     } else {
@@ -82,7 +83,14 @@ var Countdown = function Countdown() {
       for (var i = 1; i < args.length; i++) {
         var arg = args[i].split(':');
         if (_.reject(arg[1], function (number) { return _.contains(valid_numbers, number) === true; }).length !== 0){
-          client.say(channel, 'The ' + arg[0] + 'isnt valid')
+          client.say(channel, 'The ' + arg[0] + ' isnt valid')
+          if (arg[0].toLowerCase() === 'letters') {
+            letterTime = self.config.roundOptions.lettersRoundMinutes;
+          } else if (arg[0].toLowerCase() === 'numbers') {
+            numberTime = self.config.roundOptions.numbersRoundMinutes;
+          } else if (arg[0].toLowerCase() === 'conundrum') {
+            conundrumTime = self.config.roundOptions.conundrumsRoundMinutes;
+          }
         }else {
           if (arg[0].toLowerCase() === 'letters') {
             letterTime = arg[1]/60;
@@ -96,7 +104,6 @@ var Countdown = function Countdown() {
       self.challenges.push({ challenger: message.nick, challenged: args[0], letter: letterTime, number: numberTime, conundrum: conundrumTime});
       client.say(channel, message.nick + ': has challenged ' + args[0]);
       client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
-      //client.say(channel, 'letters: ' + letterTime*60 + ' numbers: ' + numberTime*60 + ' conundrum: ' + conundrumTime*60);
     } else {
       client.say(channel, message.nick + ': You have already challenged ' + args[0] + '.');
     }
@@ -172,6 +179,7 @@ var Countdown = function Countdown() {
   self.select = function (client, message, cmdArgs) {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
       var args;
+      cmdArgs = cmdArgs.toLowerCase();
 
       if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !cd command');
@@ -180,9 +188,10 @@ var Countdown = function Countdown() {
 
       args = cmdArgs.replace(/\s/g, '').split('');
 
-      self.game.letters(message.nick, args.toLowerCase());
+      self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
       var args;
+      cmdArgs = cmdArgs.toLowerCase();
 
       if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !cd command');
@@ -191,7 +200,7 @@ var Countdown = function Countdown() {
 
       args = cmdArgs.replace(/\s/g, '').split('');
 
-      self.game.numbers(message.nick, args.toLowerCase());
+      self.game.numbers(message.nick, args);
     } else {
       client.say(message.args[0], 'The select command is not available at the moment');
     }
