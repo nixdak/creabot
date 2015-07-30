@@ -671,8 +671,8 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
 
       clearInterval(self.roundTimer);
       self.say('Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
-      if (!_.isUndefined(self.numberTime)){
-        self.say(self.numberTime*60 + ' ' + inflection.inflect('second', self.numberTime*60) +
+      if (!_.isUndefined(self.numbersTime)){
+        self.say(self.numbersTime*60 + ' ' + inflection.inflect('second', self.numbersTime*60) +
           ' on the clock');
       } else {
         self.say(self.config.roundOptions.numbersRoundMinutes + ' ' + inflection.inflect('minute', self.config.roundOptions.numbersRoundMinutes) +
@@ -681,8 +681,8 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
       }
 
       self.pm(self.challenger.nick, 'Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
-      if (!_.isUndefined(self.numberTime)){
-        self.pm(self.challenger.nick, self.numberTime*60 + ' ' + inflection.inflect('second', self.numberTime*60) +
+      if (!_.isUndefined(self.numbersTime)){
+        self.pm(self.challenger.nick, self.numbersTime*60 + ' ' + inflection.inflect('second', self.numbersTime*60) +
           ' on the clock');
       } else {
         self.pm(self.challenger.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
@@ -692,8 +692,8 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
       self.pm(self.challenger.nick, 'Play an equation with !cd [equation]');
 
       self.pm(self.challenged.nick, 'Numbers for this round: ' + self.table.numbers.join(' ') + ' and the target is: ' + self.table.target);
-      if (!_.isUndefined(self.numberTime)){
-        self.pm(self.challenged.nick, self.numberTime*60 + ' ' + inflection.inflect('second', self.numberTime*60) +
+      if (!_.isUndefined(self.numbersTime)){
+        self.pm(self.challenged.nick, self.numbersTime*60 + ' ' + inflection.inflect('second', self.numbersTime*60) +
           ' on the clock');
       } else {
         self.pm(self.challenged.nick, self.config.roundOptions.numbersRoundMinutes + ' ' +
