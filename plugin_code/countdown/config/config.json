@@ -47,7 +47,8 @@
       "numbersRoundMinutes": 5,
       "conundrumRoundMinutes": 2,
       "secondsBeforeConundrum": 15,
-      "minimumVowels": 3
+      "minimumVowels": 3,
+      "minimumConstant": 3
     },
 
     "gameOptions": {
@@ -115,7 +116,8 @@
       "numbersRoundMinutes": 5,
       "conundrumRoundMinutes": 2,
       "secondsBeforeConundrum": 15,
-      "minimumVowels": 3
+      "minimumVowels": 3,
+      "minimumConstant": 3
     },
 
     "gameOptions": {
