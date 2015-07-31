@@ -14,13 +14,12 @@ var Countdown = function Countdown() {
   self.accept = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       var channel = message.args[0];
-      var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
-      var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
 
       var games = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
-      var letterTimes = _.map(games, function (challenge) { return challenge.letterTime; });
-      var numberTimes = _.map(games, function (challenge) { return challenge.numberTime; });
-      var conundrumTimes = _.map(games, function (challenge) { return challenge.conundrumTime; });
+      var challengers = _.map(games, function (challenge) { return challenge.challenger; });
+      var letterTimes = _.map(games, function (challenge) { return challenge.letter; });
+      var numberTimes = _.map(games, function (challenge) { return challenge.number; });
+      var conundrumTimes = _.map(games, function (challenge) { return challenge.conundrum; });
 
       if (cmdArgs === '') {
         if (challengers.length === 1) {
@@ -40,10 +39,11 @@ var Countdown = function Countdown() {
       } else {
         var challenger = new Player(cmdArgs);
         var challenged = new Player(message.nick);
-        var letterTime = self.config.roundOptions.lettersRoundMinutes;
-        var numberTime = self.config.roundOptions.lettersRoundMinutes;
-        var conundrumTime = self.config.roundOptions.lettersRoundMinutes;
+        var letterTime = letterTimes[0];
+        var numberTime = numberTimes[0];
+        var conundrumTime = conundrumTimes[0];
         self.game = new Game(channel, client, self.config, challenger, challenged, letterTime, numberTime, conundrumTime);
+        client.say(channel, 'letters: ' + letterTime*60 + ' numbers: ' + numberTime*60 + ' conundrum: ' + conundrumTime*60);
         self.game.addPlayer(challenged);
       }
     } else {
@@ -67,9 +67,10 @@ var Countdown = function Countdown() {
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
     var args = cmdArgs.split(" ", 6);
+    var valid_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     var letterTime = self.config.roundOptions.lettersRoundMinutes;
-    var numberTime = self.config.roundOptions.lettersRoundMinutes;
-    var conundrumTime = self.config.roundOptions.lettersRoundMinutes;
+    var numberTime = self.config.roundOptions.numbersRoundMinutes;
+    var conundrumTime = self.config.roundOptions.conundrumRoundMinutes;
 
     if (args[0] === '') {
       client.say(channel, 'Please supply a nick with this command');
@@ -82,13 +83,22 @@ var Countdown = function Countdown() {
     } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
       for (var i = 1; i < args.length; i++) {
         var arg = args[i].split(':');
-        if (_.contains(self.valid_numbers_characters, args[1]) === true; }) {
-          if (arg[0].toLowerCase() === 'letters'){
-            letterTime = arg[1];
+        if (_.reject(arg[1], function (number) { return _.contains(valid_numbers, number) === true; }).length !== 0){
+          client.say(channel, 'The ' + arg[0] + ' isnt valid')
+          if (arg[0].toLowerCase() === 'letters') {
+            letterTime = self.config.roundOptions.lettersRoundMinutes;
           } else if (arg[0].toLowerCase() === 'numbers') {
-            numberTime = args[1];
-          } else if (arg[0].toLowerCase() === 'conundrum'){
-            conundrumTime = arg[1];
+            numberTime = self.config.roundOptions.numbersRoundMinutes;
+          } else if (arg[0].toLowerCase() === 'conundrum') {
+            conundrumTime = self.config.roundOptions.conundrumRoundMinutes;
+          }
+        }else {
+          if (arg[0].toLowerCase() === 'letters') {
+            letterTime = arg[1]/60;
+          } else if (arg[0].toLowerCase() === 'numbers') {
+            numberTime = arg[1]/60;
+          } else if (arg[0].toLowerCase() === 'conundrum') {
+            conundrumTime = arg[1]/60;
           }
         }
       }
@@ -172,9 +182,10 @@ var Countdown = function Countdown() {
   self.select = function (client, message, cmdArgs) {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
       var args;
+      cmdArgs = cmdArgs.toLowerCase();
 
       if (cmdArgs === '') {
-        client.say(message.args[0], 'Please supply arguments to the !select command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
 
@@ -183,9 +194,10 @@ var Countdown = function Countdown() {
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
       var args;
+      cmdArgs = cmdArgs.toLowerCase();
 
       if (cmdArgs === '') {
-        client.say(message.args[0], 'Please supply arguments to the !select command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
 
@@ -211,22 +223,6 @@ var Countdown = function Countdown() {
     }
   };
 
-  self.reload = function (client, message, cmdArgs) {
-    var channel = message.args[0],
-        nick = message.nick,
-        hostname = message.host;
-
-    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
-      if (nick.toLowerCase() === client.userName.toLowerCase()) { // need to make this configurable
-        delete require.cache[require.resolve('../../config/config.json')];
-        config = require('../../config/config.json')[env];
-      } else {
-        client.say('You do not have permission to use this command');
-      }
-    } else {
-      client.say('Please wait till the game is stopped');
-    }
-  }
 };
 
 exports = module.exports = Countdown;
