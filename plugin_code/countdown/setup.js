@@ -17,7 +17,6 @@ module.exports = function(app) {
   app.cmd('lock', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.lock);
   app.cmd('quit', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.stop);
   app.cmd('stop', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.stop);
-  app.cmd('reload', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.reload);
 
   // Private commands
   app.msg('cd', '', countdown.play);
