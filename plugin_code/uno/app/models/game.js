@@ -24,6 +24,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.deck = new Deck(true);
   self.discard = new Deck(false);
   self.turn = 0;
+  self.colors = ['YELLOW', 'GREEN', 'BLUE', 'RED'];
 
   self.deck.shuffle();
 
@@ -103,7 +104,29 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.turnTimer = function() {
+    // check the time
+    var now = new Date();
+    var timeLimit = 60 * 1000 * config.gameOptions.roundMinutes;
+    var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
+    console.log('Round elapsed:', roundElapsed, now.getTime(), self.roundStarted.getTime());
+
+    if (roundElapsed >= timeLimit) {
+      console.log('The round timed out');
+      self.say('Time is up!');
+      self.markInactivePlayers();
+      // show end of turn
+    } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
+      // 10s ... 0s left
+      self.say('10 seconds left!');
+    } else if (roundElapsed >= timeLimit - (30 * 1000) && roundElapsed < timeLimit - (20 * 1000)) {
+      // 30s ... 20s left
+      self.say('30 seconds left!');
+    } else if (roundElapsed >= timeLimit - (60 * 1000) && roundElapsed < timeLimit - (50 * 1000)) {
+      // 60s ... 50s left
+      self.say('Hurry up, 1 minute left!');
+      self.showStatus();
+    }
   };
 
   self.showCards = function (player) {
@@ -157,8 +180,46 @@ var Game = function (channel, client, config, cmdArgs) {
     self.nextTurn();
   };
 
-  self.play = function (player, card) {
+  self.play = function (nick, card, color) {
+    var player = self.getPlayer({ nick: player });
 
+    if (_.isUndefined(player })) {
+      return false;
+    }
+
+    if (isNaN(card) || card < 0 || card > player.hand.numCards()) {
+      self.pm(player, 'Please enter a valid index');
+      return false;
+    }
+
+    if (player.hand.checkPlayable(card, self.discard.getCurrentCard()) === false) {
+      self.pm(player, 'That card is not playable. Please select another card.');
+      return false;
+    }
+
+    if (player.hand.getCard(card).color === 'WILD' && _.isUndefined(color)) {
+      self.pm(player, 'Please provide a color for this card!');
+      return false;
+    }
+
+    if (player.hand.getCard(card).color === 'WILD' && !_.contains(self.colors, color.toUpperCase())) {
+      self.pm('Please provide a valid color for this card. [Red, Blue, Green, Yellow]');
+      return false;
+    }
+
+    var card = player.hand.pickCard(card);
+
+    self.discard.addCard(card);
+
+    self.say(player.nick + ' has played ' + card.toString() + '!');
+
+    if (card.color === 'WILD') {
+      self.say(player.nick + ' has changed the color to ' + color);
+    }
+
+    self.say(player.nick + ' has ' + player.hand.numCards() + inflection.inflect('card', player.hand.numCards()) ' left ');
+
+    self.nextTurn();
   };
 
   self.addPlayer = function (player) {

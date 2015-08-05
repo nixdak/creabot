@@ -75,7 +75,7 @@ var Uno = function Uno () {
 
     cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
 
-    self.game.uno(message.nick, cmdArgs);
+    self.game.play(message.nick, cmdArgs[0], cmdArgs[1]);
   };
 }; 
 

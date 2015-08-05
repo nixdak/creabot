@@ -8,25 +8,36 @@ var Card = function Card(card) {
   self.value = card.value;
 
   switch (self.type) {
-    case "Number":
+    case 'Number':
       self.onPlay = self.addPoints;
       break;
-    case "Draw Two":
+    case 'Draw Two':
       self.onPlay = self.drawTwo;
       break;
-    case "Reverse":
+    case 'Reverse':
       self.onPlay = self.reverse;
       break;
-    case "Skip":
+    case 'Skip':
       self.onPlay = self.skip;
       break;
-    case "Wild":
+    case 'Wild':
       self.onPlay = self.wild;
       break;
-    case "Wild Draw Four":
+    case 'Wild Draw Four':
       self.onPlay = self.wildDrawFour;
       break;
   }
+
+  self.isPlayable = function (currentCard) {
+    switch (currentCard.type) {
+      case 'Wild', 'Wild Draw Four':
+        return (self.color === 'Wild' || self.color === currentCard.color); 
+      case 'Number':
+        return self.color === 'WILD' || (self.color === currentCard.color || self.value === currentCard.value);
+      case 'Skip', 'Reverse', 'Draw Two':
+        return (self.color === 'WILD') || (self.color === currentCard.color || self.type === currentCard.type); 
+    }
+  } 
 
   self.addPoints = function () {
 
@@ -77,19 +88,19 @@ var Card = function Card(card) {
     }
 
     switch (self.color) {
-      case 'Yellow':
+      case 'YELLOW':
         cardString = c.bold.yellow(cardString);
         break;
-      case 'Green':
+      case 'GREEN':
         cardString = c.bold.green(cardString);
         break;
-      case 'Blue':
+      case 'BLUE':
         cardString = c.bold.blue(cardString);
         break;
-      case 'Red':
+      case 'RED':
         cardString = c.bold.red(cardString);
         break;
-      case 'Wild':
+      case 'WILD':
         cardString = c.bold.rainbow(cardString);
         break;
     }
