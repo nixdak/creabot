@@ -35,10 +35,22 @@ var Deck = function Deck(deck) {
     return card;
   };
 
+  self.checkPlayable = function (index, currentCard) {
+    return self.cards[index].isPlayable(currentCard);
+  };
+
+  self.getCard = function (index) {
+    return self.cards[index];
+  };
+
   self.pickCard = function (index) {
     var card = self.cards[index];
     self.removeCard(card);
     return card;
+  };
+
+  self.getCurrentCard = function () {
+    return self.cards[self.cards.legnth - 1];
   };
 
   self.getCards = function () {
