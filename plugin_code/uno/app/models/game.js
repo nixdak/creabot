@@ -160,6 +160,8 @@ var Game = function (channel, client, config, cmdArgs) {
     self.turn += 1;
     self.setPlayer();
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
+
+    self.roundStarted = new Date();
     self.turnTimeout = setInterval(self.turnTimer, 10 * 1000);
   };
 
