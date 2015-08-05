@@ -186,6 +186,7 @@ var Game = function (channel, client, config, cmdArgs) {
     var player = self.getPlayer({ nick: player });
 
     if (_.isUndefined(player)) {
+      console.log('Player is undefined');
       return false;
     }
 
