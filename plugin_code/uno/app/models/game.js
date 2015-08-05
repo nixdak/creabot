@@ -185,7 +185,8 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.play = function (nick, card, color) {
     console.log('In play');
-    var player = self.getPlayer({ nick: player });
+
+    var player = self.getPlayer({ nick: nick });
 
     if (_.isUndefined(player)) {
       console.log('Player is undefined');
