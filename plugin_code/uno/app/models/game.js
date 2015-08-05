@@ -217,7 +217,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(player.nick + ' has changed the color to ' + color);
     }
 
-    self.say(player.nick + ' has ' + player.hand.numCards() + inflection.inflect('card', player.hand.numCards()) ' left ');
+    self.say(player.nick + ' has ' + player.hand.numCards() + inflection.inflect('card', player.hand.numCards()) + ' left!');
 
     self.nextTurn();
   };
