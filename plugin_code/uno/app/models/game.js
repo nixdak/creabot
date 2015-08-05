@@ -183,6 +183,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.play = function (nick, card, color) {
+    console.log('In play');
     var player = self.getPlayer({ nick: player });
 
     if (_.isUndefined(player)) {
