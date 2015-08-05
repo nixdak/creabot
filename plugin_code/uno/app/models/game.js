@@ -157,6 +157,7 @@ var Game = function (channel, client, config, cmdArgs) {
       _.each(self.players, function (player) { self.showCards(player) });
     }
 
+    self.state = STATES.PLAYABLE;
     self.turn += 1;
     self.setPlayer();
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
