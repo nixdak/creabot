@@ -183,7 +183,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.play = function (nick, card, color) {
     var player = self.getPlayer({ nick: player });
 
-    if (_.isUndefined(player })) {
+    if (_.isUndefined(player)) {
       return false;
     }
 
