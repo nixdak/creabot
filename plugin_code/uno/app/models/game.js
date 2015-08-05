@@ -189,6 +189,11 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
+    if (player !== self.currentPlayer) {
+      self.pm(player.nick, 'It is not your turn.');
+      return false;
+    }
+
     if (isNaN(card) || card < 0 || card > player.hand.numCards()) {
       self.pm(player, 'Please enter a valid index');
       return false;
