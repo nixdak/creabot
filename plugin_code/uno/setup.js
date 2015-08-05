@@ -19,5 +19,5 @@ module.exports = function(app) {
 
   // Private commands
   app.msg('draw', '', uno.draw);
-  app.msg('uno', '', uno.draw);
+  app.msg('uno', '', uno.uno);
 };
