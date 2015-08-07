@@ -231,11 +231,11 @@ var Game = function (channel, client, config, cmdArgs) {
 
     console.log('Color is valid if required');
 
-    var card = player.hand.pickCard(card);
+    var pickedCard = player.hand.pickCard(card);
 
-    self.discard.addCard(card);
+    self.discard.addCard(pickedCard);
 
-    self.say(player.nick + ' has played ' + card.toString() + '!');
+    self.say(player.nick + ' has played ' + pickedCard.toString() + '!');
 
     if (card.color === 'WILD') {
       self.say(player.nick + ' has changed the color to ' + color);
