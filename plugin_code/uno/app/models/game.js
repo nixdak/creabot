@@ -211,7 +211,7 @@ var Game = function (channel, client, config, cmdArgs) {
     console.log('Index is valid');
 
     if (player.hand.checkPlayable(card, self.discard.getCurrentCard()) === false) {
-      self.pm(player, 'That card is not playable. Please select another card.');
+      self.pm(player.nick, 'That card is not playable. Please select another card.');
       return false;
     }
 
