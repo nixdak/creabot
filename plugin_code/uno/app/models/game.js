@@ -155,6 +155,8 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (self.turn === 0) {
       _.each(self.players, function (player) { self.showCards(player) });
+      self.deck.deal(self.discard);
+      self.say('The first card is : ' + self.discard.getCurrentCard().toString());
     }
 
     self.state = STATES.PLAYABLE;
@@ -184,8 +186,6 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.play = function (nick, card, color) {
-    console.log('In play');
-
     var player = self.getPlayer({ nick: nick });
 
     if (_.isUndefined(player)) {
