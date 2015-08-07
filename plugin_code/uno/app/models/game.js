@@ -194,30 +194,42 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
+    console.log('Player is not undefined');
+
     if (player !== self.currentPlayer) {
       self.pm(player.nick, 'It is not your turn.');
       return false;
     }
+
+    console.log('Player is current player');
 
     if (isNaN(card) || card < 0 || card > player.hand.numCards()) {
       self.pm(player, 'Please enter a valid index');
       return false;
     }
 
+    console.log('Index is valid');
+
     if (player.hand.checkPlayable(card, self.discard.getCurrentCard()) === false) {
       self.pm(player, 'That card is not playable. Please select another card.');
       return false;
     }
+
+    console.log('Card is playable');
 
     if (player.hand.getCard(card).color === 'WILD' && _.isUndefined(color)) {
       self.pm(player, 'Please provide a color for this card!');
       return false;
     }
 
+    console.log('Color is defined or uneccessary')
+
     if (player.hand.getCard(card).color === 'WILD' && !_.contains(self.colors, color.toUpperCase())) {
       self.pm('Please provide a valid color for this card. [Red, Blue, Green, Yellow]');
       return false;
     }
+
+    console.log('Color is valid if required');
 
     var card = player.hand.pickCard(card);
 
