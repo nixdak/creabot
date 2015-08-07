@@ -50,7 +50,7 @@ var Deck = function Deck(deck) {
   };
 
   self.getCurrentCard = function () {
-    return self.cards[self.cards.legnth - 1];
+    return self.cards[self.cards.length - 1];
   };
 
   self.getCards = function () {
