@@ -162,6 +162,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.state = STATES.PLAYABLE;
     self.turn += 1;
+    console.log('Setting player');
     self.setPlayer();
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
