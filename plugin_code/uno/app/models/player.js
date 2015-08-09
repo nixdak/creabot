@@ -8,7 +8,6 @@ var Player = function(nick, user, hostname) {
   self.hostname = hostname;
   self.points = 0;
   self.isActive = true;
-  self.turn = false;
   self.hand = new Deck(false);
   self.hasPlayed = false;
   self.hasDrawn = false;

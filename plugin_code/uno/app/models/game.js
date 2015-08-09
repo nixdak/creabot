@@ -91,14 +91,13 @@ var Game = function (channel, client, config, cmdArgs) {
   self.setPlayer = function () {
     if (_.isUndefined(self.currentPlayer)) {
       self.currentPlayer = _.where(self.players, { isActive: true })[0];
-      self.currentPlayer.turn = true;
       return true;
     }
 
     for (var i = (self.players.indexOf(self.currentPlayer) + 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
       if (self.players[i].isActive === true) {
         self.currentPlayer = self.players[i];
-        self.currentPlayer.turn = true;
+        return true;
       }
     }
   };
