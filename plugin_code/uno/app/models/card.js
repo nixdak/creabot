@@ -29,6 +29,7 @@ var Card = function Card(card) {
   }
 
   self.isPlayable = function (currentCard) {
+    console.log(currentCard.type);
     switch (currentCard.type) {
       case 'Wild', 'Wild Draw Four':
         return (self.color === 'WILD' || self.color === currentCard.color); 
