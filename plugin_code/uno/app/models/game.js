@@ -156,7 +156,7 @@ var Game = function (channel, client, config, cmdArgs) {
       _.each(self.players, function (player) { self.showCards(player) });
       self.deck.deal(self.discard);
       console.log(self.discard.numCards());
-      self.say('The first card is : ' + self.discard.getCurrentCard().toString());
+      self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     }
 
     self.state = STATES.PLAYABLE;
@@ -164,6 +164,8 @@ var Game = function (channel, client, config, cmdArgs) {
     console.log('Setting player');
     self.setPlayer();
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
+
+    self.pm(self.currentPlayer.nick, 'The current card is: ' + self.discard.getCurrentCard().toString());
 
     self.roundStarted = new Date();
     self.turnTimeout = setInterval(self.turnTimer, 10 * 1000);
@@ -229,7 +231,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(player.nick + ' has changed the color to ' + color);
     }
 
-    self.say(player.nick + ' has ' + player.hand.numCards() + inflection.inflect('card', player.hand.numCards()) + ' left!');
+    self.say(player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!');
 
     console.log('Entering nextTurn');
     
