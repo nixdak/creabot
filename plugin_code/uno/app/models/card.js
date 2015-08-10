@@ -41,7 +41,9 @@ var Card = function Card(card) {
       case 'Number':
         return self.color === 'WILD' || (self.color === currentCard.color || self.value === currentCard.value);
       case 'Skip', 'Reverse', 'Draw Two':
-        return (self.color === 'WILD') || (self.color === currentCard.color || self.type === currentCard.type); 
+        return (self.color === 'WILD') || (self.color === currentCard.color || self.type === currentCard.type);
+      default:
+        console.log(currentCard.type);
     }
   } 
 
