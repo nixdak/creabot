@@ -9,7 +9,7 @@ var Card = function Card(card) {
 
   switch (self.type) {
     case 'Number':
-      self.onPlay = self.addPoints;
+      self.onPlay = self.number;
       break;
     case 'Draw Two':
       self.onPlay = self.drawTwo;
@@ -39,16 +39,19 @@ var Card = function Card(card) {
     }
   } 
 
-  self.addPoints = function () {
-
+  self.number = function () {
+    return true;
   };
 
   self.drawTwo = function () {
-
+    
   };
 
   self.reverse = function () {
-
+    // If only two players
+    // Skip
+    // Else
+    // Reverse game players
   };
 
   self.skip = function () {
@@ -56,11 +59,12 @@ var Card = function Card(card) {
   };
 
   self.wild = function () {
-
+    // Color is handled by the play function so just return true
+    return true;
   };
 
   self.wildDrawFour = function () {
-
+    // Color setting is handled else where, so make next player draw four cards
   };
 
   self.toString = function () {
