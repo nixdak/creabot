@@ -35,6 +35,8 @@ var Card = function Card(card) {
     console.log('Self color: ' + self.color);
     switch (currentCard.type) {
       case 'Wild', 'Wild Draw Four':
+        console.log('color:' + self.color === 'WILD');
+        console.log('currentColor:' + self.color === currentCard.color);
         return (self.color === 'WILD' || self.color === currentCard.color); 
       case 'Number':
         return self.color === 'WILD' || (self.color === currentCard.color || self.value === currentCard.value);
