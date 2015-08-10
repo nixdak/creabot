@@ -212,12 +212,12 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (player.hand.getCard(card).color === 'WILD' && _.isUndefined(color)) {
-      self.pm(player, 'Please provide a color for this card!');
+      self.pm(player.nick, 'Please provide a color for this card!');
       return false;
     }
 
     if (player.hand.getCard(card).color === 'WILD' && !_.contains(self.colors, color.toUpperCase())) {
-      self.pm('Please provide a valid color for this card. [Red, Blue, Green, Yellow]');
+      self.pm(player.nick, 'Please provide a valid color for this card. [Red, Blue, Green, Yellow]');
       return false;
     }
 

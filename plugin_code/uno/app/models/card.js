@@ -31,7 +31,7 @@ var Card = function Card(card) {
   self.isPlayable = function (currentCard) {
     switch (currentCard.type) {
       case 'Wild', 'Wild Draw Four':
-        return (self.color === 'Wild' || self.color === currentCard.color); 
+        return (self.color === 'WILD' || self.color === currentCard.color); 
       case 'Number':
         return self.color === 'WILD' || (self.color === currentCard.color || self.value === currentCard.value);
       case 'Skip', 'Reverse', 'Draw Two':
