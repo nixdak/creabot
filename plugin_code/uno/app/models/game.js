@@ -227,8 +227,9 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.say(player.nick + ' has played ' + pickedCard.toString() + '!');
 
-    if (card.color === 'WILD') {
+    if (pickedCard.color === 'WILD') {
       self.say(player.nick + ' has changed the color to ' + color);
+      pickedCard.color = color.toUpperCase();
     }
 
     self.say(player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!');
