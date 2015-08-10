@@ -29,22 +29,16 @@ var Card = function Card(card) {
   }
 
   self.isPlayable = function (currentCard) {
-    console.log('Current type: ' + currentCard.type);
-    console.log('Current color: ' + currentCard.color);
-    console.log('Self type: ' + self.type);
-    console.log('Self color: ' + self.color);
     switch (currentCard.type) {
       case 'Wild':
       case 'Wild Draw Four':
-        console.log('color:' + self.color === 'WILD');
-        console.log('currentColor:' + self.color === currentCard.color);
         return (self.color === 'WILD' || self.color === currentCard.color); 
       case 'Number':
         return self.color === 'WILD' || (self.color === currentCard.color || self.value === currentCard.value);
-      case 'Skip', 'Reverse', 'Draw Two':
+      case 'Skip':
+      case 'Reverse':
+      case 'Draw Two':
         return (self.color === 'WILD') || (self.color === currentCard.color || self.type === currentCard.type);
-      default:
-        console.log(currentCard.type);
     }
   } 
 
