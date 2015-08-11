@@ -165,6 +165,10 @@ var Game = function (channel, client, config, cmdArgs) {
     self.setPlayer();
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
+    if (self.turn !== 0) {
+      self.showCards(self.currentPlayer);
+    }
+    
     self.pm(self.currentPlayer.nick, 'The current card is: ' + self.discard.getCurrentCard().toString());
 
     self.roundStarted = new Date();
