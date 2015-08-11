@@ -153,7 +153,6 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (self.turn === 0) {
-      _.each(self.players, function (player) { self.showCards(player) });
       self.deck.deal(self.discard);
       console.log(self.discard.numCards());
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
@@ -165,6 +164,10 @@ var Game = function (channel, client, config, cmdArgs) {
     self.setPlayer();
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
+    if (self.turn !== 0) {
+      self.showCards(self.currentPlayer);
+    }
+    
     self.pm(self.currentPlayer.nick, 'The current card is: ' + self.discard.getCurrentCard().toString());
 
     self.roundStarted = new Date();
@@ -212,12 +215,12 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (player.hand.getCard(card).color === 'WILD' && _.isUndefined(color)) {
-      self.pm(player, 'Please provide a color for this card!');
+      self.pm(player.nick, 'Please provide a color for this card!');
       return false;
     }
 
     if (player.hand.getCard(card).color === 'WILD' && !_.contains(self.colors, color.toUpperCase())) {
-      self.pm('Please provide a valid color for this card. [Red, Blue, Green, Yellow]');
+      self.pm(player.nick, 'Please provide a valid color for this card. [Red, Blue, Green, Yellow]');
       return false;
     }
 
@@ -227,8 +230,9 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.say(player.nick + ' has played ' + pickedCard.toString() + '!');
 
-    if (card.color === 'WILD') {
+    if (pickedCard.color === 'WILD') {
       self.say(player.nick + ' has changed the color to ' + color);
+      pickedCard.color = color.toUpperCase();
     }
 
     self.say(player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!');
