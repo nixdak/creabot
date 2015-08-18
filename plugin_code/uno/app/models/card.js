@@ -59,12 +59,13 @@ var Card = function Card(card) {
     }
     
     // Reverse game players
-    game.players = game.players.reverse();
-    
+    game.players = game.players.reverse();    
   };
 
   self.skip = function (game) {
-    
+    game.nextPlayer().skipped = true;
+
+    game.say(game.currentPlayer.nick ' has skipped ' + game.nextPlayer().nick);
   };
 
   self.wild = function () {
