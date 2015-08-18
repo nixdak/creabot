@@ -88,18 +88,21 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
+  self.nextPlayer = function() {
+    for (var i = (self.players.indexOf(self.currentPlayer + 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.legnth) {
+      if (self.players[i].isActive === true && self.players[i].skipped === false) {
+	return self.players[i];
+      }
+    }
+  };
+
   self.setPlayer = function () {
     if (_.isUndefined(self.currentPlayer)) {
       self.currentPlayer = _.where(self.players, { isActive: true })[0];
       return true;
     }
 
-    for (var i = (self.players.indexOf(self.currentPlayer) + 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
-      if (self.players[i].isActive === true) {
-        self.currentPlayer = self.players[i];
-        return true;
-      }
-    }
+    self.currentPlayer = self.nextPlayer();
   };
 
   self.turnTimer = function() {
@@ -162,6 +165,10 @@ var Game = function (channel, client, config, cmdArgs) {
     self.turn += 1;
     console.log('Setting player');
     self.setPlayer();
+
+    // Unset skipped flags
+    _.each(self.players, function (player) { player.skipped = false; });
+    
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
     if (self.turn !== 0) {
@@ -230,6 +237,8 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.say(player.nick + ' has played ' + pickedCard.toString() + '!');
 
+    pickedCard.onPlay(self);
+    
     if (pickedCard.color === 'WILD') {
       self.say(player.nick + ' has changed the color to ' + color);
       pickedCard.color = color.toUpperCase();
