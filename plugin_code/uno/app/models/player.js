@@ -9,6 +9,7 @@ var Player = function(nick, user, hostname) {
   self.points = 0;
   self.isActive = true;
   self.hand = new Deck(false);
+  self.skipped = false;
   self.hasPlayed = false;
   self.hasDrawn = false;
 };
