@@ -74,7 +74,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.say('PING! ' + _.map(self.players, function (player) { return player.nick; }).join(', '));
     self.say('The current game took too long to start and has been cancelled. If you are still active, please join again to start a new game.');
     self.stop();
-  }
+  };
 
   self.deal = function (player, number) {
     for (var i = 0; i < number; i++) {
@@ -167,7 +167,11 @@ var Game = function (channel, client, config, cmdArgs) {
     self.setPlayer();
 
     // Unset skipped flags
-    _.each(self.players, function (player) { player.skipped = false; });
+    _.each(self.players, function (player) { 
+      player.skipped = false;
+      player.hasPlayed = false;
+      player.hasDrawn = false;
+    });
     
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
@@ -179,6 +183,26 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.roundStarted = new Date();
     self.turnTimeout = setInterval(self.turnTimer, 10 * 1000);
+  };
+
+  self.endTurn = function (nick) {
+    if (!_.isUndefined(nick) && currentPlayer.nick !== nick) {
+      self.pm(nick, 'It is not your turn');
+      return false;
+    }
+
+    if (self.currentPlayer.hasPlayed === false || self.currentPlayer.hasDrawn === false) {
+      self.pm(self.currentPlayer.nick, 'You must at least draw a card before you can end your turn');
+      return false;
+    }
+
+    if (self.currentPlayer.hasPlayed === false) {
+      self.say(self.currentPlayer.nick + ' has ended their turn without playing. ' + self.currentPlayer.nick + ' has ' + self.currentPlayer.hand.numCards() + ' ' +
+        inflection.inflect('card', self.currentPlayer.hand.numCards()) + ' left.'); 
+      );
+    }
+
+    self.nextTurn();
   };
 
   self.start = function (nick) {
@@ -248,9 +272,20 @@ var Game = function (channel, client, config, cmdArgs) {
 
     console.log('Entering nextTurn');
     
-    self.nextTurn();
+    player.hasPlayed = true;
+    self.endTurn();
 
     console.log('End of the function');
+  };
+
+  self.draw = function (nick) {
+    if (self.currentPlayer.nick !== nick) {
+      self.pm(nick, 'It is not your turn.');
+      return false;
+    }
+
+    self.deal(self.currentPlayer, 1);
+    self.currentPlayer.hasDrawn = true;
   };
 
   self.addPlayer = function (player) {

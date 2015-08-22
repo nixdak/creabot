@@ -1,4 +1,5 @@
-var c = require('irc-colors');
+var c = require('irc-colors'),
+    inflection = require('inflection');
 
 var Card = function Card(card) {
   var self = this;
@@ -42,12 +43,15 @@ var Card = function Card(card) {
     }
   } 
 
-  self.number = function () {
+  self.number = function (game) {
     return true;
   };
 
-  self.drawTwo = function () {
+  self.drawTwo = function (game) {
     // Next player draws
+    game.draw(game.nextPlayer(), 2);
+    game.say(game.nextPlayer().nick + ' has picked up two cards and has ' + game.nextPlayer().hand.numCards() + ' left');
+    self.skip(game);
   };
 
   self.reverse = function (game) {
@@ -64,17 +68,19 @@ var Card = function Card(card) {
 
   self.skip = function (game) {
     game.nextPlayer().skipped = true;
-
-    game.say(game.currentPlayer.nick ' has skipped ' + game.nextPlayer().nick);
+    game.say(game.nextPlayer().nick + ' has been skipped!');
   };
 
-  self.wild = function () {
+  self.wild = function (game) {
     // Color is handled by the play function so just return true
     return true;
   };
 
-  self.wildDrawFour = function () {
+  self.wildDrawFour = function (game) {
     // Color setting is handled else where, so make next player draw four cards and skip them
+    game.draw(game.nextPlayer, 4);
+    game.say(game.nextPlayer().nick + ' has picked up four cards and has ' + game.nextPlayer().hand.numCards() + ' left');
+    self.skip(game)
   };
 
   self.toString = function () {

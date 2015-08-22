@@ -18,6 +18,7 @@ module.exports = function(app) {
   app.cmd('uno', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.uno);
 
   // Private commands
-  app.msg('draw', '', uno.draw);
+  app.msg('udraw', '', uno.draw);
+  app.msg('uend', '', )
   app.msg('uno', '', uno.uno);
 };
