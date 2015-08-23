@@ -95,9 +95,9 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.nextPlayer = function() {
-    for (var i = (self.players.indexOf(self.currentPlayer + 1) % self.players.length); i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.legnth) {
+    for (var i = (self.players.indexOf(self.currentPlayer) + 1 % self.players.length); i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.legnth) {
       if (self.players[i].isActive === true && self.players[i].skipped === false) {
-	return self.players[i];
+        return self.players[i];
       }
     }
   };
