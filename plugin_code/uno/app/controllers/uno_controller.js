@@ -13,7 +13,7 @@ var Uno = function Uno () {
   };
 
   self.draw = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.states !== Game.STATES.PLAYABLE) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       client.say(message.nick, 'That command is not available right now');
       return false;
     }
@@ -22,7 +22,7 @@ var Uno = function Uno () {
   };
 
   self.end = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.states !== Game.STATES.PLAYABLE) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       client.say(message.nick, 'That command is not available right now');
       return false;
     }
