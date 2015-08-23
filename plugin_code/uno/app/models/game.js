@@ -163,7 +163,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (self.turn === 0) {
-      self.deck.deal(self.discard);
+      self.discard.addCard(self.deck.deal());
       console.log(self.discard.numCards());
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     }
