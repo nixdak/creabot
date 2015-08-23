@@ -95,7 +95,11 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.nextPlayer = function() {
-    for (var i = (self.players.indexOf(self.currentPlayer) + 1 % self.players.length); i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.legnth) {
+    if (_.isUndefined(self.currentPlayer)) {
+      return _.where(self.players, { isActive: true})[0];
+    }
+
+    for (var i = (self.players.indexOf(self.currentPlayer) + 1 % self.players.length); i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
       if (self.players[i].isActive === true && self.players[i].skipped === false) {
         return self.players[i];
       }
@@ -103,11 +107,6 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.setPlayer = function () {
-    if (_.isUndefined(self.currentPlayer)) {
-      self.currentPlayer = _.where(self.players, { isActive: true })[0];
-      return true;
-    }
-
     self.currentPlayer = self.nextPlayer();
   };
 
@@ -164,6 +163,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (self.turn === 0) {
       self.discard.addCard(self.deck.deal());
+      self.discard.getCurrentCard().onPlay(self);
       console.log(self.discard.numCards());
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     }
