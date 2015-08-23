@@ -13,15 +13,21 @@ var Uno = function Uno () {
   };
 
   self.draw = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.states === Game.STATES.PLAYABLE) {
-      self.game.draw(message.nick);
+    if (_.isUndefined(self.game) || self.game.states !== Game.STATES.PLAYABLE) {
+      client.say(message.nick, 'That command is not available right now');
+      return false;
     }
+
+    self.game.draw(message.nick);
   };
 
   self.end = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.states === Game.STATES.PLAYABLE) {
-      self.game.endTurn(message.nick);
+    if (_.isUndefined(self.game) || self.game.states !== Game.STATES.PLAYABLE) {
+      client.say(message.nick, 'That command is not available right now');
+      return false;
     }
+
+    self.game.endTurn(message.nick);
   };
 
   self.join = function (client, message, cmdArgs) {
