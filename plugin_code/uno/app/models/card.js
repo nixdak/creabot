@@ -8,25 +8,27 @@ var Card = function Card(card) {
   self.color = card.color;
   self.value = card.value;
 
-  switch (self.type) {
-    case 'Number':
-      self.onPlay = self.number;
-      break;
-    case 'Draw Two':
-      self.onPlay = self.drawTwo;
-      break;
-    case 'Reverse':
-      self.onPlay = self.reverse;
-      break;
-    case 'Skip':
-      self.onPlay = self.skip;
-      break;
-    case 'Wild':
-      self.onPlay = self.wild;
-      break;
-    case 'Wild Draw Four':
-      self.onPlay = self.wildDrawFour;
-      break;
+  self.onPlay = function (game) {
+    switch (self.type) {
+      case 'Number':
+        self.number(game);
+        break;
+      case 'Draw Two':
+        self.drawTwo(game);
+        break;
+      case 'Reverse':
+        self.reverse(game);
+        break;
+      case 'Skip':
+        self.skip(game);
+        break;
+      case 'Wild':
+        self.wild(game);
+        break;
+      case 'Wild Draw Four':
+        self.wildDrawFour(game);
+        break
+    }
   }
 
   self.isPlayable = function (currentCard) {
