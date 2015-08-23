@@ -198,7 +198,7 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    if (self.currentPlayer.hasPlayed === false || self.currentPlayer.hasDrawn === false) {
+    if (self.currentPlayer.hasPlayed === false && self.currentPlayer.hasDrawn === false) {
       self.pm(self.currentPlayer.nick, 'You must at least draw a card before you can end your turn');
       return false;
     }
