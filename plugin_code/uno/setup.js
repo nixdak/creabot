@@ -12,7 +12,7 @@ module.exports = function(app) {
   app.cmd('j', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.join);
   app.cmd('join', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.join);
   app.cmd('quit', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.quit);
-  app.cmd('score', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.score);
+  //app.cmd('score', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.score);
   app.cmd('start', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.start);
   app.cmd('stop', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.stop);
   app.cmd('uno', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.uno);
