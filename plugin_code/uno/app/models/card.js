@@ -35,7 +35,7 @@ var Card = function Card(card) {
     switch (currentCard.type) {
       case 'Wild':
       case 'Wild Draw Four':
-        return (self.color === 'WILD' || self.color === currentCard.color); 
+        return (self.color === 'WILD' || currentCard.color === 'WILD' || self.color === currentCard.color); 
       case 'Number':
         return self.color === 'WILD' || (self.color === currentCard.color || self.value === currentCard.value);
       case 'Skip':
