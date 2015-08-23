@@ -87,7 +87,7 @@ var Game = function (channel, client, config, cmdArgs) {
       var card = self.deck.deal();
 
       if (showCard === true) {
-        self.pm(player.nick, 'You drew ' + card.toString());
+        self.pm(player.nick, 'You drew ' + c.bold.white('[' + player.hand.numCards() + '] ') + card.toString());
       }
 
       player.hand.addCard(card);
