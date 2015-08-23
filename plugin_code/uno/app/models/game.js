@@ -76,7 +76,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.stop();
   };
 
-  self.deal = function (player, number) {
+  self.deal = function (player, number, showCard) {
     for (var i = 0; i < number; i++) {
       if (self.deck.numCards() === 0) {
         self.deck = self.discard;
@@ -84,7 +84,11 @@ var Game = function (channel, client, config, cmdArgs) {
         self.deck.shuffle();
       }
 
-      self.deck.deal(player.hand);
+      var card = self.deck.deal();
+
+      if (showCard === true) {
+        self.pm('You drew ' + card.toString());
+      }
     }
   };
 
@@ -143,6 +147,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.nextTurn = function() {
+    self.state = STATES.PLAYED;
     if (!_.isUndefined(self.turnTimeout)) {
       clearTimeout(self.turnTimeout);
     }
@@ -284,8 +289,10 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    self.deal(self.currentPlayer, 1);
+    self.deal(self.currentPlayer, 1, true);
     self.currentPlayer.hasDrawn = true;
+
+    self.say(self.currentPlayer.nick + ' has drawn a card and has ' + self.currentPlayer.hand.numCards() + ' left.');
   };
 
   self.addPlayer = function (player) {
