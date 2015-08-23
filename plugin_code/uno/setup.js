@@ -19,6 +19,6 @@ module.exports = function(app) {
 
   // Private commands
   app.msg('udraw', '', uno.draw);
-  app.msg('uend', '', )
+  app.msg('uend', '', uno.endTurn);
   app.msg('uno', '', uno.uno);
 };
