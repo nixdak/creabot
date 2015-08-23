@@ -7,8 +7,8 @@ module.exports = function(app) {
   app.joinChannels(uno.config.pluginOptions.channelsToJoin);
 
   // Public commands
+  app.cmd('cards', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.cards);
   app.cmd('challenge', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.challenge);
-  app.cmd('draw', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.draw);
   app.cmd('j', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.join);
   app.cmd('join', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.join);
   app.cmd('quit', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.quit);
@@ -20,5 +20,5 @@ module.exports = function(app) {
   // Private commands
   app.msg('udraw', '', uno.draw);
   app.msg('uend', '', uno.end);
-  app.msg('uno', '', uno.uno);
+  app.msg('uplay', '', uno.play);
 };
