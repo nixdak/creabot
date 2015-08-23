@@ -18,8 +18,8 @@ var Deck = function Deck(deck) {
     self.cards = _.shuffle(_.shuffle(self.cards));
   };
 
-  self.deal = function (deck) {
-    deck.addCard(self.cards.pop());
+  self.deal = function () {
+    return self.cards.pop();
   }
 
   self.addCard = function (card) {
