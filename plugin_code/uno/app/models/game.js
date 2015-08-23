@@ -162,17 +162,17 @@ var Game = function (channel, client, config, cmdArgs) {
       return false
     }
 
+    self.state = STATES.PLAYABLE;
+    self.turn += 1;
+    console.log('Setting player');
+    self.setPlayer();
+
     if (self.turn === 0) {
       self.discard.addCard(self.deck.deal());
       self.discard.getCurrentCard().onPlay(self);
       console.log(self.discard.numCards());
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     }
-
-    self.state = STATES.PLAYABLE;
-    self.turn += 1;
-    console.log('Setting player');
-    self.setPlayer();
 
     // Unset skipped flags
     _.each(self.players, function (player) { 
@@ -242,7 +242,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (isNaN(card) || card < 0 || card >= player.hand.numCards()) {
-      self.pm(player, 'Please enter a valid index');
+      self.pm(player.nick, 'Please enter a valid index');
       return false;
     }
 
