@@ -193,7 +193,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.endTurn = function (nick) {
-    if (!_.isUndefined(nick) && currentPlayer.nick !== nick) {
+    if (!_.isUndefined(nick) && self.currentPlayer.nick !== nick) {
       self.pm(nick, 'It is not your turn');
       return false;
     }
