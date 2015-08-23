@@ -100,8 +100,16 @@ var Game = function (channel, client, config, cmdArgs) {
       return _.where(self.players, { isActive: true})[0];
     }
 
+    if (self.players.length === 2) {
+      currentPlayerIndex = self.players.indexOf(self.currentPlayer);
+      nextPlayerIndex = (currentPlayerIndex + 1) % self.players.length; 
+
+      nextPlayer = self.players[nextPlayerIndex].skipped === true ? self.players[nextPlayerIndex] : self.currentPlayer;
+      return nextPlayer;
+    }
+
     for (var i = (self.players.indexOf(self.currentPlayer) + 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
-      if (self.players[i].isActive === true && self.players[i].skipped === false) {
+      if (self.players[i].skipped === false) {
         return self.players[i];
       }
     }
@@ -173,7 +181,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     self.turn += 1;
-    // Unset skipped flags
+    // Unset flags
     _.each(self.players, function (player) { 
       player.skipped = false;
       player.hasPlayed = false;
