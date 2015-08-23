@@ -198,7 +198,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (self.currentPlayer.hasPlayed === false) {
       self.say(self.currentPlayer.nick + ' has ended their turn without playing. ' + self.currentPlayer.nick + ' has ' + self.currentPlayer.hand.numCards() + ' ' +
-        inflection.inflect('card', self.currentPlayer.hand.numCards()) + ' left.'); 
+        inflection.inflect('card', self.currentPlayer.hand.numCards()) + ' left.' 
       );
     }
 
