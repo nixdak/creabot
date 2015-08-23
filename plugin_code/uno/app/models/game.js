@@ -289,13 +289,9 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     self.say(player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!');
-
-    console.log('Entering nextTurn');
     
     player.hasPlayed = true;
     self.endTurn();
-
-    console.log('End of the function');
   };
 
   self.draw = function (nick) {
