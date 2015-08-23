@@ -8,6 +8,16 @@ var Uno = function Uno () {
   var self = this;
   self.config = config;
 
+  self.cards = function (client, message, cmdArgs) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
+      client.say(message.args[0], 'That command is not available right now');
+      return false;
+    }
+
+    var player = self.game.getPlayer({ nick: message.nick });
+    self.game.showCards(player);
+  };
+
   self.challenge = function (client, message, cmdArgs) {
 
   };
@@ -78,7 +88,7 @@ var Uno = function Uno () {
     self.game.stop(message.nick);
   };
 
-  self.uno = function (client, message, cmdArgs) {
+  self.play = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }

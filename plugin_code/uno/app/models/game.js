@@ -139,7 +139,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.showCards = function (player) {
     var cardString = 'Your cards are:';
-    if (player.isActive) {
+    if (!_.isUndefined(player) && player.isActive) {
       _.each(player.hand.getCards(), function (card, index) { 
         cardString += c.bold(' [' + index + '] ') + card.toString();
       });
@@ -216,6 +216,11 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (_.isUndefined(self.getPlayer({nick: nick}))) {
       self.say(nick + ': Only players may start the game. !j to get in on the fun.');
+      return false;
+    }
+
+    if (self.players.length < 2) {
+      self.say(nick + ': There must be at least 2 players to start a game.');
       return false;
     }
 
