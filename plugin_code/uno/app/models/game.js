@@ -99,7 +99,7 @@ var Game = function (channel, client, config, cmdArgs) {
       return _.where(self.players, { isActive: true})[0];
     }
 
-    for (var i = (self.players.indexOf(self.currentPlayer) + 1 % self.players.length); i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
+    for (var i = (self.players.indexOf(self.currentPlayer) + 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
       if (self.players[i].isActive === true && self.players[i].skipped === false) {
         return self.players[i];
       }
