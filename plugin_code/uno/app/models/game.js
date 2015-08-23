@@ -38,8 +38,10 @@ var Game = function (channel, client, config, cmdArgs) {
     self.pointLimit = cmdArgs[0];
   }
 
-  self.stop = function (player, pointLimitReached) {
+  self.stop = function (nick, pointLimitReached) {
     self.state = STATES.STOPPED;
+
+    player = self.getPlayer({ nick: nick });
 
     if (!_.isUndefined(player) && !_.isNull(player)) {
       self.say(player.nick + ' stopped the game.');
@@ -64,7 +66,6 @@ var Game = function (channel, client, config, cmdArgs) {
     delete self.channel;
     delete self.client;
     delete self.config;
-    delete self.state;
     delete self.pointLimit;
     delete self.deck;
     delete self.discard;
