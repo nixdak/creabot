@@ -89,6 +89,8 @@ var Game = function (channel, client, config, cmdArgs) {
       if (showCard === true) {
         self.pm('You drew ' + card.toString());
       }
+
+      player.hand.addCard(card);
     }
   };
 
