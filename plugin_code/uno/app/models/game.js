@@ -163,8 +163,6 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     self.state = STATES.PLAYABLE;
-    self.turn += 1;
-    console.log('Setting player');
     self.setPlayer();
 
     if (self.turn === 0) {
@@ -174,6 +172,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     }
 
+    self.turn += 1;
     // Unset skipped flags
     _.each(self.players, function (player) { 
       player.skipped = false;
