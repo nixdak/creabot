@@ -97,6 +97,12 @@ var Uno = function Uno () {
 
     self.game.play(message.nick, cmdArgs[0], cmdArgs[1]);
   };
+
+  self.uno = function (client, message, cmdArgs) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
+      return false;
+    }
+  }
 }; 
 
 exports = module.exports = Uno;
