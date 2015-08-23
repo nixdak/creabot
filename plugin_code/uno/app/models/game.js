@@ -241,7 +241,7 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    if (isNaN(card) || card < 0 || card > player.hand.numCards()) {
+    if (isNaN(card) || card < 0 || card > player.hand.numCards() - 1) {
       self.pm(player, 'Please enter a valid index');
       return false;
     }
