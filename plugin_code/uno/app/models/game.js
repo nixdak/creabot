@@ -57,6 +57,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     // Clear timeouts and intervals
     clearTimeout(self.startTimeout);
+    clearInterval(self.turnTimeout);
 
     // Delete Game properties
     delete self.players;
