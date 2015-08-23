@@ -73,8 +73,9 @@ var Card = function Card(card) {
   };
 
   self.skip = function (game) {
-    game.nextPlayer().skipped = true;
-    game.say(game.nextPlayer().nick + ' has been skipped!');
+    var nextPlayer = game.nextPlayer();
+    nextPlayer.skipped = true;
+    game.say(nextPlayer.nick + ' has been skipped!');
   };
 
   self.wild = function (game) {
