@@ -10,6 +10,7 @@ var STATES = {
   PLAYABLE: 'Playable',
   PLAYED: 'Played',
   TURN_END: 'Turn End',
+  FINISHED: 'Game Finished'
 };
 
 var Game = function (channel, client, config, cmdArgs) {
