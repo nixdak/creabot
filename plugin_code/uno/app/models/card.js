@@ -51,7 +51,7 @@ var Card = function Card(card) {
 
   self.drawTwo = function (game) {
     // Next player draws
-    game.draw(game.nextPlayer(), 2);
+    game.deal(game.nextPlayer(), 2, true);
     game.say(game.nextPlayer().nick + ' has picked up two cards and has ' + game.nextPlayer().hand.numCards() + ' left');
     self.skip(game);
   };
@@ -80,7 +80,7 @@ var Card = function Card(card) {
 
   self.wildDrawFour = function (game) {
     // Color setting is handled else where, so make next player draw four cards and skip them
-    game.draw(game.nextPlayer, 4);
+    game.deal(game.nextPlayer(), 4, true);
     game.say(game.nextPlayer().nick + ' has picked up four cards and has ' + game.nextPlayer().hand.numCards() + ' left');
     self.skip(game)
   };
