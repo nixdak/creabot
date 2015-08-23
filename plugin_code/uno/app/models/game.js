@@ -86,6 +86,8 @@ var Game = function (channel, client, config, cmdArgs) {
 
       var card = self.deck.deal();
 
+      console.log("Show card value: " + showCard);
+
       if (showCard === true) {
         self.pm('You drew ' + card.toString());
       }
