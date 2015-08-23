@@ -81,6 +81,7 @@ var Game = function (channel, client, config, cmdArgs) {
       if (self.deck.numCards() === 0) {
         self.deck = self.discard;
         self.discard = new Deck(false);
+        self.discard.addCard(self.deck.getCurrentCard());
         self.deck.shuffle();
       }
 
@@ -204,9 +205,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (self.currentPlayer.hasPlayed === false) {
-      self.say(self.currentPlayer.nick + ' has ended their turn without playing. ' + self.currentPlayer.nick + ' has ' + self.currentPlayer.hand.numCards() + ' ' +
-        inflection.inflect('card', self.currentPlayer.hand.numCards()) + ' left.' 
-      );
+      self.say(self.currentPlayer.nick + ' has ended their turn without playing.');
     }
 
     self.nextTurn();
