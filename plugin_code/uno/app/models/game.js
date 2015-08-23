@@ -302,6 +302,11 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
+    if (self.currentPlayer.hasDrawn === true) {
+      self.pm(nick, 'You can only draw once per turn.');
+      return false;
+    }
+
     self.deal(self.currentPlayer, 1, true);
     self.currentPlayer.hasDrawn = true;
 
