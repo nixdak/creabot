@@ -1,4 +1,4 @@
-var _ = require('underscore'),j
+var _ = require('underscore'),
     Game = require('./game'),
     Player = require('../models/player'),
     env = process.env.NODE_ENV || 'development',
@@ -13,14 +13,21 @@ var Countdown = function Countdown() {
   self.accept = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       var channel = message.args[0];
-      var challengers = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
-      var challengers = _.map(challengers, function (challenge) { return challenge.challenger; });
+
+      var games = _.filter(self.challenges, function (challenge) { return challenge.challenged.toLowerCase() === message.nick.toLowerCase(); });
+      var challengers = _.map(games, function (challenge) { return challenge.challenger; });
+      var letterTimes = _.map(games, function (challenge) { return challenge.letter; });
+      var numberTimes = _.map(games, function (challenge) { return challenge.number; });
+      var conundrumTimes = _.map(games, function (challenge) { return challenge.conundrum; });
 
       if (cmdArgs === '') {
         if (challengers.length === 1) {
           var challenger = new Player(challengers[0]);
           var challenged = new Player(message.nick);
-          self.game = new Game(channel, client, self.config, challenger, challenged);
+          var letterTime = letterTimes[0];
+          var numberTime = numberTimes[0];
+          var conundrumTime = conundrumTimes[0];
+          self.game = new Game(channel, client, self.config, challenger, challenged, letterTime, numberTime, conundrumTime);
           self.game.addPlayer(challenged);
         } else {
           self.list(client, message, cmdArgs);
@@ -31,7 +38,11 @@ var Countdown = function Countdown() {
       } else {
         var challenger = new Player(cmdArgs);
         var challenged = new Player(message.nick);
-        self.game = new Game(channel, client, self.config, challenger, challenged);
+        var letterTime = letterTimes[0];
+        var numberTime = numberTimes[0];
+        var conundrumTime = conundrumTimes[0];
+        self.game = new Game(channel, client, self.config, challenger, challenged, letterTime, numberTime, conundrumTime);
+        client.say(channel, 'letters: ' + letterTime*60 + ' numbers: ' + numberTime*60 + ' conundrum: ' + conundrumTime*60);
         self.game.addPlayer(challenged);
       }
     } else {
@@ -54,21 +65,47 @@ var Countdown = function Countdown() {
 
   self.challenge = function (client, message, cmdArgs) {
     var channel = message.args[0];
+    var args = cmdArgs.split(" ", 6);
+    var valid_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    var letterTime = self.config.roundOptions.lettersRoundMinutes;
+    var numberTime = self.config.roundOptions.numbersRoundMinutes;
+    var conundrumTime = self.config.roundOptions.conundrumRoundMinutes;
 
-    if (cmdArgs === '') {
+    if (args[0] === '') {
       client.say(channel, 'Please supply a nick with this command');
-    } else if (client.nick.toLowerCase() === cmdArgs.toLowerCase()) {
+    } else if (client.nick.toLowerCase() === args[0].toLowerCase()) {
       client.say(channel, 'You can\'t challenge the bot');
-    } else if (message.nick.toLowerCase() === cmdArgs.toLowerCase()){
+    } else if (message.nick.toLowerCase() === args[0].toLowerCase()){
       client.say(channel, 'You can\'t challenge yourself');
-    } else if (!_.isUndefined(_.findWhere(self.challenges, { challenger: cmdArgs.toLowerCase(), challenged: message.nick.toLowerCase() }))) {
-      self.accept(client, message, cmdArgs)
-    } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: cmdArgs.toLowerCase() })) {
-      self.challenges.push({ challenger: message.nick, challenged: cmdArgs });
-      client.say(channel, message.nick + ': has challenged ' + cmdArgs);
-      client.say(channel, cmdArgs + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
+    } else if (!_.isUndefined(_.findWhere(self.challenges, { challenger: args[0].toLowerCase(), challenged: message.nick.toLowerCase() }))) {
+      self.accept(client, message, args[0])//move accept in here
+    } else if (!_.contains(self.challenges, { challenger: message.nick.toLowerCase(), challenged: args[0].toLowerCase() })) {
+      for (var i = 1; i < args.length; i++) {
+        var arg = args[i].split(':');
+        if (_.reject(arg[1], function (number) { return _.contains(valid_numbers, number) === true; }).length !== 0){
+          client.say(channel, 'The ' + arg[0] + ' isnt valid')
+          if (arg[0].toLowerCase() === 'letters') {
+            letterTime = self.config.roundOptions.lettersRoundMinutes;
+          } else if (arg[0].toLowerCase() === 'numbers') {
+            numberTime = self.config.roundOptions.numbersRoundMinutes;
+          } else if (arg[0].toLowerCase() === 'conundrum') {
+            conundrumTime = self.config.roundOptions.conundrumRoundMinutes;
+          }
+        }else {
+          if (arg[0].toLowerCase() === 'letters') {
+            letterTime = arg[1]/60;
+          } else if (arg[0].toLowerCase() === 'numbers') {
+            numberTime = arg[1]/60;
+          } else if (arg[0].toLowerCase() === 'conundrum') {
+            conundrumTime = arg[1]/60;
+          }
+        }
+      }
+      self.challenges.push({ challenger: message.nick, challenged: args[0], letter: letterTime, number: numberTime, conundrum: conundrumTime});
+      client.say(channel, message.nick + ': has challenged ' + args[0]);
+      client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
-      client.say(channel, message.nick + ': You have already challenged ' + cmdArgs + '.');
+      client.say(channel, message.nick + ': You have already challenged ' + args[0] + '.');
     }
   };
 
@@ -142,9 +179,10 @@ var Countdown = function Countdown() {
   self.select = function (client, message, cmdArgs) {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
       var args;
+      cmdArgs = cmdArgs.toLowerCase();
 
       if (cmdArgs === '') {
-        client.say(message.args[0], 'Please supply arguments to the !select command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
 
@@ -153,9 +191,10 @@ var Countdown = function Countdown() {
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
       var args;
+      cmdArgs = cmdArgs.toLowerCase();
 
       if (cmdArgs === '') {
-        client.say(message.args[0], 'Please supply arguments to the !select command');
+        client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
 
@@ -180,6 +219,7 @@ var Countdown = function Countdown() {
       client.say(channel, 'Only the players can stop the game');
     }
   };
+
 };
 
 exports = module.exports = Countdown;
