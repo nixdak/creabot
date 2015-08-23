@@ -51,9 +51,13 @@ var Card = function Card(card) {
 
   self.drawTwo = function (game) {
     // Next player draws
-    game.deal(game.nextPlayer(), 2, true);
-    game.say(game.nextPlayer().nick + ' has picked up two cards and has ' + game.nextPlayer().hand.numCards() + ' left');
-    self.skip(game);
+    var nextPlayer = game.nextPlayer();
+    game.deal(nextPlayer, 2, true);
+    game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
+    
+    // Skip player
+    nextPlayer.skipped = true;
+    game.say(nextPlayer.nick + ' has been skipped!');
   };
 
   self.reverse = function (game) {
@@ -80,9 +84,16 @@ var Card = function Card(card) {
 
   self.wildDrawFour = function (game) {
     // Color setting is handled else where, so make next player draw four cards and skip them
-    game.deal(game.nextPlayer(), 4, true);
-    game.say(game.nextPlayer().nick + ' has picked up four cards and has ' + game.nextPlayer().hand.numCards() + ' left');
+    var nextPlayer = game.nextPlayer()
+
+    // Next player draw
+    game.deal(nextPlayer, 4, true);
+    game.say(nextPlayer.nick + ' has picked up four cards and has ' + nextPlayer.hand.numCards() + ' left');
     self.skip(game)
+
+    // Skip player
+    nextPlayer.skipped = true;
+    game.say(nextPlayer.nick + ' has been skipped!');
   };
 
   self.toString = function () {
@@ -102,16 +113,15 @@ var Card = function Card(card) {
         cardString = self.color + ' Draw Two';
         break;
       case 'Wild':
-	if (self.color !== 'WILD') {
+        if (self.color !== 'WILD') {
           cardString += self.color + ' ';
-	}
-	
-	cardString += 'Wild';
+        }
+        cardString += 'Wild';
         break;
       case 'Wild Draw Four':
-	if (self.color !== 'WILD') {
-	  cardString += self.color + ' ';
-	}
+        if (self.color !== 'WILD') {
+          cardString += self.color + ' ';
+        }
 	
         cardString += 'Wild Draw Four';
         break;
