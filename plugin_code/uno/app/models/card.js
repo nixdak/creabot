@@ -90,7 +90,6 @@ var Card = function Card(card) {
     // Next player draw
     game.deal(nextPlayer, 4, true);
     game.say(nextPlayer.nick + ' has picked up four cards and has ' + nextPlayer.hand.numCards() + ' left');
-    self.skip(game)
 
     // Skip player
     nextPlayer.skipped = true;
