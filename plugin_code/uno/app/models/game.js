@@ -101,7 +101,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.nextPlayer = function() {
     if (_.isUndefined(self.currentPlayer)) {
-      return _.where(self.players, { isActive: true})[0];
+      return self.players[0];
     }
 
     if (self.players.length === 2) {
@@ -151,7 +151,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.showCards = function (player) {
     var cardString = 'Your cards are:';
-    if (!_.isUndefined(player) && player.isActive) {
+    if (!_.isUndefined(player)) {
       _.each(player.hand.getCards(), function (card, index) {
         cardString += c.bold(' [' + index + '] ') + card.toString();
       });
@@ -311,6 +311,13 @@ var Game = function (channel, client, config, cmdArgs) {
     self.currentPlayer.hasDrawn = true;
 
     self.say(self.currentPlayer.nick + ' has drawn a card and has ' + self.currentPlayer.hand.numCards() + ' left.');
+
+    var playable = _.filter(self.currentPlayer.hand.getCards(), function (card) {return card.isPlayable(self.discard.getCurrentCard())});
+
+    if (playable.length === 0) {
+      self.pm(self.currentPlayer, 'You have no playable cards. Ending your turn.');
+      self.endTurn();
+    }
   };
 
   self.addPlayer = function (player) {
@@ -323,9 +330,29 @@ var Game = function (channel, client, config, cmdArgs) {
     self.players.push(player);
     self.say(player.nick + ' has joined the game!');
 
-    if (self.state === STATES.WAITING && _.where(self.players, { isActive: true }).length === 10) {
+    if (self.state === STATES.WAITING && self.players.length === 10) {
       self.start();
     }
+  };
+
+  self.removePlayer = function (nick) {
+    var player = self.getPlayer({ nick: nick });
+
+    if (_.isUndefined(player)) {
+      return false;
+    }
+
+    // Add cards back into the deck
+    _.each(player.hand.getCards(), function (card) {
+      self.deck.addCard(card);
+    });
+
+    self.deck.shuffle();
+
+    // Next turn
+    self.say(player.nick + ' has left the game.');
+    self.nextTurn();
+    self.players.splice(self.players.indexOf(player), 1);
   };
 
   self.setTopic = function (topic) {

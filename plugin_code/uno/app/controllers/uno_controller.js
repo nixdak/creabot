@@ -61,7 +61,11 @@ var Uno = function Uno () {
   };
 
   self.quit = function (client, message, cmdArgs) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.FINISHED) {
+      return false;
+    }
 
+    self.game.removePlayer(message.nick);
   };
 
   self.score = function (client, message, cmdArgs) {
