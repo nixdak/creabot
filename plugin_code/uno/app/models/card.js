@@ -59,7 +59,9 @@ var Card = function Card(card) {
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
 
-    game.turn === 1 ? game.nextTurn() : return true;
+    if (game.turn === 1) {
+      game.nextTurn();
+    }
   };
 
   self.reverse = function (game) {
@@ -79,7 +81,9 @@ var Card = function Card(card) {
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
 
-    game.turn === 1 ? game.nextTurn() : return true;
+    if (game.turn === 1) {
+      game.nextTurn();
+    }
   };
 
   self.wild = function (game) {
@@ -99,7 +103,9 @@ var Card = function Card(card) {
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
 
-    game.turn === 1 ? game.nextTurn() : return true;
+    if (game.turn === 1) {
+      game.nextTurn();
+    }
   };
 
   self.toString = function () {
