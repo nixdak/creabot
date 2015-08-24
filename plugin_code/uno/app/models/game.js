@@ -134,7 +134,7 @@ var Game = function (channel, client, config, cmdArgs) {
     if (roundElapsed >= timeLimit) {
       console.log('The round timed out');
       self.say('Time is up!');
-      self.markInactivePlayers();
+      self.idled();
       // show end of turn
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
       // 10s ... 0s left
@@ -358,7 +358,11 @@ var Game = function (channel, client, config, cmdArgs) {
 
     // Next turn
     self.say(player.nick + ' has left the game.');
-    self.nextTurn();
+
+    if (self.currentPlayer === player) {
+      self.nextTurn();
+    }
+    
     self.players.splice(self.players.indexOf(player), 1);
   };
 
