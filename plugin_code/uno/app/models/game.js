@@ -179,7 +179,6 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (self.turn === 0) {
       self.discard.addCard(self.deck.deal());
-      self.discard.getCurrentCard().onPlay(self);
       console.log(self.discard.numCards());
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     }
@@ -193,6 +192,7 @@ var Game = function (channel, client, config, cmdArgs) {
     });
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
+    self.discard.getCurrentCard().onPlay(self);
 
     if (self.turn !== 0) {
       self.showCards(self.currentPlayer);
