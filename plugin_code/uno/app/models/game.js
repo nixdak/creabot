@@ -257,7 +257,7 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    if (isNan(card)) {
+    if (isNaN(card)) {
       self.pm(player.nick, 'Please enter a valid numeric index');
       return false;
     }
