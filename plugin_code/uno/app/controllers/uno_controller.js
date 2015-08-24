@@ -88,8 +88,9 @@ var Uno = function Uno () {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
       return false;
     }
+
     if (_.isUndefined(self.game.getPlayer({nick: message.nick}))) {
-      self.say(nick + ': Only players may stop the game.');
+      self.say(message.nick + ': Only players may stop the game.');
       return false;
     }
     
