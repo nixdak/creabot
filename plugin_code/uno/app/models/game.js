@@ -108,7 +108,7 @@ var Game = function (channel, client, config, cmdArgs) {
       currentPlayerIndex = self.players.indexOf(self.currentPlayer);
       nextPlayerIndex = (currentPlayerIndex + 1) % self.players.length;
 
-      nextPlayer = self.players[nextPlayerIndex].skipped === true ? self.players[nextPlayerIndex] : self.currentPlayer;
+      nextPlayer = self.players[nextPlayerIndex].skipped === false ? self.players[nextPlayerIndex] : self.currentPlayer;
       return nextPlayer;
     }
 
@@ -179,8 +179,6 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (self.turn === 0) {
       self.discard.addCard(self.deck.deal());
-      console.log(self.discard.numCards());
-      self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     }
 
     self.turn += 1;
@@ -192,6 +190,7 @@ var Game = function (channel, client, config, cmdArgs) {
     });
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
+    self.say('The first card is: ' + self.discard.getCurrentCard().toString());
     self.discard.getCurrentCard().onPlay(self);
 
     if (self.turn !== 0) {
