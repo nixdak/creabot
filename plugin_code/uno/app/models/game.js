@@ -190,8 +190,11 @@ var Game = function (channel, client, config, cmdArgs) {
     });
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
-    self.say('The first card is: ' + self.discard.getCurrentCard().toString());
-    self.discard.getCurrentCard().onPlay(self);
+    
+    if (self.turn === 1) {
+      self.say('The first card is: ' + self.discard.getCurrentCard().toString());
+      self.discard.getCurrentCard().onPlay(self);
+    }
 
     if (self.turn !== 0) {
       self.showCards(self.currentPlayer);
