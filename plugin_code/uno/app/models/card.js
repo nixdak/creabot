@@ -51,13 +51,15 @@ var Card = function Card(card) {
 
   self.drawTwo = function (game) {
     // Next player draws
-    var nextPlayer = game.nextPlayer();
+    var nextPlayer = game.turn === 1 ? game.currentPlayer : game.nextPlayer();
     game.deal(nextPlayer, 2, true);
     game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
     
     // Skip player
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
+
+    game.turn === 1 ? game.nextTurn() : return true;
   };
 
   self.reverse = function (game) {
