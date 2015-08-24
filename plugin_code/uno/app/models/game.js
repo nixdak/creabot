@@ -362,8 +362,12 @@ var Game = function (channel, client, config, cmdArgs) {
     if (self.currentPlayer === player) {
       self.nextTurn();
     }
-    
+
     self.players.splice(self.players.indexOf(player), 1);
+
+    if (self.players.legnth === 0) {
+      self.stop();
+    }
   };
 
   self.setTopic = function (topic) {
