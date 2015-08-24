@@ -85,7 +85,7 @@ var Uno = function Uno () {
   };
 
   self.stop = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.FINISHED) {
       return false;
     }
 
