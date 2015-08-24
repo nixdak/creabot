@@ -40,10 +40,6 @@ var Game = function (channel, client, config, cmdArgs) {
   }
 
   self.stop = function (nick, pointLimitReached) {
-    if (_.isUndefined(self.getPlayer({nick: nick}))) {
-      self.say(nick + ': Only players may stop the game.');
-      return false;
-    }
 
     self.state = STATES.FINISHED;
 

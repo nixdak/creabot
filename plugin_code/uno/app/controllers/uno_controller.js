@@ -45,7 +45,7 @@ var Uno = function Uno () {
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
-    } 
+    }
 
     if (!_.isUndefined(self.game) && self.game.state !== Game.STATES.STOPPED && self.game.state !== Game.STATES.FINISHED) {
       client.say(channel, message.nick + ': Cannot join games that are already in progress.');
@@ -84,7 +84,11 @@ var Uno = function Uno () {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
       return false;
     }
-
+    if (_.isUndefined(self.game.getPlayer({nick: message.nick}))) {
+      self.say(nick + ': Only players may stop the game.');
+      return false;
+    }
+    
     self.game.stop(message.nick);
   };
 
@@ -103,6 +107,6 @@ var Uno = function Uno () {
       return false;
     }
   }
-}; 
+};
 
 exports = module.exports = Uno;
