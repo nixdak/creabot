@@ -40,6 +40,11 @@ var Game = function (channel, client, config, cmdArgs) {
   }
 
   self.stop = function (nick, pointLimitReached) {
+    if (_.isUndefined(self.getPlayer({nick: nick}))) {
+      self.say(nick + ': Only players may start the game. !j to get in on the fun.');
+      return false;
+    }
+
     self.state = STATES.FINISHED;
 
     player = self.getPlayer({ nick: nick });
@@ -105,7 +110,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (self.players.length === 2) {
       currentPlayerIndex = self.players.indexOf(self.currentPlayer);
-      nextPlayerIndex = (currentPlayerIndex + 1) % self.players.length; 
+      nextPlayerIndex = (currentPlayerIndex + 1) % self.players.length;
 
       nextPlayer = self.players[nextPlayerIndex].skipped === true ? self.players[nextPlayerIndex] : self.currentPlayer;
       return nextPlayer;
@@ -151,7 +156,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.showCards = function (player) {
     var cardString = 'Your cards are:';
     if (!_.isUndefined(player) && player.isActive) {
-      _.each(player.hand.getCards(), function (card, index) { 
+      _.each(player.hand.getCards(), function (card, index) {
         cardString += c.bold(' [' + index + '] ') + card.toString();
       });
 
@@ -185,18 +190,18 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.turn += 1;
     // Unset flags
-    _.each(self.players, function (player) { 
+    _.each(self.players, function (player) {
       player.skipped = false;
       player.hasPlayed = false;
       player.hasDrawn = false;
     });
-    
+
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
     if (self.turn !== 0) {
       self.showCards(self.currentPlayer);
     }
-    
+
     self.pm(self.currentPlayer.nick, 'The current card is: ' + self.discard.getCurrentCard().toString());
 
     self.roundStarted = new Date();
@@ -283,14 +288,14 @@ var Game = function (channel, client, config, cmdArgs) {
     self.say(player.nick + ' has played ' + pickedCard.toString() + '!');
 
     pickedCard.onPlay(self);
-    
+
     if (pickedCard.color === 'WILD') {
       self.say(player.nick + ' has changed the color to ' + color);
       pickedCard.color = color.toUpperCase();
     }
 
     self.say(player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!');
-    
+
     player.hasPlayed = true;
     self.endTurn();
   };
