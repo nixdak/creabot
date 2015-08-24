@@ -365,7 +365,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.players.splice(self.players.indexOf(player), 1);
 
-    if (self.players.legnth === 0) {
+    if (self.players.length === 0) {
       self.stop();
     }
   };
