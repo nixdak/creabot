@@ -134,7 +134,8 @@ var Game = function (channel, client, config, cmdArgs) {
     if (roundElapsed >= timeLimit) {
       console.log('The round timed out');
       self.say('Time is up!');
-      self.idled();
+      // Temporary deal with idle players by removing them
+      self.removePlayer(self.currentPlayer.nick);
       // show end of turn
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
       // 10s ... 0s left
@@ -190,7 +191,7 @@ var Game = function (channel, client, config, cmdArgs) {
     });
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
-    
+
     if (self.turn === 1) {
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
       self.discard.getCurrentCard().onPlay(self);
