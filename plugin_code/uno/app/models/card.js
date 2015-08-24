@@ -75,9 +75,11 @@ var Card = function Card(card) {
   };
 
   self.skip = function (game) {
-    var nextPlayer = game.nextPlayer();
+    var nextPlayer = game.turn === 1 ? game.currentPlayer : game.nextPlayer();
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
+
+    game.turn === 1 ? game.nextTurn() : return true;
   };
 
   self.wild = function (game) {
@@ -87,7 +89,7 @@ var Card = function Card(card) {
 
   self.wildDrawFour = function (game) {
     // Color setting is handled else where, so make next player draw four cards and skip them
-    var nextPlayer = game.nextPlayer()
+    var nextPlayer = game.turn === 1 ? game.currentPlayer : game.nextPlayer();
 
     // Next player draw
     game.deal(nextPlayer, 4, true);
@@ -96,6 +98,8 @@ var Card = function Card(card) {
     // Skip player
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
+
+    game.turn === 1 ? game.nextTurn() : return true;
   };
 
   self.toString = function () {
