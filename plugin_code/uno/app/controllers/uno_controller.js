@@ -90,7 +90,7 @@ var Uno = function Uno () {
     }
 
     if (_.isUndefined(self.game.getPlayer({nick: message.nick}))) {
-      self.say(message.nick + ': Only players may stop the game.');
+      client.say(message.nick + ': Only players may stop the game.');
       return false;
     }
     
