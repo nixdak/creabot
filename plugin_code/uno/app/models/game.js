@@ -257,7 +257,14 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    if (isNaN(card) || card < 0 || card >= player.hand.numCards()) {
+    if (isNan(card)) {
+      self.pm(player.nick, 'Please enter a valid numeric index');
+      return false;
+    }
+
+    card = parseInt(card);
+
+    if (card < 0 || card >= player.hand.numCards()) {
       self.pm(player.nick, 'Please enter a valid index');
       return false;
     }
