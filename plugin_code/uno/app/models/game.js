@@ -40,7 +40,7 @@ var Game = function (channel, client, config, cmdArgs) {
   }
 
   self.stop = function (nick, pointLimitReached) {
-    self.state = STATES.STOPPED;
+    self.state = STATES.FINISHED;
 
     player = self.getPlayer({ nick: nick });
 
