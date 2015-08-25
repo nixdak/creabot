@@ -1,8 +1,9 @@
 {
   "development": {
     "gameOptions": {
-      "turnMinutes": 3
-  },
+      "turnMinutes": 3,
+      "maxIdleTurns": 3
+    },
 
     "pluginOptions": {
       "channels": ["#UnoDev"],
@@ -13,7 +14,8 @@
 
   "production": {
     "gameOptions": {
-      "turnMinutes": 3
+      "turnMinutes": 3,
+      "maxIdleTurns": 3
     },
 
     "pluginOptions": {
