@@ -191,7 +191,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
     if (self.firstCard === true) {
-      self.firstCard = false;
+      self.firstCard = false; 
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
       self.discard.getCurrentCard().onPlay(self);
     }
@@ -217,7 +217,9 @@ var Game = function (channel, client, config, cmdArgs) {
       self.removePlayer(currentPlayer.nick);
     }
 
-    self.nextTurn();
+    if (!_.undefined(self.players)) {
+      self.nextTurn();
+    }
   };
 
   self.endTurn = function (nick, idled) {
