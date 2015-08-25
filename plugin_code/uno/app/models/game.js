@@ -378,13 +378,11 @@ var Game = function (channel, client, config, cmdArgs) {
     // Next turn
     self.say(player.nick + ' has left the game.');
 
-    if (self.currentPlayer === player) {
-      self.nextTurn();
-    }
-
     self.players.splice(self.players.indexOf(player), 1);
 
-    if (self.players.length < 2) {
+    if (self.currentPlayer === player && self.players.length >= 2) {
+      self.nextTurn();
+    } else {
       self.stop();
     }
   };
