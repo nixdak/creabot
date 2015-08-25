@@ -211,7 +211,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
       self.draw(currentPlayer.nick);
     } else {
-      self.say(currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + 
+      self.say(currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + ' '
         inflection.inflect('time', self.config.gameOptions.maxIdleTurns) + '. Removing them from the game.'
       );
       self.removePlayer(currentPlayer.nick);
