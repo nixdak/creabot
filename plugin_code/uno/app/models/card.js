@@ -51,7 +51,7 @@ var Card = function Card(card) {
 
   self.drawTwo = function (game) {
     // Next player draws
-    var nextPlayer = game.turn === 1 ? game.currentPlayer : game.nextPlayer();
+    var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
     game.deal(nextPlayer, 2, true);
     game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
     
@@ -59,7 +59,7 @@ var Card = function Card(card) {
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
 
-    if (game.turn === 1) {
+    if (game.firstCard === true) {
       game.nextTurn();
     }
   };
@@ -77,11 +77,11 @@ var Card = function Card(card) {
   };
 
   self.skip = function (game) {
-    var nextPlayer = game.turn === 1 ? game.currentPlayer : game.nextPlayer();
+    var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
 
-    if (game.turn === 1) {
+    if (game.firstCard === true) {
       game.nextTurn();
     }
   };
@@ -93,7 +93,7 @@ var Card = function Card(card) {
 
   self.wildDrawFour = function (game) {
     // Color setting is handled else where, so make next player draw four cards and skip them
-    var nextPlayer = game.turn === 1 ? game.currentPlayer : game.nextPlayer();
+    var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
 
     // Next player draw
     game.deal(nextPlayer, 4, true);
@@ -103,7 +103,7 @@ var Card = function Card(card) {
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
 
-    if (game.turn === 1) {
+    if (game.firstCard === true) {
       game.nextTurn();
     }
   };

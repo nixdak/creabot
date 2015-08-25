@@ -24,6 +24,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.pointLimit = 0;
   self.deck = new Deck(true);
   self.discard = new Deck(false);
+  self.firstCard = true;
   self.turn = 0;
   self.colors = ['YELLOW', 'GREEN', 'BLUE', 'RED'];
 
@@ -192,9 +193,10 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
-    if (self.turn === 1) {
+    if (self.firstCard === true) {
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
       self.discard.getCurrentCard().onPlay(self);
+      self.fisrtCard = false; 
     }
 
     if (self.turn !== 0) {
