@@ -344,7 +344,7 @@ var Game = function (channel, client, config, cmdArgs) {
     var playable = _.filter(self.currentPlayer.hand.getCards(), function (card) {return card.isPlayable(self.discard.getCurrentCard())});
 
     if (playable.length === 0) {
-      self.pm(self.currentPlayer.nick, 'You have no playable cards. Ending your turn.');
+      self.pm(self.currentPlayer, 'You have no playable cards. Ending your turn.');
       self.endTurn();
     }
   };
