@@ -68,7 +68,7 @@ var Card = function Card(card) {
     // If only two players
     if (game.players.length === 2) { 
       // Skip
-      self.skip();
+      self.skip(game);
       return true;
     }
     
