@@ -217,7 +217,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.removePlayer(currentPlayer.nick);
     }
 
-    if (!_.undefined(self.players)) {
+    if (!_.isUndefined(self.players)) {
       self.nextTurn();
     }
   };
