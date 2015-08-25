@@ -8,7 +8,6 @@ var STATES = {
   STOPPED: 'Stopped',
   STARTED: 'Started',
   PLAYABLE: 'Playable',
-  PLAYED: 'Played',
   TURN_END: 'Turn End',
   FINISHED: 'Game Finished'
 };
@@ -127,7 +126,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.turnTimer = function() {
     // check the time
     var now = new Date();
-    var timeLimit = 60 * 1000 * config.gameOptions.roundMinutes;
+    var timeLimit = 60 * 1000 * config.gameOptions.turnMinutes;
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed:', roundElapsed, now.getTime(), self.roundStarted.getTime());
@@ -136,8 +135,7 @@ var Game = function (channel, client, config, cmdArgs) {
       console.log('The round timed out');
       self.say('Time is up!');
       // Temporary deal with idle players by removing them
-      self.removePlayer(self.currentPlayer.nick);
-      // show end of turn
+      self.idled();
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
       // 10s ... 0s left
       self.say('10 seconds left!');
@@ -163,7 +161,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.nextTurn = function() {
-    self.state = STATES.PLAYED;
+    self.state = STATES.TURN_END;
     if (!_.isUndefined(self.turnTimeout)) {
       clearTimeout(self.turnTimeout);
     }
@@ -206,7 +204,24 @@ var Game = function (channel, client, config, cmdArgs) {
     self.turnTimeout = setInterval(self.turnTimer, 10 * 1000);
   };
 
-  self.endTurn = function (nick) {
+  self.idled = function () {
+    var currentPlayer = self.currentPlayer;
+    currentPlayer.idleTurns += 1;
+
+    if (currentPlayer.idleTurns < self.config.gameOptions.maxIdleTurns) {
+      self.say(currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
+      self.draw(currentPlayer.nick);
+    } else {
+      self.say(currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + 
+        inflection.inflect('time', self.config.gameOptions.maxIdleTurns) + '. Removing them from the game.'
+      );
+      self.removePlayer(currentPlayer.nick);
+    }
+
+    self.nextTurn();
+  };
+
+  self.endTurn = function (nick, idled) {
     if (!_.isUndefined(nick) && self.currentPlayer.nick !== nick) {
       self.pm(nick, 'It is not your turn');
       return false;
@@ -221,6 +236,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(self.currentPlayer.nick + ' has ended their turn without playing.');
     }
 
+    self.currentPlayer.idleTurns = 0;
     self.nextTurn();
   };
 
