@@ -414,7 +414,7 @@ var Game = function (channel, client, config, cmdArgs) {
     var player = self.getPlayer({nick: nick});
 
     if (!_.isUndefined(player)) {
-      self.removePlayer(player);
+      self.removePlayer(player.nick);
     }
   };
 
