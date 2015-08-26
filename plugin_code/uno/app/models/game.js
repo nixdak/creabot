@@ -139,12 +139,15 @@ var Game = function (channel, client, config, cmdArgs) {
     } else if (roundElapsed >= timeLimit - (10 * 1000) && roundElapsed < timeLimit) {
       // 10s ... 0s left
       self.say('10 seconds left!');
+      self.pm(self.currentPlayer.nick, '10 seconds left');
     } else if (roundElapsed >= timeLimit - (30 * 1000) && roundElapsed < timeLimit - (20 * 1000)) {
       // 30s ... 20s left
       self.say('30 seconds left!');
+      self.pm(self.currentPlayer.nick, '30 seconds left');
     } else if (roundElapsed >= timeLimit - (60 * 1000) && roundElapsed < timeLimit - (50 * 1000)) {
       // 60s ... 50s left
       self.say('Hurry up, 1 minute left!');
+      self.pm(self.currentPlayer.nick, 'Hurry up, 1 minute left!');
     }
   };
 
