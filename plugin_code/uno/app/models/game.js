@@ -436,7 +436,9 @@ var Game = function (channel, client, config, cmdArgs) {
     if (self.currentPlayer === player && self.players.length >= 2) {
       self.nextTurn();
     } else {
-      self.stop();
+      if(self.state === STATES.PLAYABLE ) {
+        self.stop();
+      }
     }
   };
 
