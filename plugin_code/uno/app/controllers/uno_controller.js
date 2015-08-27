@@ -19,7 +19,12 @@ var Uno = function Uno () {
   };
 
   self.challenge = function (client, message, cmdArgs) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
+      client.say(message.nick, 'That command is not available right now');
+      return false;
+    }
 
+    self.game.challenge(message.nick);
   };
 
   self.draw = function (client, message, cmdArgs) {
@@ -92,7 +97,7 @@ var Uno = function Uno () {
     if (_.isUndefined(self.game.getPlayer({nick: message.nick}))) {
       return false;
     }
-    
+
     self.game.stop(message.nick);
   };
 
@@ -110,6 +115,7 @@ var Uno = function Uno () {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
+    self.game.uno(message.nick);
   }
 };
 

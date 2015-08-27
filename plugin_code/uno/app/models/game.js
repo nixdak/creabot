@@ -119,8 +119,25 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
+  self.lastPlayer = function() {
+    if (self.players.length === 2) {
+      currentPlayerIndex = self.players.indexOf(self.currentPlayer);
+      lestPlayerIndex = (currentPlayerIndex - 1) % self.players.length;
+
+      lestPlayer = self.players[lastPlayerIndex].skipped === false ? self.players[lastPlayerIndex] : self.currentPlayer;
+      return lastPlayer;
+    }
+
+    for (var i = (self.players.indexOf(self.currentPlayer) - 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
+      if (self.players[i].skipped === false) {
+        return self.players[i];
+      }
+    }
+  };
+
   self.setPlayer = function () {
     self.currentPlayer = self.nextPlayer();
+    self.currentPlayer.uno = false;
   };
 
   self.turnTimer = function() {
@@ -194,7 +211,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
 
     if (self.firstCard === true) {
-      self.firstCard = false; 
+      self.firstCard = false;
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
       self.discard.getCurrentCard().onPlay(self);
     }
@@ -347,6 +364,32 @@ var Game = function (channel, client, config, cmdArgs) {
       self.pm(self.currentPlayer, 'You have no playable cards. Ending your turn.');
       self.endTurn();
     }
+  };
+
+  self.uno = function (nick) {
+    if (self.currentPlayer.nick !== nick) {
+      self.pm(nick, 'It is not your turn.');
+      return false;
+    }
+    self.currentPlayer.uno = true;
+  };
+
+  self.challenge = function (nick) {
+    if(self.turn === 1){
+      self.say("You cant challenge now");
+    }
+    self.previousPlayer = self.lastPlayer();
+    self.say(nick + ' has challenged ' + self.previousPlayer.nick);
+    if(self.previousPlayer.uno === true){
+      self.say(self.previousPlayer.nick + ' said Uno');
+      return false;
+    }
+    if(self.previousPlayer.hand.numCards() === 1){
+      self.say(self.previousPlayer.nick + ' didn\'t say Uno and must draw 2 cards');
+      self.draw(previousPlayer.nick);
+      self.draw(previousPlayer.nick);
+    }
+    self.previousPlayer.uno = false;
   };
 
   self.addPlayer = function (player) {
