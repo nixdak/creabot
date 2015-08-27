@@ -259,7 +259,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     self.currentPlayer.idleTurns = 0;
-    currentPlayer.roundShorten = 0;
+    self.currentPlayer.roundShorten = 0;
     self.nextTurn();
   };
 
