@@ -952,6 +952,12 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                 self.selectWinner(Math.round(Math.random() * (self.table.answer.length - 1)));
             }
 
+            //check if everyone has left the game
+            activePlayers = _.filter(self.players, function (player) { return player.isActive; });
+            if (activePlayers.length === 0){
+              self.stop();
+            }
+
             return player;
         }
         return false;
