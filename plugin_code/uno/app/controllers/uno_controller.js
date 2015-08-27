@@ -82,7 +82,7 @@ var Uno = function Uno () {
   };
 
   self.start = function (client, message, cmdArgs) {
-    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state !== Game.STATES.WAITING) {
       return false;
     }
 
