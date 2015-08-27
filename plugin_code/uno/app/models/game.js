@@ -323,6 +323,11 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
+    if (player.hasDrawn && card !== numCards - 1){
+      self.pm(player.nick, 'You Must use the card you drew');
+      return false;
+    }
+
     var pickedCard = player.hand.pickCard(card);
 
     self.discard.addCard(pickedCard);
