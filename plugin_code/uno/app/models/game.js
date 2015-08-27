@@ -9,7 +9,7 @@ var STATES = {
   STARTED: 'Started',
   PLAYABLE: 'Playable',
   TURN_END: 'Turn End',
-  FINISHED: 'Game Finished'
+  FINISHED: 'Game Finished',
   WAITING: 'Waiting'
 };
 
