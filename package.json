@@ -1,6 +1,6 @@
 {
   "name": "creabot",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Creabot",
   "main": "app.js",
   "author": "Creadak <creadak@gmail.com>",
@@ -17,6 +17,7 @@
     "sequelize": "latest",
     "sequelize-cli": "latest",
     "mariasql": "latest",
+    "mysql": "latest",
     "nodemon": "latest",
     "mathjs": "latest"
   }
