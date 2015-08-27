@@ -143,7 +143,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.turnTimer = function() {
     // check the time
     var now = new Date();
-    var timeLimit = 60 * 1000 * config.gameOptions.turnMinutes;
+    var timeLimit = (60 * config.gameOptions.turnMinutes - currentPlayer.roundShorten )* 1000 ;
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed:', roundElapsed, now.getTime(), self.roundStarted.getTime());
@@ -226,6 +226,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.idled = function () {
     var currentPlayer = self.currentPlayer;
     currentPlayer.idleTurns += 1;
+    currentPlayer.roundShorten += 40;
 
     if (currentPlayer.idleTurns < self.config.gameOptions.maxIdleTurns) {
       self.say(currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
@@ -258,6 +259,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     self.currentPlayer.idleTurns = 0;
+    currentPlayer.roundShorten = 0;
     self.nextTurn();
   };
 
