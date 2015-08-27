@@ -143,7 +143,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.turnTimer = function() {
     // check the time
     var now = new Date();
-    var timeLimit = (60 * config.gameOptions.turnMinutes - currentPlayer.roundShorten )* 1000 ;
+    var timeLimit = (60 * config.gameOptions.turnMinutes - self.currentPlayer.roundShorten )* 1000 ;
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed:', roundElapsed, now.getTime(), self.roundStarted.getTime());
