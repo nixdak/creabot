@@ -404,7 +404,7 @@ var Game = function (channel, client, config, cmdArgs) {
     if (self.state === STATES.PLAYABLE) {
       self.say('It is currently ' + currentPlayer.nick + ' go!');
     } else {
-      self.say(self.Player.length + ' people are playing. ' + _.pluck(players, 'nick').join(', ')))
+      self.say(self.Player.length + ' people are playing. ' + _.pluck(players, 'nick').join(', '));
     }
   }
 
