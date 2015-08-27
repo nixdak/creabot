@@ -52,7 +52,7 @@ var Uno = function Uno () {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
     }
 
-    if (!_.isUndefined(self.game) && self.game.state !== Game.STATES.STOPPED && self.game.state !== Game.STATES.FINISHED) {
+    if (!_.isUndefined(self.game) && self.game.state !== Game.STATES.STOPPED && self.game.state !== Game.STATES.FINISHED && self.game.state !== Game.STATES.WAITING) {
       client.say(channel, message.nick + ': Cannot join games that are already in progress.');
       return false;
     }
