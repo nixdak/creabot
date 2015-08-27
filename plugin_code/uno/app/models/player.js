@@ -13,6 +13,7 @@ var Player = function(nick, user, hostname) {
   self.hasPlayed = false;
   self.hasDrawn = false;
   self.uno = false;
+  self.roundShorten = 0;
 };
 
 exports = module.exports = Player;
