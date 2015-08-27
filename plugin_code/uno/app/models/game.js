@@ -406,7 +406,7 @@ var Game = function (channel, client, config, cmdArgs) {
     } else {
       self.say(self.Player.length + ' people are playing. ' + _.pluck(players, 'nick').join(', '));
     }
-  }
+  };
 
   self.addPlayer = function (player) {
     var alreadyPlayer = self.getPlayer({ nick: player.nick, user: player.user, hostname: player.hostname });
