@@ -12,6 +12,7 @@ var Player = function(nick, user, hostname) {
   self.skipped = false;
   self.hasPlayed = false;
   self.hasDrawn = false;
+  self.uno = false;
 };
 
 exports = module.exports = Player;
