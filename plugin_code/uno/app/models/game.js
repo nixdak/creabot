@@ -10,6 +10,7 @@ var STATES = {
   PLAYABLE: 'Playable',
   TURN_END: 'Turn End',
   FINISHED: 'Game Finished'
+  WAITING: 'Waiting'
 };
 
 var Game = function (channel, client, config, cmdArgs) {
@@ -399,6 +400,14 @@ var Game = function (channel, client, config, cmdArgs) {
     self.previousPlayer.uno = false;
   };
 
+  self.showStatus = function (){
+    if (self.state === STATES.PLAYABLE) {
+      self.say('It is currently ' + currentPlayer.nick + ' go!');
+    } else {
+      self.say(self.Player.length + ' people are playing. ' + _.pluck(players, 'nick').join(', ')))
+    }
+  }
+
   self.addPlayer = function (player) {
     var alreadyPlayer = self.getPlayer({ nick: player.nick, user: player.user, hostname: player.hostname });
 
@@ -407,6 +416,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     self.players.push(player);
+    self.state = STATES.WAITING;
     self.say(player.nick + ' has joined the game!');
 
     if (self.state === STATES.WAITING && self.players.length === 10) {

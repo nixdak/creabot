@@ -116,7 +116,15 @@ var Uno = function Uno () {
       return false;
     }
     self.game.uno(message.nick);
-  }
+  };
+
+  self.status = function (client, message, cmdArgs){
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
+        client.say(channel, 'No game running. Start the game by typing !j.');
+    } else {
+        self.game.showStatus();
+    }
+  };
 };
 
 exports = module.exports = Uno;
