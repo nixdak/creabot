@@ -404,7 +404,7 @@ var Game = function (channel, client, config, cmdArgs) {
     if (self.state === STATES.PLAYABLE) {
       self.say('It is currently ' + currentPlayer.nick + ' go!');
     } else {
-      self.say(self.Player.length + ' people are playing. ' + _.pluck(players, 'nick').join(', '));
+      self.say(self.players.length + ' people are playing. ' + _.pluck(players, 'nick').join(', '));
     }
   };
 
@@ -470,7 +470,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.getPlayer = function (search) {
     return _.findWhere(self.players, search);
-  }
+  };
 
   self.findAndRemoveIfPlaying = function (nick) {
     var player = self.getPlayer({nick: nick});
@@ -488,7 +488,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.playerKickHandler = function(nick, by, reason, message) {
     console.log(nick + ' was kicked. Removing from game.');
     self.findAndRemoveIfPlaying(nick);
-  }
+  };
 
   self.playerQuitHandler = function (nick, reason, channel, message) {
     console.log(nick + ' has quit. Removing from game.');
