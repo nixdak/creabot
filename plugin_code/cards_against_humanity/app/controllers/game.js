@@ -891,6 +891,9 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                 oldPlayer.isActive = true;
             } else {
               self.players.push(player);
+              if(self.state !== STATES.WAITING){
+                self.players[self.players.length-1].hasPlayed = true;
+              }
             }
 
             self.say(player.nick + ' has joined the game');
