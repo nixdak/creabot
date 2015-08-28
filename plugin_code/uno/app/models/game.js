@@ -146,7 +146,7 @@ var Game = function (channel, client, config, cmdArgs) {
     var now = new Date();
 
     var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) - 
-                              (self.currentPlayer.idleRounds * self.config.gameOptions.idleRoundTimerDecrement));
+                              (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
     var timeLimit = seconds * 1000;
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
@@ -185,7 +185,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.showTimeInRound = function() {
     var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) - 
-      (self.currentPlayer.idleRounds * self.config.gameOptions.idleRoundTimerDecrement));
+      (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
 
     self.say(seconds + ' seconds on the clock');
   }
