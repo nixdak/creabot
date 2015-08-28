@@ -144,7 +144,10 @@ var Game = function (channel, client, config, cmdArgs) {
   self.turnTimer = function() {
     // check the time
     var now = new Date();
-    var timeLimit = (60 * config.gameOptions.turnMinutes - self.currentPlayer.roundShorten )* 1000 ;
+
+    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) - 
+                              (self.currentPlayer.idleRounds * self.config.gameOptions.idleRoundTimerDecrement));
+    var timeLimit = seconds * 1000;
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
 
     console.log('Round elapsed:', roundElapsed, now.getTime(), self.roundStarted.getTime());
@@ -180,6 +183,13 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
+  self.showTimeInRound = function() {
+    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) - 
+      (self.currentPlayer.idleRounds * self.config.gameOptions.idleRoundTimerDecrement));
+
+    self.say(seconds + ' seconds on the clock');
+  }
+
   self.nextTurn = function() {
     self.state = STATES.TURN_END;
     if (!_.isUndefined(self.turnTimeout)) {
@@ -210,6 +220,7 @@ var Game = function (channel, client, config, cmdArgs) {
     });
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
+    self.showTimeInRound();
 
     if (self.firstCard === true) {
       self.firstCard = false;
@@ -227,7 +238,6 @@ var Game = function (channel, client, config, cmdArgs) {
   self.idled = function () {
     var currentPlayer = self.currentPlayer;
     currentPlayer.idleTurns += 1;
-    currentPlayer.roundShorten += 40;
 
     if (currentPlayer.idleTurns < self.config.gameOptions.maxIdleTurns) {
       self.say(currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
@@ -260,7 +270,6 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     self.currentPlayer.idleTurns = 0;
-    self.currentPlayer.roundShorten = 0;
     self.nextTurn();
   };
 
@@ -327,7 +336,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (player.hasDrawn && card !== player.hand.numCards() - 1){
-      self.pm(player.nick, 'You Must use the card you drew');
+      self.pm(player.nick, 'You must use the card you drew');
       return false;
     }
 
