@@ -223,9 +223,9 @@ var Game = function (channel, client, config, cmdArgs) {
     self.showTimeInRound();
 
     if (self.firstCard === true) {
-      self.firstCard = false;
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
       self.discard.getCurrentCard().onPlay(self);
+      self.firstCard = false;
     }
 
     self.showCards(self.currentPlayer);
