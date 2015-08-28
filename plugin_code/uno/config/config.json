@@ -3,7 +3,7 @@
     "gameOptions": {
       "turnMinutes": 3,
       "maxIdleTurns": 3,
-      "idleRoundTimerDecrement": 30
+      "idleRoundTimerDecrement": 60
     },
 
     "pluginOptions": {
@@ -17,7 +17,7 @@
     "gameOptions": {
       "turnMinutes": 3,
       "maxIdleTurns": 3,
-      "idleRoundTimerDecrement": 30
+      "idleRoundTimerDecrement": 60
     },
 
     "pluginOptions": {
