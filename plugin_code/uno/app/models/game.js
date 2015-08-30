@@ -41,8 +41,11 @@ var Game = function (channel, client, config, cmdArgs) {
   }
 
   self.stop = function (nick, pointLimitReached) {
-
     self.state = STATES.FINISHED;
+    
+    // Clear timeouts and intervals
+    clearTimeout(self.startTimeout);
+    clearInterval(self.turnTimeout);
 
     player = self.getPlayer({ nick: nick });
 
@@ -59,10 +62,6 @@ var Game = function (channel, client, config, cmdArgs) {
     client.removeListener('quit', self.playerQuitHandler);
     client.removeListener('kick' + self.channel, self.playerKickHandler);
     client.removeListener('nick', self.playerNickChangeHandler);
-
-    // Clear timeouts and intervals
-    clearTimeout(self.startTimeout);
-    clearInterval(self.turnTimeout);
 
     // Delete Game properties
     delete self.players;
