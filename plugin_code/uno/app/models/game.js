@@ -35,7 +35,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.pointLimit = self.config.gameOptions.pointLimit;
   }
 
-  if (!_.isUndefined(cmdArgs[0]) && !isNan(cmdArgs[0])) {
+  if (!_.isUndefined(cmdArgs[0]) && !isNaN(cmdArgs[0])) {
     console.log('Setting pointLimit to ' + cmdArgs[0] + 'from arguments');
     self.pointLimit = cmdArgs[0];
   }
@@ -137,7 +137,6 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.setPlayer = function () {
     self.currentPlayer = self.nextPlayer();
-    self.currentPlayer.uno = false;
   };
 
   self.turnTimer = function() {
