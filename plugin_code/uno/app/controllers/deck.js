@@ -20,7 +20,7 @@ var Deck = function Deck(deck) {
 
   self.deal = function () {
     return self.cards.pop();
-  }
+  };
 
   self.addCard = function (card) {
     self.cards.push(card);
