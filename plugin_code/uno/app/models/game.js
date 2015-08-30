@@ -1,7 +1,7 @@
 var c = require('irc-colors'),
     _ = require('underscore'),
     inflection = require('inflection'),
-    Deck = require('../controllers/deck')
+    Deck = require('../controllers/deck'),
     Card = require('./card');
 
 var STATES = {
@@ -188,9 +188,10 @@ var Game = function (channel, client, config, cmdArgs) {
       (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
 
     self.say(seconds + ' seconds on the clock');
-  }
+  };
 
   self.nextTurn = function() {
+    console.log('In game.nextTurn()');
     self.state = STATES.TURN_END;
     if (!_.isUndefined(self.turnTimeout)) {
       clearTimeout(self.turnTimeout);
@@ -201,7 +202,7 @@ var Game = function (channel, client, config, cmdArgs) {
     if (!_.isUndefined(winner)) {
       self.say(winner.nick + ' has played all their cards and won the game! Congratulations!');
       self.stop(null, true);
-      return false
+      return false;
     }
 
     self.state = STATES.PLAYABLE;
@@ -274,6 +275,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.start = function (nick) {
+    console.log('In game.start()');
     clearTimeout(self.startTimeout);
 
     if (_.isUndefined(self.getPlayer({nick: nick}))) {
@@ -447,17 +449,14 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.deck.shuffle();
 
-    // Next turn
     self.say(player.nick + ' has left the game.');
-
     self.players.splice(self.players.indexOf(player), 1);
 
-    if (self.currentPlayer === player && self.players.length >= 2) {
+    // If the player is the current player, move to the next turn 
+    if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player && self.players.length) {
       self.nextTurn();
-    } else {
-      if(self.state === STATES.PLAYABLE ) {
-        self.stop();
-      }
+    } else if (self.players.length < 2) {
+      self.stop();
     }
   };
 
