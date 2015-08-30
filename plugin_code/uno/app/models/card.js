@@ -27,9 +27,9 @@ var Card = function Card(card) {
         break;
       case 'Wild Draw Four':
         self.wildDrawFour(game);
-        break
+        break;
     }
-  }
+  };
 
   self.isPlayable = function (currentCard) {
     switch (currentCard.type) {
@@ -43,9 +43,10 @@ var Card = function Card(card) {
       case 'Draw Two':
         return (self.color === 'WILD') || (self.color === currentCard.color || self.type === currentCard.type);
     }
-  } 
+  };
 
   self.number = function (game) {
+    game.firstCard = false;
     return true;
   };
 
@@ -60,6 +61,7 @@ var Card = function Card(card) {
     game.say(nextPlayer.nick + ' has been skipped!');
 
     if (game.firstCard === true) {
+      game.firstCard = false;
       game.nextTurn();
     }
   };
@@ -73,6 +75,7 @@ var Card = function Card(card) {
     }
     
     // Reverse game players
+    game.firstCard = false;
     game.players = game.players.reverse();    
   };
 
@@ -82,12 +85,14 @@ var Card = function Card(card) {
     game.say(nextPlayer.nick + ' has been skipped!');
 
     if (game.firstCard === true) {
+      game.firstCard = false;
       game.nextTurn();
     }
   };
 
   self.wild = function (game) {
     // Color is handled by the play function so just return true
+    game.firstCard = false;
     return true;
   };
 
@@ -104,6 +109,7 @@ var Card = function Card(card) {
     game.say(nextPlayer.nick + ' has been skipped!');
 
     if (game.firstCard === true) {
+      game.firstCard = false;
       game.nextTurn();
     }
   };
@@ -158,7 +164,7 @@ var Card = function Card(card) {
     }
 
     return cardString;
-  }
-}
+  };
+};
 
 exports = module.exports = Card;
