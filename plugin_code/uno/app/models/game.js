@@ -450,7 +450,9 @@ var Game = function (channel, client, config, cmdArgs) {
     // If the player is the current player, move to the next turn 
     if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player && self.players.length) {
       self.nextTurn();
-    } else if (self.players.length < 2) {
+    } else if (self.players.length < 2 && self.state !== STATES.FINISHED && self.state !== STATES.STOPPED && self.state !== STATES.WAITING) {
+      self.stop();
+    } else if (self.players.length === 0) {
       self.stop();
     }
   };
