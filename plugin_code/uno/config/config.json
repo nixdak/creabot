@@ -1,0 +1,29 @@
+{
+  "development": {
+    "gameOptions": {
+      "turnMinutes": 3,
+      "maxIdleTurns": 3,
+      "idleRoundTimerDecrement": 60
+    },
+
+    "pluginOptions": {
+      "channels": ["#UnoDev"],
+      "channelsToExclude": [],
+      "channelsToJoin": ["#UnoDev"]
+    }
+  },
+
+  "production": {
+    "gameOptions": {
+      "turnMinutes": 3,
+      "maxIdleTurns": 3,
+      "idleRoundTimerDecrement": 60
+    },
+
+    "pluginOptions": {
+      "channels": ["#Uno"],
+      "channelsToExclude": [],
+      "channelsToJoin": ["#Uno"]
+    }
+  }
+}
