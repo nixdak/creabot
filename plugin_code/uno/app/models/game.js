@@ -179,11 +179,11 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
-  self.showTimeInRound = function() {
+  self.showRoundInfo = function() {
     var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) - 
       (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
 
-    self.say(seconds + ' seconds on the clock');
+    self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn. ' + seconds + ' seconds on the clock');
   };
 
   self.nextTurn = function() {
@@ -216,8 +216,7 @@ var Game = function (channel, client, config, cmdArgs) {
       player.hasDrawn = false;
     });
 
-    self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
-    self.showTimeInRound();
+    self.showRoundInfo();
 
     if (self.firstCard === true) {
       self.say('The first card is: ' + self.discard.getCurrentCard().toString());
@@ -338,20 +337,23 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     var pickedCard = player.hand.pickCard(card);
-
+    var playString = '';
+    
     self.discard.addCard(pickedCard);
 
-    self.say(player.nick + ' has played ' + pickedCard.toString() + '!');
+    playString += player.nick + ' has played ' + pickedCard.toString() + '! ';
 
     pickedCard.onPlay(self);
 
     if (pickedCard.color === 'WILD') {
-      self.say(player.nick + ' has changed the color to ' + color);
+      playString += player.nick + ' has changed the color to ' + color + '. ';
       pickedCard.color = color.toUpperCase();
     }
 
-    self.say(player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!');
+    playString += player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!';
 
+    self.say(playString);
+    
     player.hasPlayed = true;
     self.endTurn();
   };
