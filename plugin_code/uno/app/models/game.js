@@ -189,9 +189,6 @@ var Game = function (channel, client, config, cmdArgs) {
   self.nextTurn = function() {
     console.log('In game.nextTurn()');
     self.state = STATES.TURN_END;
-    if (!_.isUndefined(self.turnTimeout)) {
-      clearTimeout(self.turnTimeout);
-    }
 
     var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
 
@@ -351,6 +348,9 @@ var Game = function (channel, client, config, cmdArgs) {
     self.say(playString);
     
     player.hasPlayed = true;
+
+    clearInterval(self.turnTimeout);
+
     self.endTurn();
   };
 
