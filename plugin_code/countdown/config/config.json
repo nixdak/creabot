@@ -42,7 +42,6 @@
     "roundOptions": {
       "letters": [1, 2, 4, 5, 7, 8, 10, 11, 12, 13],
       "numbers": [3, 6, 9, 14],
-      "conundrum": 15,
       "lettersRoundMinutes": 2,
       "numbersRoundMinutes": 5,
       "conundrumRoundMinutes": 2,
@@ -54,10 +53,8 @@
     "gameOptions": {
       "setTopic":      true,
       "topicBase":     "|| Dev Bot || Expect spam || Expect breakings",
-      "notifyUsers":   false,
       "minutesBeforeStart": 2,
       "roundMinutes": 2,
-      "database": true,
       "maxIdleCount": 3
     },
 
@@ -111,7 +108,6 @@
     "roundOptions": {
       "letters": [1, 2, 4, 5, 7, 8, 10, 11, 12, 13],
       "numbers": [3, 6, 9, 14],
-      "conundrum": 15,
       "lettersRoundMinutes": 2,
       "numbersRoundMinutes": 5,
       "conundrumRoundMinutes": 2,
@@ -123,9 +119,7 @@
     "gameOptions": {
       "setTopic":      true,
       "topicBase":     "|| Dev Bot || Expect spam || Expect breakings",
-      "notifyUsers":   false,
       "minutesBeforeStart": 2,
-      "database": true,
       "maxIdleCount": 3
     },
 
