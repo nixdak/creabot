@@ -243,10 +243,6 @@ var Game = function (channel, client, config, cmdArgs) {
       );
       self.removePlayer(currentPlayer.nick);
     }
-
-    if (!_.isUndefined(self.players)) {
-      self.nextTurn();
-    }
   };
 
   self.endTurn = function (nick, idled) {
