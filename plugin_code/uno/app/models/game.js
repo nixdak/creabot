@@ -177,10 +177,13 @@ var Game = function (channel, client, config, cmdArgs) {
     var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
 
     if (!_.isUndefined(winner)) {
+      console.log('Doing winner');
       self.say(winner.nick + ' has played all their cards and won the game! Congratulations!');
       self.stop(null, true);
       return false;
     }
+
+    console.log('Continue if there was no winner');
 
     self.state = STATES.PLAYABLE;
     self.setPlayer();
