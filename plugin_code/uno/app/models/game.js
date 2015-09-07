@@ -62,15 +62,6 @@ var Game = function (channel, client, config, cmdArgs) {
     client.removeListener('quit', self.playerQuitHandler);
     client.removeListener('kick' + self.channel, self.playerKickHandler);
     client.removeListener('nick', self.playerNickChangeHandler);
-
-    // Delete Game properties
-    delete self.players;
-    delete self.channel;
-    delete self.client;
-    delete self.config;
-    delete self.pointLimit;
-    delete self.deck;
-    delete self.discard;
   };
 
   self.startTimeoutFunction = function () {
