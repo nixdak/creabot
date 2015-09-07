@@ -285,7 +285,7 @@ var Game = function (channel, client, config, cmdArgs) {
       card.color = color.toUpperCase();
     }
 
-    playString += player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + 'left';
+    playString += player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left';
 
     self.say(playString);
     
