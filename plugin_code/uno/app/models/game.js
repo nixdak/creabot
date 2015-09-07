@@ -402,9 +402,9 @@ var Game = function (channel, client, config, cmdArgs) {
 
     var challengeablePlayer = self.getPlayer({ challengable: true });
 
-    if (!_.isUndefined(challengablePlayer)) {
-      self.say(player.nick + ' has successfully challenged ' + challengablePlayer.nick + '. ' + challengeablePlayer.nick + ' has picked up 2 cards.');
-      self.deal(challengablePlayer, 2, true);
+    if (!_.isUndefined(challengeablePlayer)) {
+      self.say(player.nick + ' has successfully challenged ' + challengeablePlayer.nick + '. ' + challengeablePlayer.nick + ' has picked up 2 cards.');
+      self.deal(challengeablePlayer, 2, true);
       challengeablePlayer.challengable = false;
     } else {
       self.say(player.nick + ' has unsuccessfully challenged a player and has picked up 2 cards.');
