@@ -366,7 +366,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     var drawnCard = self.currentPlayer.hand.getCard(self.currentPlayer.hand.numCards() - 1);
 
-    if (drawnCard.playable(self.discard.getCurrentCard()) === false) {
+    if (drawnCard.isPlayable(self.discard.getCurrentCard()) === false) {
       self.pm(self.currentPlayer.nick, 'You have no playable cards. Ending your turn.');
       self.endTurn();
     }
