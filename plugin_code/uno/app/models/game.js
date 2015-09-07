@@ -119,22 +119,6 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
-  self.lastPlayer = function() {
-    if (self.players.length === 2) {
-      currentPlayerIndex = self.players.indexOf(self.currentPlayer);
-      lestPlayerIndex = (currentPlayerIndex - 1) % self.players.length;
-
-      lestPlayer = self.players[lastPlayerIndex].skipped === false ? self.players[lastPlayerIndex] : self.currentPlayer;
-      return lastPlayer;
-    }
-
-    for (var i = (self.players.indexOf(self.currentPlayer) - 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
-      if (self.players[i].skipped === false) {
-        return self.players[i];
-      }
-    }
-  };
-
   self.setPlayer = function () {
     self.currentPlayer = self.nextPlayer();
   };
@@ -211,6 +195,7 @@ var Game = function (channel, client, config, cmdArgs) {
       player.skipped = false;
       player.hasPlayed = false;
       player.hasDrawn = false;
+      player.uno = false;
     });
 
     self.showRoundInfo();
@@ -257,6 +242,10 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(self.currentPlayer.nick + ' has ended their turn without playing.');
     }
 
+    if (self.currentPlayer.uno === false && self.currentPlayer.hand.numCards() === 1) {
+      self.currentPlayer.challengable = true;
+    }
+    
     self.currentPlayer.idleTurns = 0;
     self.nextTurn();
   };
@@ -284,6 +273,25 @@ var Game = function (channel, client, config, cmdArgs) {
     self.nextTurn();
   };
 
+  self.playCard = function (player, card, color) {
+    var playString = '';
+
+    self.discard.addCard(card);
+
+    playString += player.nick + ' has played ' + card.toString() + '! ';
+
+    if (card.color === 'WILD') {
+      playString += player.nick + ' has changed the color to ' + color + '. ';
+      card.color = color.toUpperCase();
+    }
+
+    playString += player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left';
+
+    self.say(playString);
+    
+    card.onPlay(self);
+  };
+  
   self.play = function (nick, card, color) {
     var player = self.getPlayer({ nick: nick });
 
@@ -330,25 +338,11 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     var pickedCard = player.hand.pickCard(card);
-    var playString = '';
-    
-    self.discard.addCard(pickedCard);
-
-    playString += player.nick + ' has played ' + pickedCard.toString() + '! ';
-
-    pickedCard.onPlay(self);
-
-    if (pickedCard.color === 'WILD') {
-      playString += player.nick + ' has changed the color to ' + color + '. ';
-      pickedCard.color = color.toUpperCase();
-    }
-
-    playString += player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left!';
-
-    self.say(playString);
-    
+    self.playCard(player, pickedCard, color);
     player.hasPlayed = true;
 
+    _.each(self.players, function (player) { player.challengeable = false; });
+    
     clearInterval(self.turnTimeout);
 
     self.endTurn();
@@ -368,6 +362,8 @@ var Game = function (channel, client, config, cmdArgs) {
     self.deal(self.currentPlayer, 1, true);
     self.currentPlayer.hasDrawn = true;
 
+    _.each(self.players, function (player) { player.challengable = false; });
+    
     self.say(self.currentPlayer.nick + ' has drawn a card and has ' + self.currentPlayer.hand.numCards() + ' left.');
 
     var playable = _.filter(self.currentPlayer.hand.getCards(), function (card) {return card.isPlayable(self.discard.getCurrentCard())});
@@ -383,25 +379,39 @@ var Game = function (channel, client, config, cmdArgs) {
       self.pm(nick, 'It is not your turn.');
       return false;
     }
-    self.currentPlayer.uno = true;
+
+    if (self.currentPlayer.hand.numCards() === 2){
+      self.currentPlayer.uno = true;
+    }
   };
 
   self.challenge = function (nick) {
-    if(self.turn === 1){
-      self.say("You cant challenge now");
-    }
-    self.previousPlayer = self.lastPlayer();
-    self.say(nick + ' has challenged ' + self.previousPlayer.nick);
-    if(self.previousPlayer.uno === true){
-      self.say(self.previousPlayer.nick + ' said Uno');
+    var player = self.getPlayer({ nick: nick });
+
+    if (_.isUndefined(player) === true) {
       return false;
     }
-    if(self.previousPlayer.hand.numCards() === 1){
-      self.say(self.previousPlayer.nick + ' didn\'t say Uno and must draw 2 cards');
-      self.draw(previousPlayer.nick);
-      self.draw(previousPlayer.nick);
+
+    if (player.hasChallenged === true) {
+      return false;
     }
-    self.previousPlayer.uno = false;
+    
+    if(self.turn === 1){
+      return false;
+    }
+
+    var challengeablePlayer = self.getPlayer({ challengable: true });
+
+    if (!_.isUndefined(challengeablePlayer)) {
+      self.say(player.nick + ' has successfully challenged ' + challengeablePlayer.nick + '. ' + challengeablePlayer.nick + ' has picked up 2 cards.');
+      self.deal(challengeablePlayer, 2, true);
+      challengeablePlayer.challengable = false;
+    } else {
+      self.say(player.nick + ' has unsuccessfully challenged a player and has picked up 2 cards.');
+      self.deal(player, 2, true);
+    }
+
+    player.hasChallenged = true;
   };
 
   self.showStatus = function (){
