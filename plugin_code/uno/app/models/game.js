@@ -278,7 +278,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.discard.addCard(card);
 
-    playString += player.nick + ' has played ' + pickedCard.toString() + '! ';
+    playString += player.nick + ' has played ' + card.toString() + '! ';
 
     if (card.color === 'WILD') {
       playString += player.nick + ' has changed the color to ' + color + '. ';
