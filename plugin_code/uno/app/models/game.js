@@ -185,6 +185,10 @@ var Game = function (channel, client, config, cmdArgs) {
 
     console.log('Continue if there was no winner');
 
+    if (self.turn > 0) {
+      self.previousPlayer = self.currentPlayer;
+    }
+
     self.state = STATES.PLAYABLE;
     self.setPlayer();
 
@@ -411,7 +415,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.deal(challengeablePlayer, 2, true);
       challengeablePlayer.challengable = false;
     } else {
-      self.say(player.nick + ' has unsuccessfully challenged a player and has picked up 2 cards.');
+      self.say(player.nick + ' has unsuccessfully challenged ' + self.previousPlayer.nick + ' and has picked up 2 cards.');
       self.deal(player, 2, true);
     }
 
