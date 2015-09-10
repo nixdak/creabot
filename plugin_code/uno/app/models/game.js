@@ -42,7 +42,8 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.stop = function (nick, pointLimitReached) {
     self.state = STATES.FINISHED;
-    
+    console.log('Stopping Game');
+
     // Clear timeouts and intervals
     clearTimeout(self.startTimeout);
     clearInterval(self.turnTimeout);
@@ -56,6 +57,7 @@ var Game = function (channel, client, config, cmdArgs) {
     if (pointLimitReached !== true) {
       self.say('Game has been stopped.');
     }
+    console.log('Game Stopped');
 
     // Remove listeners
     client.removeListener('part', self.playerPartHandler);
@@ -118,7 +120,7 @@ var Game = function (channel, client, config, cmdArgs) {
     // check the time
     var now = new Date();
 
-    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) - 
+    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) -
                               (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
     var timeLimit = seconds * 1000;
     var roundElapsed = (now.getTime() - self.roundStarted.getTime());
@@ -155,7 +157,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.showRoundInfo = function() {
-    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) - 
+    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) -
       (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn. ' + seconds + ' seconds on the clock');
@@ -164,6 +166,10 @@ var Game = function (channel, client, config, cmdArgs) {
   self.nextTurn = function() {
     console.log('In game.nextTurn()');
     self.state = STATES.TURN_END;
+
+    if (!_.isUndefined(self.turnTimeout)) {
+      clearTimeout(self.turnTimeout);
+    }
 
     var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
 
@@ -243,7 +249,7 @@ var Game = function (channel, client, config, cmdArgs) {
     if (self.currentPlayer.uno === false && self.currentPlayer.hand.numCards() === 1) {
       self.currentPlayer.challengable = true;
     }
-    
+
     self.currentPlayer.idleTurns = 0;
     self.nextTurn();
   };
@@ -286,10 +292,10 @@ var Game = function (channel, client, config, cmdArgs) {
     playString += player.nick + ' has ' + player.hand.numCards() + ' ' + inflection.inflect('card', player.hand.numCards()) + ' left';
 
     self.say(playString);
-    
+
     card.onPlay(self);
   };
-  
+
   self.play = function (nick, card, color) {
     var player = self.getPlayer({ nick: nick });
 
@@ -340,7 +346,7 @@ var Game = function (channel, client, config, cmdArgs) {
     player.hasPlayed = true;
 
     _.each(self.players, function (player) { player.challengeable = false; });
-    
+
     clearInterval(self.turnTimeout);
 
     self.endTurn();
@@ -361,7 +367,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.currentPlayer.hasDrawn = true;
 
     _.each(self.players, function (player) { player.challengable = false; });
-    
+
     self.say(self.currentPlayer.nick + ' has drawn a card and has ' + self.currentPlayer.hand.numCards() + ' left.');
 
     var drawnCard = self.currentPlayer.hand.getCard(self.currentPlayer.hand.numCards() - 1);
@@ -394,7 +400,7 @@ var Game = function (channel, client, config, cmdArgs) {
     if (player.hasChallenged === true) {
       return false;
     }
-    
+
     if(self.turn === 1){
       return false;
     }
@@ -454,7 +460,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.say(player.nick + ' has left the game.');
     self.players.splice(self.players.indexOf(player), 1);
 
-    // If the player is the current player, move to the next turn 
+    // If the player is the current player, move to the next turn
     if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player && self.players.length) {
       self.nextTurn();
     } else if (self.players.length < 2 && self.state !== STATES.FINISHED && self.state !== STATES.STOPPED && self.state !== STATES.WAITING) {
