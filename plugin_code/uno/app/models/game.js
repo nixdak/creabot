@@ -42,7 +42,6 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.stop = function (nick, pointLimitReached) {
     self.state = STATES.FINISHED;
-    console.log('Stopping Game');
 
     // Clear timeouts and intervals
     clearTimeout(self.startTimeout);
@@ -57,7 +56,6 @@ var Game = function (channel, client, config, cmdArgs) {
     if (pointLimitReached !== true) {
       self.say('Game has been stopped.');
     }
-    console.log('Game Stopped');
 
     // Remove listeners
     client.removeListener('part', self.playerPartHandler);
@@ -157,8 +155,8 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.showRoundInfo = function() {
-    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) -
-      (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
+    var seconds = Math.max(60, ((60 * self.config.gameOptions.turnMinutes) -
+      (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement)));
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn. ' + seconds + ' seconds on the clock');
   };
@@ -166,10 +164,6 @@ var Game = function (channel, client, config, cmdArgs) {
   self.nextTurn = function() {
     console.log('In game.nextTurn()');
     self.state = STATES.TURN_END;
-
-    if (!_.isUndefined(self.turnTimeout)) {
-      clearTimeout(self.turnTimeout);
-    }
 
     var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
 
@@ -217,21 +211,16 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.idled = function () {
-    var currentPlayer = self.currentPlayer;
-    currentPlayer.idleTurns += 1;
+    self.currentPlayer.idleTurns += 1;
 
-    if (currentPlayer.idleTurns < self.config.gameOptions.maxIdleTurns) {
-      self.say(currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
-      self.draw(currentPlayer.nick);
+    if (self.currentPlayer.idleTurns < self.config.gameOptions.maxIdleTurns) {
+      self.say(self.currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
+      self.draw(self.currentPlayer.nick);
     } else {
-      self.say(currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + ' ' +
+      self.say(self.currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + ' ' +
         inflection.inflect('time', self.config.gameOptions.maxIdleTurns) + '. Removing them from the game.'
       );
-      self.removePlayer(currentPlayer.nick);
-    }
-
-    if (self.currentPlayer === currentPlayer) {
-      self.nextTurn();
+      self.removePlayer(self.currentPlayer.nick);
     }
   };
 
