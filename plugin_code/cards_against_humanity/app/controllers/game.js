@@ -944,6 +944,12 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                 self.say(player.nick + ' has left the game');
             }
 
+            if (_.where(self.players, { isActive: true}).length === 0){
+              self.say("No Players left");
+              self.stop();
+              return false;
+            }
+            
             // check if remaining players have all player
             if (self.state === STATES.PLAYABLE && self.checkAllPlayed()) {
                 self.showEntries();
