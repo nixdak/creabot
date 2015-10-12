@@ -119,22 +119,6 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
-  self.lastPlayer = function() {
-    if (self.players.length === 2) {
-      currentPlayerIndex = self.players.indexOf(self.currentPlayer);
-      lestPlayerIndex = (currentPlayerIndex - 1) % self.players.length;
-
-      lestPlayer = self.players[lastPlayerIndex].skipped === false ? self.players[lastPlayerIndex] : self.currentPlayer;
-      return lastPlayer;
-    }
-
-    for (var i = (self.players.indexOf(self.currentPlayer) - 1) % self.players.length; i !== self.players.indexOf(self.currentPlayer); i = (i + 1) % self.players.length) {
-      if (self.players[i].skipped === false) {
-        return self.players[i];
-      }
-    }
-  };
-
   self.setPlayer = function () {
     self.currentPlayer = self.nextPlayer();
   };
@@ -189,6 +173,7 @@ var Game = function (channel, client, config, cmdArgs) {
   self.nextTurn = function() {
     console.log('In game.nextTurn()');
     self.state = STATES.TURN_END;
+
     if (!_.isUndefined(self.turnTimeout)) {
       clearTimeout(self.turnTimeout);
     }
@@ -201,6 +186,10 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
+    if (self.turn > 0) {
+      self.previousPlayer = self.currentPlayer;
+    }
+    
     self.state = STATES.PLAYABLE;
     self.setPlayer();
 
@@ -214,6 +203,7 @@ var Game = function (channel, client, config, cmdArgs) {
       player.skipped = false;
       player.hasPlayed = false;
       player.hasDrawn = false;
+      player.uno = false;
     });
 
     self.showRoundInfo();
@@ -264,6 +254,10 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(self.currentPlayer.nick + ' has ended their turn without playing.');
     }
 
+    if (self.currentPlayer.uno === false && self.currentPlayer.hand.numCards() === 1) {
+      self.currentPlayer.challengeable = true;
+    }
+    
     self.currentPlayer.idleTurns = 0;
     self.nextTurn();
   };
@@ -355,6 +349,8 @@ var Game = function (channel, client, config, cmdArgs) {
     self.say(playString);
     
     player.hasPlayed = true;
+
+    _.each(self.players, function (player) { player.challengeable = false; });
     self.endTurn();
   };
 
@@ -372,6 +368,8 @@ var Game = function (channel, client, config, cmdArgs) {
     self.deal(self.currentPlayer, 1, true);
     self.currentPlayer.hasDrawn = true;
 
+    _.each(self.players, function (player) { player.challengeable = false; });
+    
     self.say(self.currentPlayer.nick + ' has drawn a card and has ' + self.currentPlayer.hand.numCards() + ' left.');
 
     var drawnCard = self.currentPlayer.hand.getCard(self.currentPlayer.hand.numCards() - 1);
@@ -384,28 +382,43 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.uno = function (nick) {
     if (self.currentPlayer.nick !== nick) {
-      self.pm(nick, 'It is not your turn.');
+      self.pm(nick, 'It is not your turn');
       return false;
     }
-    self.currentPlayer.uno = true;
+
+    if (self.currentPlayer.hand.numCards() === 2) {
+      self.currentPlayer.uno = true;
+      self.say(self.currentPlayer.nick + ' has declared UNO!');
+    }
   };
 
   self.challenge = function (nick) {
-    if(self.turn === 1){
-      self.say("You cant challenge now");
-    }
-    self.previousPlayer = self.lastPlayer();
-    self.say(nick + ' has challenged ' + self.previousPlayer.nick);
-    if(self.previousPlayer.uno === true){
-      self.say(self.previousPlayer.nick + ' said Uno');
+    var player = self.getPlayer({ nick: nick });
+
+    if (_.isUndefined(player) === true) {
       return false;
     }
-    if(self.previousPlayer.hand.numCards() === 1){
-      self.say(self.previousPlayer.nick + ' didn\'t say Uno and must draw 2 cards');
-      self.draw(previousPlayer.nick);
-      self.draw(previousPlayer.nick);
+
+    if (player.hasChallenged === true) {
+      return false;
     }
-    self.previousPlayer.uno = false;
+
+    if (self.turn === 1) {
+      return false;
+    }
+
+    var challengeablePlayer = self.getPlayer({ challengeable: true });
+
+    if (!_.isUndefined(challengeablePlayer)) {
+      self.say(player.nick + ' has successfully challenged ' + challengeablePlayer.nick + '. ' + challengeablePlayer.nick + ' has drawn 2 cards.');
+      self.deal(challengeablePlayer, 2, true);
+      challengeablePlayer = false;
+    } else {
+      self.say(player.nick + ' has unsuccessfully challeneged ' + challengeablePlayer.nick + self.previousPlayer.nick + ' and has picked up 2 cards.');
+      self.deal(player, 2, true);
+    }
+
+    player.hasChallenged = true;
   };
 
   self.showStatus = function (){
