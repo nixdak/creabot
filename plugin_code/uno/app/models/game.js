@@ -175,7 +175,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.state = STATES.TURN_END;
 
     if (!_.isUndefined(self.turnTimeout)) {
-      clearTimeout(self.turnTimeout);
+      clearInterval(self.turnTimeout);
     }
 
     var winner = _.filter(self.players, function (player) { return player.hand.numCards() === 0})[0];
