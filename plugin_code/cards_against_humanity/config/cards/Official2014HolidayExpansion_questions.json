@@ -5,7 +5,7 @@
     "keep": "Yes",
     "draw": 0,
     "pick": 1,
-    "source": "CaH Holiday 2014 Expansion"
+    "source": "Official 2014 Holiday Expansion"
   },
   {
     "type": "Question",
@@ -13,7 +13,7 @@
     "keep": "Yes",
     "draw": 0,
     "pick": 1,
-    "source": "CaH Holiday 2014 Expansion"
+    "source": "Official 2014 Holiday Expansion"
   },
   {
     "type": "Question",
@@ -21,7 +21,7 @@
     "keep": "Yes",
     "draw": 1,
     "pick": 2,
-    "source": "CaH Holiday 2014 Expansion"
+    "source": "Official 2014 Holiday Expansion"
   },
   {
     "type": "Question",
@@ -29,7 +29,7 @@
     "keep": "Yes",
     "draw": 0,
     "pick": 1,
-    "source": "CaH Holiday 2014 Expansion"
+    "source": "Official 2014 Holiday Expansion"
   },
   {
     "type": "Question",
@@ -37,7 +37,7 @@
     "keep": "Yes",
     "draw": 0,
     "pick": 1,
-    "source": "CaH Holiday 2014 Expansion"
+    "source": "Official 2014 Holiday Expansion"
   },
   {
     "type": "Question",
@@ -45,6 +45,6 @@
     "keep": "Yes",
     "draw": 1,
     "pick": 2,
-    "source": "CaH Holiday 2014 Expansion"
+    "source": "Official 2014 Holiday Expansion"
   }
 ]
