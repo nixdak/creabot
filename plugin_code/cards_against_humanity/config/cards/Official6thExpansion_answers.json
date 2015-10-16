@@ -289,7 +289,7 @@
   },
   {
     "type": "Answer",
-     "value": "Kale",
+    "value": "Kale",
     "keep": "Yes",
     "draw": 0,
     "pick": 1,
