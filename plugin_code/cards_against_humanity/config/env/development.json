@@ -13,6 +13,7 @@
 
   "pluginOptions": {
     "channels": ["#CardsAgainstHumanityDev"],
-    "channelsToJoin": ["#CardsAgainstHumanityDev"]
+    "channelsToJoin": ["#CardsAgainstHumanityDev"],
+    "moderatorChannel": ["#DakDak"]
   }
 }

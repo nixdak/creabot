@@ -343,6 +343,19 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
       }
     }
   };
+
+  self.cah = function (client, message, cmdArgs) {
+    var channel = message.args[0];
+
+    if (cmdArgs !== '') {
+      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+    }
+
+    if (cmdArgs[0].match(/listpacks/i)) {
+      var cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));
+      _.each(cardPacks, function (pack) { client.say(channel, pack); });
+    }
+  };
 };
 
 exports = module.exports = CardsAgainstHumanity;
