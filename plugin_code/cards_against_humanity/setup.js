@@ -3,9 +3,13 @@ var CardsAgainstHumanity = require('./app/controllers/cards_against_humanity_con
 module.exports = function(app) {
   var cardsAgainstHumanity = new CardsAgainstHumanity();
 
-  // Join Channels
+  // Join plugin channel
   app.joinChannels(cardsAgainstHumanity.config.pluginOptions.channelsToJoin);
 
+  // Join admin channel
+
+  // Join moderator channel
+  
   // Public commands
   app.cmd('cards', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.cards);
   app.cmd('cah', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.pick);
@@ -19,9 +23,14 @@ module.exports = function(app) {
   app.cmd('quit', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.quit);
   app.cmd('resume', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.resume);
   app.cmd('status', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.status);
-  app.cmd('start', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.start)
+  app.cmd('start', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.start);
   app.cmd('stop', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.stop);
 
   // Private commands
   app.msg('cah', '', cardsAgainstHumanity.pick);
+
+  // Admin channel commands
+
+  // Moderator channel commands
+  app.cmd('cah', '', cardsAgainstHumanity.config.pluginOptions.moderatorChannel, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.cah);
 };
