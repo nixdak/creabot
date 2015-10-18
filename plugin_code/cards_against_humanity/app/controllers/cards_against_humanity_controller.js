@@ -1,4 +1,5 @@
 var _ = require('underscore'),
+    c = require('irc-colors'),
     Game = require('./game'),
     Player = require('../models/player'),
     config = require('../../config/config'),
