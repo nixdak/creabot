@@ -8,7 +8,6 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
   var self = this;
   self.game;
   self.config = config;
-  self.cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));
 
   /**
    * Start a game
@@ -347,7 +346,8 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
 
   self.cah = function (client, message, cmdArgs) {
     var channel = message.args[0];
-    
+    self.cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));    
+
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
     }
