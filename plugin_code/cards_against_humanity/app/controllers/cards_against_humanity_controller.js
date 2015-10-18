@@ -9,7 +9,8 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
   var self = this;
   self.game;
   self.config = config;
-
+  self.disabledPacks = [];
+  
   /**
    * Start a game
    * @param client
@@ -345,8 +346,32 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     }
   };
 
-  self.cah = function (client, message, cmdArgs) {
+  self.listPacks = function (client, message, cmdArgs) {
     var channel = message.args[0];
+    var packString;
+    
+    for (var i = 0; i < self.cardPacks.length; i++) {
+      if (i !== 0 && i % 5 === 0) {
+	client.say(channel, packString);
+	packString = '';
+      } else if (i === self.cardPacks.length - 1) {
+	client.say(channel, packString);
+	break;
+      }
+
+      packString += c.bold(' [' + i + '] ') + self.cardPacks[i];
+    }
+  };
+
+  self.enable = function (client, message, cmdArgs) {
+    
+  };
+
+  self.disable = function (client, message, cmdArgs) {
+    
+  };
+
+  self.cah = function (client, message, cmdArgs) {
     self.cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));    
 
     if (cmdArgs !== '') {
@@ -354,24 +379,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     }
     
     if (cmdArgs[0].match(/listpacks/i)) {
-      console.log('In listpacks');
-      console.log(self.cardPacks);
-      var packString;
-      for (var i = 0; i < self.cardPacks.length; i++) {
-	console.log('i = ' + i);
-	console.log(packString);
-	if (i === 0) {
-	  packString = 'Current card packs:';
-	} else if (i % 10 === 0) {
-	  client.say(channel, packString);
-	  packString = '';
-	} else if (i === self.cardPacks.length - 1) {
-	  client.say(channel, packString);
-	  break;
-	}
-
-	packString += c.bold(' [' + i + '] ') + self.cardPacks[i]; 
-      }
+      self.listPacks(client, message, cmdArgs);
+    } else if (cmdArgs[0].match(/enable/i)) {
+      self.enable(client, message, cmdArgs);
+    } else if (cmdArgs[0].match(/disable/i)) {
+      self.disable(client, message, cmdArgs);
     }
   };
 };
