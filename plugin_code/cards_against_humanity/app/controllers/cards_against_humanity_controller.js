@@ -355,7 +355,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     if (cmdArgs[0].match(/listpacks/i)) {
       console.log('In listpacks');
       var packString;
-      for (var i = 0; i < self.cardPacks.length; i = i + 10) {
+      for (var i = 0; i < self.cardPacks.length; i++) {
 	console.log('i = ' + i);
 	console.log(packString);
 	if (i === 0) {
