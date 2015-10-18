@@ -348,7 +348,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
 
   self.listPacks = function (client, message, cmdArgs) {
     var channel = message.args[0];
-    var packString;
+    var packString = '';
     
     for (var i = 0; i < self.cardPacks.length; i++) {
       if (i !== 0 && i % 5 === 0) {
