@@ -353,15 +353,21 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     }
     
     if (cmdArgs[0].match(/listpacks/i)) {
+      var packString;
       for (var i = 0; i < self.cardPacks.length; i = i + 10) {
-	var packString = "";
-	for (var j = i; j < i + 10 && j < self.cardPacks.length; j++) {
-	  packString = packString + c.bold("[" + j + "]") + self.cardPacks[j];
+	if (i === 0) {
+	  packString = 'Current card packs:';
+	} else if (i % 10 === 0) {
+	  client.say(channel, packString);
+	  packString = '';
+	} else if (i === self.cardPacks.length - 1) {
+	  client.say(channel, packString);
+	  break;
 	}
 
-	client.say(channel, packString);
+	packString += c.bold(' [' + i + '] ') + self.cardPacks[i]; 
       }
-    } 
+    }
   };
 };
 
