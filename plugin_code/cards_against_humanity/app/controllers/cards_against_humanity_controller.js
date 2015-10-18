@@ -8,6 +8,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
   var self = this;
   self.game;
   self.config = config;
+  self.cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));
 
   /**
    * Start a game
@@ -18,9 +19,9 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
   self.start = function (client, message, cmdArgs) {
     // check if game running on the channel
     var channel = message.args[0],
-    nick = message.nick,
-    user = message.user,
-    hostname = message.host;
+	nick = message.nick,
+	user = message.user,
+	hostname = message.host;
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
@@ -46,8 +47,8 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
    */
   self.stop = function (client, message, cmdArgs) {
     var channel = message.args[0],
-        nick = message.nick,
-        hostname = message.host;
+    nick = message.nick,
+    hostname = message.host;
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
@@ -72,8 +73,8 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
    */
   self.pause = function(client, message, cmdArgs) {
     var channel = message.args[0],
-        nick = message.nick,
-        hostname = message.host;
+    nick = message.nick,
+    hostname = message.host;
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
@@ -168,8 +169,8 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
    */
   self.cards = function (client, message, cmdArgs) {
     var channel = message.args[0],
-        nick = message.nick,
-        hostname = message.host;
+    nick = message.nick,
+    hostname = message.host;
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
@@ -237,8 +238,8 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
    */
   self.winner = function (client, message, cmdArgs) {
     var channel = message.args[0],
-    nick = message.nick,
-    hostname = message.host;
+	nick = message.nick,
+	hostname = message.host;
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
@@ -262,7 +263,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
    */
   self.points = function (client, message, cmdArgs) {
     var channel = message.args[0],
-        hostname = message.host;
+    hostname = message.host;
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
@@ -346,15 +347,21 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
 
   self.cah = function (client, message, cmdArgs) {
     var channel = message.args[0];
-
+    
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
     }
-
+    
     if (cmdArgs[0].match(/listpacks/i)) {
-      var cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));
-      _.each(cardPacks, function (pack) { client.say(channel, pack); });
-    }
+      for (var i = 0; i < self.cardPacks.length; i = i + 10) {
+	var packString = "";
+	for (var j = i; j < i + 10 && j < self.cardPacks.length; j++) {
+	  packString = packString + c.bold("[" + j + "]") + self.cardPacks[j];
+	}
+
+	client.say(channel, packString);
+      }
+    } 
   };
 };
 
