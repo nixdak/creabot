@@ -10,7 +10,7 @@ The bot is extensible through the use of plugins. This is achieved using the plu
 
 More information on writing plugins for the bot can be found in the plugins directory
 
-# Licence
+# License
 
 This bot was originally a fork of https://github.com/teeli/irc-cah but was modified enough to warrant not being a fork anymore.
 
