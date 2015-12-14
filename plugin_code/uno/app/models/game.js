@@ -410,7 +410,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.deal(challengeablePlayer, 2, true);
       challengeablePlayer = false;
     } else {
-      self.say(player.nick + ' has unsuccessfully challeneged ' + challengeablePlayer.nick + ' and has picked up 2 cards.');
+      self.say(player.nick + ' has unsuccessfully challeneged  and has picked up 2 cards.');
       self.deal(player, 2, true);
     }
 
