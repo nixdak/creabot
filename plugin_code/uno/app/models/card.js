@@ -35,7 +35,7 @@ var Card = function Card(card) {
     switch (currentCard.type) {
       case 'Wild':
       case 'Wild Draw Four':
-        return (self.color === 'WILD' || currentCard.color === 'WILD' || self.color === currentCard.color); 
+        return (self.color === 'WILD' || currentCard.color === 'WILD' || self.color === currentCard.color);
       case 'Number':
         return self.color === 'WILD' || (self.color === currentCard.color || self.value === currentCard.value);
       case 'Skip':
@@ -55,7 +55,7 @@ var Card = function Card(card) {
     var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
     game.deal(nextPlayer, 2, true);
     game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
-    
+
     // Skip player
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
@@ -68,15 +68,15 @@ var Card = function Card(card) {
 
   self.reverse = function (game) {
     // If only two players
-    if (game.players.length === 2) { 
+    if (game.players.length === 2) {
       // Skip
       self.skip(game);
       return true;
     }
-    
-    // Reverse game players
+
+        // Reverse game players
     game.firstCard = false;
-    game.players = game.players.reverse();    
+    game.players = game.players.reverse();
   };
 
   self.skip = function (game) {
@@ -140,7 +140,7 @@ var Card = function Card(card) {
         if (self.color !== 'WILD') {
           cardString += self.color + ' ';
         }
-	
+
         cardString += 'Wild Draw Four';
         break;
     }
