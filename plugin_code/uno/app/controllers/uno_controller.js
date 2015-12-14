@@ -111,7 +111,7 @@ var Uno = function Uno () {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
-    self.game.uno(message.nick);
+    self.game.uno(message.nick, cmdArgs[0], cmdArgs[1]);
   };
 
   self.status = function (client, message, cmdArgs){
