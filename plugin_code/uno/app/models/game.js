@@ -340,7 +340,21 @@ var Game = function (channel, client, config, cmdArgs) {
     pickedCard.onPlay(self);
 
     if (pickedCard.color === 'WILD') {
-      playString += player.nick + ' has changed the color to ' + color + '. ';
+      playString += player.nick + ' has changed the color to ';
+      switch (color.toUpperCase()) {
+        case 'YELLOW':
+          playString +=  c.bold.yellow(color) + '. ';
+          break;
+        case 'GREEN':
+          playString +=  c.bold.green(color) + '. ';
+          break;
+        case 'BLUE':
+          cplayString +=  c.bold.blue(color) + '. ';
+          break;
+        case 'RED':
+          playString +=  c.bold.red(color) + '. ';
+          break;
+      }
       pickedCard.color = color.toUpperCase();
     }
 
