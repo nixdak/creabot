@@ -493,14 +493,14 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.setTopic = function (topic) {
     // ignore if not configured to set topic
-    if (_.isUndefined(config.gameOptions.setTopic) || config.gameOptions.setTopic === false) {
+    if (_.isUndefined(self.config.gameOptions.setTopic) || self.config.gameOptions.setTopic === false) {
       return false;
     }
 
     // construct new topic
     var newTopic = topic;
-    if (typeof config.gameOptions.topicBase !== 'undefined') {
-      newTopic = topic + ' ' + config.gameOptions.topicBase;
+    if (typeof self.config.gameOptions.topicBase !== 'undefined') {
+      newTopic = topic + ' ' + self.config.gameOptions.topicBase;
     }
 
     // set it
