@@ -170,7 +170,7 @@ var Game = function (channel, client, config, cmdArgs) {
       (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn. ' + seconds + ' seconds on the clock');
-    self.setTopic('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn. ');
+    self.setTopic('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
   };
 
   self.nextTurn = function() {
@@ -238,7 +238,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (!_.isUndefined(self.players)) {
-      self.nextTurn();
+      self.endTurn();
     }
   };
 
