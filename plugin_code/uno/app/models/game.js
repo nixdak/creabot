@@ -189,7 +189,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (self.players.length == 1) {
-      self.say('Only one player left. ' + players[0] + ' wins the game!');
+      self.say('Only one player left. ' + self.players[0] + ' wins the game!');
       self.stop(null, null);
       return false;
     }
