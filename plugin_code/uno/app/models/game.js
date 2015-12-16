@@ -72,6 +72,7 @@ var Game = function (channel, client, config, cmdArgs) {
     delete self.pointLimit;
     delete self.deck;
     delete self.discard;
+    console.log('Game stopped');
   };
 
   self.startTimeoutFunction = function () {
