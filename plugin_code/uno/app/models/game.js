@@ -42,7 +42,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.stop = function (nick, pointLimitReached) {
     self.state = STATES.FINISHED;
-    console.log(In game.stop());
+    console.log('In game.stop()');
 
     // Clear timeouts and intervals
     clearTimeout(self.startTimeout);
