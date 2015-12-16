@@ -188,8 +188,10 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    if (self.turn > 0) {
-      self.previousPlayer = self.currentPlayer;
+    if (self.players.length == 1) {
+      self.say('Only one player left. ' + players[0] + ' wins the game!');
+      self.stop(null, null);
+      return false;
     }
 
     self.state = STATES.PLAYABLE;
@@ -466,9 +468,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     // If the player is the current player, move to the next turn
     if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player && self.players.length) {
-      if (self.players.length < 2){
-        self.stop();
-      } else self.nextTurn();
+      self.nextTurn();
     } else if (self.players.length < 2 && self.state !== STATES.FINISHED && self.state !== STATES.STOPPED && self.state !== STATES.WAITING) {
       self.stop();
     } else if (self.players.length === 0) {
