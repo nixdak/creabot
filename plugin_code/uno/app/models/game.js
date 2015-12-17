@@ -244,7 +244,10 @@ var Game = function (channel, client, config, cmdArgs) {
       self.currentPlayer.challengable = true;
     }
 
-    self.currentPlayer.idleTurns = 0;
+    if (idle !== true) {
+      self.currentPlayer.idleTurns = 0;
+    }
+
     self.nextTurn();
   };
 
