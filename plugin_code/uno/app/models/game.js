@@ -457,7 +457,7 @@ var Game = function (channel, client, config, cmdArgs) {
     });
 
     self.deck.shuffle();
-
+    console.log(player.nick + ' removed.');
     self.say(player.nick + ' has left the game.');
     self.players.splice(self.players.indexOf(player), 1);
 
