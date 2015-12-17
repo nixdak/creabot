@@ -216,7 +216,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     if (self.currentPlayer.idleTurns < self.config.gameOptions.maxIdleTurns) {
       self.say(self.currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
-      self.draw(self.currentPlayer.nick);
+      self.draw(self.currentPlayer.nick, true);
     } else {
       self.say(self.currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + ' ' +
         inflection.inflect('time', self.config.gameOptions.maxIdleTurns) + '. Removing them from the game.'
@@ -225,7 +225,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
-  self.endTurn = function (nick, idled) {
+  self.endTurn = function (nick, idle) {
     if (!_.isUndefined(nick) && self.currentPlayer.nick !== nick) {
       self.pm(nick, 'It is not your turn');
       return false;
@@ -236,7 +236,7 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    if (self.currentPlayer.hasPlayed === false) {
+    if (self.currentPlayer.hasPlayed === false && idle !== true ) {
       self.say(self.currentPlayer.nick + ' has ended their turn without playing.');
     }
 
@@ -346,7 +346,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.endTurn();
   };
 
-  self.draw = function (nick) {
+  self.draw = function (nick, idle) {
     if (self.currentPlayer.nick !== nick) {
       self.pm(nick, 'It is not your turn.');
       return false;
@@ -366,8 +366,12 @@ var Game = function (channel, client, config, cmdArgs) {
 
     var drawnCard = self.currentPlayer.hand.getCard(self.currentPlayer.hand.numCards() - 1);
 
-    if (drawnCard.isPlayable(self.discard.getCurrentCard()) === false) {
+    if (idle) {
+      clearInterval(self.turnTimeout);
+      self.endTurn(nick, idle);
+    } else if (drawnCard.isPlayable(self.discard.getCurrentCard()) === false) {
       self.pm(self.currentPlayer.nick, 'You have no playable cards. Ending your turn.');
+      clearInterval(self.turnTimeout);
       self.endTurn();
     }
   };
