@@ -212,6 +212,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.idled = function () {
     self.currentPlayer.idleTurns += 1;
+    console.log(self.currentPlayer.nick + ' has idled ' + self.currentPlayer.idleTurns);
 
     if (self.currentPlayer.idleTurns < self.config.gameOptions.maxIdleTurns) {
       self.say(self.currentPlayer.nick + ' has idled. Drawing a card and ending their turn.');
