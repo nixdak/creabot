@@ -57,7 +57,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
         break;
       case 'Helpdesk':
         self.helpdesk = false;
-        self.waitHelpdesk= setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitHelpdesk = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'Admins':
@@ -137,7 +137,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(chairperson) && self.chair) {
       chair_string = chairperson.name + ' (' + chairperson.nick + ')';
       client.say(message.args[0], 'Chairperson: ' + chair_string);
-      //self.wait('Chair');
+      self.wait('Chair');
     }
   };
 
@@ -146,7 +146,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(secretary) && self.sec) {
       secretary_string = secretary.name + ' (' + secretary.nick + ')';
       client.say(message.args[0], 'Secretary: ' + secretary_string);
-      //self.wait('Sec');
+      self.wait('Sec');
     }
   };
 
@@ -155,7 +155,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(treasurer) && self.treasurer) {
       treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
       client.say(message.args[0], 'Treasurer: ' + treasurer_string);
-      //self.wait('Treasurer');
+      self.wait('Treasurer');
     }
   };
 
@@ -164,16 +164,16 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(pro) && self.pro) {
       pro_string = pro.name + ' (' + pro.nick + ')';
       client.say(message.args[0], 'Public Relations Officer: ' + pro_string);
-      //self.wait('PRO');
+      self.wait('PRO');
     }
   };
 
   self.showEvents = function(client, message, cmdArgs) {
     var events = _.find(self.committee, { role: 'Events Officer' });
-    if (!_.isUndefined(events) && self.Events) {
+    if (!_.isUndefined(events) && self.events) {
       events_string = events.name + ' (' + events.nick + ')';
       client.say(message.args[0], 'Events Officer: ' + events_string);
-      //self.wait('Events');
+      self.wait('Events');
     }
   };
 
@@ -182,16 +182,16 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(first_year_rep) && self.fyr) {
       fyr_string = first_year_rep.name + ' (' + first_year_rep.nick + ')';
       client.say(message.args[0], 'First Year Representative: ' + fyr_string);
-      //self.wait('FYR');
+      self.wait('FYR');
     }
   };
 
   self.showWebmaster = function (client, message, cmdArgs) {
     var webmaster = _.find(self.committee, { role: 'Webmaster' });
-    if (!_.isUndefined(webmaster) && self.webmaster) {
+    if (!_.isUndefined(webmaster) && self.web) {
       webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
       client.say(message.args[0], 'Webmaster: ' + webmaster_string);
-      // self.wait('Web');
+      self.wait('Web');
     }
   };
 
@@ -200,16 +200,16 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(helpdesk) && self.helpdesk) {
       var helpdesk_string = _.map(helpdesk, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(message.args[0], 'Helpdesk: ' + helpdesk_string);
-      // self.wait('Helpdesk');
+      self.wait('Helpdesk');
     }
   };
 
   self.showAdmins = function (client, message, cmdArgs) {
     var admins = _.filter(self.committee, { role: 'System Administrator' });
-    if (!_.isUndefined(admins) && self.admin) {
+    if (!_.isUndefined(admins) && self.admins) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(message.args[0], 'System Administrators: ' + admins_string);
-      // self.wait('Admins');
+      self.wait('Admins');
     }
   };
 
