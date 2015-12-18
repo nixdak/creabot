@@ -130,7 +130,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     self.showWebmaster(client, message, cmdArgs);
     self.showHelpdesk(client, message, cmdArgs);
     self.showAdmins(client, message, cmdArgs);
-    console.log('chair: ' + chair + ', sec: ' + sec + ', treasurer: ' + treasurer + ', pro: ' + pro + ', events: ' + events + ', FYR: ' + fyr + ', web: ' + web + ', helpdesk: ' + helpdesk + ', admins: ' + admins);
+    console.log('chair: ' + self.chair + ', sec: ' + self.sec + ', treasurer: ' + self.treasurer + ', pro: ' + self.pro + ', events: ' + self.events + ', FYR: ' + self.fyr + ', web: ' + self.web + ', helpdesk: ' + self.helpdesk + ', admins: ' + self.admins);
   };
 
   self.showChair = function (client, message, cmdArgst) {
