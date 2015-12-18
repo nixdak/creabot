@@ -27,42 +27,42 @@ var RedbrickCommittee = function RedbrickCommittee() {
         break;
       case 'Sec':
         self.sec = false;
-        self.waitSec = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitSec = setTimeout(self.readySec, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'Treasurer':
         self.treasurer = false;
-        self.waitTreasurer = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitTreasurer = setTimeout(self.readyTreasurer, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'PRO':
         self.pro = false;
-        self.waitPRO = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitPRO = setTimeout(self.readyPRO, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'Events':
         self.events = false;
-        self.waitEvents = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitEvents = setTimeout(self.readyEvents, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'FYR':
         self.fyr = false;
-        self.waitFYR = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitFYR = setTimeout(self.readyFYR, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'Web':
         self.web = false;
-        self.waitWeb = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitWeb = setTimeout(self.readyWeb, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'Helpdesk':
         self.helpdesk = false;
-        self.waitHelpdesk = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitHelpdesk = setTimeout(self.readyHelpdesk, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'Admins':
         self.admins = false;
-        self.waitAdmins = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitAdmins = setTimeout(self.readyAdmins, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
     }
@@ -71,57 +71,55 @@ var RedbrickCommittee = function RedbrickCommittee() {
   self.readyChair = function() {
     clearTimeout(self.waitChair);
     self.chair = true;
-    console.log('Ready for ' + position);
-  }
+    console.log('Ready for Chair');
+  };
 
-  self.ready = function(position) {
-    switch (position) {
-      case 'Chair':
-        clearTimeout(self.waitChair);
-        self.chair = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'Sec':
-        clearTimeout(self.waitSec);
-        self.sec = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'Treasurer':
-        clearTimeout(self.waitTreasurer);
-        self.treasurer = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'PRO':
-        clearTimeout(self.waitPRO);
-        self.pro = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'Events':
-        clearTimeout(self.waitEvents);
-        self.events = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'FYR':
-        clearTimeout(self.waitFYR);
-        self.FYR = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'Web':
-        clearTimeout(self.waitWeb);
-        self.web = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'Helpdesk':
-        clearTimeout(self.waitHelpdesk);
-        self.helpdesk = true;
-        console.log('Ready for ' + position);
-        break;
-      case 'Admins':
-        clearTimeout(self.waitAdmins);
-        self.admins = true;
-        console.log('Ready for ' + position);
-        break;
-    }
+  self.readySec = function() {
+    clearTimeout(self.waitSec);
+    self.sec = true;
+    console.log('Ready for Secretary');
+  };
+
+  self.readyTreasurer = function() {
+    clearTimeout(self.waitTreasurer);
+    self.treasurer = true;
+    console.log('Ready for Treasurer');
+  };
+
+  self.readyPRO = function() {
+    clearTimeout(self.waitPRO);
+    self.pro = true;
+    console.log('Ready for PRO');
+  };
+
+  self.readyEvents = function() {
+    clearTimeout(self.waitEvents);
+    self.events = true;
+    console.log('Ready for Events');
+  };
+
+  self.readyFYR = function() {
+    clearTimeout(self.waitFYR);
+    self.FYR = true;
+    console.log('Ready for FYR');
+  };
+
+  self.readyWeb = function() {
+    clearTimeout(self.waitWeb);
+    self.web = true;
+    console.log('Ready for Webmaster');
+  };
+
+  self.readyHelpdesk = function() {
+    clearTimeout(self.waitHelpdesk);
+    self.helpdesk = true;
+    console.log('Ready for Helpdesk');
+  };
+
+  self.readyAdmins = function() {
+    clearTimeout(self.waitAdmins);
+    self.admins = true;
+    console.log('Ready for Admins');
   };
 
   self.showCommitteeInfo = function(client, message, cmdArgs) {
