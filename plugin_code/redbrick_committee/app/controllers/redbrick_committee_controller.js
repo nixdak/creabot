@@ -119,7 +119,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showHelpdesk = function (client, message, cmdArgs) {
+  self.showHelpdesk = function (client, message, cmdArgs, cmt) {
     var helpdesk = _.filter(self.committee, { role: 'Helpdesk' });
     if (!_.isUndefined(helpdesk) && self.state === STATES.READY) {
       var helpdesk_string = _.map(helpdesk, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
@@ -130,7 +130,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showAdmins = function (client, message, cmdArgs) {
+  self.showAdmins = function (client, message, cmdArgs, cmt) {
     var admins = _.filter(self.committee, { role: 'System Administrator' });
     if (!_.isUndefined(admins) && self.state === STATES.READY) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
