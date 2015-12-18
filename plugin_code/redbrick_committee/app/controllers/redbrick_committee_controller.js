@@ -160,7 +160,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showPRO = function (client, message, cmdArgs) {
     var pro = _.find(self.committee, { role: 'Public Relations Officer' });
-    if (!_.isUndefined(pro) && self.pro {
+    if (!_.isUndefined(pro) && self.pro) {
       pro_string = pro.name + ' (' + pro.nick + ')';
       client.say(message.args[0], 'Public Relations Officer: ' + pro_string);
       self.wait('PRO');
