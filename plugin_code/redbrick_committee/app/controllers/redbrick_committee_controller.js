@@ -3,11 +3,17 @@ var _ = require('underscore'),
     config = require('../../config/config.json')[env],
     committee = require('../../config/committee.json');
 
+var STATES = {
+  READY: 'Ready',
+  WAIT: 'Waiting'
+}
+
 var RedbrickCommittee = function RedbrickCommittee() {
   var self = this;
 
   self.config = config;
   self.committee = committee;
+  self.state = STATES.READY;
 
   self.showCommitteeInfo = function(client, message, cmdArgs) {
     var nick = message.nick;
@@ -25,7 +31,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showChair = function (channel) {
     var chairperson = _.find(self.committee, { role: 'Chairperson' });
-    if (!_.isUndefined(chairperson)) {
+    if (!_.isUndefined(chairperson) && self.state === STATES.READY) {
       chair_string = chairperson.name + ' (' + chairperson.nick + ')';
       client.say(channel, 'Chairperson: ' + chair_string);
     }
@@ -33,7 +39,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showSecretary = function (channel) {
     var secretary = _.find(self.committee, { role: 'Secretary' });
-    if (!_.isUndefined(secretary)) {
+    if (!_.isUndefined(secretary) && self.state === STATES.READY) {
       secretary_string = secretary.name + ' (' + secretary.nick + ')';
       client.say(nick, 'Secretary: ' + secretary_string);
     }
@@ -41,7 +47,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showTreasurer = function (channel) {
     var treasurer = _.find(self.committee, { role: 'Treasurer' });
-    if (!_.isUndefined(treasurer)) {
+    if (!_.isUndefined(treasurer) && self.state === STATES.READY) {
       treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
       client.say(nick, 'Treasurer: ' + treasurer_string);
     }
@@ -49,7 +55,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showPRO = function (channel) {
     var pro = _.find(self.committee, { role: 'Public Relations Officer' });
-    if (!_.isUndefined(pro)) {
+    if (!_.isUndefined(pro) && self.state === STATES.READY) {
       pro_string = pro.name + ' (' + pro.nick + ')';
       client.say(nick, 'Public Relations Officer: ' + pro_string);
     }
@@ -57,7 +63,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showEvents = function(channel) {
     var events = _.find(self.committee, { role: 'Events Officer' });
-    if (!_.isUndefined(events)) {
+    if (!_.isUndefined(events) && self.state === STATES.READY) {
       events_string = events.name + ' (' + events.nick + ')';
       client.say(nick, 'Events Officer: ' + events_string);
     }
@@ -65,7 +71,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showFYR = function(channel) {
     var first_year_rep = _.find(self.committee, { role: 'First Year Representative' });
-    if (!_.isUndefined(first_year_rep)) {
+    if (!_.isUndefined(first_year_rep) && self.state === STATES.READY) {
       fyr_string = first_year_rep.name + ' (' + first_year_rep.nick + ')';
       client.say(nick, 'First Year Representative: ' + fyr_string);
     }
@@ -73,7 +79,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showWebmaster = function (channel) {
     var webmaster = _.find(self.committee, { role: 'Webmaster' });
-    if (!_.isUndefined(webmaster)) {
+    if (!_.isUndefined(webmaster) && self.state === STATES.READY) {
       webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
       client.say(nick, 'Webmaster: ' + webmaster_string);
     }
@@ -81,7 +87,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showHelpdesk = function (channel) {
     var helpdesk = _.filter(self.committee, { role: 'Helpdesk' });
-    if (!_.isUndefined(helpdesk)) {
+    if (!_.isUndefined(helpdesk) && self.state === STATES.READY) {
       var helpdesk_string = _.map(helpdesk, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(nick, 'Helpdesk: ' + helpdesk_string);
     }
@@ -89,14 +95,14 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.admins = function (channel) {
     var admins = _.filter(self.committee, { role: 'System Administrator' });
-    if (!_.isUndefined(admins)) {
+    if (!_.isUndefined(admins) && self.state === STATES.READY) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(nick, 'System Administrators: ' + admins_string);
     }
   };
 
   self.reload = function () {
-
+    //reload config possibly better done with admin channel controle
   };
 };
 
