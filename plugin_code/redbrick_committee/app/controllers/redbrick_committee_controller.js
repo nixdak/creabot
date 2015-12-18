@@ -27,6 +27,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showCommitteeInfo = function(client, message, cmdArgs) {
     var nick = message.nick;
+    self.client = client;
 
     self.showChair(message.args[0]);
     self.showSecretary(message.args[0]);
@@ -44,7 +45,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var chairperson = _.find(self.committee, { role: 'Chairperson' });
     if (!_.isUndefined(chairperson) && self.state === STATES.READY) {
       chair_string = chairperson.name + ' (' + chairperson.nick + ')';
-      client.say(channel, 'Chairperson: ' + chair_string);
+      self.client.say(channel, 'Chairperson: ' + chair_string);
       // self.wait();
     }
   };
@@ -53,7 +54,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var secretary = _.find(self.committee, { role: 'Secretary' });
     if (!_.isUndefined(secretary) && self.state === STATES.READY) {
       secretary_string = secretary.name + ' (' + secretary.nick + ')';
-      client.say(nick, 'Secretary: ' + secretary_string);
+      self.client.say(nick, 'Secretary: ' + secretary_string);
       // self.wait();
     }
   };
@@ -62,7 +63,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var treasurer = _.find(self.committee, { role: 'Treasurer' });
     if (!_.isUndefined(treasurer) && self.state === STATES.READY) {
       treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
-      client.say(nick, 'Treasurer: ' + treasurer_string);
+      self.client.say(nick, 'Treasurer: ' + treasurer_string);
       // self.wait();
     }
   };
@@ -71,7 +72,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var pro = _.find(self.committee, { role: 'Public Relations Officer' });
     if (!_.isUndefined(pro) && self.state === STATES.READY) {
       pro_string = pro.name + ' (' + pro.nick + ')';
-      client.say(nick, 'Public Relations Officer: ' + pro_string);
+      self.client.say(nick, 'Public Relations Officer: ' + pro_string);
       // self.wait();
     }
   };
@@ -80,7 +81,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var events = _.find(self.committee, { role: 'Events Officer' });
     if (!_.isUndefined(events) && self.state === STATES.READY) {
       events_string = events.name + ' (' + events.nick + ')';
-      client.say(nick, 'Events Officer: ' + events_string);
+      self.client.say(nick, 'Events Officer: ' + events_string);
       // self.wait();
     }
   };
@@ -89,7 +90,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var first_year_rep = _.find(self.committee, { role: 'First Year Representative' });
     if (!_.isUndefined(first_year_rep) && self.state === STATES.READY) {
       fyr_string = first_year_rep.name + ' (' + first_year_rep.nick + ')';
-      client.say(nick, 'First Year Representative: ' + fyr_string);
+      self.client.say(nick, 'First Year Representative: ' + fyr_string);
       // self.wait();
     }
   };
@@ -98,7 +99,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var webmaster = _.find(self.committee, { role: 'Webmaster' });
     if (!_.isUndefined(webmaster) && self.state === STATES.READY) {
       webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
-      client.say(nick, 'Webmaster: ' + webmaster_string);
+      self.client.say(nick, 'Webmaster: ' + webmaster_string);
       // self.wait();
     }
   };
@@ -107,7 +108,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var helpdesk = _.filter(self.committee, { role: 'Helpdesk' });
     if (!_.isUndefined(helpdesk) && self.state === STATES.READY) {
       var helpdesk_string = _.map(helpdesk, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
-      client.say(nick, 'Helpdesk: ' + helpdesk_string);
+      self.client.say(nick, 'Helpdesk: ' + helpdesk_string);
       // self.wait();
     }
   };
@@ -116,7 +117,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var admins = _.filter(self.committee, { role: 'System Administrator' });
     if (!_.isUndefined(admins) && self.state === STATES.READY) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
-      client.say(nick, 'System Administrators: ' + admins_string);
+      self.client.say(nick, 'System Administrators: ' + admins_string);
       // self.wait();
     }
   };
