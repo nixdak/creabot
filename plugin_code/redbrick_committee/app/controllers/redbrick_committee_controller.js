@@ -130,6 +130,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     self.showWebmaster(client, message, cmdArgs);
     self.showHelpdesk(client, message, cmdArgs);
     self.showAdmins(client, message, cmdArgs);
+    console.log('chair: ' + chair + ', sec: ' + sec + ', treasurer: ' + treasurer + ', pro: ' + pro + ', events: ' + events + ', FYR: ' + fyr + ', web: ' + web + ', helpdesk: ' + helpdesk + ', admins: ' + admins);
   };
 
   self.showChair = function (client, message, cmdArgst) {
@@ -168,7 +169,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showEvents = function(client, message, cmdArgs) {
+  self.showevents = function(client, message, cmdArgs) {
     var events = _.find(self.committee, { role: 'Events Officer' });
     if (!_.isUndefined(events) && self.events) {
       events_string = events.name + ' (' + events.nick + ')';
