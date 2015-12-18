@@ -22,7 +22,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     switch (position) {
       case 'Chair':
         self.chair = false;
-        self.waitChair = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
+        self.waitChair = setTimeout(self.readyChair, 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
       case 'Sec':
@@ -68,6 +68,12 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
+  self.readyChair = function() {
+    clearTimeout(self.waitChair);
+    self.chair = true;
+    console.log('Ready for ' + position);
+  }
+
   self.ready = function(position) {
     switch (position) {
       case 'Chair':
@@ -107,12 +113,12 @@ var RedbrickCommittee = function RedbrickCommittee() {
         break;
       case 'Helpdesk':
         clearTimeout(self.waitHelpdesk);
-        self.Helpdesk = true;
+        self.helpdesk = true;
         console.log('Ready for ' + position);
         break;
       case 'Admins':
-        clearTimeout(self.waitHelpdesk);
-        self.helpdesk = true;
+        clearTimeout(self.waitAdmins);
+        self.admins = true;
         console.log('Ready for ' + position);
         break;
     }
