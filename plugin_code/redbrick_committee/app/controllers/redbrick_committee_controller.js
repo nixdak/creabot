@@ -18,11 +18,13 @@ var RedbrickCommittee = function RedbrickCommittee() {
   self.wait = function() {
     self.state = STATES.WAIT;
     self.waitTimer = setTimeout(self.ready, 60 * 1000 * self.config.waitTime);
+    console.log('Waiting for cmt');
   };
 
   self.ready = function() {
     clearTimeout(self.waitTimer);
     self.state = STATES.READY;
+    console.log('Ready for cmt');
   };
 
   self.showCommitteeInfo = function(client, message, cmdArgs) {
