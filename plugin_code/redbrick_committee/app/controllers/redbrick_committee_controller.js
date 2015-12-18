@@ -65,7 +65,6 @@ var RedbrickCommittee = function RedbrickCommittee() {
         self.waitAdmins = setTimeout(self.ready(position), 60 * 1000 * self.config.waitTime);
         console.log('Waiting for ' + position);
         break;
-      }
     }
   };
 
@@ -116,6 +115,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
         self.helpdesk = true;
         console.log('Ready for ' + position);
         break;
+    }
   };
 
   self.showCommitteeInfo = function(client, message, cmdArgs) {
