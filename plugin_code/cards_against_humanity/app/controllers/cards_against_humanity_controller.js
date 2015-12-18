@@ -10,7 +10,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
   self.game;
   self.config = config;
   self.disabledPacks = [];
-  
+
   /**
    * Start a game
    * @param client
@@ -349,35 +349,34 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
   self.listPacks = function (client, message, cmdArgs) {
     var channel = message.args[0];
     var packString = '';
-    
+
     for (var i = 0; i < self.cardPacks.length; i++) {
       if (i !== 0 && i % 5 === 0) {
-	client.say(channel, packString);
-	packString = '';
+      	client.say(channel, packString);
+      	packString = '';
       } else if (i === self.cardPacks.length - 1) {
-	client.say(channel, packString);
-	break;
+    	   client.say(channel, packString);
+    	  break;
       }
-
       packString += c.bold(' [' + i + '] ') + self.cardPacks[i];
     }
   };
 
   self.enable = function (client, message, cmdArgs) {
-    
+
   };
 
   self.disable = function (client, message, cmdArgs) {
-    
+
   };
 
   self.cah = function (client, message, cmdArgs) {
-    self.cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));    
+    self.cardPacks = _.uniq(_.map(self.config.cards, function (card) { return card.source; }));
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
     }
-    
+
     if (cmdArgs[0].match(/listpacks/i)) {
       self.listPacks(client, message, cmdArgs);
     } else if (cmdArgs[0].match(/enable/i)) {

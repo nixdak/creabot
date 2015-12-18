@@ -10,7 +10,7 @@ module.exports = function(app) {
 
   // Join moderator channel
   app.joinChannels(cardsAgainstHumanity.config.pluginOptions.moderatorChannel);
-  
+
   // Public commands
   app.cmd('cards', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.cards);
   app.cmd('cah', '', cardsAgainstHumanity.config.pluginOptions.channels, cardsAgainstHumanity.config.pluginOptions.channelsToExclude, cardsAgainstHumanity.pick);
