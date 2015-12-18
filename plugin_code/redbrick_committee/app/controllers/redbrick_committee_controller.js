@@ -169,7 +169,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showevents = function(client, message, cmdArgs) {
+  self.showEvents = function(client, message, cmdArgs) {
     var events = _.find(self.committee, { role: 'Events Officer' });
     if (!_.isUndefined(events) && self.events) {
       events_string = events.name + ' (' + events.nick + ')';
