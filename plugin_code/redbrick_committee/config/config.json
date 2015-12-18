@@ -1,11 +1,13 @@
 {
   "production": {
-    "channels": [ "#DakDak" ],
+    "waitTime": 1,
+    "channels": ["#Bots"],
     "channelsToExclude": [],
-    "channelsToJoin": [ "#DakDak" ]
+    "channelsToJoin": [ "#Bots" ]
   },
 
   "development": {
+    "waitTime": 1,
     "channels": [ "#DakDak" ],
     "channelsToExclude": [],
     "channelsToJoin": [ "#DakDak" ]
