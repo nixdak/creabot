@@ -113,7 +113,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.admins = function (channel) {
+  self.showAdmins = function (channel) {
     var admins = _.filter(self.committee, { role: 'System Administrator' });
     if (!_.isUndefined(admins) && self.state === STATES.READY) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
