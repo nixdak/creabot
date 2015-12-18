@@ -137,7 +137,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(chairperson) && self.chair) {
       chair_string = chairperson.name + ' (' + chairperson.nick + ')';
       client.say(message.args[0], 'Chairperson: ' + chair_string);
-      self.wait('Chair');
+      //self.wait('Chair');
     }
   };
 
@@ -146,7 +146,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(secretary) && self.sec) {
       secretary_string = secretary.name + ' (' + secretary.nick + ')';
       client.say(message.args[0], 'Secretary: ' + secretary_string);
-      self.wait('Sec');
+      //self.wait('Sec');
     }
   };
 
@@ -155,7 +155,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(treasurer) && self.treasurer) {
       treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
       client.say(message.args[0], 'Treasurer: ' + treasurer_string);
-      self.wait('Treasurer');
+      //self.wait('Treasurer');
     }
   };
 
@@ -164,7 +164,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(pro) && self.pro) {
       pro_string = pro.name + ' (' + pro.nick + ')';
       client.say(message.args[0], 'Public Relations Officer: ' + pro_string);
-      self.wait('PRO');
+      //self.wait('PRO');
     }
   };
 
@@ -173,7 +173,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(events) && self.Events) {
       events_string = events.name + ' (' + events.nick + ')';
       client.say(message.args[0], 'Events Officer: ' + events_string);
-      self.wait('Events');
+      //self.wait('Events');
     }
   };
 
@@ -182,7 +182,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(first_year_rep) && self.fyr) {
       fyr_string = first_year_rep.name + ' (' + first_year_rep.nick + ')';
       client.say(message.args[0], 'First Year Representative: ' + fyr_string);
-      self.wait('FYR');
+      //self.wait('FYR');
     }
   };
 
@@ -191,7 +191,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(webmaster) && self.webmaster) {
       webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
       client.say(message.args[0], 'Webmaster: ' + webmaster_string);
-      self.wait('Web');
+      // self.wait('Web');
     }
   };
 
@@ -200,7 +200,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(helpdesk) && self.helpdesk) {
       var helpdesk_string = _.map(helpdesk, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(message.args[0], 'Helpdesk: ' + helpdesk_string);
-      self.wait('Helpdesk');
+      // self.wait('Helpdesk');
     }
   };
 
@@ -209,7 +209,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     if (!_.isUndefined(admins) && self.admin) {
       var admins_string = _.map(admins, function (member) { return member.name + ' (' + member.nick + ')' }).join(', ');
       client.say(message.args[0], 'System Administrators: ' + admins_string);
-      self.wait('Admins');
+      // self.wait('Admins');
     }
   };
 
