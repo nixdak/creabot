@@ -53,7 +53,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showSecretary = function (client, message, cmdArgs) {
+  self.showSecretary = function (client, message, cmdArgs, cmt) {
     var secretary = _.find(self.committee, { role: 'Secretary' });
     if (!_.isUndefined(secretary) && self.state === STATES.READY) {
       secretary_string = secretary.name + ' (' + secretary.nick + ')';
@@ -64,7 +64,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showTreasurer = function (client, message, cmdArgs) {
+  self.showTreasurer = function (client, message, cmdArgs, cmt) {
     var treasurer = _.find(self.committee, { role: 'Treasurer' });
     if (!_.isUndefined(treasurer) && self.state === STATES.READY) {
       treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
@@ -75,7 +75,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showPRO = function (client, message, cmdArgs) {
+  self.showPRO = function (client, message, cmdArgs, cmt) {
     var pro = _.find(self.committee, { role: 'Public Relations Officer' });
     if (!_.isUndefined(pro) && self.state === STATES.READY) {
       pro_string = pro.name + ' (' + pro.nick + ')';
@@ -86,7 +86,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showEvents = function(client, message, cmdArgs) {
+  self.showEvents = function(client, message, cmdArgs, cmt) {
     var events = _.find(self.committee, { role: 'Events Officer' });
     if (!_.isUndefined(events) && self.state === STATES.READY) {
       events_string = events.name + ' (' + events.nick + ')';
@@ -97,7 +97,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showFYR = function(client, message, cmdArgs) {
+  self.showFYR = function(client, message, cmdArgs, cmt) {
     var first_year_rep = _.find(self.committee, { role: 'First Year Representative' });
     if (!_.isUndefined(first_year_rep) && self.state === STATES.READY) {
       fyr_string = first_year_rep.name + ' (' + first_year_rep.nick + ')';
@@ -108,7 +108,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     }
   };
 
-  self.showWebmaster = function (client, message, cmdArgs) {
+  self.showWebmaster = function (client, message, cmdArgs, cmt) {
     var webmaster = _.find(self.committee, { role: 'Webmaster' });
     if (!_.isUndefined(webmaster) && self.state === STATES.READY) {
       webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
