@@ -100,7 +100,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.readyFYR = function() {
     clearTimeout(self.waitFYR);
-    self.FYR = true;
+    self.fyr = true;
     console.log('Ready for FYR');
   };
 
