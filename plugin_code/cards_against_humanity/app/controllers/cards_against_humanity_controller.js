@@ -353,7 +353,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     for (var i = 0; i < self.cardPacks.length; i++) {
       if (i !== 0 && i % 5 === 0) {
       	client.say(channel, packString);
-      	packString = '';
+      	// packString = '';
       } else if (i === self.cardPacks.length - 1) {
     	   client.say(channel, packString);
     	  break;
