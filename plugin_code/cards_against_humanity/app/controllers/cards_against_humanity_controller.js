@@ -20,9 +20,9 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
   self.start = function (client, message, cmdArgs) {
     // check if game running on the channel
     var channel = message.args[0],
-	nick = message.nick,
-	user = message.user,
-	hostname = message.host;
+    nick = message.nick,
+    user = message.user,
+    hostname = message.host;
 
     if (cmdArgs !== '') {
       cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
@@ -353,7 +353,7 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     for (var i = 0; i < self.cardPacks.length; i++) {
       if (i !== 0 && i % 5 === 0) {
       	client.say(channel, packString);
-      	// packString = '';
+      	packString = '';
       } else if (i === self.cardPacks.length - 1) {
     	   client.say(channel, packString);
     	  break;
