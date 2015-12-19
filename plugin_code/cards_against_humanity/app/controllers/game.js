@@ -883,7 +883,7 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
 		  self.say(player.nick + ': You cannot join right now as the maximum number of players have joined the game');
 		  return false;
 		}
-	      
+
                 oldPlayer.isActive = true;
             } else {
 	      if (_.where(self.players, {isActive: true}).length >= self.config.gameOptions.maxPlayers) {
@@ -1051,6 +1051,15 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                 self.say(c.bold('Status: ') + 'Game is paused.');
                 break;
         }
+    };
+
+    self.messageWiki = function (nick){
+      self.pm(nick, 'https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
+    };
+
+    self.linkWiki = function (nick) {
+      self.say(nick + ': https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
+      self.messageWiki(nick);
     };
 
     /**
