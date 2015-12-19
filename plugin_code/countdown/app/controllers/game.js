@@ -983,6 +983,15 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
     }
   };
 
+  self.messageWiki = function (nick){
+    self.pm(nick, 'https://github.com/creadak/creabot/wiki/Countdown');
+  };
+
+  self.linkWiki = function (nick) {
+    self.say(nick + ': https://github.com/creadak/creabot/wiki/Countdown');
+    self.messageWiki(nick);
+  };
+
   /*
    * Set the channel topic
    */

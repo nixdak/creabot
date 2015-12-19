@@ -121,6 +121,14 @@ var Uno = function Uno () {
         self.game.showStatus();
     }
   };
+
+  self.wiki = function (client, message, cmdArgs){
+    self.game.linkWiki(massage.nick);
+  };
+
+  self.pmWiki = function (client, message, cmdArgs){
+    self.game.messageWiki(massage.nick);
+  };
 };
 
 exports = module.exports = Uno;

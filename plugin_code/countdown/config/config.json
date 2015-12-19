@@ -122,7 +122,7 @@
 
     "gameOptions": {
       "setTopic":      true,
-      "topicBase":     "|| Dev Bot || Expect spam || Expect breakings",
+      "topicBase":     "|| wiki: https://github.com/creadak/creabot/wiki/Countdown",
       "notifyUsers":   false,
       "minutesBeforeStart": 2,
       "database": true,

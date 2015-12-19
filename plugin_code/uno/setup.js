@@ -13,14 +13,16 @@ module.exports = function(app) {
   app.cmd('join', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.join);
   app.cmd('quit', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.quit);
   //app.cmd('score', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.score);
-  //app.cmd('status', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.status);
+  app.cmd('status', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.status);
   app.cmd('start', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.start);
   app.cmd('stop', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.stop);
   app.cmd('uno', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.uno);
+  app.cmd('wiki', '', uno.config.pluginOptions.channels, uno.config.pluginOptions.channelsToExclude, uno.wiki);
 
   // Private commands
   app.msg('udraw', '', uno.draw);
   app.msg('uend', '', uno.end);
   app.msg('uplay', '', uno.play);
   app.msg('uno', '', uno.uno);
+  app.msg('uwiki', ''uno.pmWiki);
 };
