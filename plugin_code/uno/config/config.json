@@ -10,7 +10,7 @@
 
     "pluginOptions": {
       "channels": ["#UnoDev"],
-      "channelsToExclude": ["#cardsagainsthumanityDev", "countdownDev", "dakdak"],
+      "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#dakdak"],
       "channelsToJoin": ["#UnoDev"]
     }
   },
@@ -21,12 +21,12 @@
       "maxIdleTurns": 3,
       "idleRoundTimerDecrement": 60,
       "setTopic": true,
-      "topicBase": "|| Welcome to Uno have fun"
+      "topicBase": "|| wiki: https://github.com/creadak/creabot/wiki/Uno"
     },
 
     "pluginOptions": {
       "channels": ["#Uno"],
-      "channelsToExclude": ["#cardsagainsthumanity", "countdown", "dakdak"],
+      "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#bots"],
       "channelsToJoin": ["#Uno"]
     }
   }

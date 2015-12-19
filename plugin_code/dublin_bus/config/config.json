@@ -1,5 +1,5 @@
 {
     "channels": "all",
-    "channelsToExclude": ["#uno", "#cardsagainsthumanity", "countdown", "#cardsagainsthumanityDev", "countdownDev", "unodev"],
-    "channelsToJoin": ["#DakDak"]
+    "channelsToExclude": ["#uno", "#cardsagainsthumanity", "#countdown", "#cardsagainsthumanityDev", "countdownDev", "unodev"],
+    "channelsToJoin": ["#bots"]
 }
