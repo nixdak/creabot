@@ -8,5 +8,4 @@ module.exports = function(app) {
 
   // Add commands
   app.cmd('pop', '', popping.config.channels, popping.config.channelsToExclude, popping.pop);
-  app.cmd('stop', '', popping.config.channels, popping.config.channelsToExclude, popping.pop);
 };
