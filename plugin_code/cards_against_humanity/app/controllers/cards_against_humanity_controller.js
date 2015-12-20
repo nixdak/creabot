@@ -345,11 +345,11 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     };
 
     self.wiki = function (client, message, cmdArgs){
-      client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
-    };
-
-    self.pmWiki = function (client, message, cmdArgs){
-      self.game.messageWiki(message.nick);
+      if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
+        client.say(message.nick, 'https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
+      } else {
+        client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
+      }
     };
 };
 
