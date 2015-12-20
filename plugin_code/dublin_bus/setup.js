@@ -1,5 +1,5 @@
 var DublinBusInfo = require('./app/controllers/dublin_bus_info.js');
-var Popping = require('./app/controllers/popping.js');
+var Popping = require('../popping/app/controllers/popping.js');
 
 module.exports = function(app) {
   var dublinBusInfo = new DublinBusInfo();
