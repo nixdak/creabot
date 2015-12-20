@@ -14,7 +14,7 @@ var Popping = function Popping() {
       var url = urls[Math.floor(Math.random()*urls.length)];
       client.say(message.args[0], url);
     }
-    if (cmdArgs.length === 1) {
+    if (cmdArgs.length >= 1) {
       url.push(cmdArgs);
       fs.writeFile(urls, JSON.stringify(self.urls, null, 2));
       client.say(message.args[0], 'link added');
