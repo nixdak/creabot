@@ -8,5 +8,5 @@ module.exports = function(app) {
 
     // Add commands
     app.cmd('pop', '', popping.config.channels, popping.config.channelsToExclude, popping.pop);
-    app.cmd('test', '', ['#dakdak'], [], popping.test)
+    app.cmd('test', '', ['#dakdak'], [], popping.test);
 };
