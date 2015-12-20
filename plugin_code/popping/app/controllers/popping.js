@@ -16,7 +16,11 @@ var Popping = function Popping() {
     }
     if (cmdArgs.length >= 1) {
       self.urls.push(cmdArgs);
-      fs.writeFileSync('url.json', JSON.stringify(self.urls, null, 2));
+      fs.writeFile('url.json', JSON.stringify(self.urls, null, 2) function (err) {
+        if (err) return console.log(err)
+        console.log(JSON.stringify(file))
+        console.log('writing to ' + fileName)
+      });
       client.say(message.args[0], 'link added');
     }
   };
