@@ -8,7 +8,7 @@ var Popping = function Popping() {
   self.config = config;
   self.urls = urls;
 
-  self.pop = function (client, message, cmdArgs){
+  self.pop = function (client, message, cmdArgs) {
     if (cmdArgs === '') {
       var url = urls[Math.floor(Math.random()*urls.length)];
       client.say(message.args[0], url);
