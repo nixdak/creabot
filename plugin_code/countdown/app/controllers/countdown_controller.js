@@ -221,11 +221,11 @@ var Countdown = function Countdown() {
   };
 
   self.wiki = function (client, message, cmdArgs){
-    self.game.linkWiki(massage.nick);
+    self.game.linkWiki(message.nick);
   };
 
   self.pmWiki = function (client, message, cmdArgs){
-    self.game.messageWiki(massage.nick);
+    self.game.messageWiki(message.nick);
   };
 };
 
