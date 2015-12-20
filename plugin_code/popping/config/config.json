@@ -1,17 +1,13 @@
 {
   "development": {
-    "pluginOptions": {
-      "channels": ["#dakdak"],
-      "channelsToExclude": [],
-      "channelsToJoin": ["#dakdak"]
-    }
+    "channels": ["#dakdak"],
+    "channelsToExclude": [],
+    "channelsToJoin": ["#dakdak"]
   },
 
   "production": {
-    "pluginOptions": {
-      "channels": ["#bots"],
-      "channelsToExclude": [],
-      "channelsToJoin": ["#bots"]
-    }
+    "channels": ["#bots"],
+    "channelsToExclude": [],
+    "channelsToJoin": ["#bots"]
   }
 }
