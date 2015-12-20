@@ -16,7 +16,7 @@ var Popping = function Popping() {
     }
     if (cmdArgs.length >= 1) {
       self.urls.push(cmdArgs);
-      fs.writeFile('./url.json', JSON.stringify(self.urls, null, 2));
+      fs.writeFileSync('url.json', JSON.stringify(self.urls, null, 2));
       client.say(message.args[0], 'link added');
     }
   };
