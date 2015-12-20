@@ -123,11 +123,12 @@ var Uno = function Uno () {
   };
 
   self.wiki = function (client, message, cmdArgs){
-    self.game.linkWiki(message.nick);
+    client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Uno');
+    self.pmWiki(client, message, cmdArgs);
   };
 
   self.pmWiki = function (client, message, cmdArgs){
-    self.game.messageWiki(message.nick);
+    client.say(message.nick, 'https://github.com/creadak/creabot/wiki/Uno');
   };
 };
 

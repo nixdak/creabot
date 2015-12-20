@@ -429,14 +429,6 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
-  self.messageWiki = function (nick){
-    self.pm(nick, 'https://github.com/creadak/creabot/wiki/Uno');
-  };
-
-  self.linkWiki = function (nick) {
-    self.say(nick + ': https://github.com/creadak/creabot/wiki/Uno');
-    self.messageWiki(nick);
-  };
 
   self.addPlayer = function (player) {
     var alreadyPlayer = self.getPlayer({ nick: player.nick, user: player.user, hostname: player.hostname });

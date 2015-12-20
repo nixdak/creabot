@@ -25,5 +25,5 @@ module.exports = function(app) {
 
   // Private commands
   app.msg('cah', '', cardsAgainstHumanity.pick);
-  app.msg('cahwiki', '', cardsAgainstHumanity.Wiki);
+  app.msg('cahwiki', '', cardsAgainstHumanity.wiki);
 };
