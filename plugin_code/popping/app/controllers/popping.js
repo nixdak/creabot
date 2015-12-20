@@ -6,6 +6,7 @@ var fs = require('fs'),
 var Popping = function Popping() {
   var self = this;
   self.config = config;
+  self.urls = urls;
   console.log('pop');
 
   self.pop = function (client, message, cmdArgs) {
