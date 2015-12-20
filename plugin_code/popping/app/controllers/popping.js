@@ -7,6 +7,7 @@ var Popping = function Popping() {
   var self = this;
   self.config = config;
   self.urls = urls;
+  console.log('pop');
 
   self.pop = function (client, message, cmdArgs) {
     if (cmdArgs === '') {
@@ -16,7 +17,7 @@ var Popping = function Popping() {
     if (cmdArgs.length === 1) {
       url.push(cmdArgs);
       fs.writeFile(urls, JSON.stringify(self.urls, null, 2));
-      client.say(message.args[0], "link added");
+      client.say(message.args[0], 'link added');
     }
   };
 }
