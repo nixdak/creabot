@@ -221,12 +221,11 @@ var Countdown = function Countdown() {
   };
 
   self.wiki = function (client, message, cmdArgs){
-    client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Countdown');
-    self.pmWiki(client, message, cmdArgs);
-  };
-
-  self.pmWiki = function (client, message, cmdArgs){
-    client.say(message.nick, 'https://github.com/creadak/creabot/wiki/Countdown');
+    if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
+      client.say(message.nick, 'https://github.com/creadak/creabot/wiki/Countdown');
+    } else {
+      client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Countdown');
+    }
   };
 };
 
