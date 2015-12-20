@@ -17,7 +17,7 @@ var Popping = function Popping() {
     }
     if (cmdArgs.length >= 1) {
       self.urls.push(cmdArgs);
-      fs.writeFile(self.fileName, JSON.stringify(self.urls, null, 2) function (err) {
+      fs.writeFile(self.fileName, JSON.stringify(self.urls, null, 2), function (err) {
         if (err) return console.log(err)
         console.log(JSON.stringify(self.urls))
         console.log('writing to ' + self.fileName)
