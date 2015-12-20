@@ -7,6 +7,7 @@ var Popping = function Popping() {
   var self = this;
   self.config = config;
   self.urls = urls;
+  self.fileName ='url.json';
   console.log('pop');
 
   self.pop = function (client, message, cmdArgs) {
@@ -16,10 +17,10 @@ var Popping = function Popping() {
     }
     if (cmdArgs.length >= 1) {
       self.urls.push(cmdArgs);
-      fs.writeFile('url.json', JSON.stringify(self.urls, null, 2) function (err) {
+      fs.writeFile(self.fileName, JSON.stringify(self.urls, null, 2) function (err) {
         if (err) return console.log(err)
-        console.log(JSON.stringify(file))
-        console.log('writing to ' + fileName)
+        console.log(JSON.stringify(self.urls))
+        console.log('writing to ' + self.fileName)
       });
       client.say(message.args[0], 'link added');
     }
