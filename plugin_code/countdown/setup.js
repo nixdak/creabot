@@ -22,5 +22,5 @@ module.exports = function(app) {
   // Private commands
   app.msg('cd', '', countdown.play);
   app.msg('lock', '', countdown.lock);
-  app.msg('cdwiki', '', countdown.pmWiki);
+  app.msg('cdwiki', '', countdown.wiki);
 };

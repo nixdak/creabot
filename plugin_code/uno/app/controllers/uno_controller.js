@@ -123,12 +123,11 @@ var Uno = function Uno () {
   };
 
   self.wiki = function (client, message, cmdArgs){
-    client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Uno');
-    self.pmWiki(client, message, cmdArgs);
-  };
-
-  self.pmWiki = function (client, message, cmdArgs){
-    client.say(message.nick, 'https://github.com/creadak/creabot/wiki/Uno');
+    if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
+      client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Uno');
+    } else {
+      client.say(message.nick, 'https://github.com/creadak/creabot/wiki/Uno');
+    }
   };
 };
 

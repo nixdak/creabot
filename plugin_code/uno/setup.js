@@ -24,5 +24,5 @@ module.exports = function(app) {
   app.msg('uend', '', uno.end);
   app.msg('uplay', '', uno.play);
   app.msg('uno', '', uno.uno);
-  app.msg('uwiki', '', uno.pmWiki);
+  app.msg('uwiki', '', uno.wiki);
 };
