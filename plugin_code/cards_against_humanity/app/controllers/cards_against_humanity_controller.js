@@ -345,7 +345,10 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
     };
 
     self.wiki = function (client, message, cmdArgs){
-      self.game.linkWiki(message.nick);
+      var channel = message.args[0],
+          nick = message.nick,
+          hostname = message.host;
+      client.say(channel, nick + ': https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
     };
 
     self.pmWiki = function (client, message, cmdArgs){

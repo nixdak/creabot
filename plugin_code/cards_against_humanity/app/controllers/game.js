@@ -1053,15 +1053,6 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
         }
     };
 
-    self.messageWiki = function (nick){
-      self.pm(nick, 'https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
-    };
-
-    self.linkWiki = function (nick) {
-      self.say(nick + ': https://github.com/creadak/creabot/wiki/Cards-Against-Humanity');
-      self.messageWiki(nick);
-    };
-
     /**
      * Set the channel topic
      */
