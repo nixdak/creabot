@@ -62,4 +62,4 @@ var DublinBusInfo = function DublinBusInfo() {
   };
 }
 
-exports = module.exports = DublinBusInfo;
+exports = module.exports =DublinBusInfo;
