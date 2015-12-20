@@ -1,4 +1,4 @@
-var _ = require('underscore'),
+var fs = require('fs'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env],
     urls = require('../../config/url.json');

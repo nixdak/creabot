@@ -4,8 +4,8 @@ module.exports = function(app) {
     var popping = new Popping();
 
     // Join Channels
-    app.joinChannels(popping.config.channelsToJoin);
+    app.joinChannels(popping.config.pluginOptions.channelsToJoin);
 
     // Add commands
-    app.cmd('pop', '', popping.config.channels, popping.config.channelsToExclude, popping.pop);
+    app.cmd('pop', '', popping.config.pluginOptions.channels, popping.config.pluginOptions.channelsToExclude, popping.pop);
 }
