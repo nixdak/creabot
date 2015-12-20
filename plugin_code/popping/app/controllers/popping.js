@@ -7,7 +7,7 @@ var Popping = function Popping() {
   var self = this;
   self.config = config;
   self.urls = urls;
-  self.fileName ='url.json';
+  self.fileName ='urls.json';
   console.log('pop');
 
   self.pop = function (client, message, cmdArgs) {
