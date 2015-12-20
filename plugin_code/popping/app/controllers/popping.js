@@ -1,7 +1,7 @@
 var fs = require('fs'),
+    urls = require('../../config/url.json'),
     env = process.env.NODE_ENV || 'development',
-    config = require('../../config/config.json')[env],
-    urls = require('../../config/url.json');
+    config = require('../../config/config.json')[env];
 
 var Popping = function Popping() {
   var self = this;
