@@ -1,11 +1,13 @@
 {
   "development": {
+    "urlFile": "../../config/url.json",
     "channels": ["#dakdak"],
     "channelsToExclude": [],
     "channelsToJoin": ["#dakdak"]
   },
 
   "production": {
+    "urlFile": "../../config/url.json",
     "channels": ["#bots"],
     "channelsToExclude": [],
     "channelsToJoin": ["#bots"]
