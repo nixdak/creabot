@@ -1,5 +1,5 @@
 var c = require('irc-colors'),
-    inflection = require('inflection');
+  inflection = require('inflection');
 
 var Card = function Card(card) {
   var self = this;
@@ -8,7 +8,7 @@ var Card = function Card(card) {
   self.color = card.color;
   self.value = card.value;
 
-  self.onPlay = function (game) {
+  self.onPlay = function(game) {
     switch (self.type) {
       case 'Number':
         self.number(game);
@@ -31,7 +31,7 @@ var Card = function Card(card) {
     }
   };
 
-  self.isPlayable = function (currentCard) {
+  self.isPlayable = function(currentCard) {
     switch (currentCard.type) {
       case 'Wild':
       case 'Wild Draw Four':
@@ -45,62 +45,62 @@ var Card = function Card(card) {
     }
   };
 
-  self.number = function (game) {
+  self.number = function(game) {
     game.firstCard = false;
     return true;
   };
 
-  self.drawTwo = function (game) {
-    if (game.firstCard === true) {
-      game.firstCard = false;
+  self.drawTwo = function(game) {
+    game.firstCard = false;
+    if (game.turn === 0) {
       return true;
-    }
-    // Next player draws
-    var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
-    game.deal(nextPlayer, 2, true);
-    game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
+    } else {
+      // Next player draws
+      var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
+      game.deal(nextPlayer, 2, true);
+      game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
 
-    // Skip player
-    nextPlayer.skipped = true;
-    game.say(nextPlayer.nick + ' has been skipped!');
-    game.nextTurn();
+      // Skip player
+      nextPlayer.skipped = true;
+      game.say(nextPlayer.nick + ' has been skipped!');
+      game.nextTurn();
+    }
   };
 
-  self.reverse = function (game) {
+  self.reverse = function(game) {
     // If only two players
     if (game.players.length === 2) {
       // Skip
       self.skip(game);
       return true;
     }
-
+    game.firstCard = false;
     // Reverse game players
-    if (game.firstCard === true) {
-      game.firstCard = false;
+    if (game.turn === 0) {
       return true;
     }
     game.players = game.players.reverse();
   };
 
-  self.skip = function (game) {
+  self.skip = function(game) {
+    game.firstCard = false;
+    if (game.turn ==== 0) {
+      return true;
+    }
     var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
-    if (game.firstCard === true) {
-      game.firstCard = false;
-      game.nextTurn();
-    }
   };
 
-  self.wild = function (game) {
+  self.wild = function(game) {
     // Color is handled by the play function so just return true
     game.firstCard = false;
     return true;
   };
 
-  self.wildDrawFour = function (game) {
-    if (game.firstCard === true) {
-      game.firstCard = false;
+  self.wildDrawFour = function(game) {
+    game.firstCard = false;
+    if (game.turn === 0) {
       return true;
     }
     // Color setting is handled else where, so make next player draw four cards and skip them
@@ -116,7 +116,7 @@ var Card = function Card(card) {
     game.nextTurn();
   };
 
-  self.toString = function () {
+  self.toString = function() {
     var cardString = '';
 
     switch (self.type) {
