@@ -1,12 +1,12 @@
 {
   "development": {
-    "channels": [ "#DakDak" ],
+    "channels": "all",
     "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#unoDev"],
     "channelsToJoin": [ "#DakDak" ]
   },
 
   "production": {
-    "channels": ["#Bots"],
+    "channels": "all",
     "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#uno"],
     "channelsToJoin": ["#Bots"]
   }
