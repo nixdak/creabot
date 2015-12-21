@@ -124,16 +124,16 @@ var RedbrickCommittee = function RedbrickCommittee() {
 
   self.showCommitteeInfo = function(client, message, cmdArgs) {
     var nick = message.nick;
-
-    self.showChair(client, nick, cmdArgs);
-    self.showSecretary(client, nick, cmdArgs);
-    self.showTreasurer(client, nick, cmdArgs);
-    self.showPRO(client, nick, cmdArgs);
-    self.showEvents(client, nick, cmdArgs);
-    self.showFYR(client, nick, cmdArgs);
-    self.showWebmaster(client, nick, cmdArgs);
-    self.showHelpdesk(client, nick, cmdArgs);
-    self.showAdmins(client, nick, cmdArgs);
+    message.args[0] = nick;
+    self.showChair(client, message, cmdArgs);
+    self.showSecretary(client, message, cmdArgs);
+    self.showTreasurer(client, message, cmdArgs);
+    self.showPRO(client, message, cmdArgs);
+    self.showEvents(client, message, cmdArgs);
+    self.showFYR(client, message, cmdArgs);
+    self.showWebmaster(client, message, cmdArgs);
+    self.showHelpdesk(client, message, cmdArgs);
+    self.showAdmins(client, message, cmdArgs);
     // console.log('chair: ' + self.chair + ', sec: ' + self.sec + ', treasurer: ' + self.treasurer + ', pro: ' + self.pro + ', events: ' + self.events + ', FYR: ' + self.fyr + ', web: ' + self.web + ', helpdesk: ' + self.helpdesk + ', admins: ' + self.admins);
   };
 
