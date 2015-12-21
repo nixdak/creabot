@@ -1,0 +1,15 @@
+{
+  "development": {
+    "thisMonthBook": "The Sphere",
+    "channels": [ "#DakDak" ],
+    "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#unoDev"],
+    "channelsToJoin": [ "#DakDak" ]
+  },
+
+  "production": {
+    "thisMonthBook": "The Sphere",
+    "channels": ["#Bookclub"],
+    "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#uno","#Bots"],
+    "channelsToJoin": ["#Bookclub"]
+  }
+}
