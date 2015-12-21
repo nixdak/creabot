@@ -376,7 +376,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
-  self.uno = function (nick) {
+  self.uno = function (nick, card, color) {
     if (self.currentPlayer.nick !== nick) {
       self.pm(nick, 'It is not your turn');
       return false;
@@ -385,7 +385,9 @@ var Game = function (channel, client, config, cmdArgs) {
     if (self.currentPlayer.hand.numCards() === 2) {
       self.currentPlayer.uno = true;
       self.say(self.currentPlayer.nick + ' has declared UNO!');
+      self.play(nick, card, color);
     }
+
   };
 
   self.challenge = function (nick) {
