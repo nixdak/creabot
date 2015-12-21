@@ -7,7 +7,7 @@ module.exports = function(app) {
     app.joinChannels(redbrickCommittee.config.channelsToJoin);
 
     // Add commands
-    //app.cmd('cmt', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showCommitteeInfo);
+    app.cmd('cmt', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showCommitteeInfo);
     app.cmd('chair', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showChair);
     app.cmd('treasurer', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showTreasurer);
     app.cmd('secretary', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showSecretary);
@@ -20,4 +20,14 @@ module.exports = function(app) {
     app.cmd('reload', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.reload);
 
     app.msg('cmt', '', redbrickCommittee.showCommitteeInfo);
+    app.msg('chair', '', redbrickCommittee.showChair);
+    app.msg('treasurer', '', redbrickCommittee.showTreasurer);
+    app.msg('secretary', '', redbrickCommittee.showSecretary);
+    app.msg('pro', '', redbrickCommittee.showPRO);
+    app.msg('events', '', redbrickCommittee.showEvents);
+    app.msg('helpdesk', '', redbrickCommittee.showHelpdesk);
+    app.msg('admins', '', redbrickCommittee.showAdmins);
+    app.msg('webmaster', '', redbrickCommittee.showWebmaster);
+    app.msg('fyr', '', redbrickCommittee.showFYR);
+    app.msg('reload', '', redbrickCommittee.reload);
 }
