@@ -348,7 +348,7 @@ var Game = function (channel, client, config, cmdArgs) {
           playString +=  c.bold.green(color) + '. ';
           break;
         case 'BLUE':
-          cplayString +=  c.bold.blue(color) + '. ';
+          playString +=  c.bold.blue(color) + '. ';
           break;
         case 'RED':
           playString +=  c.bold.red(color) + '. ';
