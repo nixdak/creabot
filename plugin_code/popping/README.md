@@ -1,9 +1,9 @@
-# Dublin Bus
-This plugin retrieves and shows information for Dublin Bus stops.
+# Popping
+This plugin displays links to popping related images and videos
 
 ## Commands
-- **!dbus stop_number** - Shows the next five buses due at that stop, so !dbus 497 will show information for Stop 497.
-- **!dbus stop_number route (route) ... (route)** - Shows the next five buses for the desired routes. So !dbus 497 14 27b will show information about stop 497, for only the 14 and 27b routes.
+- **!pop** - Will print a random link.
+- **!pop link** - Adds link to the bot.
 
 ## Configuration
 In config/config.json there are three settings.
