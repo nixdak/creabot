@@ -63,7 +63,7 @@
 
     "pluginOptions": {
       "channels": ["#CountdownDev"],
-      "channelsToExclude": ["#cardsagainsthumanityDev", "#DakDak", "#UnoDev"],,
+      "channelsToExclude": ["#cardsagainsthumanityDev", "#DakDak", "#UnoDev"],
       "channelsToJoin": ["#CountdownDev"]
     }
   },
