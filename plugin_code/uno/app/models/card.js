@@ -83,15 +83,13 @@ var Card = function Card(card) {
   };
 
   self.skip = function (game) {
-    if (game.firstCard === true) {
-      game.firstCard = false;
-      return true;
-    }
-
     var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
-    game.nextTurn();
+    if (game.firstCard === true) {
+      game.firstCard = false;
+      game.nextTurn();
+    }
   };
 
   self.wild = function (game) {
