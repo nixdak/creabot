@@ -1,5 +1,5 @@
 [
-	{
+  {
     "type": "Question",
     "value": "Siskel and Ebert have panned %s as \"poorly conceived\" and \"sloppily executed.\"",
     "keep": "Yes",
@@ -23,7 +23,7 @@
     "pick": 1,
     "source": "90's Nostalgia Set"
   },
-	{
+  {
     "type": "Question",
     "value": "It's Morphin' Time! Mastodon! Pterodactyl! Triceratops! Sabertooth Tiger! %s!",
     "keep": "Yes",
