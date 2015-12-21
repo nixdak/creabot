@@ -410,7 +410,9 @@ var Game = function (channel, client, config, cmdArgs) {
     if (self.currentPlayer.hand.numCards() === 2) {
       self.currentPlayer.uno = true;
       self.say(self.currentPlayer.nick + ' has declared UNO!');
-      self.play(nick, card, color);
+      if (!_.isUndefined(card)){
+        self.play(nick, card, color);
+      }
     }
 
   };
