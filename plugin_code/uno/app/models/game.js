@@ -57,6 +57,8 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say('Game has been stopped.');
     }
 
+    self.setTopic('No game running! !j To start a new one.');
+
     // Remove listeners
     client.removeListener('part', self.playerPartHandler);
     client.removeListener('quit', self.playerQuitHandler);
@@ -168,6 +170,7 @@ var Game = function (channel, client, config, cmdArgs) {
       (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn. ' + seconds + ' seconds on the clock');
+    self.setTopic('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
   };
 
   self.nextTurn = function() {
@@ -231,7 +234,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
 
     if (!_.isUndefined(self.players)) {
-      self.nextTurn();
+      self.endTurn();
     }
   };
 
@@ -336,7 +339,21 @@ var Game = function (channel, client, config, cmdArgs) {
     pickedCard.onPlay(self);
 
     if (pickedCard.color === 'WILD') {
-      playString += player.nick + ' has changed the color to ' + color + '. ';
+      playString += player.nick + ' has changed the color to ';
+      switch (color.toUpperCase()) {
+        case 'YELLOW':
+          playString +=  c.bold.yellow(color) + '. ';
+          break;
+        case 'GREEN':
+          playString +=  c.bold.green(color) + '. ';
+          break;
+        case 'BLUE':
+          cplayString +=  c.bold.blue(color) + '. ';
+          break;
+        case 'RED':
+          playString +=  c.bold.red(color) + '. ';
+          break;
+      }
       pickedCard.color = color.toUpperCase();
     }
 
@@ -472,14 +489,14 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.setTopic = function (topic) {
     // ignore if not configured to set topic
-    if (_.isUndefined(config.gameOptions.setTopic) || config.gameOptions.setTopic === false) {
+    if (_.isUndefined(self.config.gameOptions.setTopic) || self.config.gameOptions.setTopic === false) {
       return false;
     }
 
     // construct new topic
     var newTopic = topic;
-    if (typeof config.gameOptions.topicBase !== 'undefined') {
-      newTopic = topic + ' ' + config.gameOptions.topicBase;
+    if (typeof self.config.gameOptions.topicBase !== 'undefined') {
+      newTopic = topic + ' ' + self.config.gameOptions.topicBase;
     }
 
     // set it
@@ -531,7 +548,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.client.say(nick, string);
   };
 
-  self.setTopic(c.bold.lime('A game is running. Type !j to get in on the fun!'));
+  self.setTopic(c.bold.lime('A game is running. Type !j to get in on the fun! and !start when ready to play.'));
   self.say('A new game of ' + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + ' has been started. Type !j to join' +
     ' and !start when ready.'
   );

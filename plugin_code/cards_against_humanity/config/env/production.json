@@ -13,6 +13,7 @@
 
   "pluginOptions": {
     "channels": ["#CardsAgainstHumanity"],
+    "channelsToExclude": ["#uno", "#countdown", "#bots"],
     "channelsToJoin": ["#CardsAgainstHumanity"]
   }
 }
