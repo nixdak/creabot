@@ -10,6 +10,7 @@ var Countdown = function Countdown() {
   self.game;
   self.config = config;
   self.challenges = challenges.games;
+  self.challengesFile = 'plugin_code/countdown/config/challenges.json'
 
   self.accept = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
@@ -103,7 +104,7 @@ var Countdown = function Countdown() {
         }
       }
       self.challenges.push({ challenger: message.nick, challenged: args[0], letter: letterTime, number: numberTime, conundrum: conundrumTime});
-      fs.writeFile(challenges, JSON.stringify(self.challenges, null, 2);
+      fs.writeFile(self.challengesFile, JSON.stringify(self.challenges, null, 2);
       client.say(channel, message.nick + ': has challenged ' + args[0]);
       client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
@@ -118,7 +119,7 @@ var Countdown = function Countdown() {
       self.challenges = _.reject(self.challenges, function(challenge) {
         return challenge.challenger === self.game.challenger.nick && challenge.challenged === self.game.challenged.nick;
       });
-      fs.writeFile(challenges, JSON.stringify(self.challenges, null, 2);
+      fs.writeFile(self.challengesFile, JSON.stringify(self.challenges, null, 2);
     } else {
       client.say(message.args[0], 'Unable to join at the moment.');
     }
