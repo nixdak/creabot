@@ -1,14 +1,14 @@
 {
   "production": {
     "waitTime": 1,
-    "channels": ["#Bots"],
-    "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#uno"],
+    "channels": "all",
+    "channelsToExclude": [ "#cardsagainsthumanity", "#countdown", "#uno" ],
     "channelsToJoin": [ "#Bots" ]
   },
 
   "development": {
     "waitTime": 1,
-    "channels": [ "#DakDak" ],
+    "channels": "all",
     "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#unoDev"],
     "channelsToJoin": [ "#DakDak" ]
   }
