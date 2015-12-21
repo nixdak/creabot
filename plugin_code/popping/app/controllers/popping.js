@@ -8,7 +8,6 @@ var Popping = function Popping() {
   self.config = config;
   self.urls = urls;
   self.fileName ='plugin_code/popping/config/url.json';
-  console.log('pop');
 
   self.pop = function (client, message, cmdArgs) {
     if (cmdArgs === '') {
