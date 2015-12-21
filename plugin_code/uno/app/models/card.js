@@ -84,7 +84,7 @@ var Card = function Card(card) {
 
   self.skip = function(game) {
     game.firstCard = false;
-    if (game.turn ==== 0) {
+    if (game.turn === 0) {
       return true;
     }
     var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
