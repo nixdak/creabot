@@ -19,7 +19,7 @@ var Popping = function Popping() {
       self.urls.push(cmdArgs);
       fs.writeFile(self.fileName, JSON.stringify(self.urls, null, 2), function (err) {
         if (err) return console.log(err)
-        console.log(JSON.stringify(self.urls))
+        //console.log(JSON.stringify(self.urls))
         console.log('writing to ' + self.fileName)
       });
       client.say(message.args[0], 'link added');
