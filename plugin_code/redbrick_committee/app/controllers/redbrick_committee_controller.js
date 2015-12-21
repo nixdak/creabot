@@ -158,7 +158,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var treasurer = _.find(self.committee, { role: 'Treasurer' });
     if (!_.isUndefined(treasurer) && self.treasurer) {
       treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
-      client.say(message.nick, 'Treasurer: ' + treasurer_string ' contact by /m ' + treasurer.nick + 'message, or email ' + treasurer.nick + '@redbrick.dcu.ie');
+      client.say(message.nick, 'Treasurer: ' + treasurer_string + ' contact by /m ' + treasurer.nick + 'message, or email ' + treasurer.nick + '@redbrick.dcu.ie');
       //self.wait('Treasurer');
     }
   };
