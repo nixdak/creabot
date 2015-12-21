@@ -52,7 +52,7 @@ var Card = function Card(card) {
 
   self.drawTwo = function(game) {
     game.firstCard = false;
-    if (game.turn === 0) {
+    if (game.turn === 1) {
       return true;
     } else {
       // Next player draws
@@ -76,7 +76,7 @@ var Card = function Card(card) {
     }
     game.firstCard = false;
     // Reverse game players
-    if (game.turn === 0) {
+    if (game.turn === 1) {
       return true;
     }
     game.players = game.players.reverse();
@@ -84,7 +84,7 @@ var Card = function Card(card) {
 
   self.skip = function(game) {
     game.firstCard = false;
-    if (game.turn === 0) {
+    if (game.turn === 1) {
       return true;
     }
     var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
@@ -100,7 +100,7 @@ var Card = function Card(card) {
 
   self.wildDrawFour = function(game) {
     game.firstCard = false;
-    if (game.turn === 0) {
+    if (game.turn === 1) {
       return true;
     }
     // Color setting is handled else where, so make next player draw four cards and skip them
