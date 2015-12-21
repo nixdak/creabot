@@ -51,16 +51,15 @@ var Card = function Card(card) {
   };
 
   self.drawTwo = function(game) {
-    game.firstCard = false;
-    if (game.turn === 1) {
+    if (game.firstCard === true) {
+      game.firstCard = false;
       return true;
-    } else {
-      // Next player draws
-      var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
-      game.deal(nextPlayer, 2, true);
-      game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
-      self.skip(game);
-    }
+    } else game.firstCard = false;
+    // Next player draws
+    var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
+    game.deal(nextPlayer, 2, true);
+    game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
+    self.skip(game);
   };
 
   self.reverse = function(game) {
@@ -70,19 +69,19 @@ var Card = function Card(card) {
       self.skip(game);
       return true;
     }
-    game.firstCard = false;
-    // Reverse game players
-    if (game.turn === 1) {
+    if (game.firstCard === true) {
+      game.firstCard = false;
       return true;
-    }
+    } else game.firstCard = false;
+    //reverse game order
     game.players = game.players.reverse();
   };
 
   self.skip = function(game) {
-    game.firstCard = false;
-    if (game.turn === 1) {
+    if (game.firstCard === true) {
+      game.firstCard = false;
       return true;
-    }
+    } else game.firstCard = false;
     var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
     nextPlayer.skipped = true;
     game.say(nextPlayer.nick + ' has been skipped!');
@@ -95,10 +94,10 @@ var Card = function Card(card) {
   };
 
   self.wildDrawFour = function(game) {
-    game.firstCard = false;
-    if (game.turn === 1) {
+    if (game.firstCard === true) {
+      game.firstCard = false;
       return true;
-    }
+    } else game.firstCard = false;
     // Color setting is handled else where, so make next player draw four cards and skip them
     var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
 
