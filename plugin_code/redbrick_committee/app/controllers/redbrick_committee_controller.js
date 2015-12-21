@@ -140,7 +140,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var chairperson = _.find(self.committee, { role: 'Chairperson' });
     if (!_.isUndefined(chairperson) && self.chair) {
       chair_string = chairperson.name + ' (' + chairperson.nick + ')';
-      client.say(message.nick, 'Chairperson: ' + chair_string + ' contact by /m ' + chairperson.nick + ' message, or email ' + chairperson.name + '@redbrick.dcu.ie');
+      client.say(message.nick, 'Chairperson: ' + chair_string + ' contact by /m ' + chairperson.nick + ' <message>, or email ' + chairperson.name + '@redbrick.dcu.ie');
       //self.wait('Chair');
     }
   };
@@ -149,7 +149,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var secretary = _.find(self.committee, { role: 'Secretary' });
     if (!_.isUndefined(secretary) && self.sec) {
       secretary_string = secretary.name + ' (' + secretary.nick + ')';
-      client.say(message.nick, 'Secretary: ' + secretary_string + ' contact by /m ' + secretary.nick + ' message, or email ' + secretary.nick + '@redbrick.dcu.ie');
+      client.say(message.nick, 'Secretary: ' + secretary_string + ' contact by /m ' + secretary.nick + ' <message>, or email ' + secretary.nick + '@redbrick.dcu.ie');
       //self.wait('Sec');
     }
   };
@@ -158,7 +158,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var treasurer = _.find(self.committee, { role: 'Treasurer' });
     if (!_.isUndefined(treasurer) && self.treasurer) {
       treasurer_string = treasurer.name + ' (' + treasurer.nick + ')';
-      client.say(message.nick, 'Treasurer: ' + treasurer_string + ' contact by /m ' + treasurer.nick + ' message, or email ' + treasurer.nick + '@redbrick.dcu.ie');
+      client.say(message.nick, 'Treasurer: ' + treasurer_string + ' contact by /m ' + treasurer.nick + ' <message>, or email ' + treasurer.nick + '@redbrick.dcu.ie');
       //self.wait('Treasurer');
     }
   };
@@ -167,7 +167,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var pro = _.find(self.committee, { role: 'Public Relations Officer' });
     if (!_.isUndefined(pro) && self.pro) {
       pro_string = pro.name + ' (' + pro.nick + ')';
-      client.say(message.nick, 'Public Relations Officer: ' + pro_string + ' contact by /m ' + pro.nick + ' message, or email ' + pro.nick + '@redbrick.dcu.ie');
+      client.say(message.nick, 'Public Relations Officer: ' + pro_string + ' contact by /m ' + pro.nick + ' <message>, or email ' + pro.nick + '@redbrick.dcu.ie');
       //self.wait('PRO');
     }
   };
@@ -176,7 +176,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var events = _.find(self.committee, { role: 'Events Officer' });
     if (!_.isUndefined(events) && self.events) {
       events_string = events.name + ' (' + events.nick + ')';
-      client.say(message.nick, 'Events Officer: ' + events_string + ' contact by /m ' + events.nick + ' message, or email ' + events.nick + '@redbrick.dcu.ie');
+      client.say(message.nick, 'Events Officer: ' + events_string + ' contact by /m ' + events.nick + ' <message>, or email ' + events.nick + '@redbrick.dcu.ie');
       //self.wait('Events');
     }
   };
@@ -185,7 +185,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var first_year_rep = _.find(self.committee, { role: 'First Year Representative' });
     if (!_.isUndefined(first_year_rep) && self.fyr) {
       fyr_string = first_year_rep.name + ' (' + first_year_rep.nick + ')';
-      client.say(message.nick, 'First Year Representative: ' + fyr_string + ' contact by /m ' + first_year_rep.nick + ' message, or email ' + first_year_rep.nick + '@redbrick.dcu.ie');
+      client.say(message.nick, 'First Year Representative: ' + fyr_string + ' contact by /m ' + first_year_rep.nick + ' <message>, or email ' + first_year_rep.nick + '@redbrick.dcu.ie');
       //self.wait('FYR');
     }
   };
@@ -194,7 +194,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     var webmaster = _.find(self.committee, { role: 'Webmaster' });
     if (!_.isUndefined(webmaster) && self.web) {
       webmaster_string = webmaster.name + ' (' + webmaster.nick + ')';
-      client.say(message.nick, 'Webmaster: ' + webmaster_string + ' contact by /m ' + webmaster.nick + ' message, or email ' + webmaster.nick + '@redbrick.dcu.ie');
+      client.say(message.nick, 'Webmaster: ' + webmaster_string + ' contact by /m ' + webmaster.nick + ' <message>, or email ' + webmaster.nick + '@redbrick.dcu.ie');
       //self.wait('Web');
     }
   };
