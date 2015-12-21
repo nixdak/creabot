@@ -8,7 +8,7 @@
 
     "pluginOptions": {
       "channels": ["#UnoDev"],
-      "channelsToExclude": [],
+      "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#DakDak"],
       "channelsToJoin": ["#UnoDev"]
     }
   },
@@ -22,7 +22,7 @@
 
     "pluginOptions": {
       "channels": ["#Uno"],
-      "channelsToExclude": [],
+      "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#Bots"],
       "channelsToJoin": ["#Uno"]
     }
   }
