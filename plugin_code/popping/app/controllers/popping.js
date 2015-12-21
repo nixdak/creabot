@@ -1,13 +1,13 @@
 var fs = require('fs'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env],
-    urls = require('./url.json');
+    urls = require('../../config/url.json');
 
 var Popping = function Popping() {
   var self = this;
   self.config = config;
   self.urls = urls;
-  self.fileName ='./urls.json';
+  self.fileName ='plugin_code/popping/config/url.json';
   console.log('pop');
 
   self.pop = function (client, message, cmdArgs) {
