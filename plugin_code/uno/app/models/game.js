@@ -42,6 +42,10 @@ var Game = function (channel, client, config, cmdArgs) {
 
   self.stop = function (nick, pointLimitReached) {
     self.state = STATES.FINISHED;
+<<<<<<< ours
+=======
+    console.log('In game.stop()');
+>>>>>>> theirs
 
     // Clear timeouts and intervals
     clearTimeout(self.startTimeout);
@@ -73,6 +77,7 @@ var Game = function (channel, client, config, cmdArgs) {
     delete self.pointLimit;
     delete self.deck;
     delete self.discard;
+    console.log('Game stopped');
   };
 
   self.startTimeoutFunction = function () {
@@ -189,6 +194,15 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
+<<<<<<< ours
+=======
+    if (self.players.length == 1) {
+      self.say('Only one player left. ' + self.players[0].nick + ' wins the game!');
+      self.stop(null, null);
+      return false;
+    }
+
+>>>>>>> theirs
     self.state = STATES.PLAYABLE;
     self.setPlayer();
 
@@ -478,7 +492,11 @@ var Game = function (channel, client, config, cmdArgs) {
     self.players.splice(self.players.indexOf(player), 1);
 
     // If the player is the current player, move to the next turn
+<<<<<<< ours
     if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player && self.players.length) {
+=======
+    if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player) {
+>>>>>>> theirs
       self.nextTurn();
     } else if (self.players.length < 2 && self.state !== STATES.FINISHED && self.state !== STATES.STOPPED && self.state !== STATES.WAITING) {
       self.stop();
