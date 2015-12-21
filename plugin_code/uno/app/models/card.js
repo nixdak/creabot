@@ -59,11 +59,7 @@ var Card = function Card(card) {
       var nextPlayer = game.firstCard === true ? game.currentPlayer : game.nextPlayer();
       game.deal(nextPlayer, 2, true);
       game.say(nextPlayer.nick + ' has picked up two cards and has ' + nextPlayer.hand.numCards() + ' left');
-
-      // Skip player
-      nextPlayer.skipped = true;
-      game.say(nextPlayer.nick + ' has been skipped!');
-      game.nextTurn();
+      self.skip(game);
     }
   };
 
@@ -109,11 +105,7 @@ var Card = function Card(card) {
     // Next player draw
     game.deal(nextPlayer, 4, true);
     game.say(nextPlayer.nick + ' has picked up four cards and has ' + nextPlayer.hand.numCards() + ' left');
-
-    // Skip player
-    nextPlayer.skipped = true;
-    game.say(nextPlayer.nick + ' has been skipped!');
-    game.nextTurn();
+    self.skip(game);
   };
 
   self.toString = function() {
