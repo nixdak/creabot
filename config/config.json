@@ -1,7 +1,7 @@
 {
   "production": {
-    "server":        "localhost",
-    "nick":          "DakDak",
+    "server":        "irc.redbrick.dcu",
+    "nick":          "butlerxxx",
 
     "connectCommands": [
           {
@@ -11,15 +11,15 @@
       ],
 
     "clientOptions": {
-        "userName":             "creadak",
+        "userName":             "butlerx",
         "floodProtection":      true,
         "floodProtectionDelay": 175
     }
   },
 
   "development": {
-    "server":        "localhost",
-    "nick":          "DakDak1",
+    "server":        "irc.redbrick.dcu",
+    "nick":          "butlerDev",
 
     "connectCommands": [
           {
@@ -29,7 +29,7 @@
       ],
 
     "clientOptions": {
-        "userName":             "creadak",
+        "userName":             "butlerx",
         "floodProtection":      true,
         "floodProtectionDelay": 175
     }
