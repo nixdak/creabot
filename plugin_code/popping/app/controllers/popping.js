@@ -12,7 +12,7 @@ var Popping = function Popping() {
   self.pop = function (client, message, cmdArgs) {
     if (cmdArgs === '') {
       var url = urls[Math.floor(Math.random()*urls.length)];
-      client.say(message.args[0], url);
+      client.say(message.args[0],'NSFW!(most likly)' + url);
     }
     if (cmdArgs.length >= 1) {
       self.urls.push(cmdArgs);
