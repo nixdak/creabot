@@ -125,9 +125,9 @@ var Uno = function Uno () {
 
   self.wiki = function (client, message, cmdArgs){
     if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
-      client.say(message.nick, 'https://github.com/creadak/creabot/wiki/Uno');
+      client.say(message.nick, 'https://github.com/butlerx/butlerbot/wiki/Uno');
     } else {
-      client.say(message.args[0], message.nick + ': https://github.com/creadak/creabot/wiki/Uno');
+      client.say(message.args[0], message.nick + ': https://github.com/butlerx/butlerbot/wiki/Uno');
     }
   };
 };
