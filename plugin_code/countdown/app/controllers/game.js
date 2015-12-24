@@ -87,7 +87,7 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
   self.discards = {
     consonants: [],
     vowels: []
-  }
+  };
 
   // Answers
   self.answers = {
@@ -273,7 +273,7 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
 
   self.letterRoundEnd = function () {
     // Show selections
-    console.log('In letterRoundEnd')
+    console.log('In letterRoundEnd');
 
     if (self.challenger.hasPlayed === true) {
       self.say(self.challenger.nick + ' has played: ' + self.answers.challenger.word);
@@ -384,7 +384,7 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
 
   self.numberRoundEnd = function () {
     var challenger_difference = Math.max(self.table.target, self.answers.challenger.value) - Math.min(self.table.target, self.answers.challenger.value);
-    var challenged_difference = Math.max(self.table.target, self.answers.challenged.value) - Math.min(self.table.target, self.answers.challenged.value)
+    var challenged_difference = Math.max(self.table.target, self.answers.challenged.value) - Math.min(self.table.target, self.answers.challenged.value);
 
     if (challenged_difference > 10 && challenger_difference > 10) {
       self.say('No player has gotten within 10 of the target and no points have been awarded');
@@ -878,7 +878,7 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
         }
       }
     }
-  }
+  };
 
   self.roundTimerCheck = function () {
     // Check the time
@@ -951,7 +951,7 @@ var Game = function Game(channel, client, config, challenger, challenged, letter
       console.log('Adding challenger');
     } else if (self.challenged.nick === player.nick) {
       self.challenged.hasJoined = true;
-      console.log('Adding challenged')
+      console.log('Adding challenged');
     } else {
       self.say('Sorry, but you cannot join this game');
       return false;

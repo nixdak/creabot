@@ -3,12 +3,14 @@
     "gameOptions": {
       "turnMinutes": 3,
       "maxIdleTurns": 3,
-      "idleRoundTimerDecrement": 60
+      "idleRoundTimerDecrement": 60,
+      "setTopic": true,
+      "topicBase": "|| Dev Bot || Expect spam || Expect breakings"
     },
 
     "pluginOptions": {
       "channels": ["#UnoDev"],
-      "channelsToExclude": [],
+      "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#dakdak"],
       "channelsToJoin": ["#UnoDev"]
     }
   },
@@ -17,12 +19,14 @@
     "gameOptions": {
       "turnMinutes": 3,
       "maxIdleTurns": 3,
-      "idleRoundTimerDecrement": 60
+      "idleRoundTimerDecrement": 60,
+      "setTopic": true,
+      "topicBase": "|| wiki: https://github.com/creadak/creabot/wiki/Uno"
     },
 
     "pluginOptions": {
       "channels": ["#Uno"],
-      "channelsToExclude": [],
+      "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#Bots"],
       "channelsToJoin": ["#Uno"]
     }
   }
