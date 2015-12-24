@@ -1,7 +1,7 @@
 {
   "gameOptions": {
     "setTopic":      true,
-    "topicBase":     "|| Dev Bot || Expect spam || Expect breakings",
+    "topicBase":     "|| wiki: https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity",
     "notifyUsers":   false,
     "pointLimit":    5,
     "idleLimit": 2,

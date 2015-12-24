@@ -343,6 +343,14 @@ var CardsAgainstHumanity = function CardsAgainstHumanity() {
             }
         }
     };
+
+    self.wiki = function (client, message, cmdArgs){
+      if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
+        client.say(message.nick, 'https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity');
+      } else {
+        client.say(message.args[0], message.nick + ': https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity');
+      }
+    };
 };
 
 exports = module.exports = CardsAgainstHumanity;
