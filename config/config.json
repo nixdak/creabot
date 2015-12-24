@@ -1,6 +1,6 @@
 {
   "production": {
-    "server":        "irc.redbrick.dcu",
+    "server":        "irc.redbrick.dcu.ie",
     "nick":          "butlerxxx",
 
     "connectCommands": [
@@ -18,7 +18,7 @@
   },
 
   "development": {
-    "server":        "irc.redbrick.dcu",
+    "server":        "irc.redbrick.dcu.ie",
     "nick":          "butlerDev",
 
     "connectCommands": [
