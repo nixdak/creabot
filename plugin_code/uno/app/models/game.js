@@ -477,6 +477,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
+
   self.addPlayer = function (player) {
     var alreadyPlayer = self.getPlayer({ nick: player.nick, user: player.user, hostname: player.hostname });
 
