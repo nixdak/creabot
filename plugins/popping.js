@@ -1,4 +1,4 @@
 exports.connect = function(app, callback) {
-  require('../plugin_code/dublin_bus/setup.js')(app);
+  require('../plugin_code/popping/setup.js')(app);
   callback();
 }
