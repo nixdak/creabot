@@ -11,7 +11,7 @@ var Countdown = function Countdown() {
   var self = this;
   self.game;
   self.config = config;
-  self.challenges = challenges.games;
+  self.challenges = challenges;
   self.challengesFile = 'plugin_code/countdown/config/challenges.json'
 
   self.accept = function (client, message, cmdArgs) {
