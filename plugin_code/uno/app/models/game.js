@@ -582,8 +582,7 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.setTopic(c.bold.lime('A game  of ' + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + ' has been started. Type !j to get in on the fun! and !start when ready to play.'));
-  //self.say('A new game of ' + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + ' has been started. Type !j to join' + ' and !start when ready.'
-  );
+  //self.say('A new game of ' + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + ' has been started. Type !j to join' + ' and !start when ready.');
 
   if (_.isUndefined(self.config.gameOptions.minutesBeforeStart)) {
     self.minutesBeforeStart = 10;
