@@ -104,7 +104,7 @@ var Countdown = function Countdown() {
         }
       }
       self.challenges.push({ challenger: message.nick, challenged: args[0], letter: letterTime, number: numberTime, conundrum: conundrumTime});
-      fs.writeFile(self.challengesFile, JSON.stringify(self.challenges, null, 2);
+      fs.writeFile(self.challengesFile, JSON.stringify(self.challenges, null, 2));
       client.say(channel, message.nick + ': has challenged ' + args[0]);
       client.say(channel, args[0] + ': To accept ' + message.nick + '\'s challenge, simply !accept ' + message.nick);
     } else {
