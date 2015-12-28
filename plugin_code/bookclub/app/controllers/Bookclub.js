@@ -70,10 +70,10 @@ var Bookclub = function Bookclub() {
     });
     //say book and cvhange TOPIC
     client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested);
-    self.setTopic(client, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author)
+    self.setTopic(client, channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author)
   };
 
-  self.setTopic = function (client, topic) {
+  self.setTopic = function (client, channel, topic) {
     // ignore if not configured to set topic
     if (typeof config.setTopic === 'undefined' || !config.setTopic) {
       return false;
