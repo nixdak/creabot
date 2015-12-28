@@ -2,7 +2,7 @@
  * Creabot
  * main application script
  * @author creadak <creadak@gmail.com>
- * @version 0.6.0
+ * @version 1.1.0
  */
 console.log('Creabot');
 

@@ -1,0 +1,14 @@
+[
+  { "name": "Lorcan Boyle", "nick": "zergless", "role": "Chairperson" },
+  { "name": "Noah Donnelly", "nick": "cac", "role": "Secretary" },
+  { "name": "Aaron Delaney", "nick": "devoxel", "role": "Treasurer" },
+  { "name": "Cian Ruane", "nick": "induxi0n", "role": "Public Relations Officer" },
+  { "name": "Clíodhna Harrison", "nick": "thegirl", "role": "Events Officer" },
+  { "name": "Cian Butler", "nick": "butlerx", "role": "Helpdesk" },
+  { "name": "Cormac Smartt", "nick": "pints", "role": "Helpdesk" },
+  { "name": "Richie Walsh", "nick": "koffee", "role": "System Administrator" },
+  { "name": "Terry Bolt", "nick": "tbolt", "role": "System Administrator" },
+  { "name": "Wojtek Bednarzak", "nick": "voy", "role": "System Administrator" },
+  { "name": "Sean Healy", "nick": "space", "role": "Webmaster" },
+  { "name": "Liam Rooney", "nick": "ginger", "role": "First Year Representative" }
+]

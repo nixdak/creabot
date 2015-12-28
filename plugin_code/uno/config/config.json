@@ -1,0 +1,33 @@
+{
+  "development": {
+    "gameOptions": {
+      "turnMinutes": 3,
+      "maxIdleTurns": 3,
+      "idleRoundTimerDecrement": 60,
+      "setTopic": true,
+      "topicBase": "|| Dev Bot || Expect spam || Expect breakings"
+    },
+
+    "pluginOptions": {
+      "channels": ["#UnoDev"],
+      "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#dakdak"],
+      "channelsToJoin": ["#UnoDev"]
+    }
+  },
+
+  "production": {
+    "gameOptions": {
+      "turnMinutes": 3,
+      "maxIdleTurns": 3,
+      "idleRoundTimerDecrement": 60,
+      "setTopic": true,
+      "topicBase": "|| wiki: https://github.com/butlerx/butlerbot/wiki/Uno"
+    },
+
+    "pluginOptions": {
+      "channels": ["#Uno"],
+      "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#Bots"],
+      "channelsToJoin": ["#Uno"]
+    }
+  }
+}
