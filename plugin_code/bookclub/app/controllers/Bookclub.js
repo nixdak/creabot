@@ -22,7 +22,7 @@ var Bookclub = function Bookclub() {
     if (month === self.thisMonthBook.month) {
       client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author);
     } else {
-      self.changeBook(month, message.args[0]);
+      self.changeBook(client, month, message.args[0]);
     }
   };
 
@@ -47,7 +47,7 @@ var Bookclub = function Bookclub() {
     } else client.say(message.args[0], 'That book has already been suggested');
   };
 
-  self.changeBook = function (month, channel) {
+  self.changeBook = function (client, month, channel) {
     //add book to read list
     self.booksRead.push(thisMonthBook);
     fs.writeFile(self.booksReadFileName, JSON.stringify(self.booksRead, null, 2), function (err) {
@@ -70,10 +70,10 @@ var Bookclub = function Bookclub() {
     });
     //say book and cvhange TOPIC
     client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested);
-    self.setTopic('This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author)
+    self.setTopic(client, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author)
   };
 
-  self.setTopic = function (topic) {
+  self.setTopic = function (client, topic) {
     // ignore if not configured to set topic
     if (typeof config.setTopic === 'undefined' || !config.setTopic) {
       return false;
