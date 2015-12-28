@@ -11,7 +11,7 @@
     "setTopic": true,
     "topicBase": " || Wecome to Bookclub check out https://github.com/butlerx/butlerbot/wiki/bookclub for commands",
     "channels": ["#Bookclub"],
-    "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#uno","#Bots"],
+    "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#uno", "#Bots"],
     "channelsToJoin": ["#Bookclub"]
   }
 }

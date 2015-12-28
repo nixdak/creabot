@@ -126,7 +126,7 @@
 
     "pluginOptions": {
       "channels": ["#Countdown"],
-      "channelsToExclude": ["#cardsagainsthumanity", "#Bots", "#uno"],
+      "channelsToExclude": ["#cardsagainsthumanity", "#Bots", "#uno", "#Bookclub"],
       "channelsToJoin": ["#Countdown"]
     }
   }
