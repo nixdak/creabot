@@ -42,7 +42,7 @@ var Bookclub = function Bookclub() {
     }
     if (_.contains(self.titlesRead, input[0].toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
-    } else if (!_.contains(self.titles, cmdArgs[0])) {
+    } else if (!_.contains(self.titles, input[0])) {
       self.toRead.push( { title: input[0], author: input[1], pages: input[2], suggested: message.nick, month: 0} );
       fs.writeFile(self.toReadFileName, JSON.stringify(self.toRead, null, 2), function (err) {
         if (err) return console.log(err);
