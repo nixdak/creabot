@@ -1,9 +1,11 @@
 var _ = require('underscore'),
     Game = require('./game'),
     Player = require('../models/player'),
+    challenges = require('../../config/challenges.json'),
+    fs = require('fs'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env];
-    challenges = require('../../config/challenges.json')
+
 
 var Countdown = function Countdown() {
   var self = this;
