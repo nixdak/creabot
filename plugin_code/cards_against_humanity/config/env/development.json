@@ -1,17 +1,19 @@
 {
-    "gameOptions": {
-        "setTopic":      true,
-        "topicBase":     "|| Dev Bot || Expect spam || Expect breakings",
-        "notifyUsers":   false,
-        "pointLimit":    5,
-        "idleLimit": 2,
-        "secondsBeforeStart": 60,
-        "roundMinutes": 6,
-        "database": true
-    },
+  "gameOptions": {
+    "setTopic":      true,
+    "topicBase":     "|| Dev Bot || Expect spam || Expect breakings",
+    "notifyUsers":   false,
+    "pointLimit":    5,
+    "idleLimit": 2,
+    "secondsBeforeStart": 60,
+    "roundMinutes": 6,
+    "database": true,
+    "maxPlayers": 8
+  },
 
-    "pluginOptions": {
-        "channels": ["#CardsAgainstHumanityDev"],
-        "channelsToJoin": ["#CardsAgainstHumanityDev"]
-    }
+  "pluginOptions": {
+    "channels": ["#CardsAgainstHumanityDev"],
+    "channelsToExclude": ["#DakDak", "#countdownDev", "#unodev"],
+    "channelsToJoin": ["#CardsAgainstHumanityDev"]
+  }
 }

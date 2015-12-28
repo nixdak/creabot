@@ -1,17 +1,19 @@
 {
-    "gameOptions": {
-        "setTopic":      true,
-        "topicBase":     "|| Dev Bot || Expect spam || Expect breakings",
-        "notifyUsers":   false,
-        "pointLimit":    5,
-        "idleLimit": 2,
-        "secondsBeforeStart": 60,
-        "roundMinutes": 6,
-        "database": true
-    },
+  "gameOptions": {
+    "setTopic":      true,
+    "topicBase":     "|| wiki: https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity",
+    "notifyUsers":   false,
+    "pointLimit":    5,
+    "idleLimit": 2,
+    "secondsBeforeStart": 60,
+    "roundMinutes": 6,
+    "database": true,
+    "maxPlayers": 8
+  },
 
-    "pluginOptions": {
-        "channels": ["#CardsAgainstHumanity"],
-        "channelsToJoin": ["#CardsAgainstHumanity"]
-    }
+  "pluginOptions": {
+    "channels": ["#CardsAgainstHumanity"],
+    "channelsToExclude": ["#uno", "#countdown", "#bots"],
+    "channelsToJoin": ["#CardsAgainstHumanity"]
+  }
 }

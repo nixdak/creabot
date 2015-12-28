@@ -879,8 +879,17 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                     return false;
                 }
 
+	        if (_.where(self.players, {isActive: true}).length >= self.config.gameOptions.maxPlayers) {
+		  self.say(player.nick + ': You cannot join right now as the maximum number of players have joined the game');
+		  return false;
+		}
+
                 oldPlayer.isActive = true;
             } else {
+	      if (_.where(self.players, {isActive: true}).length >= self.config.gameOptions.maxPlayers) {
+		self.say(player.nick + ': You cannot join right now as the maximum number of players have joined the game');
+		return false;
+	      }
               self.players.push(player);
             }
 
