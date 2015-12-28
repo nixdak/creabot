@@ -41,7 +41,8 @@ var Bookclub = function Bookclub() {
     var suggesters = _.map(self.toRead, function (book) { return book.suggested; });
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(self.read, function (book) { return book.title; });
-
+    console.log(books);
+    
     if (_.contains(titlesRead, input[0].toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(titles, input[0].toLowerCase())) {
