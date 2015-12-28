@@ -35,6 +35,11 @@ var Bookclub = function Bookclub() {
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === cmdArgs[0].toLowerCase(); });
     var titlesRead = _.map(self.read, function (book) { return book.title; });
     var input = cmdArgs.split("; ");
+    if (input.length !== 3) {
+      if (input.length !== 2) {
+        input.push("unknown"); input.push(null);
+      }else if (input.length === 2) { input.push(null) }
+    }
     if (_.contains(self.titlesRead, input[0].toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(self.titles, cmdArgs[0])) {
