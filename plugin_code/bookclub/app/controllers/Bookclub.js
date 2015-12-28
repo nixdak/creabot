@@ -27,19 +27,21 @@ var Bookclub = function Bookclub() {
   };
 
   self.suggest = function (client, message, cmdArgs) {
-    var books = _.filter(self.toRead, function (book) { return book.title.toLowerCase() === cmdArgs[0].toLowerCase(); });
-    var titles = _.map(self.toRead, function (book) { return book.title; });
-    var authors = _.map(self.toRead, function (book) { return book.author; });
-    var pages = _.map(self.toRead, function (book) { return book.pages; });
-    var suggesters = _.map(self.toRead, function (book) { return book.suggested; });
-    var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === cmdArgs[0].toLowerCase(); });
-    var titlesRead = _.map(self.read, function (book) { return book.title; });
-    var input = cmdArgs.split("; ");
     if (input.length !== 3) {
       if (input.length !== 2) {
         input.push("unknown"); input.push(null);
       }else if (input.length === 2) { input.push(null) }
     }
+
+    var books = _.filter(self.toRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
+    var titles = _.map(self.toRead, function (book) { return book.title; });
+    var authors = _.map(self.toRead, function (book) { return book.author; });
+    var pages = _.map(self.toRead, function (book) { return book.pages; });
+    var suggesters = _.map(self.toRead, function (book) { return book.suggested; });
+    var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
+    var titlesRead = _.map(self.read, function (book) { return book.title; });
+    var input = cmdArgs.split("; ");
+
     if (_.contains(titlesRead, input[0].toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(titles, input[0].toLowerCase())) {
