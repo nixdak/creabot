@@ -1,176 +1,175 @@
-[
-  {
-    "title": "Pride and Prejudice and Zombies",
-    "author": "Seth Grahame-Smith",
-    "pages": 319,
-    "suggested": "butlerx"
-  },
-  {
-    "title": "Brave New World",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Catch-22",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Cryptonomicon",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Fahrenheit 451",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Neuromancer",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Night In Gaza",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Shiprocked: Life on the Waves with Radio Caroline",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Cuckoo's Calling",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Girl on the Train",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Nightmare",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Plot Against America",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Shepherd's Crown",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Stranger",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Yurope: The American Invasion",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Three-Body Problem",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Elantris",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Bright's Passage",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Restaurant at the End of the Universe ",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Alan Turing: The Enigma",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Trial",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Dune",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "2001: A Space Oddyssey",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Nineteen Eighty-Four",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Jurassic Park",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Sphere",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "The Casual Vacancy",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Seeds Of Earth",
-    "author": "",
-    "pages": ,
-    "suggested": ""
-  },
-  {
-    "title": "Gun Control in the Third Reich",
-    "author": "Stephen P. Halbrook",
-    "pages": 364,
-    "suggested": "Paul"
-  }
-]
+[{
+  "title": "Brave New World",
+  "author": "Aldous Huxley",
+  "pages": 259,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "Catch-22",
+  "author": "Joseph Heller",
+  "pages": 435,
+  "suggested": "gamma",
+  "month": 0
+}, {
+  "title": "Cryptonomicon",
+  "author": "Neal Stephenson",
+  "pages": 1168,
+  "suggested": "cooker3",
+  "month": 0
+}, {
+  "title": "Fahrenheit 451",
+  "author": "Ray Bradbury",
+  "pages": 159,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "Neuromancer",
+  "author": "William Gibson",
+  "pages": 271,
+  "suggested": "moju",
+  "month": 0
+}, {
+  "title": "Night In Gaza",
+  "author": "Dr. Mads Gilbert",
+  "pages": 190,
+  "suggested": "cooker3",
+  "month": 0
+}, {
+  "title": "Shiprocked: Life on the Waves with Radio Caroline",
+  "author": "Steve Conway",
+  "pages": 211,
+  "suggested": "mrs_girl",
+  "month": 0
+}, {
+  "title": "The Cuckoo's Calling",
+  "author": "Robert Galbraith",
+  "pages": 464,
+  "suggested": "creadak",
+  "month": 0
+}, {
+  "title": "The Girl on the Train",
+  "author": "fgsfds_loa Hawkins",
+  "pages": 338,
+  "suggested": "mrs_girl",
+  "month": 0
+}, {
+  "title": "The Nightmare",
+  "author": "Lars Kepler ",
+  "pages": 609,
+  "suggested": "mrs_girl",
+  "month": 0
+}, {
+  "title": "The Plot Against America",
+  "author": "Philip Roth",
+  "pages": 400,
+  "suggested": "gamma",
+  "month": 0
+}, {
+  "title": "The Shepherd's Crown",
+  "author": "Terry Pratchett",
+  "pages": 304,
+  "suggested": "Chimaera",
+  "month": 0
+}, {
+  "title": "The Stranger",
+  "author": "Albert Camus",
+  "pages": 123,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "Yurope: The American Invasion",
+  "author": "Michael D. Wood",
+  "pages": 118,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "The Three-Body Problem",
+  "author": "Liu Cixin",
+  "pages": 302,
+  "suggested": "butlerx",
+  "month": 0
+}, {
+  "title": "Elantris",
+  "author": "Brandon Sanderson",
+  "pages": 496,
+  "suggested": "gamma",
+  "month": 0
+}, {
+  "title": "Bright's Passage",
+  "author": "Josh Ritter ",
+  "pages": 208,
+  "suggested": "gamma",
+  "month": 0
+}, {
+  "title": "The Restaurant at the End of the Universe ",
+  "author": "Douglas Adams",
+  "pages": 208,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "Alan Turing: The Enigma",
+  "author": "Andrew Hodges",
+  "pages": 768,
+  "suggested": "butlerx",
+  "month": 0
+}, {
+  "title": "The Trial",
+  "author": "Franz Kafka",
+  "pages": 213,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "Dune",
+  "author": "Frank Herbert",
+  "pages": 418,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "2001: A Space Oddyssey",
+  "author": "Arthur C Clarke",
+  "pages": 224,
+  "suggested": "creadak",
+  "month": 0
+}, {
+  "title": "Nineteen Eighty-Four",
+  "author": "George Orwell",
+  "pages": 267,
+  "suggested": "creadak",
+  "month": 0
+}, {
+  "title": "Jurassic Park",
+  "author": "Michael Chricton",
+  "pages": 448,
+  "suggested": "creadak",
+  "month": 0
+}, {
+  "title": "Sphere",
+  "author": "Michael Chricton",
+  "pages": 385,
+  "suggested": "creadak",
+  "month": 0
+}, {
+  "title": "The Casual Vacancy",
+  "author": "J. K. Rowling",
+  "pages": 503,
+  "suggested": "creadak",
+  "month": 0
+}, {
+  "title": "Seeds Of Earth",
+  "author": "Michael Cobley",
+  "pages": 400,
+  "suggested": "creadak",
+  "month": 0
+}, {
+  "title": "Gun Control in the Third Reich",
+  "author": "Stephen P. Halbrook",
+  "pages": 364,
+  "suggested": "fgsfds_lo",
+  "month": 0
+}, {
+  "title": "Pride and Prejudice and Zombies",
+  "author": "Seth Grahame-Smith",
+  "pages": 319,
+  "suggested": "butlerx",
+  "month": 0
+}]
