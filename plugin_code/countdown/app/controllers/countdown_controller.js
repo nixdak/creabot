@@ -119,7 +119,7 @@ var Countdown = function Countdown() {
       self.challenges = _.reject(self.challenges, function(challenge) {
         return challenge.challenger === self.game.challenger.nick && challenge.challenged === self.game.challenged.nick;
       });
-      fs.writeFile(self.challengesFile, JSON.stringify(self.challenges, null, 2);
+      fs.writeFile(self.challengesFile, JSON.stringify(self.challenges, null, 2));
     } else {
       client.say(message.args[0], 'Unable to join at the moment.');
     }
