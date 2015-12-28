@@ -80,7 +80,7 @@ var Bookclub = function Bookclub() {
     }
     // construct new topic
     var newTopic = topic;
-    if (typeof config.gameOptions.topicBase !== 'undefined') {
+    if (typeof config.topicBase !== 'undefined') {
       newTopic = topic + ' ' + config.topicBase;
     }
     // set it
