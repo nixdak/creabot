@@ -34,11 +34,11 @@ var Bookclub = function Bookclub() {
     var suggesters = _.map(self.toRead, function (book) { return book.suggested; });
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === cmdArgs[0].toLowerCase(); });
     var titlesRead = _.map(self.read, function (book) { return book.title; });
-
-    if (_.contains(self.titlesRead, cmdArgs[0])) {
+    var input = cmdArgs.split("; ");
+    if (_.contains(self.titlesRead, input[0].toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(self.titles, cmdArgs[0])) {
-      self.toRead.push( { title: cmdArgs[0], author: cmdArgs[1], pages: cmdArgs[2], suggested: message.nick, month: 0} );
+      self.toRead.push( { title: input[0], author: input[1], pages: input[2], suggested: message.nick, month: 0} );
       fs.writeFile(self.toReadFileName, JSON.stringify(self.toRead, null, 2), function (err) {
         if (err) return console.log(err);
         console.log('writing to ' + self.toReadFileName);
