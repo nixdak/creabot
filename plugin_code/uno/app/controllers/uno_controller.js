@@ -111,7 +111,8 @@ var Uno = function Uno () {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
-    self.game.uno(message.nick);
+    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+    self.game.uno(message.nick, cmdArgs[0], cmdArgs[1]);
   };
 
   self.status = function (client, message, cmdArgs){
@@ -119,6 +120,14 @@ var Uno = function Uno () {
         client.say(channel, 'No game running. Start the game by typing !j.');
     } else {
         self.game.showStatus();
+    }
+  };
+
+  self.wiki = function (client, message, cmdArgs){
+    if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
+      client.say(message.nick, 'https://github.com/butlerx/butlerbot/wiki/Uno');
+    } else {
+      client.say(message.args[0], message.nick + ': https://github.com/butlerx/butlerbot/wiki/Uno');
     }
   };
 };
