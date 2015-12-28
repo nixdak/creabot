@@ -5,8 +5,8 @@
 
     "connectCommands": [
           {
-              "target": "",
-              "message": ""
+              "target": "nickserv",
+              "message": "identify"
           }
       ],
 

@@ -1,7 +1,7 @@
 {
   "development": {
     "setTopic": true,
-    "topicBase": " || Wecome to Bookclub check out https://github.com/butlerx/butlerbot/wiki/bookclub for commands",
+    "topicBase": "|| Dev Bot || Expect spam || Expect breakings",
     "channels": [ "#DakDak" ],
     "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#unoDev"],
     "channelsToJoin": [ "#DakDak" ]
