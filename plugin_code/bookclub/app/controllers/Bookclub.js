@@ -35,14 +35,13 @@ var Bookclub = function Bookclub() {
     }
 
     var books = _.filter(self.toRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
-    var titles = _.map(self.toRead, function (book) { return book.title; });
-    var authors = _.map(self.toRead, function (book) { return book.author; });
-    var pages = _.map(self.toRead, function (book) { return book.pages; });
-    var suggesters = _.map(self.toRead, function (book) { return book.suggested; });
+    var titles = _.map(self.toRead, function (book) { return book.title.toLowerCase(); });
+    var authors = _.map(self.toRead, function (book) { return book.author.toLowerCase(); });
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
-    var titlesRead = _.map(self.read, function (book) { return book.title; });
+    var titlesRead = _.map(self.read, function (book) { return book.title.toLowerCase(); });
     console.log(books);
-    
+    console.log(titles);
+
     if (_.contains(titlesRead, input[0].toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(titles, input[0].toLowerCase())) {
