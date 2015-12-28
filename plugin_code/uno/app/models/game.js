@@ -287,7 +287,7 @@ var Game = function (channel, client, config, cmdArgs) {
     _.each(self.players, function (player) {
       self.deal(player, 7);
     });
-    self.setTopic(c.bold.lime('A game  of ') + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + c.bold.lime(' is running.'));
+    self.setTopic(c.bold.lime('A game of ') + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + c.bold.lime(' is running.'));
     self.nextTurn();
   };
 
@@ -581,7 +581,7 @@ var Game = function (channel, client, config, cmdArgs) {
     self.client.say(nick, string);
   };
 
-  self.setTopic(c.bold.lime('A game  of ') + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + c.bold.lime(' has been started. Type !j to get in on the fun! and !start when ready to play.'));
+  self.setTopic(c.bold.lime('A game of ') + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + c.bold.lime(' has been started. Type !j to get in on the fun! and !start when ready to play.'));
   //self.say('A new game of ' + c.bold.yellow('U') + c.bold.green('N') + c.bold.blue('O') + c.bold.red('!') + ' has been started. Type !j to join' + ' and !start when ready.');
 
   if (_.isUndefined(self.config.gameOptions.minutesBeforeStart)) {
