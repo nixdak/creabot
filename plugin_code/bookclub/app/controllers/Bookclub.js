@@ -36,7 +36,6 @@ var Bookclub = function Bookclub() {
 
     var books = _.filter(self.toRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titles = _.map(self.toRead, function (book) { return book.title.toLowerCase(); });
-    var authors = _.map(self.toRead, function (book) { return book.author.toLowerCase(); });
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(self.read, function (book) { return book.title.toLowerCase(); });
     console.log(books);
