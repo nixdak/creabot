@@ -9,4 +9,5 @@ module.exports = function(app) {
   // Add commands
   app.cmd('suggest', '', bookclub.config.channels, bookclub.config.channelsToExclude, bookclub.suggest);
   app.cmd('current', '', bookclub.config.channels, bookclub.config.channelsToExclude, bookclub.thisMonth);
+  app.cmd('next', '', bookclub.config.channels, bookclub.config.channelsToExclude, bookclub.nextMonth);
 };
