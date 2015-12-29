@@ -2,19 +2,16 @@ var _ = require('underscore'),
     fs = require('fs'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env],
-    toRead = require('../../config/booksToRead.json'),
+    booksToRead = require('../../config/booksToRead.json'),
     booksRead = require('../../config/booksRead.json');
     thisMonthBook = require('../../config/thisMonthBook.json');
 
 var Bookclub = function Bookclub() {
   var self = this;
   self.config = config;
-  self.toRead = toRead;
+  self.booksToRead = booksToRead;
   self.thisMonthBook = thisMonthBook;
   self.booksRead = booksRead;
-  self.toReadFileName = 'plugin_code/bookclub/config/booksToRead.json';
-  self.thisMonthFileName = 'plugin_code/bookclub/config/thisMonthBook.json';
-  self.booksReadFileName = 'plugin_code/bookclub/config/booksRead.json';
 
   self.thisMonth = function (client, message, cmdArgs) {
     var d = new Date();
@@ -34,7 +31,7 @@ var Bookclub = function Bookclub() {
       }else if (input.length === 2) { input.push(null) }
     }
 
-    var books = _.filter(self.toRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
+    var books = _.filter(self.booksToRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titles = _.map(books, function (book) { return book.title.toLowerCase(); });
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
@@ -45,11 +42,8 @@ var Bookclub = function Bookclub() {
     if (_.contains(titlesRead, input[0].toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(titles, input[0].toLowerCase())) {
-      self.toRead.push( { title: input[0], author: input[1], pages: input[2], suggested: message.nick, month: 0} );
-      fs.writeFile(self.toReadFileName, JSON.stringify(self.toRead, null, 2), function (err) {
-        if (err) return console.log(err);
-        console.log('writing to ' + self.toReadFileName);
-      });
+      self.booksToRead.push( { title: input[0], author: input[1], pages: input[2], suggested: message.nick, month: 0} );
+      self.write('booksToRead', self.booksToRead);
       client.say(message.args[0], 'Book added!');
     } else client.say(message.args[0], 'That book has already been suggested');
   };
@@ -57,24 +51,15 @@ var Bookclub = function Bookclub() {
   self.changeBook = function (client, month, channel) {
     //add book to read list
     self.booksRead.push(thisMonthBook);
-    fs.writeFile(self.booksReadFileName, JSON.stringify(self.booksRead, null, 2), function (err) {
-      if (err) return console.log(err);
-      console.log('writing to ' + self.booksReadFileName);
-    });
-    //choose random book from toRead
-    newbook = Math.floor(Math.random()*self.toRead.length);
-    self.thisMonthBook = self.toRead[newbook];
-    self.toRead.splice(newbook, 1);
+    self.write('booksRead', self.booksRead);
+    //choose random book from booksToRead
+    newbook = Math.floor(Math.random()*self.booksToRead.length);
+    self.thisMonthBook = self.booksToRead[newbook];
+    self.booksToRead.splice(newbook, 1);
     self.thisMonthBook.month = month;
-    // write out toRead and thisMonthBook
-    fs.writeFile(self.toReadFileName, JSON.stringify(self.toRead, null, 2), function (err) {
-      if (err) return console.log(err);
-      console.log('writing to ' + self.toReadFileName);
-    });
-    fs.writeFile(self.thisMonthFileName, JSON.stringify(self.thisMonthBook, null, 2), function (err) {
-      if (err) return console.log(err);
-      console.log('writing to ' + self.thisMonthFileName);
-    });
+    // write out booksToRead and thisMonthBook
+    self.write('booksToRead', self.booksToRead);
+    self.write('thisMonthFileName', self.thisMonthFileName);
     //say book and cvhange TOPIC
     client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested);
     self.setTopic(client, channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author)
@@ -92,6 +77,14 @@ var Bookclub = function Bookclub() {
     }
     // set it
     client.send('TOPIC', channel, newTopic);
+  };
+
+  self.write = function (fileName, file) {
+    fileName = 'plugin_code/bookclub/config/' + fileName '.json';
+    fs.writeFile(fileName, JSON.stringify(file, null, 2), function (err) {
+      if (err) return console.log(err);
+      console.log('writing to ' + fileName);
+    });
   };
 }
 
