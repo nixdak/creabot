@@ -40,11 +40,12 @@ var Bookclub = function Bookclub() {
     // console.log(books);
     // console.log(titles);
     // console.log(titlesRead);
-
-    if (_.contains(titlesRead, input[0].toLowerCase())) {
+    var title = input[0].toString(), author = input[1].toString(), pages = input[2];
+    if (typeof pages !== "number") { pages = null }
+    if (_.contains(titlesRead, title.toLowerCase())) {
       client.say(message.args[0], 'That book has already been read');
-    } else if (!_.contains(titles, input[0].toLowerCase())) {
-      self.booksToRead.push( { title: input[0], author: input[1], pages: input[2], suggested: message.nick, month: 0} );
+    } else if (!_.contains(titles, title.toLowerCase())) {
+      self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0} );
       self.write('booksToRead', self.booksToRead);
       client.say(message.args[0], 'Book added!');
     } else client.say(message.args[0], 'That book has already been suggested');
