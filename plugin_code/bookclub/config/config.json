@@ -2,16 +2,16 @@
   "development": {
     "setTopic": true,
     "topicBase": "|| Dev Bot || Expect spam || Expect breakings",
-    "channels": [ "#DakDak" ],
-    "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#unoDev"],
-    "channelsToJoin": [ "#DakDak" ]
+    "channels": [ "#botdev" ],
+    "channelsToExclude": [],
+    "channelsToJoin": [ "#botdev" ]
   },
 
   "production": {
     "setTopic": true,
     "topicBase": " || Wecome to Bookclub check out https://github.com/butlerx/butlerbot/wiki/bookclub for commands",
-    "channels": ["#Bookclub"],
-    "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#uno", "#Bots"],
-    "channelsToJoin": ["#Bookclub"]
+    "channels": ["#BookClub"],
+    "channelsToExclude": ["#Uno", "#CardsAgainstHumanity", "#Countdown", "bots"],
+    "channelsToJoin": ["#BookClub"]
   }
 }

@@ -9,9 +9,9 @@
     },
 
     "pluginOptions": {
-      "channels": ["#UnoDev"],
-      "channelsToExclude": ["#cardsagainsthumanityDev", "#countdownDev", "#dakdak"],
-      "channelsToJoin": ["#UnoDev"]
+      "channels": ["#botdev"],
+      "channelsToExclude": [],
+      "channelsToJoin": ["#botdev"]
     }
   },
 
@@ -26,7 +26,7 @@
 
     "pluginOptions": {
       "channels": ["#Uno"],
-      "channelsToExclude": ["#cardsagainsthumanity", "#countdown", "#Bots", "#Bookclub"],
+      "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#bots", "#BookClub"],
       "channelsToJoin": ["#Uno"]
     }
   }
