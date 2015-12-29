@@ -17,8 +17,8 @@ var Bookclub = function Bookclub() {
   self.nextMonthBook = nextMonthBook;
   self.booksRead = booksRead;
   self.date = new Date();
-  
-  self.update = schedule.scheduleJob('0 0 1 * *' function(){
+
+  self.update = schedule.scheduleJob('0 0 1 * *', function(){
     console.log('Scheduled update');
     self.changeBook();
   });
