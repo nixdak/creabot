@@ -14,6 +14,7 @@ var Bookclub = function Bookclub() {
   self.booksRead = booksRead;
 
   self.thisMonth = function (client, message, cmdArgs) {
+    console.log('in thisMonth');
     var d = new Date();
     var month = d.getMonth();
     if (month === self.thisMonthBook.month) {
@@ -24,6 +25,7 @@ var Bookclub = function Bookclub() {
   };
 
   self.suggest = function (client, message, cmdArgs) {
+    console.log('in suggest');
     var input = cmdArgs.split("; ");
     if (input.length !== 3) {
       if (input.length !== 2) {
@@ -49,6 +51,7 @@ var Bookclub = function Bookclub() {
   };
 
   self.changeBook = function (client, month, channel) {
+    console.log('changing book');
     //add book to read list
     self.booksRead.push(thisMonthBook);
     self.write('booksRead', self.booksRead);
