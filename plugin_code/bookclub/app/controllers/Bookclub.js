@@ -117,7 +117,7 @@ var Bookclub = function Bookclub() {
   self.showBooks = function (client, message, cmdArgs) {
     var list = "";
     for (var i = 0; i < self.booksToRead.length; i++) {
-      var message =+ '[' + i '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested + ' ';
+      var message =+ '[' + i + '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested + ' ';
     }
     client.say(message.nick, list);
   };
