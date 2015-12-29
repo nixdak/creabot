@@ -63,7 +63,7 @@ var Bookclub = function Bookclub() {
 
     var title = input[0].toString(), author = input[1].toString(), pages = input[2];
     if (typeof pages !== "number") { pages = null }
-    if (_.contains(titlesRead, title.toLowerCase())) {
+    if (_.contains(titlesRead, title.toLowerCase()) || title.toLowerCase() === self.thisMonthBook.toLowerCase() || title.toLowerCase() === self.nextMonthBook.toLowerCase()) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(titles, title.toLowerCase())) {
       self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0} );
@@ -114,8 +114,12 @@ var Bookclub = function Bookclub() {
     });
   };
 
-  self.showBooks = function (client, channel, topic) {
-
+  self.showBooks = function (client, message, cmdArgs) {
+    var list = "";
+    for (var i = 0; i < self.booksToRead.length; i++) {
+      var message =+ '[' + i '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested + ' ';
+    }
+    client.say(message.nick, list);
   };
 }
 
