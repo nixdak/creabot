@@ -1,11 +1,13 @@
 var _ = require('underscore'),
     fs = require('fs'),
+    schedule = require('node-schedule');
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env],
     booksToRead = require('../../config/booksToRead.json'),
-    booksRead = require('../../config/booksRead.json');
-    thisMonthBook = require('../../config/thisMonthBook.json');
+    booksRead = require('../../config/booksRead.json'),
+    thisMonthBook = require('../../config/thisMonthBook.json'),
     nextMonthBook = require('../../config/nextMonthBook.json');
+
 
 var Bookclub = function Bookclub() {
   var self = this;
@@ -14,11 +16,16 @@ var Bookclub = function Bookclub() {
   self.thisMonthBook = thisMonthBook;
   self.nextMonthBook = nextMonthBook;
   self.booksRead = booksRead;
+  self.date = new Date();
+  
+  self.update = schedule.scheduleJob('0 0 1 * *' function(){
+    console.log('Scheduled update');
+    self.changeBook();
+  });
 
   self.thisMonth = function (client, message, cmdArgs) {
     console.log('in thisMonth');
-    var d = new Date();
-    var month = d.getMonth();
+    var month = self.date.getMonth();
     if (month === self.thisMonthBook.month) {
       client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author);
     } else {
@@ -28,8 +35,7 @@ var Bookclub = function Bookclub() {
 
   self.nextMonth = function (client, message, cmdArgs) {
     console.log('in nextMonth');
-    var d = new Date();
-    var month = d.getMonth();
+    var month = self.date.getMonth();
     if (month === self.thisMonthBook.month) {
       client.say(message.args[0], 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author);
     } else {
