@@ -115,13 +115,8 @@ var Bookclub = function Bookclub() {
   };
 
   self.showBooks = function (client, message, cmdArgs) {
-    var list = '';
     for (var i = 0; i < self.booksToRead.length; i++) {
-      list =+ '[' + i + '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested + ' ';
-      if (i%5 === 0){
-        client.say(message.nick, list);
-        list = '';
-      }
+       client.say(message.nick, self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested);
     }
   };
 }
