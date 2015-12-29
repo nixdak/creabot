@@ -1,9 +1,7 @@
-[
-  {
-    "title": "The Three-Body Problem",
-    "author": "Liu Cixin",
-    "pages": 302,
-    "suggested": "butlerx",
-    "month": 0
-  }
-]
+{
+  "title": "The Three-Body Problem",
+  "author": "Liu Cixin",
+  "pages": 302,
+  "suggested": "butlerx",
+  "month": 0
+}
