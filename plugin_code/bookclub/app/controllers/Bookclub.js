@@ -46,7 +46,7 @@ var Bookclub = function Bookclub() {
   self.suggest = function (client, message, cmdArgs) {
     console.log('in suggest');
     var input = cmdArgs.split("; ");
-    if (input.length === 0) {
+    if (input[0] === "") {
       client.say(message.args[0], 'You must provide a title');
       return false;
     }
