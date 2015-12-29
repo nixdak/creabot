@@ -19,6 +19,7 @@
     "mariasql": "latest",
     "mysql": "latest",
     "nodemon": "latest",
-    "mathjs": "latest"
+    "mathjs": "latest",
+    "node-schedule": "latest"
   }
 }
