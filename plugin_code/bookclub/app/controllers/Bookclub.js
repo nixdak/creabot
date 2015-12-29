@@ -46,19 +46,21 @@ var Bookclub = function Bookclub() {
   self.suggest = function (client, message, cmdArgs) {
     console.log('in suggest');
     var input = cmdArgs.split("; ");
+    if (input.length === 0) {
+      client.say(message.args[0], 'You must provide a title');
+      return false;
+    }
     if (input.length !== 3) {
       if (input.length !== 2) {
         input.push("unknown"); input.push(null);
-      }else if (input.length === 2) { input.push(null) }
+      } else if (input.length === 2) { input.push(null) }
     }
 
     var books = _.filter(self.booksToRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titles = _.map(books, function (book) { return book.title.toLowerCase(); });
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
-    // console.log(books);
-    // console.log(titles);
-    // console.log(titlesRead);
+
     var title = input[0].toString(), author = input[1].toString(), pages = input[2];
     if (typeof pages !== "number") { pages = null }
     if (_.contains(titlesRead, title.toLowerCase())) {
