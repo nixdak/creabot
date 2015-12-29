@@ -1,9 +1,9 @@
 {
-  "name": "creabot",
+  "name": "butlerbot",
   "version": "1.1.0",
-  "description": "Creabot",
+  "description": "Butlerbot",
   "main": "app.js",
-  "author": "Creadak <creadak@gmail.com>",
+  "author": "butlerx <butlerx@redbrick.dcu.ie>",
   "license": "Creative Commons BY-NC-SA 2.0",
   "dependencies": {
     "underscore": "latest",
