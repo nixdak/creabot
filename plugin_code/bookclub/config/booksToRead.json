@@ -174,8 +174,26 @@
   "month": 0
 }, {
   "title": "The Sandman: Endless Nights",
-  "author": "Neil Gaiman;",
+  "author": "Neil Gaiman",
   "pages": null,
+  "suggested": "butlerx",
+  "month": 0
+}, {
+  "title": "Childhood's End",
+  "author": "Arthur C. Clarke",
+  "pages": 214,
+  "suggested": "butlerx",
+  "month": 0
+}, {
+  "title": "Leviathan Wakes",
+  "author": "James S. A. Corey",
+  "pages": 582,
+  "suggested": "butlerx",
+  "month": 0
+}, {
+  "title": "The Man in the High Castle",
+  "author": "Philip K. Dick",
+  "pages": 239,
   "suggested": "butlerx",
   "month": 0
 }]
