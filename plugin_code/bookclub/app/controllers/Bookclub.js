@@ -75,6 +75,7 @@ var Bookclub = function Bookclub() {
   self.changeBook = function (client, month, channel) {
     console.log('changing book');
     //add book to read list
+    self.setTopic(client, channel, 'This months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author + ' || This months discussion: ' + self.thisMonthBook.title)
     self.booksRead.push(thisMonthBook);
     self.write('booksRead', self.booksRead);
     //choose random book from booksToRead
@@ -89,7 +90,6 @@ var Bookclub = function Bookclub() {
     self.write('nextMonthBook', self.nextMonthBook);
     //say book and cvhange TOPIC
     client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested);
-    self.setTopic(client, channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author)
   };
 
   self.setTopic = function (client, channel, topic) {
@@ -112,6 +112,10 @@ var Bookclub = function Bookclub() {
       if (err) return console.log(err);
       console.log('writing to ' + fileName);
     });
+  };
+
+  self.showBooks = function (client, channel, topic) {
+
   };
 }
 
