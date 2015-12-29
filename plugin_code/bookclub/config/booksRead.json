@@ -4,6 +4,27 @@
     "author": "Andy Weir",
     "pages": "369",
     "suggested": "butlerx",
-    "month": 0
+    "month": 7
+  },
+  {
+    "title": "Ready Player One",
+    "author": "Ernest Cline",
+    "pages": null,
+    "suggested": "gamma",
+    "month": 8
+  },
+  {
+    "title": "The Hitchhikers Guide to the Galaxy",
+    "author": "Douglas Adams",
+    "pages": null,
+    "suggested": "",
+    "month": 9
+  },
+  {
+    "title": "World War Z",
+    "author": "Max Brooks",
+    "pages": null,
+    "suggested": "",
+    "month": 10
   }
 ]

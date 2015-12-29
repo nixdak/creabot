@@ -74,7 +74,7 @@ var Bookclub = function Bookclub() {
     newbook = Math.floor(Math.random()*self.booksToRead.length);
     self.nextMonthBook = self.booksToRead[newbook];
     self.booksToRead.splice(newbook, 1);
-    self.nextMonthBook.month = month+1;
+    self.nextMonthBook.month = month+1%12;
     // write out booksToRead and thisMonthBook
     self.write('booksToRead', self.booksToRead);
     self.write('thisMonthBook', self.thisMonthBook);
