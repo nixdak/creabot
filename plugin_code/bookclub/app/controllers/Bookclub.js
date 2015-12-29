@@ -5,12 +5,14 @@ var _ = require('underscore'),
     booksToRead = require('../../config/booksToRead.json'),
     booksRead = require('../../config/booksRead.json');
     thisMonthBook = require('../../config/thisMonthBook.json');
+    nextMonthBook = require('../../config/nextMonthBook.json');
 
 var Bookclub = function Bookclub() {
   var self = this;
   self.config = config;
   self.booksToRead = booksToRead;
   self.thisMonthBook = thisMonthBook;
+  self.nextMonthBook = nextMonthBook;
   self.booksRead = booksRead;
 
   self.thisMonth = function (client, message, cmdArgs) {
@@ -19,6 +21,17 @@ var Bookclub = function Bookclub() {
     var month = d.getMonth();
     if (month === self.thisMonthBook.month) {
       client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author);
+    } else {
+      self.changeBook(client, month, message.args[0]);
+    }
+  };
+
+  self.nextMonth = function (client, message, cmdArgs) {
+    console.log('in nextMonth');
+    var d = new Date();
+    var month = d.getMonth();
+    if (month === self.thisMonthBook.month) {
+      client.say(message.args[0], 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author);
     } else {
       self.changeBook(client, month, message.args[0]);
     }
@@ -57,13 +70,15 @@ var Bookclub = function Bookclub() {
     self.booksRead.push(thisMonthBook);
     self.write('booksRead', self.booksRead);
     //choose random book from booksToRead
+    self.thisMonthBook = self.nextMonthBook;
     newbook = Math.floor(Math.random()*self.booksToRead.length);
-    self.thisMonthBook = self.booksToRead[newbook];
+    self.nextMonthBook = self.booksToRead[newbook];
     self.booksToRead.splice(newbook, 1);
-    self.thisMonthBook.month = month;
+    self.nextMonthBook.month = month+1;
     // write out booksToRead and thisMonthBook
     self.write('booksToRead', self.booksToRead);
-    self.write('thisMonthFileName', self.thisMonthFileName);
+    self.write('thisMonthBook', self.thisMonthBook);
+    self.write('nextMonthBook', self.nextMonthBook);
     //say book and cvhange TOPIC
     client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested);
     self.setTopic(client, channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author)
