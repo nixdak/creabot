@@ -19,6 +19,7 @@ module.exports = function(app) {
     app.cmd('fyr', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.showFYR);
     app.cmd('reload', '', redbrickCommittee.config.channels, redbrickCommittee.config.channelsToExclude, redbrickCommittee.reload);
 
+    // Private commands
     app.msg('cmt', '', redbrickCommittee.showCommitteeInfo);
     app.msg('chair', '', redbrickCommittee.showChair);
     app.msg('treasurer', '', redbrickCommittee.showTreasurer);
