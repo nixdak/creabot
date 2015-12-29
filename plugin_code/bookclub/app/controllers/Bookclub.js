@@ -80,7 +80,7 @@ var Bookclub = function Bookclub() {
   };
 
   self.write = function (fileName, file) {
-    fileName = 'plugin_code/bookclub/config/' + fileName '.json';
+    fileName = 'plugin_code/bookclub/config/' + fileName + '.json';
     fs.writeFile(fileName, JSON.stringify(file, null, 2), function (err) {
       if (err) return console.log(err);
       console.log('writing to ' + fileName);
