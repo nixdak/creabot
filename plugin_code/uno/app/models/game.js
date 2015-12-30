@@ -256,6 +256,8 @@ var Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
+    clearInterval(self.turnTimeout);
+
     if (self.currentPlayer.hasPlayed === false && idle !== true ) {
       self.say(self.currentPlayer.nick + ' has ended their turn without playing.');
     }
@@ -386,8 +388,6 @@ var Game = function (channel, client, config, cmdArgs) {
       pickedCard.color = color.toUpperCase();
     }
 
-    clearInterval(self.turnTimeout);
-
     self.say(playString);
 
     player.hasPlayed = true;
@@ -417,11 +417,9 @@ var Game = function (channel, client, config, cmdArgs) {
     var drawnCard = self.currentPlayer.hand.getCard(self.currentPlayer.hand.numCards() - 1);
 
     if (idle) {
-      clearInterval(self.turnTimeout);
       self.endTurn(nick, idle);
     } else if (drawnCard.isPlayable(self.discard.getCurrentCard()) === false) {
       self.pm(self.currentPlayer.nick, 'You have no playable cards. Ending your turn.');
-      clearInterval(self.turnTimeout);
       self.endTurn();
     }
   };
