@@ -237,7 +237,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(self.currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + ' ' +
         inflection.inflect('time', self.config.gameOptions.maxIdleTurns) + '. Removing them from the game.'
       );
-      self.(self.currentPlayer.nick);
+      self.removePlayer(self.currentPlayer.nick);
     }
 
     if (!_.isUndefined(self.players)) {
