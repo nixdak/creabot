@@ -161,12 +161,11 @@ var Game = function (channel, client, config, cmdArgs) {
     if (!_.isUndefined(player)) {
       _.each(player.hand.getCards(), function (card, index) {
         cardString += c.bold(' [' + index + '] ') + card.toString();
-        if(512 === cardString.length){
+        if(cardString.length >= 200){
           self.pm(player.nick, cardString);
           cardString = '';
         }
       });
-
       self.pm(player.nick, cardString);
     }
   };
