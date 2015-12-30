@@ -237,7 +237,7 @@ var Game = function (channel, client, config, cmdArgs) {
       self.say(self.currentPlayer.nick + ' has idled ' + self.config.gameOptions.maxIdleTurns + ' ' +
         inflection.inflect('time', self.config.gameOptions.maxIdleTurns) + '. Removing them from the game.'
       );
-      self.removePlayer(self.currentPlayer.nick);
+      self.(self.currentPlayer.nick);
     }
 
     if (!_.isUndefined(self.players)) {
@@ -513,6 +513,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     // If the player is the current player, move to the next turn
     if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player) {
+      clearInterval(self.turnTimeout);
       self.nextTurn();
     } else if (self.players.length < 2 && self.state !== STATES.FINISHED && self.state !== STATES.STOPPED && self.state !== STATES.WAITING) {
       self.stop();
