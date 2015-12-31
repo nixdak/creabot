@@ -4,7 +4,14 @@
   "description": "Butlerbot",
   "main": "app.js",
   "author": "butlerx <butlerx@redbrick.dcu.ie>",
-  "license": "Creative Commons BY-NC-SA 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/butlerx/butlerbot"
+  },
+  "bugs": {
+    "url": "http://github.com/butlerx/butlerbot/issues"
+  },
+  "license": "CC-BY-NC-SA-2.0",
   "dependencies": {
     "underscore": "latest",
     "irc": "~0.3.6",
