@@ -123,7 +123,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
   };
 
   self.showCommitteeInfo = function(client, message, cmdArgs) {
-
+    client.say(message.args[0], 'Committee details sent. Who you want to tell to resign!');
     self.showChair(client, message, cmdArgs);
     self.showSecretary(client, message, cmdArgs);
     self.showTreasurer(client, message, cmdArgs);
@@ -136,7 +136,7 @@ var RedbrickCommittee = function RedbrickCommittee() {
     // console.log('chair: ' + self.chair + ', sec: ' + self.sec + ', treasurer: ' + self.treasurer + ', pro: ' + self.pro + ', events: ' + self.events + ', FYR: ' + self.fyr + ', web: ' + self.web + ', helpdesk: ' + self.helpdesk + ', admins: ' + self.admins);
   };
 
-  self.showChair = function (client, message, cmdArgsbbss) {
+  self.showChair = function (client, message, cmdArgs) {
     var chairperson = _.find(self.committee, { role: 'Chairperson' });
     if (!_.isUndefined(chairperson) && self.chair) {
       chair_string = chairperson.name + ' (' + chairperson.nick + ')';
