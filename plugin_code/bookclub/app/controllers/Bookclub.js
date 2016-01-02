@@ -20,7 +20,8 @@ var Bookclub = function Bookclub() {
 
   self.update = schedule.scheduleJob('0 0 1 * *', function(){
     console.log('Scheduled update');
-    self.changeBook();
+    var month = self.date.getMonth();
+    self.changeBook(client, month, self.config.channels[0]);
   });
 
   self.thisMonth = function (client, message, cmdArgs) {
@@ -117,6 +118,51 @@ var Bookclub = function Bookclub() {
   self.showBooks = function (client, message, cmdArgs) {
     for (var i = 0; i < self.booksToRead.length; i++) {
       client.say(message.nick, ' [' + i + '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested);
+    }
+  };
+
+  self.showRead = function (client, message, cmdArgs) {
+    var month;
+    for (var i = 0; i < self.booksRead.length; i++) {
+      switch (self.booksRead[i].month) {
+        case 0:
+          month = 'January';
+          break;
+        case 1:
+          month = 'Febuary';
+          break;
+        case 2:
+          month = 'March';
+          break;
+        case 3:
+          month = 'April';
+          break;
+        case 4:
+          month = 'May';
+          break;
+        case 5:
+          month = 'June';
+          break;
+        case 6:
+          month = 'July';
+          break;
+        case 7:
+          month = 'August';
+          break;
+        case 8:
+          month = 'September';
+          break;
+        case 9:
+          month = 'October';
+          break;
+        case 10:
+          month = 'November';
+          break;
+        case 11:
+          month = 'December';
+          break;
+      }
+      client.say(message.nick, month + ': ' + self.booksRead[i].title + ' by ' + self.booksRead[i].author + ' suggested by ' + self.booksRead[i].suggested);
     }
   };
 }
