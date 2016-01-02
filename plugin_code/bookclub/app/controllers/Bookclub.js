@@ -17,16 +17,20 @@ var Bookclub = function Bookclub() {
   self.nextMonthBook = nextMonthBook;
   self.booksRead = booksRead;
   self.date = new Date();
+  self.client = null;
 
   self.update = schedule.scheduleJob('0 0 1 * *', function(){
-    console.log('Scheduled update');
-    var month = self.date.getMonth();
-    self.changeBook(client, month, self.config.channels[0]);
+    if (self.client !== null) {
+      console.log('Scheduled update');
+      var month = self.date.getMonth();
+      self.changeBook(self.client, month, self.config.channel[0]);
+    }
   });
 
   self.thisMonth = function (client, message, cmdArgs) {
     console.log('in thisMonth');
     var month = self.date.getMonth();
+    self.client = client;
     if (month === self.thisMonthBook.month) {
       client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author);
     } else {
@@ -37,6 +41,7 @@ var Bookclub = function Bookclub() {
   self.nextMonth = function (client, message, cmdArgs) {
     console.log('in nextMonth');
     var month = self.date.getMonth();
+    self.client = client;
     if (month === self.thisMonthBook.month) {
       client.say(message.args[0], 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author);
     } else {
@@ -46,6 +51,7 @@ var Bookclub = function Bookclub() {
 
   self.suggest = function (client, message, cmdArgs) {
     console.log('in suggest');
+    self.client = client;
     var input = cmdArgs.split("; ");
     if (input[0] === "") {
       client.say(message.args[0], 'You must provide a title');
@@ -116,14 +122,16 @@ var Bookclub = function Bookclub() {
   };
 
   self.showBooks = function (client, message, cmdArgs) {
+    self.client = client;
     for (var i = 0; i < self.booksToRead.length; i++) {
       client.say(message.nick, ' [' + i + '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested);
     }
   };
 
-  self.showRead = function (client, message, cmdArgs) {
-    var month;
-    for (var i = 0; i < self.booksRead.length; i++) {
+  self.showBooks = function (client, message, cmdArgs) {
+    self.client = client;
+    for (var i = 0; i < self.booksToRead.length; i++) {
+      var months = 'No Month';
       switch (self.booksRead[i].month) {
         case 0:
           month = 'January';
@@ -162,7 +170,7 @@ var Bookclub = function Bookclub() {
           month = 'December';
           break;
       }
-      client.say(message.nick, month + ': ' + self.booksRead[i].title + ' by ' + self.booksRead[i].author + ' suggested by ' + self.booksRead[i].suggested);
+      client.say(message.nick, month + ': ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested);
     }
   };
 }
