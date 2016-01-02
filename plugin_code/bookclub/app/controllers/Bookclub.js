@@ -24,7 +24,7 @@ var Bookclub = function Bookclub() {
       console.log('Scheduled update');
       var month = self.date.getMonth();
       self.changeBook(self.client, month, self.config.channel[0]);
-    }
+    } else console.log('update failed');
   });
 
   self.thisMonth = function (client, message, cmdArgs) {
