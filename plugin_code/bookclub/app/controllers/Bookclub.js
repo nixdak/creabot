@@ -23,7 +23,7 @@ var Bookclub = function Bookclub() {
     if (self.client !== null) {
       console.log('Scheduled update');
       var month = self.date.getMonth();
-      self.changeBook(self.client, month, self.config.channel[0]);
+      self.changeBook(self.client, month, self.config.channels[0]);
     } else console.log('update failed');
   });
 
@@ -97,6 +97,7 @@ var Bookclub = function Bookclub() {
     self.write('nextMonthBook', self.nextMonthBook);
     //say book and cvhange TOPIC
     client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested);
+    client.say(channel, 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author + ' suggested by ' + self.nextMonthBook.suggested);
   };
 
   self.setTopic = function (client, channel, topic) {
