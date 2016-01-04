@@ -129,9 +129,9 @@ var Bookclub = function Bookclub() {
     }
   };
 
-  self.showBooks = function (client, message, cmdArgs) {
+  self.showRead = function (client, message, cmdArgs) {
     self.client = client;
-    for (var i = 0; i < self.booksToRead.length; i++) {
+    for (var i = 0; i < self.booksRead.length; i++) {
       var months = 'No Month';
       switch (self.booksRead[i].month) {
         case 0:
@@ -171,7 +171,7 @@ var Bookclub = function Bookclub() {
           month = 'December';
           break;
       }
-      client.say(message.nick, month + ': ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested);
+      client.say(message.nick, month + ': ' + self.booksRead[i].title + ' by ' + self.booksRead[i].author + ' suggested by ' + self.booksRead[i].suggested);
     }
   };
 }
