@@ -181,11 +181,11 @@ var Bookclub = function Bookclub() {
     var args = cmdArgs.split(" ", 1);
     self.client = client;
     if (args[0] === '') {
-      client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+      client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
     }
     if (args[0].toLowerCase() === 'keep') {
       self.keep++;
-      client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+      client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
     } else if (args[0].toLowerCase() === 'new') {
       if (self.new === 0) {
         self.startTimeout = setTimeout(self.startTimeoutFunction, self.minutesBeforeStart * 60 * 1000);
@@ -194,12 +194,12 @@ var Bookclub = function Bookclub() {
       if (self.new === 5) {
         if (self.keep === 0){
           var month = self.date.getMonth();
-          changeBook(client, month,message[0]);//need to fix change book
+          changeBook(client, month,message.args[0]);//need to fix change book
           clearTimeout(startTimeout);
-        } else client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+        } else client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
       }
     } else {
-      client.say(message[0], args[0] + ' is not a valid input');
+      client.say(message.args[0], args[0] + ' is not a valid input');
     }
   };
 
