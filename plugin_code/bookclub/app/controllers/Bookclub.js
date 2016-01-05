@@ -20,6 +20,7 @@ var Bookclub = function Bookclub() {
   self.client = null;
   self.new = 0;
   self.keep = 0;
+  self.voted = [];
 
   self.update = schedule.scheduleJob('0 0 1 * *', function(){
     if (self.client !== null) {
@@ -183,25 +184,32 @@ var Bookclub = function Bookclub() {
     if (args[0] === '') {
       client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
     } else {
-      if (args[0].toLowerCase() === 'keep') {
-        self.keep++;
-        client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+      if (_.contains(self.voted, message.nick.toLowerCase())) {
+      client.say(message.args[0], message.nick + ' you\'ve arlready voted')
+      return false;
       } else {
-        if (args[0].toLowerCase() === 'new') {
-          if (self.new === 0) {
-            self.startTimeout = setTimeout(self.startTimeoutFunction, 10 * 60 * 1000);
-          }
-          self.new++;
-          if (self.new === 5) {
-            if (self.keep === 0){
-              var month = self.date.getMonth();
-              changeBook(client, month,message.args[0]);// NOTE: need to fix change book
-              self.keep = 0; self.new = 0;
-              clearTimeout(self.startTimeout);
-            }
-          } else client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+        if (args[0].toLowerCase() === 'keep') {
+          self.keep++;
+          self.voted.push(message.nick.toLowerCase());
+          client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
         } else {
-          client.say(message.args[0], args[0] + ' is not a valid input');
+          if (args[0].toLowerCase() === 'new') {
+            if (self.new === 2) {
+              self.startTimeout = setTimeout(self.startTimeoutFunction, 10 * 60 * 1000);
+            }
+            self.new++;
+            self.voted.push(message.nick.toLowerCase());
+            if (self.new === 6) {
+              if (self.keep === 0){
+                var month = self.date.getMonth();
+                changeBook(client, month,message.args[0]);// NOTE: need to fix change book
+                self.keep = 0; self.new = 0;
+                clearTimeout(self.startTimeout);
+              }
+            } else client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+          } else {
+            client.say(message.args[0], args[0] + ' is not a valid input');
+          }
         }
       }
     }
