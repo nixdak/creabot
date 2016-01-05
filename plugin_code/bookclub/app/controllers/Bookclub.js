@@ -195,7 +195,8 @@ var Bookclub = function Bookclub() {
           if (self.new === 5) {
             if (self.keep === 0){
               var month = self.date.getMonth();
-              changeBook(client, month,message.args[0]);//need to fix change book
+              changeBook(client, month,message.args[0]);// NOTE: need to fix change book
+              self.keep = 0; self.new = 0;
               clearTimeout(self.startTimeout);
             }
           } else client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
@@ -208,6 +209,7 @@ var Bookclub = function Bookclub() {
 
   self.startTimeoutFunction = function () {
     clearTimeout(self.startTimeout);
+    self.keep = 0; self.new = 0;
     if (self.client !== null) {
       if (self.new > self.keep) {
         var month = self.date.getMonth();
