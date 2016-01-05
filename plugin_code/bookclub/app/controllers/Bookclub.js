@@ -179,23 +179,41 @@ var Bookclub = function Bookclub() {
 
   self.vote = function (client, message, cmdArgs) {
     var args = cmdArgs.split(" ", 1);
+    self.client = client;
     if (args[0] === '') {
       client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
     }
-    if (args[0] === 'keep') {
+    if (args[0].toLowerCase() === 'keep') {
       self.keep++;
       client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
-    } else if (args[0] === 'new') {
+    } else if (args[0].toLowerCase() === 'new') {
+      if (self.new === 0) {
+        self.startTimeout = setTimeout(self.startTimeoutFunction, self.minutesBeforeStart * 60 * 1000);
+      }
       self.new++;
       if (self.new === 5) {
         if (self.keep === 0){
-          changeBook();
+          var month = self.date.getMonth();
+          changeBook(client, month,message[0]);//need to fix change book
+          clearTimeout(startTimeout);
         } else client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
       }
     } else {
       client.say(message[0], args[0] + ' is not a valid input');
     }
-  }
+  };
+
+  self.startTimeoutFunction = function () {
+    clearTimeout(startTimeout);
+    if (self.client !== null) {
+      if (self.new > self.keep) {
+        var month = self.date.getMonth();
+        self.changeBook(self.client, month, self.config.channels[0]);
+      } else {
+        self.client.say(self.config.channels[0], 'You\'ve voted to keep this months book');
+      }
+    }
+  };
 }
 
 exports = module.exports = Bookclub;
