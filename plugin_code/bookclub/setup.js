@@ -12,6 +12,7 @@ module.exports = function(app) {
   app.cmd('next', '', bookclub.config.channels, bookclub.config.channelsToExclude, bookclub.nextMonth);
   app.cmd('listbooks', '', bookclub.config.channels, bookclub.config.channelsToExclude, bookclub.showBooks);
   app.cmd('listread', '', bookclub.config.channels, bookclub.config.channelsToExclude, bookclub.showRead);
+  app.cmd('v', '', bookclub.config.channels, bookclub.config.channelsToExclude, bookclub.vote);
 
   // Private commands
   app.msg('listbooks', '', bookclub.showBooks);
