@@ -18,6 +18,8 @@ var Bookclub = function Bookclub() {
   self.booksRead = booksRead;
   self.date = new Date();
   self.client = null;
+  self.new = 0;
+  slef.keep = 0;
 
   self.update = schedule.scheduleJob('0 0 1 * *', function(){
     if (self.client !== null) {
@@ -174,6 +176,26 @@ var Bookclub = function Bookclub() {
       client.say(message.nick, month + ': ' + self.booksRead[i].title + ' by ' + self.booksRead[i].author + ' suggested by ' + self.booksRead[i].suggested);
     }
   };
+
+  self.vote = function (client, message, cmdArgs) {
+    var args = cmdArgs.split(" ", 1);
+    if (args[0] === '') {
+      client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+    }
+    if (args[0] === 'keep') {
+      self.keep++;
+      client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+    } else if (args[0] === 'new') {
+      self.new++;
+      if (self.new === 5) {
+        if (self.keep === 0){
+          changeBook();
+        } else client.say(message[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+      }
+    } else {
+      client.say(message[0], args[0] + ' is not a valid input');
+    }
+  }
 }
 
 exports = module.exports = Bookclub;
