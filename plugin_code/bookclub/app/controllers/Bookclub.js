@@ -186,20 +186,22 @@ var Bookclub = function Bookclub() {
     if (args[0].toLowerCase() === 'keep') {
       self.keep++;
       client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
-    } else if (args[0].toLowerCase() === 'new') {
-      if (self.new === 0) {
-        self.startTimeout = setTimeout(self.startTimeoutFunction, self.minutesBeforeStart * 60 * 1000);
-      }
-      self.new++;
-      if (self.new === 5) {
-        if (self.keep === 0){
-          var month = self.date.getMonth();
-          changeBook(client, month,message.args[0]);//need to fix change book
-          clearTimeout(startTimeout);
-        } else client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
-      }
     } else {
-      client.say(message.args[0], args[0] + ' is not a valid input');
+      if (args[0].toLowerCase() === 'new') {
+        if (self.new === 0) {
+          self.startTimeout = setTimeout(self.startTimeoutFunction, 10 * 60 * 1000);
+        }
+        self.new++;
+        if (self.new === 5) {
+          if (self.keep === 0){
+            var month = self.date.getMonth();
+            changeBook(client, month,message.args[0]);//need to fix change book
+            clearTimeout(startTimeout);
+          } else client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+        }
+      } else {
+        client.say(message.args[0], args[0] + ' is not a valid input');
+      }
     }
   };
 
