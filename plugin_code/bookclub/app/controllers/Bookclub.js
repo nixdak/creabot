@@ -219,7 +219,7 @@ var Bookclub = function Bookclub() {
     clearTimeout(self.startTimeout);
     if (self.client !== null) {
       if (self.new > self.keep) {
-        var month = self.date.getMonth();
+        var month = self.date.getMonth() - 1;
         self.keep = 0; self.new = 0;
         self.changeBook(self.client, month, self.config.channels[0]);
       } else {
