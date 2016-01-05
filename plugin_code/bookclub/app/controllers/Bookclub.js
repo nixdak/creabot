@@ -209,13 +209,14 @@ var Bookclub = function Bookclub() {
 
   self.startTimeoutFunction = function () {
     clearTimeout(self.startTimeout);
-    self.keep = 0; self.new = 0;
     if (self.client !== null) {
       if (self.new > self.keep) {
         var month = self.date.getMonth();
+        self.keep = 0; self.new = 0;
         self.changeBook(self.client, month, self.config.channels[0]);
       } else {
         self.client.say(self.config.channels[0], 'You\'ve voted to keep this months book');
+        self.keep = 0; self.new = 0;
       }
     }
   };
