@@ -19,7 +19,7 @@ var Bookclub = function Bookclub() {
   self.date = new Date();
   self.client = null;
   self.new = 0;
-  slef.keep = 0;
+  self.keep = 0;
 
   self.update = schedule.scheduleJob('0 0 1 * *', function(){
     if (self.client !== null) {
