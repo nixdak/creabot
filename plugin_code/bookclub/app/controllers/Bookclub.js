@@ -199,14 +199,14 @@ var Bookclub = function Bookclub() {
             }
             self.new++;
             self.voted.push(message.nick.toLowerCase());
-            if (self.new === 6) {
-              if (self.keep === 0){
-                var month = self.date.getMonth();
-                changeBook(client, month,message.args[0]);// NOTE: need to fix change book
-                self.keep = 0; self.new = 0;
-                clearTimeout(self.startTimeout);
-              }
-            } else client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
+            if (self.new === 6 && self.keep === 0) {
+              var month = self.date.getMonth();
+              changeBook(client, month,message.args[0]);// NOTE: need to fix change book
+              self.keep = 0; self.new = 0; self.voted = [];
+              clearTimeout(self.startTimeout);
+              return true;
+            }
+            client.say(message.args[0], 'Keep: ' + self.keep + ' Against: ' + self.new);
           } else {
             client.say(message.args[0], args[0] + ' is not a valid input');
           }
@@ -220,12 +220,11 @@ var Bookclub = function Bookclub() {
     if (self.client !== null) {
       if (self.new > self.keep) {
         var month = self.date.getMonth() - 1;
-        self.keep = 0; self.new = 0;
         self.changeBook(self.client, month, self.config.channels[0]);
       } else {
         self.client.say(self.config.channels[0], 'You\'ve voted to keep this months book');
-        self.keep = 0; self.new = 0;
       }
+      self.keep = 0; self.new = 0; self.voted = [];
     }
   };
 }
