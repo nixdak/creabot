@@ -18,11 +18,11 @@ var Helpdesk = function Helpdesk() {
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
     tabletojson.convertUrl(url, function(tablesAsJson) {
       var par = tablesAsJson[0];
-    })
-    // client.say(message.nick, par);
-    console.log(par);
-    client.say(message.args[0], url);
+      console.log(par);
+      // client.say(message.nick, par);
+      client.say(message.args[0], url);
   };
+    })
 
   self.list = function (client, message, cmdArgs) {
     var commands = '';
