@@ -1,8 +1,7 @@
 var fs = require('fs'),
     c = require('irc-colors'),
     _ = require('underscore'),
-    request = require('request'),
-    cherrio = require('cherrio'),
+    tabletojson = require('tabletojson'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env];
 
@@ -17,17 +16,11 @@ var Helpdesk = function Helpdesk() {
       return false;
     }
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
-    request(url, function(error, response, html){
-      if(!error){
-        var $ = cheerio.load(html);
-        // We'll use the unique header class as a starting point.
-        $('.header').filter(function(){
-          // Let's store the data we filter into a variable so we can easily see what's going on.
-          var data = $(this);
-          console(data);
-        })
-      }
-    })
+    tabletojson.convertUrl(url, function(tablesAsJson) {
+      var par = tablesAsJson[0];
+    }
+    client.say(message.nick, par);
+    client.say(message.args[0], url);
   };
 
   self.list = function (client, message, cmdArgs) {
