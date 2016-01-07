@@ -22,9 +22,10 @@ var Helpdesk = function Helpdesk() {
         var $ = cheerio.load(html);
         // We'll use the unique header class as a starting point.
         $('.header').filter(function(){
-        // Let's store the data we filter into a variable so we can easily see what's going on.
-        var data = $(this);
-        console(data);
+          // Let's store the data we filter into a variable so we can easily see what's going on.
+          var data = $(this);
+          console(data);
+        }
       }
     })  
   };
