@@ -201,7 +201,7 @@ var Bookclub = function Bookclub() {
             self.voted.push(message.nick.toLowerCase());
             if (self.new === 6 && self.keep === 0) {
               var month = self.date.getMonth();
-              changeBook(client, month,message.args[0]);// NOTE: need to fix change book
+              self.changeBook(self.client, month, message.args[0]);// NOTE: need to fix change book
               self.keep = 0; self.new = 0; self.voted = [];
               clearTimeout(self.startTimeout);
               return true;
