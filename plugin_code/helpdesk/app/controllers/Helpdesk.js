@@ -25,9 +25,9 @@ var Helpdesk = function Helpdesk() {
           // Let's store the data we filter into a variable so we can easily see what's going on.
           var data = $(this);
           console(data);
-        }
+        })
       }
-    })  
+    })
   };
 
   self.list = function (client, message, cmdArgs) {
