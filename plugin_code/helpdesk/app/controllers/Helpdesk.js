@@ -16,10 +16,10 @@ var Helpdesk = function Helpdesk() {
       return false;
     }
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
-    tabletojson.convertUrl(url, function(tablesAsJson) {
+    tabletojson.convertUrl(url).then(function(tablesAsJson) {
       var par = tablesAsJson[0];
       console.log(par);
-      // client.say(message.nick, par);
+      client.say(message.nick, par);
       client.say(message.args[0], url);
     })
   };
