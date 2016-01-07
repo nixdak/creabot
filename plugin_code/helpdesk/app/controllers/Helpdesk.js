@@ -1,7 +1,7 @@
 var fs = require('fs'),
     c = require('irc-colors'),
     _ = require('underscore'),
-    var tabletojson = require('tabletojson');
+    tabletojson = require('tabletojson'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env];
 
