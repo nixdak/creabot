@@ -19,7 +19,8 @@ var Helpdesk = function Helpdesk() {
     tabletojson.convertUrl(url, function(tablesAsJson) {
       var par = tablesAsJson[0];
     })
-    client.say(message.nick, par);
+    // client.say(message.nick, par);
+    console.log(par);
     client.say(message.args[0], url);
   };
 
