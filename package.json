@@ -27,6 +27,8 @@
     "mysql": "latest",
     "nodemon": "latest",
     "mathjs": "latest",
-    "node-schedule": "latest"
+    "node-schedule": "latest",
+    "cherrio": "latest",
+    "request": "request"
   }
 }
