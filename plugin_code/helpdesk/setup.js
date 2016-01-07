@@ -1,4 +1,4 @@
-var Helpdesk = require('./app/controllers/helpdesk.js');
+var Helpdesk = require('./app/controllers/Helpdesk.js');
 
 module.exports = function(app) {
   var helpdesk = new Helpdesk();
