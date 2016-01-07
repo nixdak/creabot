@@ -1,0 +1,15 @@
+{
+  "development": {
+    "channels": ["#botdev"],
+    "channelsToExclude": [],
+    "channelsToJoin": [ "#botdev" ],
+    "commands": ["!cmt","!help"]
+  },
+
+  "production": {
+    "channels": ["#bots"],
+    "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub"],
+    "channelsToJoin": ["#bots"],
+    "commands": ["!cmt","!help"]
+  }
+}
