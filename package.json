@@ -28,7 +28,7 @@
     "nodemon": "latest",
     "mathjs": "latest",
     "node-schedule": "latest",
-    "cherrio": "latest",
+    "cheerio": "latest",
     "request": "request"
   }
 }
