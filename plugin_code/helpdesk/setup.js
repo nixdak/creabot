@@ -8,4 +8,8 @@ module.exports = function(app) {
 
   // Add commands
   app.cmd('help', '', helpdesk.config.channels, helpdesk.config.channelsToExclude, helpdesk.help);
+
+  // PM commands
+  app.msg('email', '', helpdesk.email);
+  app.msg('help', '', helpdesk.help);
 };

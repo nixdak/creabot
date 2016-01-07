@@ -10,6 +10,8 @@
     "channels": ["#bots"],
     "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub"],
     "channelsToJoin": ["#bots"],
-    "commands": ["!cmt","!help"]
+    "commands": ["!cmt","!help"],
+    "channelCommands": [],
+    "pmCommands": ["!email"]
   }
 }

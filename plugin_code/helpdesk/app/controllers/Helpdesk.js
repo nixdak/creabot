@@ -1,6 +1,7 @@
 var fs = require('fs'),
     c = require('irc-colors'),
     _ = require('underscore'),
+    var tabletojson = require('tabletojson');
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env];
 
@@ -9,7 +10,15 @@ var Helpdesk = function Helpdesk() {
   self.config = config;
 
   self.help = function (client, message, cmdArgs) {
-    client.say(message.args[0], 'Helpdesk is a bot to help with all your problems pm me !help for a list of commads')
+    var input = cmdArgs.split(" ", 1);
+      if (input[0] === '') {
+        client.say(message.args[0], 'Helpdesk is a bot to help with all your problems pm me !help for a list of commads');
+        return false;
+      }
+      var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
+      tabletojson.convertUrl(url).then(function (tablesAsJson) {
+        console.log(tablesAsJson);
+      })
   };
 
   self.list = function (client, message, cmdArgs) {
