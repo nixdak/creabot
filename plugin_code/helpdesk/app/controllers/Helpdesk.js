@@ -56,15 +56,18 @@ var Helpdesk = function Helpdesk() {
   };
 
   self.list = function (client, message, cmdArgs) {
-    var commands = '';
+    var commands = '', pmCommands = '';
     for (var i = 0; i < self.config.commands.length; i++) {
       if (i !== self.config.commands.length - 1) {
         commands += self.config.commands[i] + ', '
-      } else {
-        commands += self.config.commands[i];
-        client.say(message.nick, commands);
-      }
+      } else commands += self.config.commands[i];
     }
+    for (var i = 0; i < self.config.pmCommands.length; i++) {
+      if (i !== self.config.pmCommands.length - 1) {
+        pmCommands += self.config.commands[i] + ', '
+      } else pmCommands += self.config.pmCommands[i];
+    }
+    client.say(message.nick, 'The commands are ' + commands + ' and pm only commands are ' + pmCommands);
   };
 
   self.email = function (client, message, cmdArgs) {

@@ -3,7 +3,8 @@
     "channels": ["#botdev"],
     "channelsToExclude": [],
     "channelsToJoin": [ "#botdev" ],
-    "commands": ["!cmt","!help"]
+    "commands": ["!cmt","!help"],
+    "pmCommands": ["!email"]
   },
 
   "production": {
@@ -11,7 +12,6 @@
     "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub"],
     "channelsToJoin": ["#bots"],
     "commands": ["!cmt","!help"],
-    "channelCommands": [],
     "pmCommands": ["!email"]
   }
 }
