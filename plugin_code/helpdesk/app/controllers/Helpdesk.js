@@ -19,8 +19,11 @@ var Helpdesk = function Helpdesk() {
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
     request(url, function (error, response, body) {
     	if (!error) {
-        var $page = cheerio.load(body),
-		    text = $page.html('<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p>');
+        var $page = cheerio.load(body), text;
+		    $page.html('.mw-content-ltr').filter(function () {
+		      var data = $(this);
+          text = data.children().first().text();
+		    }
         console.log(text);
         // client.say(message.nick, par);
         client.say(message.args[0], url);
