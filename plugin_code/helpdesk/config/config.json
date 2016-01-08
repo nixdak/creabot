@@ -3,7 +3,7 @@
     "channels": ["#botdev"],
     "channelsToExclude": [],
     "channelsToJoin": [ "#botdev" ],
-    "commands": ["!cmt","!help"],
+    "commands": ["!cmt", "!helpdesk", "!chair", "!secretary", "!treasurer", "!pro", "!events", "!admins", "!webmaster", "!fyr", "!help"],
     "pmCommands": ["!email"]
   },
 
@@ -11,7 +11,7 @@
     "channels": ["#bots"],
     "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub"],
     "channelsToJoin": ["#bots"],
-    "commands": ["!cmt","!help"],
+    "commands": ["!cmt", "!helpdesk", "!chair", "!secretary", "!treasurer", "!pro", "!events", "!admins", "!webmaster", "!fyr", "!help"],
     "pmCommands": ["!email"]
   }
 }
