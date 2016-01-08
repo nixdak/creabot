@@ -31,7 +31,6 @@ var Helpdesk = function Helpdesk() {
         var $page = cheerio.load(body), text;
         $page('.mw-content-ltr').filter(function () {
           var data = $page(this);
-          console.log(data);
           if (!_.isUndefined(data)) {
             text = data.children().first().text();
             console.log(text);
@@ -39,20 +38,19 @@ var Helpdesk = function Helpdesk() {
             client.say(message.args[0], url); // TODO: need to check if pm
             return true;
           }
-          client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
-          fs.appendFile(self.fileName, input[0], function (err) {
-            if (err) return console.log(err);
-            //console.log(JSON.stringify(self.urls))
-            console.log('writing to ' + self.fileName);
-          });
-          for (var i = 0; i < self.helpdesk.length; i++) {
-            client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
-          }
         })
       } else {
         console.log('We’ve encountered an error: ' + error);
       }
     });
+    client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
+    fs.appendFile(self.fileName, input[0], function (err) {
+      if (err) return console.log(err);
+      console.log('writing to ' + self.fileName);
+    });
+    for (var i = 0; i < self.helpdesk.length; i++) {
+      client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
+    }
   };
 
   self.list = function (client, message, cmdArgs) {
