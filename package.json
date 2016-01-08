@@ -29,6 +29,6 @@
     "mathjs": "latest",
     "node-schedule": "latest",
     "cheerio": "latest",
-    "request": "request"
+    "request": "2.67.0"
   }
 }

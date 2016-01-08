@@ -19,9 +19,10 @@ var Helpdesk = function Helpdesk() {
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
     request(url, function (error, response, body) {
     	if (!error) {
-    		var $ = cheerio.load(body),
-  			par = $("mw-content-text.p").html();
-        client.say(message.nick, par);
+        var $page = cheerio.load(body),
+		    text = $page("body").text();
+        console.log(text);
+        // client.say(message.nick, par);
         client.say(message.args[0], url);
     	} else {
     		console.log("We’ve encountered an error: " + error);
