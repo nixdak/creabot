@@ -31,21 +31,22 @@ var Helpdesk = function Helpdesk() {
         var $page = cheerio.load(body), text;
         $page('.mw-content-ltr').filter(function () {
           var data = $page(this);
+          console.log(data);
           if (!_.isUndefined(data)) {
             text = data.children().first().text();
-            // console.log(text);
+            console.log(text);
             client.say(message.nick, text);
             client.say(message.args[0], url); // TODO: need to check if pm
-          } else {
-            client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
-            fs.appendFile(self.fileName, input[0], function (err) {
-              if (err) return console.log(err);
-              //console.log(JSON.stringify(self.urls))
-              console.log('writing to ' + self.fileName);
-            });
-            for (var i = 0; i < self.helpdesk.length; i++) {
-              client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
-            }
+            return true;
+          }
+          client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
+          fs.appendFile(self.fileName, input[0], function (err) {
+            if (err) return console.log(err);
+            //console.log(JSON.stringify(self.urls))
+            console.log('writing to ' + self.fileName);
+          });
+          for (var i = 0; i < self.helpdesk.length; i++) {
+            client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
           }
         })
       } else {
