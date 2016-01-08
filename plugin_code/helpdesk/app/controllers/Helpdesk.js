@@ -35,20 +35,18 @@ var Helpdesk = function Helpdesk() {
         var $page = cheerio.load(body), text;
         $page('.mw-content-ltr').filter(function () {
           var data = $page(this);
-          if ('' !== data) {
-            text = data.children().first().text();
-            console.log(text);
-            client.say(message.nick, text);
-            client.say(channel, url);
-          } else {
-            client.say(channel, 'Sorry theres no help for that, but helpdesk has been told');
-            fs.appendFile(self.fileName, input[0], function (err) {
-              if (err) return console.log(err);
-              console.log('writing to ' + self.fileName);
-            });
-            for (var i = 0; i < self.helpdesk.length; i++) {
-              client.say(self.helpdesk[i], input[0] + ' needs to be added to the wiki');
-            }
+          text = data.children().first().text();
+          client.say(channel, url);
+          client.say(message.nick, text);
+        })
+        $page('.noarticletext').filter(function () {
+          client.say(channel, 'Sorry theres no help for that, but helpdesk has been told');
+          fs.appendFile(self.fileName, input[0], function (err) {
+            if (err) return console.log(err);
+            console.log('writing to ' + self.fileName);
+          });
+          for (var i = 0; i < self.helpdesk.length; i++) {
+            client.say(self.helpdesk[i], input[0] + ' needs to be added to the wiki');
           }
         })
       } else {
