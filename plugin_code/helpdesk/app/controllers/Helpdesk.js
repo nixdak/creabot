@@ -20,7 +20,7 @@ var Helpdesk = function Helpdesk() {
     request(url, function (error, response, body) {
     	if (!error) {
         var $page = cheerio.load(body),
-		    text = $page.parseHTML(p);
+		    text = $page.('p').toArray();
         console.log(text);
         // client.say(message.nick, par);
         client.say(message.args[0], url);
