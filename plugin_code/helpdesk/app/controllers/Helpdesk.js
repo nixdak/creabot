@@ -56,6 +56,10 @@ var Helpdesk = function Helpdesk() {
   };
 
   self.list = function (client, message, cmdArgs) {
+    var channel = message.args[0];
+    if (channel === client.nick) {
+      channel = message.nick;
+    }
     var commands = '', pmCommands = '';
     for (var i = 0; i < self.config.commands.length; i++) {
       if (i !== self.config.commands.length - 1) {
@@ -67,7 +71,7 @@ var Helpdesk = function Helpdesk() {
         pmCommands += self.config.commands[i] + ', '
       } else pmCommands += self.config.pmCommands[i];
     }
-    client.say(message.nick, 'The commands are ' + commands + ' and pm only commands are ' + pmCommands);
+    client.say(channel, 'The commands are ' + commands + ' and pm only commands are ' + pmCommands);
   };
 
   self.email = function (client, message, cmdArgs) {
