@@ -20,9 +20,13 @@ var Helpdesk = function Helpdesk() {
   }
 
   self.help = function (client, message, cmdArgs) {
+    var channel = message.args[0];
+    if (channel === '') {
+      channel = message.nick;
+    }
     var input = cmdArgs.split(" ", 1);
     if (input[0] === '') {
-      client.say(message.args[0], 'Helpdesk is a bot to help with all your problems pm me !help for a list of commads');
+      client.say(channel, 'Helpdesk is a bot to help with all your problems pm me !help for a list of commads');
       return false;
     }
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
@@ -35,22 +39,22 @@ var Helpdesk = function Helpdesk() {
             text = data.children().first().text();
             console.log(text);
             client.say(message.nick, text);
-            client.say(message.args[0], url); // TODO: need to check if pm
+            client.say(channel, url);
             return true;
+          }
+          client.say(channel, 'Sorry theres no help for that, but helpdesk has been told');
+          fs.appendFile(self.fileName, input[0], function (err) {
+            if (err) return console.log(err);
+            console.log('writing to ' + self.fileName);
+          });
+          for (var i = 0; i < self.helpdesk.length; i++) {
+            client.say(self.helpdesk[i], input[0] + ' needs to be added to the wiki');
           }
         })
       } else {
         console.log('We’ve encountered an error: ' + error);
       }
     });
-    client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
-    fs.appendFile(self.fileName, input[0], function (err) {
-      if (err) return console.log(err);
-      console.log('writing to ' + self.fileName);
-    });
-    for (var i = 0; i < self.helpdesk.length; i++) {
-      client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
-    }
   };
 
   self.list = function (client, message, cmdArgs) {
