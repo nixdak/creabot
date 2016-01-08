@@ -20,12 +20,12 @@ var Helpdesk = function Helpdesk() {
     request(url, function (error, response, body) {
     	if (!error) {
         var $page = cheerio.load(body),
-		    text = $page("mw-content-text").text();
+		    text = $page.parseHTML(p);
         console.log(text);
         // client.say(message.nick, par);
         client.say(message.args[0], url);
     	} else {
-    		console.log("We’ve encountered an error: " + error);
+    		console.log('We’ve encountered an error: ' + error);
     	}
     });
   };
