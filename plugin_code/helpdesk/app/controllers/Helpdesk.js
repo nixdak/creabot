@@ -1,7 +1,8 @@
 var fs = require('fs'),
     c = require('irc-colors'),
     _ = require('underscore'),
-    tabletojson = require('tabletojson'),
+    request = require("request"),
+    cheerio = require("cheerio"),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env];
 
@@ -16,12 +17,16 @@ var Helpdesk = function Helpdesk() {
       return false;
     }
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
-    tabletojson.convertUrl(url).then(function(tablesAsJson) {
-      var par = tablesAsJson[0];
-      console.log(par);
-      client.say(message.nick, par);
-      client.say(message.args[0], url);
-    })
+    request(url, function (error, response, body) {
+    	if (!error) {
+    		var $ = cheerio.load(body),
+  			par = $("mw-content-text.p").html();
+        client.say(message.nick, par);
+        client.say(message.args[0], url);
+    	} else {
+    		console.log("We’ve encountered an error: " + error);
+    	}
+    });
   };
 
   self.list = function (client, message, cmdArgs) {
