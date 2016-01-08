@@ -27,29 +27,28 @@ var Helpdesk = function Helpdesk() {
     }
     var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
     request(url, function (error, response, body) {
-      if (!_.undefined(body)) {
-        if (!error) {
-          var $page = cheerio.load(body), text;
-          $page('.mw-content-ltr').filter(function () {
+      if (!error) {
+        var $page = cheerio.load(body), text;
+        $page('.mw-content-ltr').filter(function () {
+          if (!_.isUndefined(body)) {
             var data = $page(this);
             text = data.children().first().text();
+          } else {
+            client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
+            fs.appendFile(self.fileName, input[0], function (err) {
+              if (err) return console.log(err);
+              //console.log(JSON.stringify(self.urls))
+              console.log('writing to ' + self.fileName);
+            });
+            for (var i = 0; i < self.helpdesk.length; i++) {
+              client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
+            }
           })
           // console.log(text);
           client.say(message.nick, text);
-          client.say(message.args[0], url);
-        } else {
-          console.log('We’ve encountered an error: ' + error);
-        }
+          client.say(message.args[0], url); // TODO: need to check if pm
       } else {
-        client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
-        fs.appendFile(self.fileName, input[0], function (err) {
-          if (err) return console.log(err);
-          //console.log(JSON.stringify(self.urls))
-          console.log('writing to ' + self.fileName);
-        });
-        for (var i = 0; i < self.helpdesk.length; i++) {
-          client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
-        }
+        console.log('We’ve encountered an error: ' + error);
       }
     });
   };
