@@ -30,9 +30,12 @@ var Helpdesk = function Helpdesk() {
       if (!error) {
         var $page = cheerio.load(body), text;
         $page('.mw-content-ltr').filter(function () {
-          if (!_.isUndefined(body)) {
-            var data = $page(this);
+          var data = $page(this);
+          if (!_.isUndefined(data)) {
             text = data.children().first().text();
+            // console.log(text);
+            client.say(message.nick, text);
+            client.say(message.args[0], url); // TODO: need to check if pm
           } else {
             client.say(message.args[0], 'Sorry theres no help for that, but helpdesk has been told');
             fs.appendFile(self.fileName, input[0], function (err) {
@@ -45,9 +48,6 @@ var Helpdesk = function Helpdesk() {
             }
           }
         })
-        // console.log(text);
-        client.say(message.nick, text);
-        client.say(message.args[0], url); // TODO: need to check if pm
       } else {
         console.log('We’ve encountered an error: ' + error);
       }
