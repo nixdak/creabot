@@ -43,10 +43,11 @@ var Helpdesk = function Helpdesk() {
             for (var i = 0; i < self.helpdesk.length; i++) {
               client.say(self.helpdesk[i], input[0] + 'needs to be added to the wiki');
             }
-          })
-          // console.log(text);
-          client.say(message.nick, text);
-          client.say(message.args[0], url); // TODO: need to check if pm
+          }
+        })
+        // console.log(text);
+        client.say(message.nick, text);
+        client.say(message.args[0], url); // TODO: need to check if pm
       } else {
         console.log('We’ve encountered an error: ' + error);
       }
