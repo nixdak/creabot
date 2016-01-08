@@ -16,7 +16,7 @@ var Helpdesk = function Helpdesk() {
 
   var helpdesk = _.filter(self.committee, { role: 'Helpdesk' });
   if (!_.isUndefined(helpdesk)) {
-    self.helpdesk.push(_.map(helpdesk, function (member) { return member.nick });
+    self.helpdesk.push(_.map(helpdesk, function (member) { return member.nick }));
   }
 
   self.help = function (client, message, cmdArgs) {
