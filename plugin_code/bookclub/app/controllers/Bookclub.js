@@ -1,6 +1,7 @@
 var _ = require('underscore'),
     fs = require('fs'),
-    schedule = require('node-schedule');
+    schedule = require('node-schedule'),
+    amazon = require('amazon-product-api'),
     env = process.env.NODE_ENV || 'development',
     config = require('../../config/config.json')[env],
     booksToRead = require('../../config/booksToRead.json'),
@@ -22,6 +23,12 @@ var Bookclub = function Bookclub() {
   self.keep = 0;
   self.voted = [];
 
+  self.amazon = amazon.createClient({
+    awsId: self.config.awsId,
+    awsSecret: self.config.awsSecret,
+    awsTag: "BookClub"
+  });
+
   self.update = schedule.scheduleJob('0 0 1 * *', function(){
     if (self.client !== null) {
       console.log('Scheduled update');
@@ -35,7 +42,7 @@ var Bookclub = function Bookclub() {
     var month = self.date.getMonth();
     self.client = client;
     if (month === self.thisMonthBook.month) {
-      client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author);
+      client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author ', ' + self.thisMonthBook.link);
     } else {
       self.changeBook(client, month, message.args[0]);
     }
@@ -46,7 +53,7 @@ var Bookclub = function Bookclub() {
     var month = self.date.getMonth();
     self.client = client;
     if (month === self.thisMonthBook.month) {
-      client.say(message.args[0], 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author);
+      client.say(message.args[0], 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author + ', ' + self.nextMonthBook.link);
     } else {
       self.changeBook(client, month, message.args[0]);
     }
@@ -72,11 +79,12 @@ var Bookclub = function Bookclub() {
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
 
     var title = input[0].toString(), author = input[1].toString(), pages = input[2];
+    var link = getBook(author, title);
     if (typeof pages !== "number") { pages = null }
     if (_.contains(titlesRead, title.toLowerCase()) || title.toLowerCase() === self.thisMonthBook.title.toLowerCase() || title.toLowerCase() === self.nextMonthBook.title.toLowerCase()) {
       client.say(message.args[0], 'That book has already been read');
     } else if (!_.contains(titles, title.toLowerCase())) {
-      self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0} );
+      self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0, link: link} );
       self.write('booksToRead', self.booksToRead);
       client.say(message.args[0], 'Book added!');
     } else client.say(message.args[0], 'That book has already been suggested');
@@ -99,8 +107,8 @@ var Bookclub = function Bookclub() {
     self.write('thisMonthBook', self.thisMonthBook);
     self.write('nextMonthBook', self.nextMonthBook);
     //say book and cvhange TOPIC
-    client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested);
-    client.say(channel, 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author + ' suggested by ' + self.nextMonthBook.suggested);
+    client.say(channel, 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ' suggested by ' + self.thisMonthBook.suggested + ', ' + self.thisMonthBook.link);
+    client.say(channel, 'Next months book is ' + self.nextMonthBook.title + ' by ' + self.nextMonthBook.author + ' suggested by ' + self.nextMonthBook.suggested + ', ' + self.nextMonthBook.link);
   };
 
   self.setTopic = function (client, channel, topic) {
@@ -128,7 +136,7 @@ var Bookclub = function Bookclub() {
   self.showBooks = function (client, message, cmdArgs) {
     self.client = client;
     for (var i = 0; i < self.booksToRead.length; i++) {
-      client.say(message.nick, ' [' + i + '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested);
+      client.say(message.nick, ' [' + i + '] ' + self.booksToRead[i].title + ' by ' + self.booksToRead[i].author + ' suggested by ' + self.booksToRead[i].suggested + ', ' + self.booksToRead[i].link);
     }
   };
 
@@ -174,7 +182,7 @@ var Bookclub = function Bookclub() {
           month = 'December';
           break;
       }
-      client.say(message.nick, month + ': ' + self.booksRead[i].title + ' by ' + self.booksRead[i].author + ' suggested by ' + self.booksRead[i].suggested);
+      client.say(message.nick, month + ': ' + self.booksRead[i].title + ' by ' + self.booksRead[i].author + ' suggested by ' + self.booksRead[i].suggested + ', '  + self.booksRead[i].link);
     }
   };
 
@@ -227,6 +235,22 @@ var Bookclub = function Bookclub() {
       self.keep = 0; self.new = 0; self.voted = [];
     }
   };
+
+  self.getBook = function (author, title) {
+    self.amazon.itemSearch({
+      title: title,
+      author: author,
+      searchIndex: 'Book'
+    }, function(err, results) {
+      if (err) {
+        console.log(err);
+        return 'No link found';
+      } else {
+        console.log(results);
+        return results.link;
+      }
+    });
+  }
 }
 
 exports = module.exports = Bookclub;
