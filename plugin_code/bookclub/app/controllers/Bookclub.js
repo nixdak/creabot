@@ -42,7 +42,7 @@ var Bookclub = function Bookclub() {
     var month = self.date.getMonth();
     self.client = client;
     if (month === self.thisMonthBook.month) {
-      client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author ', ' + self.thisMonthBook.link);
+      client.say(message.args[0], 'This months book is ' + self.thisMonthBook.title + ' by ' + self.thisMonthBook.author + ', ' + self.thisMonthBook.link);
     } else {
       self.changeBook(client, month, message.args[0]);
     }
