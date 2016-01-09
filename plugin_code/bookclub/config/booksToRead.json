@@ -3,191 +3,223 @@
   "author": "Aldous Huxley",
   "pages": 259,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Brave-New-World-Aldous-Huxley/dp/0099518473"
 }, {
   "title": "Catch-22",
   "author": "Joseph Heller",
   "pages": 435,
   "suggested": "gamma",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Catch-22-Joseph-Heller/dp/0099477319"
 }, {
   "title": "Cryptonomicon",
   "author": "Neal Stephenson",
   "pages": 1168,
   "suggested": "cooker3",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Cryptonomicon-Neal-Stephenson/dp/0099410672"
 }, {
   "title": "Fahrenheit 451",
   "author": "Ray Bradbury",
   "pages": 159,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Fahrenheit-451-Flamingo-Modern-Classics/dp/0006546064"
 }, {
   "title": "Neuromancer",
   "author": "William Gibson",
   "pages": 271,
   "suggested": "moju",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Neuromancer-William-Gibson/dp/0006480411"
 }, {
   "title": "Night In Gaza",
   "author": "Dr. Mads Gilbert",
   "pages": 190,
   "suggested": "cooker3",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Night-Gaza-Mads-Gilbert/dp/0993153364"
 }, {
   "title": "Shiprocked: Life on the Waves with Radio Caroline",
   "author": "Steve Conway",
   "pages": 211,
   "suggested": "mrs_girl",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Shiprocked-Life-Waves-Radio-Caroline/dp/1909718521"
 }, {
   "title": "The Cuckoo's Calling",
   "author": "Robert Galbraith",
   "pages": 464,
   "suggested": "creadak",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Cuckoos-Calling-Cormoran-Strike/dp/0751549258"
 }, {
   "title": "The Girl on the Train",
   "author": "Paula Hawkins",
   "pages": 338,
   "suggested": "mrs_girl",
-  "month": 0
+  "month": 0,
+  "link": "http://www.amazon.co.uk/Girl-Train-Paula-Hawkins/dp/0857522310"
 }, {
   "title": "The Nightmare",
   "author": "Lars Kepler ",
   "pages": 609,
   "suggested": "mrs_girl",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Plot Against America",
   "author": "Philip Roth",
   "pages": 400,
   "suggested": "gamma",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Shepherd's Crown",
   "author": "Terry Pratchett",
   "pages": 304,
   "suggested": "Chimaera",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Stranger",
   "author": "Albert Camus",
   "pages": 123,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Yurope: The American Invasion",
   "author": "Michael D. Wood",
   "pages": 118,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Elantris",
   "author": "Brandon Sanderson",
   "pages": 496,
   "suggested": "gamma",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Bright's Passage",
   "author": "Josh Ritter ",
   "pages": 208,
   "suggested": "gamma",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Restaurant at the End of the Universe ",
   "author": "Douglas Adams",
   "pages": 208,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Alan Turing: The Enigma",
   "author": "Andrew Hodges",
   "pages": 768,
   "suggested": "butlerx",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Trial",
   "author": "Franz Kafka",
   "pages": 213,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Dune",
   "author": "Frank Herbert",
   "pages": 418,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "2001: A Space Oddyssey",
   "author": "Arthur C Clarke",
   "pages": 224,
   "suggested": "creadak",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Nineteen Eighty-Four",
   "author": "George Orwell",
   "pages": 267,
   "suggested": "creadak",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Jurassic Park",
   "author": "Michael Chricton",
   "pages": 448,
   "suggested": "creadak",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Sphere",
   "author": "Michael Chricton",
   "pages": 385,
   "suggested": "creadak",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Casual Vacancy",
   "author": "J. K. Rowling",
   "pages": 503,
   "suggested": "creadak",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Seeds Of Earth",
   "author": "Michael Cobley",
   "pages": 400,
   "suggested": "creadak",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Gun Control in the Third Reich",
   "author": "Stephen P. Halbrook",
   "pages": 364,
   "suggested": "fgsfds_lo",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Pride and Prejudice and Zombies",
   "author": "Seth Grahame-Smith",
   "pages": 319,
   "suggested": "butlerx",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Sandman: Endless Nights",
   "author": "Neil Gaiman",
   "pages": null,
   "suggested": "butlerx",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Childhood's End",
   "author": "Arthur C. Clarke",
   "pages": 214,
   "suggested": "butlerx",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "Leviathan Wakes",
   "author": "James S. A. Corey",
   "pages": 582,
   "suggested": "butlerx",
-  "month": 0
+  "month": 0,
+  "link": ""
 }, {
   "title": "The Man in the High Castle",
   "author": "Philip K. Dick",
   "pages": 239,
   "suggested": "butlerx",
-  "month": 0
+  "month": 0,
+  "link": ""
 }]
