@@ -244,12 +244,10 @@ var Bookclub = function Bookclub() {
       title: title,
       author: author,
       searchIndex: 'Books'
-    }, function(err, results) {
-      if (err) {
-        console.log(err);
-      } else {
-        link = results[0].DetailPageURL[0].split('%');
-      }
+    }).then(function(results){
+      link = results[0].DetailPageURL[0].split('%');
+    }).catch(function(err){
+      console.log(err);
     });
     return link;
   };
