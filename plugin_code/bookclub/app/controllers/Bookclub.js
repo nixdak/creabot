@@ -78,8 +78,18 @@ var Bookclub = function Bookclub() {
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
 
-    var title = input[0].toString(), author = input[1].toString(), pages = input[2];
-    var link = self.getBook(author, title);
+    var title = input[0].toString(), author = input[1].toString(), pages = input[2], link = 'No link found';
+
+    self.amazon.itemSearch({
+      title: title,
+      author: author,
+      searchIndex: 'Books'
+    }).then(function(results){
+      link = results[0].DetailPageURL[0].split('%');
+    }).catch(function(err){
+      console.log(err);
+    });
+
     if (typeof pages !== "number") { pages = null }
     if (_.contains(titlesRead, title.toLowerCase()) || title.toLowerCase() === self.thisMonthBook.title.toLowerCase() || title.toLowerCase() === self.nextMonthBook.title.toLowerCase()) {
       client.say(message.args[0], 'That book has already been read');
@@ -235,22 +245,6 @@ var Bookclub = function Bookclub() {
       self.keep = 0; self.new = 0; self.voted = [];
     }
   };
-
-  self.getBook = function (author, title) {
-    self.amazon.itemSearch({
-      title: title,
-      author: author,
-      searchIndex: 'Books'
-    }, function(err, results) {
-      if (err) {
-        console.log(err);
-        return 'No link found';
-      } else {
-        var url = results[0].DetailPageURL[0].split('%');
-        return url[0];
-      }
-    });
-  }
 }
 
 exports = module.exports = Bookclub;
