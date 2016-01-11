@@ -62,7 +62,7 @@ var Bookclub = function Bookclub() {
   self.suggest = function (client, message, cmdArgs) {
     console.log('in suggest');
     self.client = client;
-    var input = cmdArgs.split("; ");
+    var input = cmdArgs.split("; "), link = self.getLink(title, author);
     if (input[0] === "") {
       client.say(message.args[0], 'You must provide a title');
       return false;
@@ -78,8 +78,7 @@ var Bookclub = function Bookclub() {
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
 
-    var title = input[0].toString(), author = input[1].toString(), pages = input[2], link = '';
-    link = wait.for(self.getLink, title, author);
+    var title = input[0].toString(), author = input[1].toString(), pages = input[2];
 
     if (typeof pages !== "number") { pages = null }
     if (_.contains(titlesRead, title.toLowerCase()) || title.toLowerCase() === self.thisMonthBook.title.toLowerCase() || title.toLowerCase() === self.nextMonthBook.title.toLowerCase()) {
