@@ -79,7 +79,7 @@ var Bookclub = function Bookclub() {
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
 
     var title = input[0].toString(), author = input[1].toString(), pages = input[2];
-    var link = getBook(author, title);
+    var link = self.getBook(author, title);
     if (typeof pages !== "number") { pages = null }
     if (_.contains(titlesRead, title.toLowerCase()) || title.toLowerCase() === self.thisMonthBook.title.toLowerCase() || title.toLowerCase() === self.nextMonthBook.title.toLowerCase()) {
       client.say(message.args[0], 'That book has already been read');
@@ -240,14 +240,14 @@ var Bookclub = function Bookclub() {
     self.amazon.itemSearch({
       title: title,
       author: author,
-      searchIndex: 'Book'
+      searchIndex: 'Books'
     }, function(err, results) {
       if (err) {
         console.log(err);
         return 'No link found';
       } else {
-        console.log(results);
-        return results.link;
+        var url = results[0].DetailPageURL[0].split('%');
+        return url[0];
       }
     });
   }
