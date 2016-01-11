@@ -78,28 +78,19 @@ var Bookclub = function Bookclub() {
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
 
-    var title = input[0].toString(), author = input[1].toString(), pages = input[2], link = 'No link found';
-
-    self.amazon.itemSearch({
-      title: title,
-      author: author,
-      searchIndex: 'Books'
-    }, function(err, results) {
-      if (err) {
-        console.log(err);
-      } else {
-        link = results[0].DetailPageURL[0].split('%');
-      }
-    });
+    var title = input[0].toString(), author = input[1].toString(), pages = input[2], link = '';
+    link = wait.for(self.getLink, title, author);
 
     if (typeof pages !== "number") { pages = null }
     if (_.contains(titlesRead, title.toLowerCase()) || title.toLowerCase() === self.thisMonthBook.title.toLowerCase() || title.toLowerCase() === self.nextMonthBook.title.toLowerCase()) {
       client.say(message.args[0], 'That book has already been read');
-    } else if (!_.contains(titles, title.toLowerCase())) {
+    } else if (_.contains(titles, title.toLowerCase())) {
+      client.say(message.args[0], 'That book has already been suggested');
+    } else {
       self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0, link: link} );
       self.write('booksToRead', self.booksToRead);
       client.say(message.args[0], 'Book added!');
-    } else client.say(message.args[0], 'That book has already been suggested');
+    }
   };
 
   self.changeBook = function (client, month, channel) {
@@ -246,6 +237,22 @@ var Bookclub = function Bookclub() {
       }
       self.keep = 0; self.new = 0; self.voted = [];
     }
+  };
+
+  self.getLink = function (title, author) {
+    var link = 'No link found';
+    self.amazon.itemSearch({
+      title: title,
+      author: author,
+      searchIndex: 'Books'
+    }, function(err, results) {
+      if (err) {
+        console.log(err);
+      } else {
+        link = results[0].DetailPageURL[0].split('%');
+      }
+    });
+    return link;
   };
 }
 
