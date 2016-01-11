@@ -84,10 +84,12 @@ var Bookclub = function Bookclub() {
       title: title,
       author: author,
       searchIndex: 'Books'
-    }).then(function(results){
-      link = results[0].DetailPageURL[0].split('%');
-    }).catch(function(err){
-      console.log(err);
+    }, function(err, results) {
+      if (err) {
+        console.log(err);
+      } else {
+        link = results[0].DetailPageURL[0].split('%');
+      }
     });
 
     if (typeof pages !== "number") { pages = null }
