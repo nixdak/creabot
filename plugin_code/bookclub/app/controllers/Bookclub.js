@@ -79,7 +79,7 @@ var Bookclub = function Bookclub() {
     var read = _.filter(self.booksRead, function (book) { return book.title.toLowerCase() === input[0].toLowerCase(); });
     var titlesRead = _.map(read, function (book) { return book.title.toLowerCase(); });
 
-    var title = input[0].toString(), author = input[1].toString(), pages = input[2], link;
+    var title = input[0].toString(), author = input[1].toString(), pages = input[2];
 
     if (typeof pages !== "number") { pages = null }
     if (_.contains(titlesRead, title.toLowerCase()) || title.toLowerCase() === self.thisMonthBook.title.toLowerCase() || title.toLowerCase() === self.nextMonthBook.title.toLowerCase()) {
@@ -87,20 +87,11 @@ var Bookclub = function Bookclub() {
     } else if (_.contains(titles, title.toLowerCase())) {
       client.say(message.args[0], 'That book has already been suggested');
     } else {
-      self.amazon.itemSearch({
-        title: titles,
-        author: author,
-        searchIndex: 'Books'
-      }).then(function(results){
-        link = results[0].DetailPageURL[0].split('%');
-      }).catch(function(err){
-        link = 'No link found';
-        console.log(err);
+      getLink(title, author, function (link) {
+        self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0, link: link} );
+        self.write('booksToRead', self.booksToRead);
+        client.say(message.args[0], 'Book added!');
       });
-      while(_.isUndefined(link)) { console.log('Waiting on amazon '); }
-      self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0, link: link} );
-      self.write('booksToRead', self.booksToRead);
-      client.say(message.args[0], 'Book added!');
     }
   };
 
@@ -249,6 +240,21 @@ var Bookclub = function Bookclub() {
       self.keep = 0; self.new = 0; self.voted = [];
     }
   };
+
+  self.getLink = function (title, author) {
+    self.amazon.itemSearch({
+      title: title,
+      author: author,
+      searchIndex: 'Books'
+    }, function(err, results) {
+      if (err) {
+        console.log(err);
+        return 'No link found';
+      } else {
+        return results[0].DetailPageURL[0].split('%');
+      }
+    });
+  }
 }
 
 exports = module.exports = Bookclub;
