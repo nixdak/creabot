@@ -62,7 +62,18 @@ var Bookclub = function Bookclub() {
   self.suggest = function (client, message, cmdArgs) {
     console.log('in suggest');
     self.client = client;
-    var input = cmdArgs.split("; "), link = self.getLink(input[0].toString(), input[1].toString());
+    var input = cmdArgs.split("; "), link = 'No link found';
+
+    self.amazon.itemSearch({
+      title: input[0].toString(),
+      author: input[1].toString(),
+      searchIndex: 'Books'
+    }).then(function(results){
+      link = results[0].DetailPageURL[0].split('%');
+    }).catch(function(err){
+      console.log(err);
+    });
+
     if (input[0] === "") {
       client.say(message.args[0], 'You must provide a title');
       return false;
@@ -236,20 +247,6 @@ var Bookclub = function Bookclub() {
       }
       self.keep = 0; self.new = 0; self.voted = [];
     }
-  };
-
-  self.getLink = function (title, author) {
-    var link = 'No link found';
-    self.amazon.itemSearch({
-      title: title,
-      author: author,
-      searchIndex: 'Books'
-    }).then(function(results){
-      link = results[0].DetailPageURL[0].split('%');
-    }).catch(function(err){
-      console.log(err);
-    });
-    return link;
   };
 }
 
