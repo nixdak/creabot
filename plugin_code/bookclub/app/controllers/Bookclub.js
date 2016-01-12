@@ -94,9 +94,10 @@ var Bookclub = function Bookclub() {
       }, function(err, results) {
         if (err) {
           console.log(err);
-          link 'No link found';
+          link = 'No link found';
         } else {
-          link = results[0].DetailPageURL[0].split('%');
+          var result = results[0].DetailPageURL[0].split('%');
+          link = result[0];
         }
         self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0, link: link} );
         self.write('booksToRead', self.booksToRead);
