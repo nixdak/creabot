@@ -87,7 +87,17 @@ var Bookclub = function Bookclub() {
     } else if (_.contains(titles, title.toLowerCase())) {
       client.say(message.args[0], 'That book has already been suggested');
     } else {
-      getLink(title, author, function (link) {
+      self.amazon.itemSearch({
+        title: title,
+        author: author,
+        searchIndex: 'Books'
+      }, function(err, results) {
+        if (err) {
+          console.log(err);
+          link 'No link found';
+        } else {
+          link = results[0].DetailPageURL[0].split('%');
+        }
         self.booksToRead.push( { title: title, author: author, pages: pages, suggested: message.nick, month: 0, link: link} );
         self.write('booksToRead', self.booksToRead);
         client.say(message.args[0], 'Book added!');
@@ -240,21 +250,6 @@ var Bookclub = function Bookclub() {
       self.keep = 0; self.new = 0; self.voted = [];
     }
   };
-
-  self.getLink = function (title, author) {
-    self.amazon.itemSearch({
-      title: title,
-      author: author,
-      searchIndex: 'Books'
-    }, function(err, results) {
-      if (err) {
-        console.log(err);
-        return 'No link found';
-      } else {
-        return results[0].DetailPageURL[0].split('%');
-      }
-    });
-  }
 }
 
 exports = module.exports = Bookclub;
