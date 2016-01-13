@@ -29,6 +29,7 @@
     "mathjs": "latest",
     "node-schedule": "latest",
     "cheerio": "latest",
-    "request": "2.67.0"
+    "request": "2.67.0",
+    "amazon-product-api": "latest"
   }
 }
