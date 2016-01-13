@@ -29,7 +29,7 @@ var Helpdesk = function Helpdesk() {
       client.say(channel, 'Helpdesk is a bot to help with all your problems pm me !help for a list of commads');
       return false;
     }
-    var url = 'http://wiki.redbrick.dcu.ie/mw/' + input[0];
+    var url = self.config.wiki + input[0];
     request(url, function (error, response, body) {
       if (!error) {
         var $page = cheerio.load(body), text;

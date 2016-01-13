@@ -4,7 +4,8 @@
     "channelsToExclude": [],
     "channelsToJoin": [ "#botdev" ],
     "commands": ["!cmt", "!helpdesk", "!chair", "!secretary", "!treasurer", "!pro", "!events", "!admins", "!webmaster", "!fyr", "!help"],
-    "pmCommands": ["!email"]
+    "pmCommands": ["!email"],
+    "wiki": "http://wiki.redbrick.dcu.ie/mw/"
   },
 
   "production": {
@@ -12,6 +13,7 @@
     "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub"],
     "channelsToJoin": ["#bots"],
     "commands": ["!cmt", "!helpdesk", "!chair", "!secretary", "!treasurer", "!pro", "!events", "!admins", "!webmaster", "!fyr", "!help"],
-    "pmCommands": ["!email"]
+    "pmCommands": ["!email"],
+    "wiki": "http://wiki.redbrick.dcu.ie/mw/"
   }
 }
