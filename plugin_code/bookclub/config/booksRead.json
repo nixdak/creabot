@@ -19,7 +19,7 @@
     "title": "The Hitchhikers Guide to the Galaxy",
     "author": "Douglas Adams",
     "pages": null,
-    "suggested": "",
+    "suggested": "gamma",
     "month": 9,
     "link": "http://www.amazon.co.uk/Hitchhikers-Guide-Galaxy-Douglas-Adams/dp/0330508539"
   },
@@ -27,7 +27,7 @@
     "title": "World War Z",
     "author": "Max Brooks",
     "pages": null,
-    "suggested": "",
+    "suggested": "creadak",
     "month": 10,
     "link": "http://www.amazon.co.uk/World-War-Export-Brooks-Max/dp/0715645110"
   },
@@ -35,7 +35,7 @@
     "title": "The Sphere",
     "author": "Michael Crichton",
     "pages": 385,
-    "suggested": "",
+    "suggested": "creadak",
     "month": 11,
     "link": "http://www.amazon.co.uk/Sphere-Michael-Crichton-ebook/dp/B007UH4G9C"
   }
