@@ -11,7 +11,7 @@
 
   "production": {
     "setTopic": true,
-    "topicBase": " || Wecome to Bookclub check out https://github.com/butlerx/butlerbot/wiki/bookclub for commands",
+    "topicBase": " || Welcome to Bookclub check out https://github.com/butlerx/butlerbot/wiki/bookclub for commands",
     "awsId": "",
     "awsSecret": "",
     "channels": ["#BookClub"],
