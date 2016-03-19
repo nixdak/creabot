@@ -21,7 +21,7 @@ var Popping = function Popping() {
         //console.log(JSON.stringify(self.urls))
         console.log('writing to ' + self.fileName);
       });
-      client.say(message.args[0], 'link added');
+      client.say(message.args[0], 'NOPE ' + message.nick);
     }
   };
 }
