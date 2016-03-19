@@ -38,5 +38,21 @@
     "suggested": "creadak",
     "month": 11,
     "link": "http://www.amazon.co.uk/Sphere-Michael-Crichton-ebook/dp/B007UH4G9C"
+  },
+  {
+    "title": "The Three-Body Problem",
+    "author": "Liu Cixin",
+    "pages": 302,
+    "suggested": "butlerx",
+    "month": 0,
+    "link": "http://www.amazon.co.uk/Three-Body-Problem-Cixin-Liu/dp/178497157X/"
+  },
+  {
+    "title": "The Sandman, Vol. 1: Preludes and Nocturnes",
+    "author": "Neil Gaiman",
+    "pages": null,
+    "suggested": "butlerx",
+    "month": 1,
+    "link": "http://www.amazon.co.uk/gp/product/1563892278/"
   }
 ]
