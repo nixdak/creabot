@@ -11,6 +11,10 @@
   "bugs": {
     "url": "http://github.com/butlerx/butlerbot/issues"
   },
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "license": "CC-BY-NC-SA-2.0",
   "dependencies": {
     "underscore": "latest",
