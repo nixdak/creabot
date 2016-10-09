@@ -145,7 +145,7 @@
   },
   {
     "type": "Question",
-    "value": "The snozberries tast like %s.",
+    "value": "The snozberries taste like %s.",
     "keep": "Yes",
     "draw": 0,
     "pick": 1,

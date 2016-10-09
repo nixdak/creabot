@@ -4,7 +4,16 @@ var util = require('util'),
     Sequelize = require('sequelize'),
     inflection = require('inflection'),
     Cards = require('../controllers/cards'),
-    Card = require('../models/card');
+    Card = require('../models/card'),
+    fs = require('fs'),
+    util = require('util'),
+    log_file = fs.createWriteStream('../../../logs/CAHdebug.log', {flags : 'a'}),
+    log_stdout = process.stdout;
+
+console.log = function(d) {
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
 
 /**
  * Available states for game
@@ -891,6 +900,9 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
 		return false;
 	      }
               self.players.push(player);
+              if(self.state !== STATES.WAITING){
+                self.players[self.players.length-1].hasPlayed = true;
+              }
             }
 
             self.say(player.nick + ' has joined the game');
@@ -941,6 +953,12 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
                 self.say(player.nick + ' has left the game');
             }
 
+            if (_.where(self.players, { isActive: true}).length === 0){
+              self.say("No Players left");
+              self.stop();
+              return false;
+            }
+            
             // check if remaining players have all player
             if (self.state === STATES.PLAYABLE && self.checkAllPlayed()) {
                 self.showEntries();
@@ -950,6 +968,12 @@ var Game = function Game(channel, client, config, cmdArgs, dbModels) {
             if (self.state === STATES.PLAYED && self.czar === player) {
                 self.say('The czar has fled the scene. So I will pick the winner on this round.');
                 self.selectWinner(Math.round(Math.random() * (self.table.answer.length - 1)));
+            }
+
+            //check if everyone has left the game
+            activePlayers = _.filter(self.players, function (player) { return player.isActive; });
+            if (activePlayers.length === 0){
+              self.stop();
             }
 
             return player;
