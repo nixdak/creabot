@@ -4,6 +4,7 @@ var _ = require('underscore'),
     config = require('../../config/config'),
     dbModels = require('../../models');
 
+
 var CardsAgainstHumanity = function CardsAgainstHumanity() {
     var self = this;
     self.game;
