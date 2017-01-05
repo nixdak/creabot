@@ -168,8 +168,8 @@ var Game = function (channel, client, config, cmdArgs) {
   };
 
   self.showRoundInfo = function() {
-    var seconds = Math.max(60, ((60 * self.config.gameOptions.turnMinutes) -
-      (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement)));
+    var seconds = Math.max(60, (60 * self.config.gameOptions.turnMinutes) -
+      (self.currentPlayer.idleTurns * self.config.gameOptions.idleRoundTimerDecrement));
 
     self.say('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn. ' + seconds + ' seconds on the clock');
     self.setTopic('TURN ' + self.turn + ': ' + self.currentPlayer.nick + '\'s turn.');
@@ -262,10 +262,10 @@ var Game = function (channel, client, config, cmdArgs) {
       self.currentPlayer.challengable = true;
     }
 
+
     if (idle !== true) {
       self.currentPlayer.idleTurns = 0;
     }
-
     self.nextTurn();
   };
 
@@ -477,6 +477,7 @@ var Game = function (channel, client, config, cmdArgs) {
     }
   };
 
+
   self.addPlayer = function (player) {
     var alreadyPlayer = self.getPlayer({ nick: player.nick, user: player.user, hostname: player.hostname });
 
@@ -511,7 +512,8 @@ var Game = function (channel, client, config, cmdArgs) {
     self.players.splice(self.players.indexOf(player), 1);
 
     // If the player is the current player, move to the next turn
-    if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player) {
+
+    if (!_.isUndefined(self.currentPlayer) && self.currentPlayer === player && self.players.length) {
       self.nextTurn();
     } else if (self.players.length < 2 && self.state !== STATES.FINISHED && self.state !== STATES.STOPPED && self.state !== STATES.WAITING) {
       self.stop();

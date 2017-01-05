@@ -17,8 +17,10 @@ module.exports = function(app) {
   app.cmd('lock', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.lock);
   app.cmd('quit', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.stop);
   app.cmd('stop', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.stop);
+  app.cmd('wiki', '', countdown.config.pluginOptions.channels, countdown.config.pluginOptions.channelsToExclude, countdown.wiki);
 
   // Private commands
   app.msg('cd', '', countdown.play);
   app.msg('lock', '', countdown.lock);
+  app.msg('cdwiki', '', countdown.wiki);
 };
