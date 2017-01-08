@@ -1,9 +1,7 @@
-var models = require('../models');
+const models = require('../models');
 
-var card_fixes = [
+const card_fixes = [];
 
-];
-
-card_fixes.forEach(function(typo_fix) {
-  models.Card.update({text: typo_fix.correct_text}, {where: {text: typo_fix.wrong_text}});
+card_fixes.forEach(({ correct_text, wrong_text }) => {
+  models.Card.update({ text: correct_text }, { where: { text: wrong_text } });
 });

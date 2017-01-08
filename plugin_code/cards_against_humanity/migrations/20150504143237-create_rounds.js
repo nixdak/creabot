@@ -1,37 +1,32 @@
-'use strict';
-
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    return queryInterface.createTable(
-      'rounds',
-      {
-        game_id: {
-          type: Sequelize.INTEGER,
-          references: 'games',
-          referencesKey: 'id',
-          primaryKey: true
-        },
-        round_number: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-          autoIncrement: false
-        },
-        winner_id: {
-          type: Sequelize.INTEGER,
-          references: 'players',
-          referencesKey: 'id'
-        },
-        num_active_players: {
-          type: Sequelize.INTEGER
-        },
-        total_players: {
-          type: Sequelize.INTEGER
-        }
-      }
-    )
+  up (queryInterface, { INTEGER }) {
+    return queryInterface.createTable('rounds', {
+      game_id: {
+        type         : INTEGER,
+        references   : 'games',
+        referencesKey: 'id',
+        primaryKey   : true,
+      },
+      round_number: {
+        type         : INTEGER,
+        primaryKey   : true,
+        autoIncrement: false,
+      },
+      winner_id: {
+        type         : INTEGER,
+        references   : 'players',
+        referencesKey: 'id',
+      },
+      num_active_players: {
+        type: INTEGER,
+      },
+      total_players: {
+        type: INTEGER,
+      },
+    });
   },
 
-  down: function (queryInterface, Sequelize) {
+  down (queryInterface, Sequelize) {
     return queryInterface.dropTable('rounds');
-  }
+  },
 };
