@@ -365,7 +365,7 @@ var Game = function (channel, client, config, cmdArgs) {
 
     self.discard.addCard(pickedCard);
 
-    playString += player.nick + ' has played ' + pickedCard.toString() + '! ';
+    playString += player.nick + ' has played ' + pickedCard.toString() + '! ' + player.nick + ' has ' + player.hand.numCards() + 'left.';
 
     pickedCard.onPlay(self);
 
