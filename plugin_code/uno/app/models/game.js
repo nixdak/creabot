@@ -2,7 +2,6 @@ const c = require('irc-colors');
 const _ = require('underscore');
 const inflection = require('inflection');
 const Deck = require('../controllers/deck');
-const Card = require('./card');
 
 const STATES = {
   STOPPED : 'Stopped',
@@ -50,7 +49,7 @@ const Game = function (channel, client, config, cmdArgs) {
     clearTimeout(self.startTimeout);
     clearInterval(self.turnTimeout);
 
-    player = self.getPlayer({ nick });
+    const player = self.getPlayer({ nick });
 
     if (!_.isUndefined(player) && !_.isNull(player)) {
       self.say(`${player.nick} stopped the game.`);
@@ -113,10 +112,10 @@ const Game = function (channel, client, config, cmdArgs) {
     }
 
     if (self.players.length === 2) {
-      currentPlayerIndex = self.players.indexOf(self.currentPlayer);
-      nextPlayerIndex = (currentPlayerIndex + 1) % self.players.length;
+      const currentPlayerIndex = self.players.indexOf(self.currentPlayer);
+      const nextPlayerIndex = (currentPlayerIndex + 1) % self.players.length;
 
-      nextPlayer = self.players[nextPlayerIndex].skipped === false
+      const nextPlayer = self.players[nextPlayerIndex].skipped === false
         ? self.players[nextPlayerIndex]
         : self.currentPlayer;
       return nextPlayer;
@@ -208,7 +207,7 @@ const Game = function (channel, client, config, cmdArgs) {
       return false;
     }
 
-    if (self.players.length == 1) {
+    if (self.players.length === 1) {
       self.say(`Only one player left. ${self.players[0].nick} wins the game!`);
       self.stop(null, null);
       return false;
@@ -520,9 +519,9 @@ const Game = function (channel, client, config, cmdArgs) {
 
   self.showStatus = () => {
     if (self.state === STATES.PLAYABLE) {
-      self.say(`It is currently ${currentPlayer.nick} go!`);
+      self.say(`It is currently ${self.currentPlayer.nick} go!`);
     } else {
-      self.say(`${self.players.length} people are playing. ${_.pluck(players, 'nick').join(', ')}`);
+      self.say(`${self.players.length} people are playing. ${_.pluck(self.players, 'nick').join(', ')}`);
     }
   };
 

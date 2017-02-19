@@ -1,3 +1,4 @@
+'use strict';
 const _ = require('underscore');
 const irc = require('irc');
 const env = process.env.NODE_ENV || 'development';
@@ -37,7 +38,7 @@ exports.init = function () {
     }
   };
 
-  self.setTopic = topic => {
+  self.setTopic = (channel, topic) => {
     // ignore if not configured to set topic
     if (typeof config.setTopic === 'undefined' || !config.setTopic) {
       return false;

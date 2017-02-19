@@ -28,11 +28,11 @@ const Countdown = function Countdown () {
 
       if (cmdArgs === '') {
         if (challengers.length === 1) {
-          var challenger = new Player(challengers[0]);
-          var challenged = new Player(message.nick);
-          var letterTime = letterTimes[0];
-          var numberTime = numberTimes[0];
-          var conundrumTime = conundrumTimes[0];
+          const challenger = new Player(challengers[0]);
+          const challenged = new Player(message.nick);
+          const letterTime = letterTimes[0];
+          const numberTime = numberTimes[0];
+          const conundrumTime = conundrumTimes[0];
           self.game = new Game(
             channel,
             client,
@@ -51,11 +51,11 @@ const Countdown = function Countdown () {
         client.say(channel, `You haven't been challenged by ${cmdArgs}. Challenging...`);
         self.challenge(client, message, cmdArgs);
       } else {
-        var challenger = new Player(cmdArgs);
-        var challenged = new Player(message.nick);
-        var letterTime = letterTimes[0];
-        var numberTime = numberTimes[0];
-        var conundrumTime = conundrumTimes[0];
+        const challenger = new Player(cmdArgs);
+        const challenged = new Player(message.nick);
+        const letterTime = letterTimes[0];
+        const numberTime = numberTimes[0];
+        const conundrumTime = conundrumTimes[0];
         self.game = new Game(
           channel,
           client,
@@ -93,7 +93,7 @@ const Countdown = function Countdown () {
   self.challenge = (client, message, cmdArgs) => {
     const channel = message.args[0];
     const args = cmdArgs.split(' ', 6);
-    const valid_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    const validNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     let letterTime = self.config.roundOptions.lettersRoundMinutes;
     let numberTime = self.config.roundOptions.numbersRoundMinutes;
     let conundrumTime = self.config.roundOptions.conundrumRoundMinutes;
@@ -121,7 +121,7 @@ const Countdown = function Countdown () {
     ) {
       for (let i = 1; i < args.length; i++) {
         const arg = args[i].split(':');
-        if (_.reject(arg[1], number => _.contains(valid_numbers, number) === true).length !== 0) {
+        if (_.reject(arg[1], number => _.contains(validNumbers, number) === true).length !== 0) {
           client.say(channel, `The ${arg[0]} isnt valid`);
           if (arg[0].toLowerCase() === 'letters') {
             letterTime = self.config.roundOptions.lettersRoundMinutes;
@@ -177,28 +177,28 @@ const Countdown = function Countdown () {
     if (self.challenges.length === 0) {
       client.say(args[0], 'No challenges have been issued.');
     } else {
-      let challenges_sent = _.filter(self.challenges, ({ challenger }) => challenger === nick);
-      let challenges_received = _.filter(self.challenges, ({ challenged }) => challenged === nick);
+      let challengesSent = _.filter(self.challenges, ({ challenger }) => challenger === nick);
+      let challengesReceived = _.filter(self.challenges, ({ challenged }) => challenged === nick);
 
-      if (challenges_sent.length < 1) {
+      if (challengesSent.length < 1) {
         client.say(args[0], `${nick}: You have issued no challenges.`);
       } else {
-        challenges_sent = _.map(challenges_sent, ({ challenged }) => challenged);
+        challengesSent = _.map(challengesSent, ({ challenged }) => challenged);
         client.say(
           args[0],
-          `${nick}: You have issued challenges to the following players: ${challenges_sent.join(
+          `${nick}: You have issued challenges to the following players: ${challengesSent.join(
             ', '
           )}.`
         );
       }
 
-      if (challenges_received.length < 1) {
+      if (challengesReceived.length < 1) {
         client.say(args[0], `${nick}: You have received no challenges.`);
       } else {
-        challenges_received = _.map(challenges_received, ({ challenger }) => challenger);
+        challengesReceived = _.map(challengesReceived, ({ challenger }) => challenger);
         client.say(
           args[0],
-          `${nick}: You have been challenged by the following players: ${challenges_received.join(
+          `${nick}: You have been challenged by the following players: ${challengesReceived.join(
             ', '
           )}.`
         );
@@ -219,15 +219,11 @@ const Countdown = function Countdown () {
 
   self.play = (client, message, cmdArgs) => {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_LETTERS) {
-      let args;
-
       if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !cd command.');
         return false;
       }
-
-      args = cmdArgs.split(' ').join('');
-
+      const args = cmdArgs.split(' ').join('');
       self.game.playLetters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.PLAY_NUMBERS) {
       if (_.isUndefined(cmdArgs)) {
@@ -243,28 +239,20 @@ const Countdown = function Countdown () {
 
   self.select = (client, message, cmdArgs) => {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.LETTERS) {
-      var args;
       cmdArgs = cmdArgs.toLowerCase();
-
       if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
-
-      args = cmdArgs.replace(/\s/g, '').split('');
-
+      const args = cmdArgs.replace(/\s/g, '').split('');
       self.game.letters(message.nick, args);
     } else if (!_.isUndefined(self.game) && self.game.state === Game.STATES.NUMBERS) {
-      var args;
       cmdArgs = cmdArgs.toLowerCase();
-
       if (cmdArgs === '') {
         client.say(message.args[0], 'Please supply arguments to the !cd command');
         return false;
       }
-
-      args = cmdArgs.replace(/\s/g, '').split('');
-
+      const args = cmdArgs.replace(/\s/g, '').split('');
       self.game.numbers(message.nick, args);
     } else {
       client.say(message.args[0], 'The select command is not available at the moment');
@@ -273,8 +261,6 @@ const Countdown = function Countdown () {
 
   self.stop = (client, message, cmdArgs) => {
     const channel = message.args[0];
-    const nick = message.nick;
-    const hostname = message.host;
 
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(message.args[0], 'No game running to stop.');

@@ -1,10 +1,10 @@
 const fs = require('fs');
-const c = require('irc-colors');
 const _ = require('underscore');
 const request = require('request');
 const cheerio = require('cheerio');
 const committee = require('../../../redbrick_committee/config/committee.json');
-env = process.env.NODE_ENV || 'development', config = require('../../config/config.json')[env];
+const env = process.env.NODE_ENV || 'development';
+const config = require('../../config/config.json')[env];
 
 const Helpdesk = function Helpdesk () {
   const self = this;
@@ -65,15 +65,19 @@ const Helpdesk = function Helpdesk () {
     }
     let commands = '';
     let pmCommands = '';
-    for (var i = 0; i < self.config.commands.length; i++) {
+    for (let i = 0; i < self.config.commands.length; i++) {
       if (i !== self.config.commands.length - 1) {
         commands += `${self.config.commands[i]}, `;
-      } else        { commands += self.config.commands[i]; }
+      } else {
+        commands += self.config.commands[i];
+      }
     }
-    for (var i = 0; i < self.config.pmCommands.length; i++) {
+    for (let i = 0; i < self.config.pmCommands.length; i++) {
       if (i !== self.config.pmCommands.length - 1) {
         pmCommands += `${self.config.commands[i]}, `;
-      } else        { pmCommands += self.config.pmCommands[i]; }
+      } else {
+        pmCommands += self.config.pmCommands[i];
+      }
     }
     client.say(channel, `The commands are ${commands} and pm only commands are ${pmCommands}`);
   };

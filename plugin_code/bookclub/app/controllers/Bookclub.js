@@ -33,7 +33,9 @@ const Bookclub = function Bookclub () {
       console.log('Scheduled update');
       const month = self.date.getMonth();
       self.changeBook(self.client, month, self.config.channels[0]);
-    } else      { console.log('update failed'); }
+    } else {
+      console.log('update failed');
+    }
   });
 
   self.thisMonth = (client, { args }, cmdArgs) => {
@@ -116,12 +118,13 @@ const Bookclub = function Bookclub () {
           searchIndex: 'Books',
         },
         (err, results) => {
+          let link;
           if (err) {
             console.log(err);
-            const link = 'No link found';
+            link = 'No link found';
           } else {
             const result = results[0].DetailPageURL[0].split('%');
-            const link = result[0];
+            link = result[0];
           }
           self.booksToRead.push({ title, author, pages, suggested: nick, month: 0, link });
           self.write('booksToRead', self.booksToRead);
@@ -197,7 +200,7 @@ const Bookclub = function Bookclub () {
   self.showRead = (client, { nick }, cmdArgs) => {
     self.client = client;
     for (let i = 0; i < self.booksRead.length; i++) {
-      const months = 'No Month';
+      let month = 'No Month';
       switch (self.booksRead[i].month) {
         case 0:
           month = 'January';

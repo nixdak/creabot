@@ -139,10 +139,10 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showChair = (client, { nick }, cmdArgs) => {
     const chairperson = _.find(self.committee, { role: 'Chairperson' });
     if (!_.isUndefined(chairperson) && self.chair) {
-      chair_string = `${chairperson.name} (${chairperson.nick})`;
+      const chairString = `${chairperson.name} (${chairperson.nick})`;
       client.say(
         nick,
-        `Chairperson: ${chair_string} contact by /m ${chairperson.nick} <message>, or email ${chairperson.name}@redbrick.dcu.ie`
+        `Chairperson: ${chairString} contact by /m ${chairperson.nick} <message>, or email ${chairperson.name}@redbrick.dcu.ie`
       );
       // self.wait('Chair');
     }
@@ -151,10 +151,10 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showSecretary = (client, { nick }, cmdArgs) => {
     const secretary = _.find(self.committee, { role: 'Secretary' });
     if (!_.isUndefined(secretary) && self.sec) {
-      secretary_string = `${secretary.name} (${secretary.nick})`;
+      const secretaryString = `${secretary.name} (${secretary.nick})`;
       client.say(
         nick,
-        `Secretary: ${secretary_string} contact by /m ${secretary.nick} <message>, or email ${secretary.nick}@redbrick.dcu.ie`
+        `Secretary: ${secretaryString} contact by /m ${secretary.nick} <message>, or email ${secretary.nick}@redbrick.dcu.ie`
       );
       // self.wait('Sec');
     }
@@ -163,10 +163,10 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showTreasurer = (client, { nick }, cmdArgs) => {
     const treasurer = _.find(self.committee, { role: 'Treasurer' });
     if (!_.isUndefined(treasurer) && self.treasurer) {
-      treasurer_string = `${treasurer.name} (${treasurer.nick})`;
+      const treasurerString = `${treasurer.name} (${treasurer.nick})`;
       client.say(
         nick,
-        `Treasurer: ${treasurer_string} contact by /m ${treasurer.nick} <message>, or email ${treasurer.nick}@redbrick.dcu.ie`
+        `Treasurer: ${treasurerString} contact by /m ${treasurer.nick} <message>, or email ${treasurer.nick}@redbrick.dcu.ie`
       );
       // self.wait('Treasurer');
     }
@@ -175,10 +175,10 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showPRO = (client, { nick }, cmdArgs) => {
     const pro = _.find(self.committee, { role: 'Public Relations Officer' });
     if (!_.isUndefined(pro) && self.pro) {
-      pro_string = `${pro.name} (${pro.nick})`;
+      const proString = `${pro.name} (${pro.nick})`;
       client.say(
         nick,
-        `Public Relations Officer: ${pro_string} contact by /m ${pro.nick} <message>, or email ${pro.nick}@redbrick.dcu.ie`
+        `Public Relations Officer: ${proString} contact by /m ${pro.nick} <message>, or email ${pro.nick}@redbrick.dcu.ie`
       );
       // self.wait('PRO');
     }
@@ -187,22 +187,22 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showEvents = (client, { nick }, cmdArgs) => {
     const events = _.find(self.committee, { role: 'Events Officer' });
     if (!_.isUndefined(events) && self.events) {
-      events_string = `${events.name} (${events.nick})`;
+      const eventsString = `${events.name} (${events.nick})`;
       client.say(
         nick,
-        `Events Officer: ${events_string} contact by /m ${events.nick} <message>, or email ${events.nick}@redbrick.dcu.ie`
+        `Events Officer: ${eventsString} contact by /m ${events.nick} <message>, or email ${events.nick}@redbrick.dcu.ie`
       );
       // self.wait('Events');
     }
   };
 
   self.showFYR = (client, { nick }, cmdArgs) => {
-    const first_year_rep = _.find(self.committee, { role: 'First Year Representative' });
-    if (!_.isUndefined(first_year_rep) && self.fyr) {
-      fyr_string = `${first_year_rep.name} (${first_year_rep.nick})`;
+    const firstYearRep = _.find(self.committee, { role: 'First Year Representative' });
+    if (!_.isUndefined(firstYearRep) && self.fyr) {
+      const fyrString = `${firstYearRep.name} (${firstYearRep.nick})`;
       client.say(
         nick,
-        `First Year Representative: ${fyr_string} contact by /m ${first_year_rep.nick} <message>, or email ${first_year_rep.nick}@redbrick.dcu.ie`
+        `First Year Representative: ${fyrString} contact by /m ${firstYearRep.nick} <message>, or email ${firstYearRep.nick}@redbrick.dcu.ie`
       );
       // self.wait('FYR');
     }
@@ -211,10 +211,10 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showWebmaster = (client, { nick }, cmdArgs) => {
     const webmaster = _.find(self.committee, { role: 'Webmaster' });
     if (!_.isUndefined(webmaster) && self.web) {
-      webmaster_string = `${webmaster.name} (${webmaster.nick})`;
+      const webmasterString = `${webmaster.name} (${webmaster.nick})`;
       client.say(
         nick,
-        `Webmaster: ${webmaster_string} contact by /m ${webmaster.nick} <message>, or email ${webmaster.nick}@redbrick.dcu.ie`
+        `Webmaster: ${webmasterString} contact by /m ${webmaster.nick} <message>, or email ${webmaster.nick}@redbrick.dcu.ie`
       );
       // self.wait('Web');
     }
@@ -223,8 +223,8 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showHelpdesk = (client, { nick }, cmdArgs) => {
     const helpdesk = _.filter(self.committee, { role: 'Helpdesk' });
     if (!_.isUndefined(helpdesk) && self.helpdesk) {
-      const helpdesk_string = _.map(helpdesk, ({ name, nick }) => `${name} (${nick})`).join(', ');
-      client.say(nick, `Helpdesk: ${helpdesk_string} contact by emailing helpdesk@redbrick.dcu.ie`);
+      const helpdeskString = _.map(helpdesk, ({ name, nick }) => `${name} (${nick})`).join(', ');
+      client.say(nick, `Helpdesk: ${helpdeskString} contact by emailing helpdesk@redbrick.dcu.ie`);
       // self.wait('Helpdesk');
     }
   };
@@ -232,10 +232,10 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.showAdmins = (client, { nick }, cmdArgs) => {
     const admins = _.filter(self.committee, { role: 'System Administrator' });
     if (!_.isUndefined(admins) && self.admins) {
-      const admins_string = _.map(admins, ({ name, nick }) => `${name} (${nick})`).join(', ');
+      const adminsString = _.map(admins, ({ name, nick }) => `${name} (${nick})`).join(', ');
       client.say(
         nick,
-        `System Administrators: ${admins_string} contact by emailing admins@redbrick.dcu.ie`
+        `System Administrators: ${adminsString} contact by emailing admins@redbrick.dcu.ie`
       );
       // self.wait('Admins');
     }

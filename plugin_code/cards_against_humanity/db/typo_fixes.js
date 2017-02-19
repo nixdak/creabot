@@ -1,7 +1,7 @@
 const models = require('../models');
 
-const card_fixes = [];
+const cardFixes = [];
 
-card_fixes.forEach(({ correct_text, wrong_text }) => {
-  models.Card.update({ text: correct_text }, { where: { text: wrong_text } });
+cardFixes.forEach(({ correctText, wrongText }) => {
+  models.Card.update({ text: correctText }, { where: { text: wrongText } });
 });

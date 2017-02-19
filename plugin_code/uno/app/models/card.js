@@ -1,5 +1,4 @@
 const c = require('irc-colors');
-const inflection = require('inflection');
 
 const Card = function Card (card) {
   const self = this;

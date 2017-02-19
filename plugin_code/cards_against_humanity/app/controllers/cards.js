@@ -2,13 +2,12 @@ const _ = require('underscore');
 const Card = require('../models/card');
 const fs = require('fs');
 const util = require('util');
-const log_file = fs.createWriteStream('../../../logs/CAHdebug.log', { flags: 'a' });
-const log_stdout = process.stdout;
+const logFile = fs.createWriteStream('../../../logs/CAHdebug.log', { flags: 'a' });
+const logStdout = process.stdout;
 
 console.log = d => {
-  //
-  log_file.write(`${util.format(d)}\n`);
-  log_stdout.write(`${util.format(d)}\n`);
+  logFile.write(`${util.format(d)}\n`);
+  logStdout.write(`${util.format(d)}\n`);
 };
 
 const Cards = function Cards (cards) {

@@ -24,18 +24,16 @@ const DublinBusInfo = function DublinBusInfo () {
             if (typeof cmdArgs[1] === 'undefined') {
               client.say(args[0], `Stop address: ${tablesAsJson[2][0]['Stop Address']}`);
 
-              for (var i = 0; i < 5 && i < tablesAsJson[3].length; i++) {
+              for (let i = 0; i < 5 && i < tablesAsJson[3].length; i++) {
                 client.say(
                   args[0],
-                  `${tablesAsJson[3][i]['Route']} to ${tablesAsJson[3][i][
-                    'Destination'
-                  ]} expected at ${tablesAsJson[3][i]['Expected Time']}`
+                  `${tablesAsJson[3][i]['Route']} to ${tablesAsJson[3][i]['Destination']} expected at ${tablesAsJson[3][i]['Expected Time']}`
                 );
               }
             } else {
               const buses = [];
 
-              for (var i = 0; i < tablesAsJson[3].length; i++) {
+              for (let i = 0; i < tablesAsJson[3].length; i++) {
                 for (let j = 1; j < cmdArgs.length; j++) {
                   if (cmdArgs[j].toLowerCase() === tablesAsJson[3][i]['Route'].toLowerCase()) {
                     buses[buses.length] = tablesAsJson[3][i];
@@ -46,7 +44,7 @@ const DublinBusInfo = function DublinBusInfo () {
               if (buses.length > 0) {
                 client.say(args[0], `Stop address: ${tablesAsJson[2][0]['Stop Address']}`);
 
-                for (var i = 0; i < 5 && i < buses.length; i++) {
+                for (let i = 0; i < 5 && i < buses.length; i++) {
                   if (buses[i]['Expected Time'] === 'Due') {
                     client.say(
                       args[0],
@@ -55,9 +53,7 @@ const DublinBusInfo = function DublinBusInfo () {
                   } else {
                     client.say(
                       args[0],
-                      `${buses[i]['Route']} to ${buses[i]['Destination']} expected at ${buses[i][
-                        'Expected Time'
-                      ]}`
+                      `${buses[i]['Route']} to ${buses[i]['Destination']} expected at ${buses[i]['Expected Time']}`
                     );
                   }
                 }

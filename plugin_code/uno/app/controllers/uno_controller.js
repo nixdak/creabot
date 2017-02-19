@@ -13,7 +13,7 @@ const Uno = function Uno () {
       return false;
     }
 
-    const player = self.game.getPlayer({ nick: nick });
+    const player = self.game.getPlayer({ nick });
     self.game.showCards(player);
   };
 
@@ -95,7 +95,7 @@ const Uno = function Uno () {
       return false;
     }
 
-    if (_.isUndefined(self.game.getPlayer({ nick: nick }))) {
+    if (_.isUndefined(self.game.getPlayer({ nick }))) {
       return false;
     }
 
@@ -120,7 +120,8 @@ const Uno = function Uno () {
     self.game.uno(nick, cmdArgs[0], cmdArgs[1]);
   };
 
-  self.status = (client, message, cmdArgs) => {
+  self.status = (client, { args }, cmdArgs) => {
+    const channel = args[0];
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !j.');
     } else {

@@ -344,13 +344,13 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     }
   };
 
-  self.wiki = (client, message, cmdArgs) => {
-    if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
-      client.say(message.nick, 'https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity');
+  self.wiki = (client, { args, nick }, cmdArgs) => {
+    if (client.nick.toLowerCase() === args[0].toLowerCase()) {
+      client.say(nick, 'https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity');
     } else {
       client.say(
-        message.args[0],
-        `${message.nick}: https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity`
+        args[0],
+        `${nick}: https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity`
       );
     }
   };

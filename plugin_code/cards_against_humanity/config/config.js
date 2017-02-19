@@ -26,7 +26,7 @@ function loadCardFile (identifier, filename) {
 }
 
 // Initialize base configuration and ENV
-var config = _.extend(
+const config = _.extend(
   require(`${__dirname}/../config/env/all.js`),
   require(`${__dirname}/../config/env/${process.env.NODE_ENV}.json`) || {},
   { cards: [] }
@@ -41,9 +41,9 @@ if (!fs.existsSync(`${__dirname}/../config/cards/Custom_q.json`)) {
 }
 
 // Init validator
-var validator = new JaySchema();
+const validator = new JaySchema();
 // Define schema to calidate against
-var schema = {
+const schema = {
   $schema: 'http://json-schema.org/draft-04/schema#',
   title  : 'Card Schema',
   type   : 'array',

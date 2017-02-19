@@ -1,6 +1,4 @@
-const c = require('irc-colors');
 const _ = require('underscore');
-const fs = require('fs');
 const inflection = require('inflection');
 const mathjs = require('mathjs');
 
@@ -81,8 +79,8 @@ const Game = function Game (
   // Load vowels
   self.vowels = [];
 
-  for (var letter in self.config.letterOptions.vowels) {
-    for (var i = 0; i < self.config.letterOptions.vowels[letter]; i++) {
+  for (const letter in self.config.letterOptions.vowels) {
+    for (let i = 0; i < self.config.letterOptions.vowels[letter]; i++) {
       self.vowels.push(letter);
     }
   }
@@ -90,8 +88,8 @@ const Game = function Game (
   self.consonants = [];
 
   // Load consonants
-  for (var letter in self.config.letterOptions.consonants) {
-    for (var i = 0; i < self.config.letterOptions.consonants[letter]; i++) {
+  for (const letter in self.config.letterOptions.consonants) {
+    for (let i = 0; i < self.config.letterOptions.consonants[letter]; i++) {
       self.consonants.push(letter);
     }
   }
@@ -454,48 +452,48 @@ const Game = function Game (
   };
 
   self.numberRoundEnd = () => {
-    const challenger_difference = Math.max(self.table.target, self.answers.challenger.value) -
+    const challengerDifference = Math.max(self.table.target, self.answers.challenger.value) -
       Math.min(self.table.target, self.answers.challenger.value);
-    const challenged_difference = Math.max(self.table.target, self.answers.challenged.value) -
+    const challengedDifference = Math.max(self.table.target, self.answers.challenged.value) -
       Math.min(self.table.target, self.answers.challenged.value);
 
-    if (challenged_difference > 10 && challenger_difference > 10) {
+    if (challengedDifference > 10 && challengerDifference > 10) {
       self.say('No player has gotten within 10 of the target and no points have been awarded');
-    } else if (challenger_difference < challenged_difference) {
+    } else if (challengerDifference < challengedDifference) {
       if (self.answers.challenger.value === self.table.target) {
         self.say(
           `${self.challenger.nick} has hit the target of ${self.table.target} with ${self.answers.challenger.expression} and receives 10 points.`
         );
         self.challenger.points += 10;
-      } else if (challenger_difference <= 5) {
+      } else if (challengerDifference <= 5) {
         self.say(
-          `${self.challenger.nick} has gotten within ${challenger_difference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 7 points.`
+          `${self.challenger.nick} has gotten within ${challengerDifference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 7 points.`
         );
         self.challenger.points += 7;
-      } else if (challenger_difference <= 10) {
+      } else if (challengerDifference <= 10) {
         self.say(
-          `${self.challenger.nick} has gotten within ${challenger_difference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 5 points.`
+          `${self.challenger.nick} has gotten within ${challengerDifference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 5 points.`
         );
         self.challenger.points += 5;
       }
-    } else if (challenged_difference < challenger_difference) {
+    } else if (challengedDifference < challengerDifference) {
       if (self.answers.challenged.value === self.table.target) {
         self.say(
           `${self.challenged.nick} has hit the target of ${self.table.target} with ${self.answers.challenged.expression} and receives 10 points.`
         );
         self.challenged.points += 10;
-      } else if (challenged_difference <= 5) {
+      } else if (challengedDifference <= 5) {
         self.say(
-          `${self.challenged.nick} has gotten within ${challenged_difference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 7 points.`
+          `${self.challenged.nick} has gotten within ${challengedDifference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 7 points.`
         );
         self.challenged.points += 7;
-      } else if (challenged_difference <= 10) {
+      } else if (challengedDifference <= 10) {
         self.say(
-          `${self.challenged.nick} has gotten within ${challenged_difference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 5 points.`
+          `${self.challenged.nick} has gotten within ${challengedDifference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 5 points.`
         );
         self.challenged.points += 5;
       }
-    } else if (challenged_difference === challenger_difference) {
+    } else if (challengedDifference === challengerDifference) {
       if (
         self.answers.challenger.value === self.table.target &&
         self.answers.challenged.value === self.table.target
@@ -509,21 +507,21 @@ const Game = function Game (
         self.say('Both players have hit the target and scored 10 points.');
         self.challenger.points += 10;
         self.challenged.points += 10;
-      } else if (challenged_difference <= 5 && challenger_difference <= 5) {
+      } else if (challengedDifference <= 5 && challengerDifference <= 5) {
         self.say(
-          `${self.challenged.nick} has gotten within ${challenged_difference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 7 points.`
+          `${self.challenged.nick} has gotten within ${challengedDifference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 7 points.`
         );
         self.say(
-          `${self.challenger.nick} has gotten within ${challenger_difference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 7 points.`
+          `${self.challenger.nick} has gotten within ${challengerDifference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 7 points.`
         );
         self.challenged.points += 7;
         self.challenger.points += 7;
-      } else if (challenged_difference <= 10 && challenger_difference <= 10) {
+      } else if (challengedDifference <= 10 && challengerDifference <= 10) {
         self.say(
-          `${self.challenged.nick} has gotten within ${challenged_difference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 5 points.`
+          `${self.challenged.nick} has gotten within ${challengedDifference} of the target with ${self.answers.challenged.expression} = ${self.answers.challenged.value} and receives 5 points.`
         );
         self.say(
-          `${self.challenger.nick} has gotten within ${challenger_difference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 5 points.`
+          `${self.challenger.nick} has gotten within ${challengerDifference} of the target with ${self.answers.challenger.expression} = ${self.answers.challenger.value} and receives 5 points.`
         );
         self.challenged.points += 5;
         self.challenger.points += 5;
@@ -1012,10 +1010,10 @@ const Game = function Game (
             self.roundEnd();
           } else {
             // Make sure the player didn't reuse any letters
-            var letters = _.clone(self.table.conundrum.split(''));
-            var valid = true;
+            const letters = _.clone(self.table.conundrum.split(''));
+            let valid = true;
 
-            for (var i = 0; i < word.length; i++) {
+            for (let i = 0; i < word.length; i++) {
               if (_.contains(letters, word[i].toUpperCase())) {
                 console.log(letters);
                 letters.splice(_.indexOf(letters, word[i]), 1);
@@ -1049,10 +1047,10 @@ const Game = function Game (
             self.roundEnd();
           } else {
             // Make sure the player didn't reuse any letters
-            var letters = _.clone(self.table.conundrum.split(''));
-            var valid = true;
+            const letters = _.clone(self.table.conundrum.split(''));
+            let valid = true;
 
-            for (var i = 0; i < word.length; i++) {
+            for (let i = 0; i < word.length; i++) {
               if (_.contains(letters, word[i].toUpperCase())) {
                 console.log(letters);
                 letters.splice(_.indexOf(letters, word[i]), 1);
