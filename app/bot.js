@@ -27,6 +27,12 @@ exports.init = function () {
   config.clientOptions.port = process.env.PORT || config.clientOptions.port;
   config.clientOptions.userName = process.env.USER || config.clientOptions.userName;
 
+  if (process.env.TARGET && process.env.MESSAGE) {
+    const target = process.env.TARGET;
+    const message = process.env.MESSAGE;
+    config.connectCommands.push({ target, message });
+  }
+
   console.log(`Connecting to ${config.server} as ${config.nick}...`);
   client = new irc.Client(config.server, config.nick, config.clientOptions);
 

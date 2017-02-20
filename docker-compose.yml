@@ -1,0 +1,16 @@
+version: "3"
+services:
+  butlerbot:
+    image: 'butlerx/butlerbot:latest'
+    restart: 'always'
+    volumes:
+      - ./bookclub:/usr/src/app/plugin_code/bookclub/config
+      - ./pop:/usr/src/app/plugin_code/poping/config
+    environment:
+      SERVER: localhost
+      PORT: 6697
+      NICK: butlerbot
+      USER: butlerx
+      NODE_ENV: development
+      TARGET: Nickserv
+      MESSAGE: identify
