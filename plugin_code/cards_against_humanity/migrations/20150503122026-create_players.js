@@ -1,34 +1,29 @@
-'use strict';
-
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    return queryInterface.createTable(
-      'players',
-      {
-        id: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-          autoIncrement: true
-        },
-        nick: {
-          type: Sequelize.STRING
-        },
-        created_at: {
-          type: Sequelize.DATE
-        },
-        updated_at: {
-          type: Sequelize.DATE
-        },
-        last_game_id: {
-          type: Sequelize.INTEGER,
-          references: 'games',
-          referencesKey: 'id'
-        }
-      }
-    );
+  up (queryInterface, { INTEGER, STRING, DATE }) {
+    return queryInterface.createTable('players', {
+      id: {
+        type         : INTEGER,
+        primaryKey   : true,
+        autoIncrement: true,
+      },
+      nick: {
+        type: STRING,
+      },
+      created_at: {
+        type: DATE,
+      },
+      updated_at: {
+        type: DATE,
+      },
+      last_game_id: {
+        type         : INTEGER,
+        references   : 'games',
+        referencesKey: 'id',
+      },
+    });
   },
 
-  down: function (queryInterface, Sequelize) {
+  down (queryInterface, Sequelize) {
     return queryInterface.dropTable('players');
-  }
+  },
 };
