@@ -1,37 +1,36 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('Round',
-    {
-      game_id: {
-        type: DataTypes.INTEGER,
-        references: 'games',
-        referencesKey: 'id',
-        primaryKey: true
-      },
-      winner_id: {
-        type: DataTypes.INTEGER,
-        references: 'players',
-        referencesKey: 'id'
-      },
-      round_number: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: false
-      },
-      question_id: {
-        type: DataTypes.INTEGER,
-        references: 'cards',
-        referencesKey: 'id',
-      },
-      num_active_players: {
-        type: DataTypes.INTEGER
-      },
-      total_players: {
-        type: DataTypes.INTEGER
-      }
+module.exports = (sequelize, { INTEGER }) => sequelize.define(
+  'Round',
+  {
+    game_id: {
+      type         : INTEGER,
+      references   : 'games',
+      referencesKey: 'id',
+      primaryKey   : true,
     },
-    {
-      tableName: 'rounds',
-      timestamps: false
-    }
-  );
-};
+    winner_id: {
+      type         : INTEGER,
+      references   : 'players',
+      referencesKey: 'id',
+    },
+    round_number: {
+      type         : INTEGER,
+      primaryKey   : true,
+      autoIncrement: false,
+    },
+    question_id: {
+      type         : INTEGER,
+      references   : 'cards',
+      referencesKey: 'id',
+    },
+    num_active_players: {
+      type: INTEGER,
+    },
+    total_players: {
+      type: INTEGER,
+    },
+  },
+  {
+    tableName : 'rounds',
+    timestamps: false,
+  }
+);

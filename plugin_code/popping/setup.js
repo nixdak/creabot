@@ -1,7 +1,7 @@
-var Popping = require('./app/controllers/popping.js');
+const Popping = require('./app/controllers/popping.js');
 
-module.exports = function(app) {
-  var popping = new Popping();
+module.exports = app => {
+  const popping = new Popping();
 
   // Join Channels
   app.joinChannels(popping.config.channelsToJoin);
