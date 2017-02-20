@@ -6,14 +6,7 @@ var util = require('util'),
     Cards = require('../controllers/cards'),
     Card = require('../models/card'),
     fs = require('fs'),
-    util = require('util'),
-    log_file = fs.createWriteStream('../../../logs/CAHdebug.log', {flags : 'a'}),
-    log_stdout = process.stdout;
-
-console.log = function(d) {
-  log_file.write(util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
-};
+    util = require('util');
 
 /**
  * Available states for game
