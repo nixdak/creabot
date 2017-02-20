@@ -1,21 +1,22 @@
-module.exports = (sequelize, { INTEGER, STRING }) => sequelize.define(
-  'Player',
-  {
-    id: {
-      type         : INTEGER,
-      primaryKey   : true,
-      autoIncrement: true,
+module.exports = function (sequelize, DataTypes) {
+  return sequelize.define('Player',
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      nick: {
+        type: DataTypes.STRING
+      },
+      last_game_id: {
+        type: DataTypes.INTEGER
+      }
     },
-    nick: {
-      type: STRING,
-    },
-    last_game_id: {
-      type: INTEGER,
-    },
-  },
-  {
-    tableName: 'players',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-  }
-);
+    {
+      tableName: 'players',
+      createdAt: 'created_at',
+      updatedAt: 'updated_at'
+    }
+  );
+};

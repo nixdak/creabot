@@ -1,13 +1,19 @@
+'use strict';
+
 module.exports = {
-  up (queryInterface, { INTEGER }) {
-    return queryInterface.addColumn('games', 'winner_id', {
-      type         : INTEGER,
-      references   : 'players',
-      referencesKey: 'id',
-    });
+  up: function (queryInterface, Sequelize) {
+    return queryInterface.addColumn(
+      'games',
+      'winner_id',
+      {
+        type: Sequelize.INTEGER,
+        references: 'players',
+        referencesKey: 'id'
+      }
+    );
   },
 
-  down (queryInterface, Sequelize) {
+  down: function (queryInterface, Sequelize) {
     return queryInterface.removeColumn('games', 'winner_id');
-  },
+  }
 };

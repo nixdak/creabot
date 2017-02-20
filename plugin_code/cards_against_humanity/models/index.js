@@ -1,21 +1,25 @@
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(module.filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(`${__dirname}/../config/config.json`)[env];
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
-const db = {};
+'use strict';
+
+var fs        = require('fs');
+var path      = require('path');
+var Sequelize = require('sequelize');
+var basename  = path.basename(module.filename);
+var env       = process.env.NODE_ENV || 'development';
+var config    = require(__dirname + '/../config/config.json')[env];
+var sequelize = new Sequelize(config.database, config.username, config.password, config);
+var db        = {};
 
 fs
   .readdirSync(__dirname)
-  .filter(file => file.indexOf('.') !== 0 && file !== basename)
-  .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
+  .filter(function(file) {
+    return (file.indexOf('.') !== 0) && (file !== basename);
+  })
+  .forEach(function(file) {
+    var model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach(function(modelName) {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db);
   }

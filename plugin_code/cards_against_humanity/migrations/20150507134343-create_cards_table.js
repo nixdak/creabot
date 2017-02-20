@@ -1,24 +1,28 @@
+'use strict';
+
 module.exports = {
-  up (queryInterface, { INTEGER, BOOLEAN }) {
-    return queryInterface.createTable('cards', {
-      id: {
-        type         : INTEGER,
-        primaryKey   : true,
-        autoIncrement: true,
-      },
-      text: {
-        type: 'VARCHAR(512)',
-      },
-      question: {
-        type: BOOLEAN,
-      },
-      times_played: {
-        type: INTEGER,
-      },
-    });
+  up: function (queryInterface, Sequelize) {
+    return queryInterface.createTable('cards',
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        text: {
+          type: 'VARCHAR(512)'
+        },
+        question: {
+            type: Sequelize.BOOLEAN
+        },
+        times_played: {
+          type: Sequelize.INTEGER
+        }
+      }
+    );
   },
 
-  down (queryInterface, Sequelize) {
+  down: function (queryInterface, Sequelize) {
     return queryInterface.dropTable('cards');
-  },
+  }
 };

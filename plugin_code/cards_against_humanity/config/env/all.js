@@ -1,6 +1,6 @@
-const path = require('path');
-const rootPath = path.normalize(`${__dirname}/../..`);
+var path = require('path'),
+    rootPath = path.normalize(__dirname + '/../..');
 
 module.exports = {
-  root: rootPath,
+    root: rootPath
 };

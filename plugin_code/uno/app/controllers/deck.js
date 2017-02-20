@@ -1,30 +1,32 @@
-const _ = require('underscore');
-const Card = require('../models/card');
-const cards = require('../../config/cards.json');
+var _ = require('underscore'),
+    Card = require('../models/card'),
+    cards = require('../../config/cards.json');
 
-const Deck = function Deck (deck) {
-  const self = this;
+var Deck = function Deck(deck) {
+  var self = this;
   self.cards = [];
 
   if (deck === true) {
-    _.each(cards, card => {
+    _.each(cards, function (card) {
       self.cards.push(new Card(card));
     });
   } else {
     self.cards = [];
   }
 
-  self.shuffle = () => {
+  self.shuffle = function () {
     self.cards = _.shuffle(_.shuffle(self.cards));
   };
 
-  self.deal = () => self.cards.pop();
+  self.deal = function () {
+    return self.cards.pop();
+  };
 
-  self.addCard = card => {
+  self.addCard = function (card) {
     self.cards.push(card);
   };
 
-  self.removeCard = card => {
+  self.removeCard = function (card) {
     if (_.isUndefined(card)) {
       return false;
     }
@@ -33,21 +35,31 @@ const Deck = function Deck (deck) {
     return card;
   };
 
-  self.checkPlayable = (index, currentCard) => self.cards[index].isPlayable(currentCard);
+  self.checkPlayable = function (index, currentCard) {
+    return self.cards[index].isPlayable(currentCard);
+  };
 
-  self.getCard = index => self.cards[index];
+  self.getCard = function (index) {
+    return self.cards[index];
+  };
 
-  self.pickCard = index => {
-    const card = self.cards[index];
+  self.pickCard = function (index) {
+    var card = self.cards[index];
     self.removeCard(card);
     return card;
   };
 
-  self.getCurrentCard = () => self.cards[self.cards.length - 1];
+  self.getCurrentCard = function () {
+    return self.cards[self.cards.length - 1];
+  };
 
-  self.getCards = () => self.cards;
+  self.getCards = function () {
+    return self.cards;
+  };
 
-  self.numCards = () => self.cards.length;
+  self.numCards = function () {
+    return self.cards.length;
+  };
 };
 
 exports = module.exports = Deck;
