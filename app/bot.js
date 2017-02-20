@@ -1,7 +1,7 @@
 const _ = require('underscore');
 const irc = require('irc');
 const env = process.env.NODE_ENV || 'development';
-let config = require('../config/config.json')[env];
+const config = require('../config/config.json')[env];
 let client;
 const commands = [];
 const msgs = [];
