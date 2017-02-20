@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * Creabot
  * main application script
