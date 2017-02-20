@@ -1,7 +1,7 @@
-const _ = require('underscore');
+var _ = require('underscore');
 
-const Player = function Player (nick, user, hostname, joined) {
-  const self = this;
+var Player = function Player(nick, user, hostname, joined) {
+  var self = this;
 
   self.id = _.uniqueId('player');
   self.nick = nick;

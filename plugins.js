@@ -1,10 +1,10 @@
-module.exports = app => {
-  const path = require('path');
-  const plugger = require('plug').create(app);
+module.exports = function(app) {
+    var path = require('path'),
+        plugger = require('plug').create(app);
 
-  plugger.on('connect', (pluginName, pluginData, modulePath) => {
-    console.log(`Loaded ${pluginName} plugin.`);
-  });
+    plugger.on('connect', function(pluginName, pluginData, modulePath) {
+        console.log('Loaded ' + pluginName + ' plugin.');
+    });
 
-  plugger.find(path.resolve(__dirname, 'plugins_enabled'));
+    plugger.find(path.resolve(__dirname, 'plugins_enabled'));
 };

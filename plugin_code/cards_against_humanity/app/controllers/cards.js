@@ -1,133 +1,131 @@
-const _ = require('underscore');
-const Card = require('../models/card');
-const fs = require('fs');
-const util = require('util');
-const logFile = fs.createWriteStream('../../../logs/CAHdebug.log', { flags: 'a' });
-const logStdout = process.stdout;
+var _ = require('underscore'),
+    Card = require('../models/card'),
+    fs = require('fs'),
+    util = require('util'),
+    log_file = fs.createWriteStream('../../../logs/CAHdebug.log', {flags : 'a'}),
+    log_stdout = process.stdout;
 
-console.log = d => {
-  logFile.write(`${util.format(d)}\n`);
-  logStdout.write(`${util.format(d)}\n`);
-};
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};;
 
-const Cards = function Cards (cards) {
-  const self = this;
+var Cards = function Cards(cards) {
+    var self = this;
 
-  self.cards = [];
+    self.cards = [];
 
-  // add all cards in init array
-  _.each(cards, c => {
-    let card;
-    if (c instanceof Card) {
-      card = c;
-    } else if (c.hasOwnProperty('value')) {
-      card = new Card(c);
-    } else {
-      console.warning('Invalid card', c);
-    }
-    self.cards.push(card);
-  });
+    // add all cards in init array
+    _.each(cards, function (c) {
+        var card;
+        if(c instanceof Card) {
+            card = c;
+        } else if(c.hasOwnProperty('value')) {
+            card = new Card(c);
+        } else {
+            console.warning('Invalid card', c);
+        }
+        self.cards.push(card);
+    });
 
-  /**
+    /**
      * Reset the collection
      * @param cards Optional replacement list of cards
      * @returns {Array} Array of the old, replaced cards
      */
-  self.reset = cards => {
-    if (typeof cards === 'undefined') {
-      cards = [];
-    }
-    const oldCards = self.cards;
-    self.cards = cards;
-    return oldCards;
-  };
+    self.reset = function(cards) {
+        if(typeof cards === 'undefined') {
+            cards = [];
+        }
+        var oldCards = self.cards;
+        self.cards = cards;
+        return oldCards;
+    };
 
-  /**
+    /**
      * Shuffle the cards
      * @returns {Cards} The shuffled collection
      */
-  self.shuffle = () => {
-    self.cards = _.shuffle(self.cards);
-    return self;
-  };
+    self.shuffle = function () {
+        self.cards = _.shuffle(self.cards);
+        return self;
+    };
 
-  /**
+    /**
      * Add card to collection
      * @param card
      * @returns {*}
      */
-  self.addCard = card => {
-    self.cards.push(card);
-    return card;
-  };
+    self.addCard = function (card) {
+        self.cards.push(card);
+        return card;
+    };
 
-  /**
+    /**
      * Remove a card from the collection
      * @param card
      * @returns {*}
      */
-  self.removeCard = card => {
-    if (typeof card !== 'undefined') {
-      self.cards = _.without(self.cards, card);
-    }
-    return card;
-  };
+    self.removeCard = function (card) {
+        if (typeof card !== 'undefined') {
+            self.cards = _.without(self.cards, card);
+        }
+        return card;
+    };
 
-  /**
+    /**
      * Pick cards from the collection
      * @param index (int|Array) Index of a single card, of Array of multiple indexes to remove and return
      * @returns {Card|Cards} Instance of a single card, or instance of Cards if multiple indexes picked
      */
-  self.pickCards = function (index) {
-    if (typeof index === 'undefined') index = 0;
-    if (index instanceof Array) {
-      // get multiple cards
-      const pickedCards = new Cards();
-      // first get all cards
-      _.each(
-        index,
-        i => {
-          const c = self.cards[i];
-          if (typeof c === 'undefined') {
-            throw new Error('Invalid card index');
-          }
-          //                cards.push();
-          pickedCards.addCard(c);
-        },
-        this
-      );
-      // then remove them
-      self.cards = _.without.apply(this, _.union([self.cards], pickedCards.cards));
-      //            _.each(pickedCards, function(card) {
-      //                self.cards.removeCard(card);
-      //            }, this);
-      console.log('picked cards:');
-      console.log(_.pluck(pickedCards.cards, 'id'));
-      console.log(_.pluck(pickedCards.cards, 'value'));
-      console.log('remaining cards:');
-      console.log(_.pluck(self.cards, 'id'));
-      console.log(_.pluck(self.cards, 'value'));
-      return pickedCards;
-    } else {
-      const card = self.cards[index];
-      self.removeCard(card);
-      return card;
-    }
-  };
+    self.pickCards = function (index) {
+        if (typeof index === 'undefined') index = 0;
+        if (index instanceof Array) {
+            // get multiple cards
+            var pickedCards = new Cards();
+            // first get all cards
+            _.each(index, function (i) {
+                var c = self.cards[i];
+                if (typeof c === 'undefined') {
+                    throw new Error('Invalid card index');
+                }
+//                cards.push();
+                pickedCards.addCard(c);
+            }, this);
+            // then remove them
+            self.cards = _.without.apply(this, _.union([self.cards], pickedCards.cards));
+//            _.each(pickedCards, function(card) {
+//                self.cards.removeCard(card);
+//            }, this);
+            console.log('picked cards:');
+            console.log(_.pluck(pickedCards.cards, 'id'));
+            console.log(_.pluck(pickedCards.cards, 'value'));
+            console.log('remaining cards:');
+            console.log(_.pluck(self.cards, 'id'));
+            console.log(_.pluck(self.cards, 'value'));
+            return pickedCards;
+        } else {
+            var card = self.cards[index];
+            self.removeCard(card);
+            return card;
+        }
+    };
 
-  /**
+    /**
      * Get all cards in collection
      * @returns {Array}
      */
-  self.getCards = () => self.cards;
+    self.getCards = function() {
+        return self.cards;
+    };
 
-  /**
+    /**
      * Get amount of cards in collection
      * @returns {Number}
      */
-  self.numCards = function () {
-    return this.cards.length;
-  };
+    self.numCards = function () {
+        return this.cards.length;
+    };
 };
 
 /**

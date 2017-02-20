@@ -11,7 +11,7 @@ console.log('butlerbot');
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 // dependencies
-const bot = require('./app/bot');
+var bot = require('./app/bot');
 
 // init the bot
 bot.init();

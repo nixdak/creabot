@@ -1,7 +1,7 @@
-const Deck = require('../controllers/deck.js');
+var Deck = require('../controllers/deck.js');
 
-const Player = function (nick, user, hostname) {
-  const self = this;
+var Player = function(nick, user, hostname) {
+  var self = this;
 
   self.nick = nick;
   self.user = user;

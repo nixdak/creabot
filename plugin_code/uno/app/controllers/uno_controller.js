@@ -1,80 +1,75 @@
-const _ = require('underscore');
-const Game = require('../models/game');
-const Player = require('../models/player');
-const env = process.env.NODE_ENV || 'development';
-const config = require('../../config/config.json')[env];
+var _ = require('underscore'),
+    Game = require('../models/game'),
+    Player = require('../models/player'),
+    env = process.env.NODE_ENV || 'development',
+    config = require('../../config/config.json')[env];
 
-const Uno = function Uno () {
-  const self = this;
+var Uno = function Uno () {
+  var self = this;
   self.config = config;
 
-  self.cards = (client, { nick }, cmdArgs) => {
+  self.cards = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
 
-    const player = self.game.getPlayer({ nick });
+    var player = self.game.getPlayer({ nick: message.nick });
     self.game.showCards(player);
   };
 
-  self.challenge = (client, { nick }, cmdArgs) => {
+  self.challenge = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
 
-    self.game.challenge(nick);
+    self.game.challenge(message.nick);
   };
 
-  self.draw = (client, { nick }, cmdArgs) => {
+  self.draw = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
 
-    self.game.draw(nick);
+    self.game.draw(message.nick);
   };
 
-  self.end = (client, { nick }, cmdArgs) => {
+  self.end = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
 
-    self.game.endTurn(nick);
+    self.game.endTurn(message.nick);
   };
 
-  self.join = (client, { args, nick, user, host }, cmdArgs) => {
-    const channel = args[0];
+  self.join = function (client, message, cmdArgs) {
+    var channel = message.args[0];
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
     }
 
-    if (
-      !_.isUndefined(self.game) &&
-      self.game.state !== Game.STATES.STOPPED &&
-      self.game.state !== Game.STATES.FINISHED &&
-      self.game.state !== Game.STATES.WAITING
-    ) {
-      client.say(channel, `${nick}: Cannot join games that are already in progress.`);
+    if (!_.isUndefined(self.game) && self.game.state !== Game.STATES.STOPPED && self.game.state !== Game.STATES.FINISHED && self.game.state !== Game.STATES.WAITING) {
+      client.say(channel, message.nick + ': Cannot join games that are already in progress.');
       return false;
     }
 
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.FINISHED) {
-      self.game = new Game(args[0], client, self.config, cmdArgs);
+      self.game = new Game(message.args[0], client, self.config, cmdArgs);
     }
 
-    const player = new Player(nick, user, host);
+    var player = new Player(message.nick, message.user, message.host);
     self.game.addPlayer(player);
   };
 
-  self.quit = (client, { nick }, cmdArgs) => {
+  self.quit = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.FINISHED) {
       return false;
     }
 
-    self.game.removePlayer(nick);
+    self.game.removePlayer(message.nick);
   };
 
-  self.score = (client, message, cmdArgs) => {
+  self.score = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       return false;
     }
@@ -82,58 +77,57 @@ const Uno = function Uno () {
     self.game.showScores();
   };
 
-  self.start = (client, { nick }, cmdArgs) => {
+  self.start = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.WAITING) {
       return false;
     }
 
-    self.game.start(nick);
+    self.game.start(message.nick);
   };
 
-  self.stop = (client, { nick }, cmdArgs) => {
+  self.stop = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.FINISHED) {
       return false;
     }
 
-    if (_.isUndefined(self.game.getPlayer({ nick }))) {
+    if (_.isUndefined(self.game.getPlayer({nick: message.nick}))) {
       return false;
     }
 
-    self.game.stop(nick);
+    self.game.stop(message.nick);
   };
 
-  self.play = (client, { nick }, cmdArgs) => {
+  self.play = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
 
-    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
 
-    self.game.play(nick, cmdArgs[0], cmdArgs[1]);
+    self.game.play(message.nick, cmdArgs[0], cmdArgs[1]);
   };
 
-  self.uno = (client, { nick }, cmdArgs) => {
+  self.uno = function (client, message, cmdArgs) {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
-    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
-    self.game.uno(nick, cmdArgs[0], cmdArgs[1]);
+    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), function (str) { return str.trim(); });
+    self.game.uno(message.nick, cmdArgs[0], cmdArgs[1]);
   };
 
-  self.status = (client, { args }, cmdArgs) => {
-    const channel = args[0];
+  self.status = function (client, message, cmdArgs){
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
-      client.say(channel, 'No game running. Start the game by typing !j.');
+        client.say(channel, 'No game running. Start the game by typing !j.');
     } else {
-      self.game.showStatus();
+        self.game.showStatus();
     }
   };
 
-  self.wiki = (client, { args, nick }, cmdArgs) => {
-    if (client.nick.toLowerCase() === args[0].toLowerCase()) {
-      client.say(nick, 'https://github.com/butlerx/butlerbot/wiki/Uno');
+  self.wiki = function (client, message, cmdArgs){
+    if (client.nick.toLowerCase() === message.args[0].toLowerCase()) {
+      client.say(message.nick, 'https://github.com/butlerx/butlerbot/wiki/Uno');
     } else {
-      client.say(args[0], `${nick}: https://github.com/butlerx/butlerbot/wiki/Uno`);
+      client.say(message.args[0], message.nick + ': https://github.com/butlerx/butlerbot/wiki/Uno');
     }
   };
 };
