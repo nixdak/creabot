@@ -7,7 +7,7 @@
     "idleLimit": 2,
     "secondsBeforeStart": 60,
     "roundMinutes": 6,
-    "database": true,
+    "database": false,
     "maxPlayers": 8
   },
 
