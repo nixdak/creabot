@@ -967,7 +967,6 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
           );
           return false;
         }
-
         oldPlayer.isActive = true;
       } else {
         if (
