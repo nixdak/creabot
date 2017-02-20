@@ -1,4 +1,4 @@
-exports.connect = function(app, callback) {
+exports.connect = (app, callback) => {
   require('../plugin_code/popping/setup.js')(app);
   callback();
-}
+};
