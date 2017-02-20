@@ -1,20 +1,18 @@
 {
   "production": {
     "server":        "localhost",
-    "nick":          "butlerxxx",
+    "nick":          "butlerbot",
 
-    "connectCommands": [
-          {
-              "target": "nickserv",
-              "message": "identify"
-          }
-      ],
+    "connectCommands": [{
+      "target": "nickserv",
+      "message": "identify"
+    }],
 
     "clientOptions": {
-        "userName":             "butlerx",
-        "port":                 "6697",
-        "floodProtection":      true,
-        "floodProtectionDelay": 175
+      "userName":             "butlerx",
+      "port":                 "6697",
+      "floodProtection":      true,
+      "floodProtectionDelay": 175
     }
   },
 
@@ -22,18 +20,16 @@
     "server":        "localhost",
     "nick":          "butlerDev",
 
-    "connectCommands": [
-          {
-              "target": "",
-              "message": ""
-          }
-      ],
+    "connectCommands": [{
+      "target": "",
+      "message": ""
+    }],
 
     "clientOptions": {
-        "userName":             "butlerx",
-        "port":                 "6697",
-        "floodProtection":      true,
-        "floodProtectionDelay": 175
+      "userName":             "butlerx",
+      "port":                 "6697",
+      "floodProtection":      true,
+      "floodProtectionDelay": 175
     }
   }
 }

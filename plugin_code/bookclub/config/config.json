@@ -13,7 +13,7 @@
     "setTopic": true,
     "topicBase": " || Welcome to Bookclub check out https://github.com/butlerx/butlerbot/wiki/bookclub for commands",
     "awsId": "",
-    "awsSecret": "",
+    "awsSecret  ": "",
     "channels": ["#BookClub"],
     "channelsToExclude": ["#Uno", "#CardsAgainstHumanity", "#Countdown", "bots"],
     "channelsToJoin": ["#BookClub"]
