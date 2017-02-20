@@ -19,7 +19,7 @@
   },
 
   "development": {
-    "server":        "irc.redbrick.dcu.ie",
+    "server":        "localhost",
     "nick":          "butlerDev",
 
     "connectCommands": [
@@ -31,6 +31,7 @@
 
     "clientOptions": {
         "userName":             "butlerx",
+        "port":                 "6697",
         "floodProtection":      true,
         "floodProtectionDelay": 175
     }

@@ -13,7 +13,9 @@
   },
   "scripts": {
     "start": "node app",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "fix": "eslint . --fix"
   },
   "license": "CC-BY-NC-SA-2.0",
   "dependencies": {
@@ -35,5 +37,11 @@
     "cheerio": "latest",
     "request": "2.67.0",
     "amazon-product-api": "latest"
+  },
+  "devDependencies": {
+    "eslint": "3.15.0",
+    "eslint-config-standard": "6.2.1",
+    "eslint-plugin-promise": "3.4.2",
+    "eslint-plugin-standard": "2.0.1"
   }
 }
