@@ -292,7 +292,6 @@ const Game = function (channel, client, config, cmdArgs) {
       self.currentPlayer.challengable = true;
     }
 
-
     if (idle !== true) {
       self.currentPlayer.idleTurns = 0;
     }

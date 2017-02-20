@@ -35,7 +35,7 @@
     "mathjs": "latest",
     "node-schedule": "latest",
     "cheerio": "latest",
-    "request": "2.67.0",
+    "request": "latest",
     "amazon-product-api": "latest"
   },
   "devDependencies": {
