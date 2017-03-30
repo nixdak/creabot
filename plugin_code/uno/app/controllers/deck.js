@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const Card = require('../models/card');
 const cards = require('../../config/cards.json');
 
@@ -7,7 +7,7 @@ const Deck = function Deck (deck) {
   self.cards = [];
 
   if (deck === true) {
-    _.each(cards, card => {
+    _.forEach(cards, card => {
       self.cards.push(new Card(card));
     });
   } else {

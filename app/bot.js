@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const irc = require('irc');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config.json')[env];
@@ -37,9 +37,9 @@ exports.init = function () {
   client = new irc.Client(config.server, config.nick, config.clientOptions);
 
   self.joinChannels = channels => {
-    if (typeof channels !== 'undefined') {
+    if (!_.isUndefined(channels)) {
       if (self.registered) {
-        channels.forEach(channel => {
+        _.forEach(channels, channel => {
           client.join(channel);
         });
       } else {
@@ -50,13 +50,13 @@ exports.init = function () {
 
   self.setTopic = (channel, topic) => {
     // ignore if not configured to set topic
-    if (typeof config.setTopic === 'undefined' || !config.setTopic) {
+    if (_.isUndefined(config.setTopic) || !config.setTopic) {
       return false;
     }
 
     // construct new topic
     let newTopic = topic;
-    if (typeof config.topicBase !== 'undefined') {
+    if (!_.isUndefined(config.topicBase)) {
       newTopic = `${topic} ${config.topicBase}`;
     }
 
@@ -70,8 +70,8 @@ exports.init = function () {
     self.registered = true;
 
     // Send connect commands after joining a server
-    if (typeof config.connectCommands !== 'undefined' && config.connectCommands.length > 0) {
-      _.each(config.connectCommands, ({ target, message }) => {
+    if (!_.isUndefined(config.connectCommands) && config.connectCommands.length > 0) {
+      _.forEach(config.connectCommands, ({ target, message }) => {
         if (target && message) {
           client.say(target, message);
         }
@@ -88,12 +88,8 @@ exports.init = function () {
   client.addListener('join', (channel, nick, message) => {
     console.log(`Joined ${channel} as ${nick}`);
     // Send join command after joining a channel
-    if (
-      typeof config.joinCommands !== 'undefined' &&
-      config.joinCommands.hasOwnProperty(channel) &&
-      config.joinCommands[channel].length > 0
-    ) {
-      _.each(config.joinCommands[channel], cmd => {
+    if (!_.isUndefined(config.joinCommands) && config.joinCommands.hasOwnProperty(channel) && config.joinCommands[channel].length > 0) {
+      _.forEach(config.joinCommands[channel], cmd => {
         if (cmd.target && cmd.message) {
           client.say(cmd.target, cmd.message);
         }
@@ -122,40 +118,44 @@ exports.init = function () {
     // build callback options
     if (config.nick === to) {
       // private message commands
-      _.each(
+      _.forEach(
         msgs,
-        c => {
-          if (cmd === c.cmd) {
-            console.log(`command: ${c.cmd}`);
-            // check user mode
-            if (checkUserMode(message, c.mode)) {
-              c.callback(client, message, cmdArgs);
+        _.bind(
+          c => {
+            if (cmd === c.cmd) {
+              console.log(`command: ${c.cmd}`);
+              // check user mode
+              if (checkUserMode(message, c.mode)) {
+                c.callback(client, message, cmdArgs);
+              }
             }
-          }
-        },
-        this
+          },
+          this
+        )
       );
     } else {
       // public commands
-      _.each(
+      _.forEach(
         commands,
-        c => {
-          // If the command matches
-          if (cmd === c.cmd) {
-            // If the channel matches the command channels or is set to respond on all channels and is not in the
-            // commands excluded channels
-            if (c.channel.indexOf(to) > -1 || c.channel === 'all') {
-              if (typeof c.exclude === 'undefined' || c.exclude.indexOf(to) === -1) {
-                console.log(`command: ${c.cmd}`);
-                // check user mode
-                if (checkUserMode(message, c.mode)) {
-                  c.callback(client, message, cmdArgs);
+        _.bind(
+          c => {
+            // If the command matches
+            if (cmd === c.cmd) {
+              // If the channel matches the command channels or is set to respond on all channels and is not in the
+              // commands excluded channels
+              if (_.includes(c.channel, to) || c.channel === 'all') {
+                if (_.isUndefined(c.exclude) || _.includes(c.exclude, to)) {
+                  console.log(`command: ${c.cmd}`);
+                  // check user mode
+                  if (checkUserMode(message, c.mode)) {
+                    c.callback(client, message, cmdArgs);
+                  }
                 }
               }
             }
-          }
-        },
-        this
+          },
+          this
+        )
       );
     }
   });

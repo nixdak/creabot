@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const tabletojson = require('tabletojson');
 const config = require('../../config/config.json');
 
@@ -10,7 +10,7 @@ const DublinBusInfo = function DublinBusInfo () {
     const url = 'http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=view&searchquery=';
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
     if (cmdArgs.length < 1 || isNaN(cmdArgs[0])) {
@@ -20,8 +20,8 @@ const DublinBusInfo = function DublinBusInfo () {
         if (tablesAsJson.length === 2) {
           client.say(args[0], `${nick}: Sorry, that stop doesn't exist.`);
         } else {
-          if (typeof tablesAsJson[3][0]['0'] === 'undefined') {
-            if (typeof cmdArgs[1] === 'undefined') {
+          if (_.isUndefined(tablesAsJson[3][0]['0'])) {
+            if (_.isUndefined(cmdArgs[1])) {
               client.say(args[0], `Stop address: ${tablesAsJson[2][0]['Stop Address']}`);
 
               for (let i = 0; i < 5 && i < tablesAsJson[3].length; i++) {

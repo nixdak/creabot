@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const fs = require('fs');
 const schedule = require('node-schedule');
 const amazon = require('amazon-product-api');
@@ -99,16 +99,16 @@ const Bookclub = function Bookclub () {
     const author = input[1].toString();
     let pages = input[2];
 
-    if (typeof pages !== 'number') {
+    if (!_.isNumber(pages)) {
       pages = null;
     }
     if (
-      _.contains(titlesRead, title.toLowerCase()) ||
+      _.includes(titlesRead, title.toLowerCase()) ||
       title.toLowerCase() === self.thisMonthBook.title.toLowerCase() ||
       title.toLowerCase() === self.nextMonthBook.title.toLowerCase()
     ) {
       client.say(args[0], 'That book has already been read');
-    } else if (_.contains(titles, title.toLowerCase())) {
+    } else if (_.includes(titles, title.toLowerCase())) {
       client.say(args[0], 'That book has already been suggested');
     } else {
       self.amazon.itemSearch(
@@ -167,12 +167,12 @@ const Bookclub = function Bookclub () {
 
   self.setTopic = (client, channel, topic) => {
     // ignore if not configured to set topic
-    if (typeof config.setTopic === 'undefined' || !config.setTopic) {
+    if (_.isUndefined(config.setTopic) || !config.setTopic) {
       return false;
     }
     // construct new topic
     let newTopic = topic;
-    if (typeof config.topicBase !== 'undefined') {
+    if (!_.isUndefined(config.topicBase)) {
       newTopic = `${topic} ${config.topicBase}`;
     }
     // set it
@@ -252,7 +252,7 @@ const Bookclub = function Bookclub () {
     if (args[0] === '') {
       client.say(message.args[0], `Keep: ${self.keep} Against: ${self.new}`);
     } else {
-      if (_.contains(self.voted, message.nick.toLowerCase())) {
+      if (_.includes(self.voted, message.nick.toLowerCase())) {
         client.say(message.args[0], `${message.nick} you've arlready voted`);
         return false;
       } else {

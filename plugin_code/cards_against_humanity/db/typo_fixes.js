@@ -1,7 +1,8 @@
+const _ = require('lodash');
 const models = require('../models');
 
 const cardFixes = [];
 
-cardFixes.forEach(({ correctText, wrongText }) => {
+_.forEach(cardFixes, ({ correctText, wrongText }) => {
   models.Card.update({ text: correctText }, { where: { text: wrongText } });
 });

@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const Game = require('../models/game');
 const Player = require('../models/player');
 const env = process.env.NODE_ENV || 'development';
@@ -45,7 +45,7 @@ const Uno = function Uno () {
     const channel = args[0];
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
     if (
@@ -106,9 +106,7 @@ const Uno = function Uno () {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
-
-    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
-
+    cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     self.game.play(nick, cmdArgs[0], cmdArgs[1]);
   };
 
@@ -116,7 +114,7 @@ const Uno = function Uno () {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
-    cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+    cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     self.game.uno(nick, cmdArgs[0], cmdArgs[1]);
   };
 

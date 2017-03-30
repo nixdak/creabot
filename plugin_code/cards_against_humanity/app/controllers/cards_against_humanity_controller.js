@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const Game = require('./game');
 const Player = require('../models/player');
 const config = require('../../config/config');
@@ -24,10 +24,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game !== 'undefined' && self.game.state !== Game.STATES.STOPPED) {
+    if (!_.isUndefined(self.game) && self.game.state !== Game.STATES.STOPPED) {
       // game exists
       client.say(channel, 'A game is already running. Type !join to join the game.');
     } else {
@@ -51,14 +51,14 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       const player = self.game.getPlayer({ nick, hostname });
-      if (typeof player !== 'undefined') {
+      if (!_.isUndefined(player)) {
         self.game.stop(self.game.getPlayer({ nick, hostname }));
         self.game = undefined;
       }
@@ -77,14 +77,14 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       const player = self.game.getPlayer({ nick, hostname });
-      if (typeof player !== 'undefined') {
+      if (!_.isUndefined(player)) {
         self.game.pause();
       }
     }
@@ -102,14 +102,14 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       const player = self.game.getPlayer({ nick, hostname });
-      if (typeof player !== 'undefined') {
+      if (!_.isUndefined(player)) {
         self.game.resume();
       }
     }
@@ -127,10 +127,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       self.start(client, message, cmdArgs);
     } else {
       const player = new Player(nick, user, hostname);
@@ -150,10 +150,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       self.game.removePlayer(self.game.getPlayer({ nick, hostname }));
@@ -172,10 +172,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       const player = self.game.getPlayer({ nick, hostname });
@@ -196,14 +196,14 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       const player = self.game.getPlayer({ nick, hostname });
-      if (typeof player !== 'undefined') {
+      if (!_.isUndefined(player)) {
         self.game.playCard(cmdArgs, player);
       }
     }
@@ -219,10 +219,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const channel = args[0];
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       self.game.listPlayers();
@@ -241,14 +241,14 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       const player = self.game.getPlayer({ nick, hostname });
-      if (typeof player !== 'undefined') {
+      if (!_.isUndefined(player)) {
         self.game.selectWinner(cmdArgs[0], player);
       }
     }
@@ -264,10 +264,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const channel = args[0];
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       self.game.showPoints();
@@ -284,10 +284,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const channel = args[0];
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       self.game.showStatus();
@@ -302,15 +302,15 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start.');
     } else {
       const player = self.game.getPlayer({ nick, hostname });
 
-      if (typeof player !== 'undefined') {
+      if (!_.isUndefined(player)) {
         if (self.game.state === Game.STATES.PLAYED && channel === self.game.channel) {
           self.game.selectWinner(cmdArgs[0], player);
         } else if (self.game.state === Game.STATES.PLAYABLE) {
@@ -328,10 +328,10 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     const hostname = message.host;
 
     if (cmdArgs !== '') {
-      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
-    if (typeof self.game === 'undefined' || self.game.state === Game.STATES.STOPPED) {
+    if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !start');
     } else {
       const player = self.game.getPlayer({ nick, hostname });

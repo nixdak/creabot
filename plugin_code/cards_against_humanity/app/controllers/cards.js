@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const Card = require('../models/card');
 
 const Cards = function Cards (cards) {
@@ -7,7 +7,7 @@ const Cards = function Cards (cards) {
   self.cards = [];
 
   // add all cards in init array
-  _.each(cards, c => {
+  _.forEach(cards, c => {
     let card;
     if (c instanceof Card) {
       card = c;
@@ -25,7 +25,7 @@ const Cards = function Cards (cards) {
      * @returns {Array} Array of the old, replaced cards
      */
   self.reset = cards => {
-    if (typeof cards === 'undefined') {
+    if (_.isUndefined(cards)) {
       cards = [];
     }
     const oldCards = self.cards;
@@ -58,7 +58,7 @@ const Cards = function Cards (cards) {
      * @returns {*}
      */
   self.removeCard = card => {
-    if (typeof card !== 'undefined') {
+    if (!_.isUndefined(card)) {
       self.cards = _.without(self.cards, card);
     }
     return card;
@@ -70,34 +70,30 @@ const Cards = function Cards (cards) {
      * @returns {Card|Cards} Instance of a single card, or instance of Cards if multiple indexes picked
      */
   self.pickCards = function (index) {
-    if (typeof index === 'undefined') index = 0;
-    if (index instanceof Array) {
+    if (_.isUndefined(index)) index = 0;
+    if (_.isArray(index)) {
       // get multiple cards
       const pickedCards = new Cards();
       // first get all cards
-      _.each(
-        index,
-        i => {
-          const c = self.cards[i];
-          if (typeof c === 'undefined') {
-            throw new Error('Invalid card index');
-          }
-          //                cards.push();
-          pickedCards.addCard(c);
-        },
-        this
-      );
+      _.forEach(index, _.bind(i => {
+        const c = self.cards[i];
+        if (_.isUndefined(c)) {
+          throw new Error('Invalid card index');
+        }
+        //                cards.push();
+        pickedCards.addCard(c);
+      }, this));
       // then remove them
       self.cards = _.without.apply(this, _.union([self.cards], pickedCards.cards));
-      //            _.each(pickedCards, function(card) {
+      //            _.forEach(pickedCards, function(card) {
       //                self.cards.removeCard(card);
       //            }, this);
       console.log('picked cards:');
-      console.log(_.pluck(pickedCards.cards, 'id'));
-      console.log(_.pluck(pickedCards.cards, 'value'));
+      console.log(_.map(pickedCards.cards, 'id'));
+      console.log(_.map(pickedCards.cards, 'value'));
       console.log('remaining cards:');
-      console.log(_.pluck(self.cards, 'id'));
-      console.log(_.pluck(self.cards, 'value'));
+      console.log(_.map(self.cards, 'id'));
+      console.log(_.map(self.cards, 'value'));
       return pickedCards;
     } else {
       const card = self.cards[index];

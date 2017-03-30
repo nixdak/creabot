@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../config/config.json')[env];
 const committee = require('../../config/committee.json');
@@ -243,6 +243,7 @@ const RedbrickCommittee = function RedbrickCommittee () {
 
   self.reload = () => {
     // reload config possibly better done with admin channel controle
+    return _.noop();
   };
 };
 

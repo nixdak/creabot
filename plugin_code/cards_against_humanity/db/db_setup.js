@@ -1,6 +1,6 @@
 const fs = require('fs');
 const JaySchema = require('jayschema');
-const _ = require('underscore');
+const _ = require('lodash');
 const models = require('../models');
 
 /**
@@ -19,7 +19,7 @@ function loadCardFile (identifier, filename) {
       } else {
         console.log(`${identifier}: Validation OK!`);
         config.cards = _.union(config.cards, data);
-        data.forEach(({ type, value }) => {
+        _.forEach(data, ({ type, value }) => {
           if (type.toLowerCase() === 'question') {
             updateOrCreateInstance(
               models.Card,
@@ -44,7 +44,7 @@ function loadCardFile (identifier, filename) {
 }
 
 // Initialize base configuration and ENV
-const config = _.extend(
+const config = _.assignIn(
   require(`${__dirname}/../config/env/all.js`),
   require(`${__dirname}/../config/env/${process.env.NODE_ENV}.json`) || {},
   { cards: [] }

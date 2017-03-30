@@ -1,5 +1,5 @@
 const c = require('irc-colors');
-const _ = require('underscore');
+const _ = require('lodash');
 const util = require('util');
 const inflection = require('inflection');
 const Cards = require('../controllers/cards');
@@ -55,7 +55,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
       // Adding game to database
       self.dbModels.Game.create({ num_rounds: self.round }).then(game => {
         self.dbGame = game;
-        self.playersToAdd.forEach(player => {
+        _.forEach(self.playersToAdd, player => {
           self.addPlayer(player);
         });
       });
@@ -81,7 +81,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
 
   self.updatePointsDatabaseTable = () => {
     if (self.config.gameOptions.database === true) {
-      self.players.forEach(({ nick, isActive, points }) => {
+      _.forEach(self.players, ({ nick, isActive, points }) => {
         self.dbModels.Player.findOne({ where: { nick: nick } }).then(({ id }) => {
           self.updateOrCreateInstance(
             self.dbModels.Points,
@@ -139,8 +139,8 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
           if (playerCards.length === 1) {
             cardString = cards[0].id;
           } else {
-            playerCards.forEach(({ value }) => {
-              cards.forEach(card => {
+            _.forEach(playerCards, ({ value }) => {
+              _.forEach(cards, card => {
                 if (value === card.text) {
                   cardString.push(card.id);
                 }
@@ -164,7 +164,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
           );
 
           // Finally update each of the cards times played count
-          cards.forEach(card => {
+          _.forEach(cards, card => {
             card.update({ times_played: card.times_played + 1 });
           });
         });
@@ -249,14 +249,12 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   self.decks.answer.shuffle();
 
   // parse point limit from configuration file
-  if (
-    typeof config.gameOptions.pointLimit !== 'undefined' && !isNaN(config.gameOptions.pointLimit)
-  ) {
+  if (!_.isUndefined(config.gameOptions.pointLimit) && !isNaN(config.gameOptions.pointLimit)) {
     console.log(`Set game point limit to ${config.gameOptions.pointLimit} from config`);
     self.pointLimit = parseInt(config.gameOptions.pointLimit);
   }
   // parse point limit from command arguments
-  if (typeof cmdArgs[0] !== 'undefined' && !isNaN(cmdArgs[0])) {
+  if (!_.isUndefined(cmdArgs[0]) && !isNaN(cmdArgs[0])) {
     console.log(`Set game point limit to ${cmdArgs[0]} from arguments`);
     self.pointLimit = parseInt(cmdArgs[0]);
   }
@@ -267,7 +265,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   self.stop = (player, pointLimitReached) => {
     self.state = STATES.STOPPED;
 
-    if (typeof player !== 'undefined' && player !== null) {
+    if (!_.isUndefined(player) && !_.isNil(player)) {
       self.say(`${player.nick} stopped the game.`);
     }
 
@@ -363,7 +361,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     // resume timers
     if (self.state === STATES.PLAYED) {
       // check if czar quit during pause
-      if (self.players.indexOf(self.czar) < 0) {
+      if (_.includes(self.players, self.czar)) {
         // no czar
         self.say('The czar quit the game during pause. I will pick the winner on this round.');
         // select winner
@@ -383,7 +381,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     clearTimeout(self.stopTimeout);
     // check if any player reached the point limit
     if (self.pointLimit > 0) {
-      const winner = _.findWhere(self.players, { points: self.pointLimit });
+      const winner = _.find(self.players, { points: self.pointLimit });
       if (winner) {
         self.say(
           `${winner.nick} has the limit of ${self.pointLimit} awesome ${inflection.inflect(
@@ -397,7 +395,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     }
 
     // check that there's enough players in the game
-    if (_.where(self.players, { isActive: true }).length < 3) {
+    if (_.filter(self.players, { isActive: true }).length < 3) {
       self.say(
         `Not enough players to start a round (need at least 3). Waiting for others to join. Stopping in ${config.gameOptions.roundMinutes} ${inflection.inflect(
           'minutes',
@@ -422,7 +420,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     self.playQuestion();
 
     // show cards for all players (except czar)
-    _.each(self.players, player => {
+    _.forEach(self.players, player => {
       if (player.isCzar !== true && player.isActive === true) {
         self.showCards(player);
         self.pm(player.nick, 'Play cards with !cah');
@@ -439,10 +437,9 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   self.setCzar = () => {
     if (self.czar) {
       console.log(`Old czar: ${self.czar.nick}`);
-
       let nextCzar;
 
-      self.players.forEach(({ nick, isActive }) => {
+      _.forEach(self.players, ({ nick, isActive }) => {
         console.log(`${nick}: ${isActive}`);
       });
 
@@ -460,7 +457,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
 
       self.czar = self.players[nextCzar];
     } else {
-      self.czar = _.where(self.players, { isActive: true })[0];
+      self.czar = _.filter(self.players, { isActive: true })[0];
     }
 
     console.log('New czar:', self.czar.nick);
@@ -472,25 +469,21 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * Deal cards to fill players' hands
      */
   self.deal = function (player, num) {
-    if (typeof player === 'undefined') {
-      _.each(
-        self.players,
-        player => {
-          if (player.isActive) {
-            console.log(
-              `${player.nick}(${player.hostname}) has ${player.cards.numCards()} cards. Dealing ${10 -
-                player.cards.numCards()} cards`
-            );
-            for (let i = player.cards.numCards(); i < 10; i++) {
-              self.checkDecks();
-              const card = self.decks.answer.pickCards();
-              player.cards.addCard(card);
-              card.owner = player;
-            }
+    if (_.isUndefined(player)) {
+      _.forEach(self.players, _.bind(player => {
+        if (player.isActive) {
+          console.log(
+            `${player.nick}(${player.hostname}) has ${player.cards.numCards()} cards. Dealing ${10 -
+              player.cards.numCards()} cards`
+          );
+          for (let i = player.cards.numCards(); i < 10; i++) {
+            self.checkDecks();
+            const card = self.decks.answer.pickCards();
+            player.cards.addCard(card);
+            card.owner = player;
           }
-        },
-        this
-      );
+        }
+      }, this));
     } else {
       if (typeof num !== 'undefined') {
         for (let i = player.cards.numCards(); i < num; i++) {
@@ -511,26 +504,18 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     self.discards.question.addCard(self.table.question);
     self.table.question = null;
     // var count = self.table.answer.length;
-    _.each(
-      self.table.answer,
-      function (cards) {
-        _.each(
-          cards.getCards(),
-          card => {
-            card.owner = null;
-            self.discards.answer.addCard(card);
-            cards.removeCard(card);
-          },
-          this
-        );
-      },
-      this
-    );
+    _.forEach(self.table.answer, _.bind(function (cards) {
+      _.forEach(cards.getCards(), _.bind(card => {
+        card.owner = null;
+        self.discards.answer.addCard(card);
+        cards.removeCard(card);
+      }, this));
+    }, this));
     self.table.answer = [];
 
     // reset players
     const removedNicks = [];
-    _.each(self.players, player => {
+    _.forEach(self.players, player => {
       player.hasPlayed = false;
       player.hasDiscarded = false;
       player.isCzar = false;
@@ -576,13 +561,13 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     self.recordRound(card.value);
 
     // PM Card to players
-    _.each(_.where(self.players, { isCzar: false, isActive: true }), ({ nick }) => {
+    _.forEach(_.filter(self.players, { isCzar: false, isActive: true }), ({ nick }) => {
       self.pm(nick, c.bold('CARD: ') + value);
     });
 
     // draw cards
     if (self.table.question.draw > 0) {
-      _.each(_.where(self.players, { isCzar: false, isActive: true }), player => {
+      _.forEach(_.filter(self.players, { isCzar: false, isActive: true }), player => {
         for (let i = 0; i < self.table.question.draw; i++) {
           self.checkDecks();
           const c = self.decks.answer.pickCards();
@@ -614,7 +599,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     cards = _.uniq(cards);
     if (self.state !== STATES.PLAYABLE || player.cards.numCards() === 0) {
       self.say(`${player.nick}: Can't play at the moment.`);
-    } else if (typeof player !== 'undefined') {
+    } else if (!_.isUndefined(player)) {
       if (player.isCzar === true) {
         self.say(
           `${player.nick}: You are the card czar. The czar does not play. The czar makes other people do their dirty work.`
@@ -679,7 +664,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
 
     if (self.state !== STATES.PLAYABLE || player.cards.numCards() === 0) {
       self.say(`${player.nick}: Can't discard at the moment.`);
-    } else if (typeof player !== 'undefined') {
+    } else if (!_.isUndefined(player)) {
       if (player.isCzar === true) {
         self.say(
           `${player.nick}: You are the card czar. You cannot discard cards until you are a regular player.`
@@ -709,7 +694,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
           self.deal(player, player.cards.numCards() + playerCards.numCards());
 
           // Add the cards to the discard pile, and reduce points, and mark the player as having discarded
-          _.each(playerCards.getCards(), card => {
+          _.forEach(playerCards.getCards(), card => {
             card.owner = null;
             self.discards.answer.addCard(card);
             playerCards.removeCard(card);
@@ -783,16 +768,12 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
       self.say('Everyone has played. Here are the entries:');
       // shuffle the entries
       self.table.answer = _.shuffle(self.table.answer);
-      _.each(
-        self.table.answer,
-        (cards, i) => {
-          self.say(`${i}: ${self.getFullEntry(self.table.question, cards.getCards())}`);
-        },
-        this
-      );
+      _.forEach(self.table.answer, _.bind((cards, i) => {
+        self.say(`${i}: ${self.getFullEntry(self.table.question, cards.getCards())}`);
+      }, this));
       // check that czar still exists
-      const currentCzar = _.findWhere(this.players, { isCzar: true, isActive: true });
-      if (typeof currentCzar === 'undefined') {
+      const currentCzar = _.find(this.players, { isCzar: true, isActive: true });
+      if (_.isUndefined(currentCzar)) {
         // no czar, random winner (TODO: Voting?)
         self.say('The czar has fled the scene. So I will pick the winner on this round.');
         self.selectWinner(Math.round(Math.random() * (self.table.answer.length - 1)));
@@ -895,13 +876,9 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      */
   self.getFullEntry = function ({ value }, answers) {
     const args = [value];
-    _.each(
-      answers,
-      ({ value }) => {
-        args.push(value);
-      },
-      this
-    );
+    _.forEach(answers, _.bind(({ value }) => {
+      args.push(value);
+    }, this));
     return util.format.apply(this, args);
   };
 
@@ -941,26 +918,23 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * @returns The new player or false if invalid player
      */
   self.addPlayer = player => {
-    if (config.gameOptions.database === true && typeof self.dbGame === 'undefined') {
+    if (config.gameOptions.database === true && _.isUndefined(self.dbGame)) {
       self.playersToAdd.push(player);
-    } else if (
-      typeof self.getPlayer({ nick: player.nick, hostname: player.hostname, isActive: true }) ===
-      'undefined'
-    ) {
+    } else if (_.isUndefined(self.getPlayer({ nick: player.nick, hostname: player.hostname, isActive: true }))) {
       // Returning players
-      const oldPlayer = _.findWhere(self.players, {
+      const oldPlayer = _.find(self.players, {
         nick    : player.nick,
         hostname: player.hostname,
         isActive: false,
       });
-      if (typeof oldPlayer !== 'undefined') {
+      if (!_.isUndefined(oldPlayer)) {
         if (oldPlayer.idleCount >= config.gameOptions.idleLimit) {
           self.say(`${player.nick}: You have idled too much and have been banned from this game.`);
           return false;
         }
 
         if (
-          _.where(self.players, { isActive: true }).length >= self.config.gameOptions.maxPlayers
+          _.filter(self.players, { isActive: true }).length >= self.config.gameOptions.maxPlayers
         ) {
           self.say(
             `${player.nick}: You cannot join right now as the maximum number of players have joined the game`
@@ -970,7 +944,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
         oldPlayer.isActive = true;
       } else {
         if (
-          _.where(self.players, { isActive: true }).length >= self.config.gameOptions.maxPlayers
+          _.filter(self.players, { isActive: true }).length >= self.config.gameOptions.maxPlayers
         ) {
           self.say(
             `${player.nick}: You cannot join right now as the maximum number of players have joined the game`
@@ -986,7 +960,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
       self.say(`${player.nick} has joined the game`);
 
       // check if waiting for players
-      if (self.state === STATES.WAITING && _.where(self.players, { isActive: true }).length >= 3) {
+      if (self.state === STATES.WAITING && _.filter(self.players, { isActive: true }).length >= 3) {
         // enough players, start the game
         self.nextRound();
       }
@@ -1003,7 +977,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * @param search
      * @returns {*}
      */
-  self.getPlayer = search => _.findWhere(self.players, search);
+  self.getPlayer = search => _.find(self.players, search);
 
   /**
      * Remove player from game
@@ -1012,15 +986,15 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * @returns The removed player or false if invalid player
      */
   self.removePlayer = (player, options) => {
-    options = _.extend({}, options);
-    if (typeof player !== 'undefined' && player.isActive) {
+    options = _.assignIn({}, options);
+    if (!_.isUndefined(player) && player.isActive) {
       console.log(`removing${player.nick} from the game`);
       // get cards in hand
       const cards = player.cards.reset();
       // remove player
       player.isActive = false;
       // put player's cards to discard
-      _.each(cards, card => {
+      _.forEach(cards, card => {
         console.log('Add card ', card.text, 'to discard');
         self.discards.answer.addCard(card);
       });
@@ -1028,7 +1002,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
         self.say(`${player.nick} has left the game`);
       }
 
-      if (_.where(self.players, { isActive: true }).length === 0) {
+      if (_.filter(self.players, { isActive: true }).length === 0) {
         self.say('No Players left');
         self.stop();
         return false;
@@ -1060,7 +1034,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * Get all player who have not played
      * @returns Array list of Players that have not played
      */
-  self.getNotPlayed = () => _.where(_.filter(self.players, (
+  self.getNotPlayed = () => _.filter(_.filter(self.players, (
       { cards } // check only players with cards (so players who joined in the middle of a round are ignored)
     ) => cards.numCards() > 0), { hasPlayed: false, isCzar: false, isActive: true });
 
@@ -1069,13 +1043,9 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * @param options
      */
   self.markInactivePlayers = function (options) {
-    _.each(
-      self.getNotPlayed(),
-      player => {
-        player.inactiveRounds++;
-      },
-      this
-    );
+    _.forEach(self.getNotPlayed(), _.bind(player => {
+      player.inactiveRounds++;
+    }, this));
   };
 
   /**
@@ -1083,20 +1053,16 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * @param player
      */
   self.showCards = function (player) {
-    if (typeof player !== 'undefined') {
+    if (!_.isUndefined(player)) {
       let cardsZeroToSix = 'Your cards are:';
       let cardsSevenToTwelve = '';
-      _.each(
-        player.cards.getCards(),
-        ({ value }, index) => {
-          if (index < 7) {
-            cardsZeroToSix += c.bold(' [' + index + '] ') + value;
-          } else {
-            cardsSevenToTwelve += `${c.bold('[' + index + '] ') + value} `;
-          }
-        },
-        this
-      );
+      _.forEach(player.cards.getCards(), _.bind(({ value }, index) => {
+        if (index < 7) {
+          cardsZeroToSix += c.bold(' [' + index + '] ') + value;
+        } else {
+          cardsSevenToTwelve += `${c.bold('[' + index + '] ') + value} `;
+        }
+      }, this));
 
       self.pm(player.nick, cardsZeroToSix);
       self.pm(player.nick, cardsSevenToTwelve);
@@ -1109,7 +1075,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   self.showPoints = () => {
     const sortedPlayers = _.sortBy(self.players, ({ points }) => -points);
     let output = '';
-    _.each(sortedPlayers, ({ nick, points }) => {
+    _.forEach(sortedPlayers, ({ nick, points }) => {
       output += `${nick} ${points} awesome ${inflection.inflect('point', points)}, `;
     });
     self.say(`The most horrible people: ${output.slice(0, -2)}`);
@@ -1127,14 +1093,14 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     const activePlayers = _.filter(self.players, ({ isActive }) => isActive);
     const playersNeeded = Math.max(0, 3 - activePlayers.length);
 
-    const notPlayed = _.where(activePlayers, { isCzar: false, hasPlayed: false, isActive: true });
+    const notPlayed = _.filter(activePlayers, { isCzar: false, hasPlayed: false, isActive: true });
     switch (self.state) {
       case STATES.PLAYABLE:
         self.say(
           `${c.bold('Status: ') + self.czar.nick} is the czar. Waiting for ${inflection.inflect(
             'players',
-            _.pluck(notPlayed, 'nick').length
-          )} to play: ${_.pluck(notPlayed, 'nick').join(', ')}`
+            _.map(notPlayed, 'nick').length
+          )} to play: ${_.map(notPlayed, 'nick').join(', ')}`
         );
         break;
       case STATES.PLAYED:
@@ -1175,13 +1141,13 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      */
   self.setTopic = topic => {
     // ignore if not configured to set topic
-    if (typeof config.gameOptions.setTopic === 'undefined' || !config.gameOptions.setTopic) {
+    if (_.isUndefined(config.gameOptions.setTopic) || !config.gameOptions.setTopic) {
       return false;
     }
 
     // construct new topic
     let newTopic = topic;
-    if (typeof config.gameOptions.topicBase !== 'undefined') {
+    if (_.isUndefined(config.gameOptions.topicBase)) {
       newTopic = `${topic} ${config.gameOptions.topicBase}`;
     }
 
@@ -1196,7 +1162,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     const activePlayers = _.filter(self.players, ({ isActive }) => isActive);
 
     if (activePlayers.length > 0) {
-      self.say(`Players currently in the game: ${_.pluck(activePlayers, 'nick').join(', ')}`);
+      self.say(`Players currently in the game: ${_.map(activePlayers, 'nick').join(', ')}`);
     } else {
       self.say('No players currently in the game');
     }
@@ -1207,8 +1173,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      */
   self.findAndRemoveIfPlaying = nick => {
     const player = self.getPlayer({ nick });
-
-    if (typeof player !== 'undefined') {
+    if (!_.isUndefined(player)) {
       self.removePlayer(player);
     }
   };
@@ -1259,10 +1224,9 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   self.playerNickChangeHandler = (oldnick, newnick, channels, message) => {
     console.log(`Player changed nick from ${oldnick} to ${newnick}`);
     const player = self.getPlayer({ nick: oldnick });
-    if (typeof player !== 'undefined') {
+    if (!_.isUndefined(player)) {
       player.nick = newnick;
     }
-
     self.updatePlayerDatabaseRecord(player);
   };
 
@@ -1291,8 +1255,8 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
     const exemptModes = ['~', '&'];
 
     // loop through and send messages
-    _.each(nicks, (mode, nick) => {
-      if (_.indexOf(exemptModes, mode) < 0 && nick !== config.botOptions.nick) {
+    _.forEach(nicks, (mode, nick) => {
+      if (_.includes(exemptModes, mode) && nick !== config.botOptions.nick) {
         self.notice(
           nick,
           `${nick}: A new game of Cards Against Humanity just began in ${channel}. Head over and !join if you'd like to get in on the fun!`
@@ -1334,7 +1298,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   );
 
   // notify users
-  if (typeof config.gameOptions.notifyUsers !== 'undefined' && config.gameOptions.notifyUsers) {
+  if (!_.isUndefined(config.gameOptions.notifyUsers) && config.gameOptions.notifyUsers) {
     self.notifyUsers();
   }
 

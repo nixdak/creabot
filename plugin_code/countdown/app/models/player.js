@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 
 const Player = function Player (nick, user, hostname, joined) {
   const self = this;
