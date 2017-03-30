@@ -3,24 +3,30 @@ module.exports = (sequelize, { INTEGER, STRING }) => sequelize.define(
   {
     game_id: {
       type         : INTEGER,
-      references   : 'games',
-      referencesKey: 'id',
       primaryKey   : true,
       autoIncrement: false,
+      references   : {
+        model: 'games',
+        key  : 'id',
+      },
     },
     player_id: {
       type         : INTEGER,
-      references   : 'player',
-      referencesKey: 'id',
       primaryKey   : true,
       autoIncrement: false,
+      references   : {
+        model: 'player',
+        key  : 'id',
+      },
     },
     question_id: {
       type         : INTEGER,
-      references   : 'cards',
-      referencesKey: 'id',
       primaryKey   : true,
       autoIncrement: false,
+      references   : {
+        model: 'cards',
+        key  : 'id',
+      },
     },
     answer_ids: {
       type: STRING,

@@ -1,9 +1,11 @@
 module.exports = {
   up (queryInterface, { INTEGER }) {
     return queryInterface.addColumn('rounds', 'question_id', {
-      type         : INTEGER,
-      references   : 'cards',
-      referencesKey: 'id',
+      type      : INTEGER,
+      references: {
+        model: 'cards',
+        key  : 'id',
+      },
     });
   },
 

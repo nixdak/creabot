@@ -3,17 +3,21 @@ module.exports = (sequelize, { INTEGER, BOOLEAN }) => sequelize.define(
   {
     player_id: {
       type         : INTEGER,
-      references   : 'players',
-      referencesKey: 'id',
       primaryKey   : true,
       autoIncrement: false,
+      references   : {
+        model: 'players',
+        key  : 'id',
+      },
     },
     game_id: {
       type         : INTEGER,
-      references   : 'games',
-      referencesKey: 'id',
       primaryKey   : true,
       autoIncrement: false,
+      references   : {
+        model: 'games',
+        key  : 'id',
+      },
     },
     is_active: {
       type: BOOLEAN,

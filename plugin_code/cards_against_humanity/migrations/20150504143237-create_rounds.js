@@ -2,10 +2,12 @@ module.exports = {
   up (queryInterface, { INTEGER }) {
     return queryInterface.createTable('rounds', {
       game_id: {
-        type         : INTEGER,
-        references   : 'games',
-        referencesKey: 'id',
-        primaryKey   : true,
+        type      : INTEGER,
+        primaryKey: true,
+        references: {
+          model: 'games',
+          key  : 'id',
+        },
       },
       round_number: {
         type         : INTEGER,
@@ -13,9 +15,11 @@ module.exports = {
         autoIncrement: false,
       },
       winner_id: {
-        type         : INTEGER,
-        references   : 'players',
-        referencesKey: 'id',
+        type      : INTEGER,
+        references: {
+          model: 'players',
+          key  : 'id',
+        },
       },
       num_active_players: {
         type: INTEGER,

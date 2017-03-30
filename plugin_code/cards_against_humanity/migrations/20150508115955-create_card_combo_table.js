@@ -3,24 +3,30 @@ module.exports = {
     return queryInterface.createTable('card_combos', {
       game_id: {
         type         : INTEGER,
-        references   : 'games',
-        referencesKey: 'id',
         primaryKey   : true,
         autoIncrement: false,
+        references   : {
+          model: 'games',
+          key  : 'id',
+        },
       },
       player_id: {
         type         : INTEGER,
-        references   : 'players',
-        referencesKey: 'id',
         primaryKey   : true,
         autoIncrement: false,
+        references   : {
+          model: 'players',
+          key  : 'id',
+        },
       },
       question_id: {
         type         : INTEGER,
-        references   : 'cards',
-        referencesKey: 'id',
         primaryKey   : true,
         autoIncrement: false,
+        references   : {
+          model: 'cards',
+          Key  : 'id',
+        },
       },
       answer_ids: {
         type: STRING,

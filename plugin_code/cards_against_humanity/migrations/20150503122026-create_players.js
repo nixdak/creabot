@@ -16,9 +16,11 @@ module.exports = {
         type: DATE,
       },
       last_game_id: {
-        type         : INTEGER,
-        references   : 'games',
-        referencesKey: 'id',
+        type      : INTEGER,
+        references: {
+          model: 'games',
+          key  : 'id',
+        },
       },
     });
   },
