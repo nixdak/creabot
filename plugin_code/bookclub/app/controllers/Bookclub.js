@@ -23,8 +23,8 @@ const Bookclub = function Bookclub () {
   self.voted = [];
 
   self.amazon = amazon.createClient({
-    awsId    : self.config.awsId,
-    awsSecret: self.config.awsSecret,
+    awsId    : process.env.AWSID || self.config.awsId,
+    awsSecret: process.env.AWSSECRET || self.config.awsSecret,
     awsTag   : 'BookClub',
   });
 
