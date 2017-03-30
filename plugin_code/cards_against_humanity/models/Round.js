@@ -2,15 +2,19 @@ module.exports = (sequelize, { INTEGER }) => sequelize.define(
   'Round',
   {
     game_id: {
-      type         : INTEGER,
-      references   : 'games',
-      referencesKey: 'id',
-      primaryKey   : true,
+      type      : INTEGER,
+      primaryKey: true,
+      references: {
+        model: 'games',
+        key  : 'id',
+      },
     },
     winner_id: {
-      type         : INTEGER,
-      references   : 'players',
-      referencesKey: 'id',
+      type      : INTEGER,
+      references: {
+        model: 'players',
+        key  : 'id',
+      },
     },
     round_number: {
       type         : INTEGER,
@@ -18,9 +22,11 @@ module.exports = (sequelize, { INTEGER }) => sequelize.define(
       autoIncrement: false,
     },
     question_id: {
-      type         : INTEGER,
-      references   : 'cards',
-      referencesKey: 'id',
+      type      : INTEGER,
+      references: {
+        model: 'cards',
+        key  : 'id',
+      },
     },
     num_active_players: {
       type: INTEGER,

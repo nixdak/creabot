@@ -10,9 +10,11 @@ module.exports = (sequelize, { INTEGER, DATE }) => sequelize.define(
       type: DATE,
     },
     winner_id: {
-      type         : INTEGER,
-      references   : 'players',
-      referencesKey: 'id',
+      type      : INTEGER,
+      references: {
+        model: 'players',
+        key  : 'id',
+      },
     },
     num_rounds: {
       type: INTEGER,
