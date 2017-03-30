@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const inflection = require('inflection');
 const mathjs = require('mathjs');
 
@@ -72,7 +72,7 @@ const Game = function Game (
   self.dictionary = require('../../config/dictionary.json')['words'];
   self.conundrums = require('../../config/conundrums.json')['words'];
   self.countdown_words = _.filter(self.dictionary, ({ length }) => length <= 9);
-  self.conundrum_words = _.shuffle(_.map(self.conundrums, word => word.toUpperCase()));
+  self.conundrum_words = _.shuffle(_.invokeMap(self.conundrums, word => word.toUpperCase()));
 
   console.log('loading alphabet');
 
@@ -246,10 +246,10 @@ const Game = function Game (
     self.challenged.hasPlayed = false;
     self.challenged.isLocked = false;
 
-    if (self.config.roundOptions.letters.indexOf(self.round) !== -1) {
+    if (_.includes(self.config.roundOptions.letters, self.round)) {
       console.log('Letters round');
       self.lettersRound();
-    } else if (self.config.roundOptions.numbers.indexOf(self.round) !== -1) {
+    } else if (_.includes(self.config.roundOptions.numbers, self.round)) {
       console.log('Numbers round');
       self.numbersRound();
     } else {
@@ -438,7 +438,7 @@ const Game = function Game (
       !_.isUndefined(letter);
       letter = self.table.letters.pop()
     ) {
-      if (_.contains(self.vowel_array, letter)) {
+      if (_.includes(self.vowel_array, letter)) {
         self.discards.vowels.push(letter);
       } else {
         self.discards.consonants.push(letter);
@@ -533,7 +533,7 @@ const Game = function Game (
       !_.isUndefined(number);
       number = self.table.numbers.pop()
     ) {
-      if (_.contains(self.config.numberOptions.small, number)) {
+      if (_.includes(self.config.numberOptions.small, number)) {
         self.small.push(number);
       } else {
         self.large.push(number);
@@ -618,7 +618,7 @@ const Game = function Game (
         self.discards.consonants = [];
       }
 
-      letters.forEach(letter => {
+      _.forEach(letters, letter => {
         if (letter.toLowerCase() === 'c') {
           self.table.letters.push(self.consonants.shift().toUpperCase());
         } else if (letter.toLowerCase() === 'v') {
@@ -719,7 +719,7 @@ const Game = function Game (
       let valid = true;
 
       for (let i = 0; i < word.length; i++) {
-        if (_.contains(letters, word[i].toUpperCase())) {
+        if (_.includes(letters, word[i].toUpperCase())) {
           console.log(letters);
           letters.splice(_.indexOf(letters, word[i]), 1);
         } else {
@@ -738,13 +738,13 @@ const Game = function Game (
         if (self.challenger.nick === player) {
           self.answers.challenger = {
             word,
-            valid: _.contains(self.countdown_words, word.toUpperCase()),
+            valid: _.includes(self.countdown_words, word.toUpperCase()),
           };
           self.challenger.hasPlayed = true;
         } else if (self.challenged.nick === player) {
           self.answers.challenged = {
             word,
-            valid: _.contains(self.countdown_words, word.toUpperCase()),
+            valid: _.includes(self.countdown_words, word.toUpperCase()),
           };
           self.challenged.hasPlayed = true;
         }
@@ -791,7 +791,7 @@ const Game = function Game (
         return false;
       }
 
-      numbers.forEach(number => {
+      _.forEach(numbers, number => {
         if (number.toLowerCase() === 'l') {
           self.table.numbers.push(self.large.shift());
         } else if (number.toLowerCase() === 's') {
@@ -895,7 +895,7 @@ const Game = function Game (
       if (
         _.reject(
           expression,
-          number => _.contains(self.valid_numbers_characters, number) === true
+          number => _.includes(self.valid_numbers_characters, number) === true
         ).length !== 0
       ) {
         self.pm(player, 'Your expression contains illegal characters');
@@ -907,7 +907,7 @@ const Game = function Game (
       let valid = true;
 
       for (let i = 0; i < playerNumbers.length; i++) {
-        if (_.contains(numbers, playerNumbers[i])) {
+        if (_.includes(numbers, playerNumbers[i])) {
           console.log(numbers);
           numbers.splice(_.indexOf(numbers, playerNumbers[i]), 1);
         } else {
@@ -1014,7 +1014,7 @@ const Game = function Game (
             let valid = true;
 
             for (let i = 0; i < word.length; i++) {
-              if (_.contains(letters, word[i].toUpperCase())) {
+              if (_.includes(letters, word[i].toUpperCase())) {
                 console.log(letters);
                 letters.splice(_.indexOf(letters, word[i]), 1);
               } else {
@@ -1023,7 +1023,7 @@ const Game = function Game (
               }
             }
 
-            if (valid === true && _.contains(self.conundrum_words, word)) {
+            if (valid === true && _.includes(self.conundrum_words, word)) {
               self.say(
                 `${player} has correctly guessed the countdown conundrum and scored 10 points`
               );
@@ -1051,7 +1051,7 @@ const Game = function Game (
             let valid = true;
 
             for (let i = 0; i < word.length; i++) {
-              if (_.contains(letters, word[i].toUpperCase())) {
+              if (_.includes(letters, word[i].toUpperCase())) {
                 console.log(letters);
                 letters.splice(_.indexOf(letters, word[i]), 1);
               } else {
@@ -1060,7 +1060,7 @@ const Game = function Game (
               }
             }
 
-            if (valid === true && _.contains(self.conundrum_words, word)) {
+            if (valid === true && _.includes(self.conundrum_words, word)) {
               self.say(
                 `${player} has correctly guessed the countdown conundrum and scored 10 points`
               );
@@ -1192,13 +1192,13 @@ const Game = function Game (
    */
   self.setTopic = topic => {
     // ignore if not configured to set topic
-    if (typeof config.gameOptions.setTopic === 'undefined' || !config.gameOptions.setTopic) {
+    if (_.isUndefined(config.gameOptions.setTopic) || !config.gameOptions.setTopic) {
       return false;
     }
 
     // construct new topic
     let newTopic = topic;
-    if (typeof config.gameOptions.topicBase !== 'undefined') {
+    if (_.isUndefined(config.gameOptions.topicBase)) {
       newTopic = `${topic} ${config.gameOptions.topicBase}`;
     }
 

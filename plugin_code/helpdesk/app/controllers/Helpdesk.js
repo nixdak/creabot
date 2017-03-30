@@ -1,5 +1,5 @@
 const fs = require('fs');
-const _ = require('underscore');
+const _ = require('lodash');
 const request = require('request');
 const cheerio = require('cheerio');
 const committee = require('../../../redbrick_committee/config/committee.json');
@@ -36,7 +36,7 @@ const Helpdesk = function Helpdesk () {
       if (!error) {
         const $page = cheerio.load(body);
         let text;
-        $page('.mw-content-ltr').filter(function () {
+        $page('.mw-content-ltr').filter(() => {
           const data = $page(this);
           text = data.children().first().text();
           client.say(channel, url);
@@ -82,7 +82,9 @@ const Helpdesk = function Helpdesk () {
     client.say(channel, `The commands are ${commands} and pm only commands are ${pmCommands}`);
   };
 
-  self.email = (client, message, cmdArgs) => {};
+  self.email = (client, message, cmdArgs) => {
+    return _.noop();
+  };
 };
 
 exports = module.exports = Helpdesk;

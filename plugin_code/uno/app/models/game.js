@@ -1,5 +1,5 @@
 const c = require('irc-colors');
-const _ = require('underscore');
+const _ = require('lodash');
 const inflection = require('inflection');
 const Deck = require('../controllers/deck');
 
@@ -51,7 +51,7 @@ const Game = function (channel, client, config, cmdArgs) {
 
     const player = self.getPlayer({ nick });
 
-    if (!_.isUndefined(player) && !_.isNull(player)) {
+    if (!_.isNil(player)) {
       self.say(`${player.nick} stopped the game.`);
     }
 
@@ -171,7 +171,7 @@ const Game = function (channel, client, config, cmdArgs) {
   self.showCards = player => {
     let cardString = 'Your cards are:';
     if (!_.isUndefined(player)) {
-      _.each(player.hand.getCards(), (card, index) => {
+      _.forEach(player.hand.getCards(), (card, index) => {
         cardString += c.bold(' [' + index + '] ') + card.toString();
         if (cardString.length >= 200) {
           self.pm(player.nick, cardString);
@@ -222,7 +222,7 @@ const Game = function (channel, client, config, cmdArgs) {
 
     self.turn += 1;
     // Unset flags
-    _.each(self.players, player => {
+    _.forEach(self.players, player => {
       player.skipped = false;
       player.hasPlayed = false;
       player.hasDrawn = false;
@@ -314,7 +314,7 @@ const Game = function (channel, client, config, cmdArgs) {
 
     self.state = STATES.STARTED;
 
-    _.each(self.players, player => {
+    _.forEach(self.players, player => {
       self.deal(player, 7);
     });
     self.setTopic(
@@ -386,7 +386,7 @@ const Game = function (channel, client, config, cmdArgs) {
     }
 
     if (
-      player.hand.getCard(card).color === 'WILD' && !_.contains(self.colors, color.toUpperCase())
+      player.hand.getCard(card).color === 'WILD' && !_.includes(self.colors, color.toUpperCase())
     ) {
       self.pm(
         player.nick,
@@ -432,7 +432,7 @@ const Game = function (channel, client, config, cmdArgs) {
 
     player.hasPlayed = true;
 
-    _.each(self.players, player => {
+    _.forEach(self.players, player => {
       player.challengeable = false;
     });
     self.endTurn();
@@ -452,7 +452,7 @@ const Game = function (channel, client, config, cmdArgs) {
     self.deal(self.currentPlayer, 1, true);
     self.currentPlayer.hasDrawn = true;
 
-    _.each(self.players, player => {
+    _.forEach(self.players, player => {
       player.challengeable = false;
     });
 
@@ -520,7 +520,7 @@ const Game = function (channel, client, config, cmdArgs) {
     if (self.state === STATES.PLAYABLE) {
       self.say(`It is currently ${self.currentPlayer.nick} go!`);
     } else {
-      self.say(`${self.players.length} people are playing. ${_.pluck(self.players, 'nick').join(', ')}`);
+      self.say(`${self.players.length} people are playing. ${_.map(self.players, 'nick').join(', ')}`);
     }
   };
 
@@ -552,7 +552,7 @@ const Game = function (channel, client, config, cmdArgs) {
     }
 
     // Add cards back into the deck
-    _.each(player.hand.getCards(), card => {
+    _.forEach(player.hand.getCards(), card => {
       self.deck.addCard(card);
     });
 
@@ -587,7 +587,7 @@ const Game = function (channel, client, config, cmdArgs) {
 
     // construct new topic
     let newTopic = topic;
-    if (typeof self.config.gameOptions.topicBase !== 'undefined') {
+    if (!_.isUndefined(self.config.gameOptions.topicBase)) {
       newTopic = `${topic} ${self.config.gameOptions.topicBase}`;
     }
 
@@ -595,7 +595,7 @@ const Game = function (channel, client, config, cmdArgs) {
     client.send('TOPIC', channel, newTopic);
   };
 
-  self.getPlayer = search => _.findWhere(self.players, search);
+  self.getPlayer = search => _.find(self.players, search);
 
   self.findAndRemoveIfPlaying = nick => {
     const player = self.getPlayer({ nick });

@@ -1,22 +1,22 @@
 const assert = require('assert');
 const config = require('../config/config');
-const _ = require('underscore');
+const _ = require('lodash');
 
 describe('Cards', () => {
   describe('value', () => {
     it('should not be blank', () => {
-      _.each(config.cards, ({ value }) => {
+      _.forEach(config.cards, ({ value }) => {
         assert.notEqual(value, '');
       });
     });
 
     it('should not be duplicated', () => {
       if (
-        _.difference(config.cards, _.uniq(config.cards, false, ({ value }) => value)).length !== 0
+        _.difference(config.cards, _.uniqBy(config.cards, ({ value }) => value)).length !== 0
       ) {
         console.log(
           _.map(
-            _.difference(config.cards, _.uniq(config.cards, false, ({ value }) => value)),
+            _.difference(config.cards, _.uniqBy(config.cards, ({ value }) => value)),
             ({ value }) => value
           )
         );
@@ -24,7 +24,7 @@ describe('Cards', () => {
 
       assert.equal(
         0,
-        _.difference(config.cards, _.uniq(config.cards, false, ({ value }) => value)).length
+        _.difference(config.cards, _.uniqBy(config.cards, ({ value }) => value)).length
       );
     });
   });

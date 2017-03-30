@@ -1,6 +1,6 @@
 const fs = require('fs');
 const JaySchema = require('jayschema');
-const _ = require('underscore');
+const _ = require('lodash');
 
 /**
  * Load and validate a card file
@@ -26,7 +26,7 @@ function loadCardFile (identifier, filename) {
 }
 
 // Initialize base configuration and ENV
-const config = _.extend(
+const config = _.assignIn(
   require(`${__dirname}/../config/env/all.js`),
   require(`${__dirname}/../config/env/${process.env.NODE_ENV}.json`) || {},
   { cards: [] }

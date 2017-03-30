@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 const Game = require('./game');
 const Player = require('../models/player');
 const challenges = require('../../config/challenges.json');
@@ -21,7 +21,7 @@ const Countdown = function Countdown () {
         self.challenges,
         challenge => challenge.challenged.toLowerCase() === message.nick.toLowerCase()
       );
-      const challengers = _.map(games, challenge => challenge.challenger);
+      const challengers = _.map(games, ({ challenge }) => challenge.challenger);
       const letterTimes = _.map(games, ({ letter }) => letter);
       const numberTimes = _.map(games, ({ number }) => number);
       const conundrumTimes = _.map(games, ({ conundrum }) => conundrum);
@@ -47,7 +47,7 @@ const Countdown = function Countdown () {
         } else {
           self.list(client, message, cmdArgs);
         }
-      } else if (!_.contains(challengers, cmdArgs.toLowerCase())) {
+      } else if (!_.includes(challengers, cmdArgs.toLowerCase())) {
         client.say(channel, `You haven't been challenged by ${cmdArgs}. Challenging...`);
         self.challenge(client, message, cmdArgs);
       } else {
@@ -106,7 +106,7 @@ const Countdown = function Countdown () {
       client.say(channel, "You can't challenge yourself");
     } else if (
       !_.isUndefined(
-        _.findWhere(self.challenges, {
+        _.find(self.challenges, {
           challenger: args[0].toLowerCase(),
           challenged: message.nick.toLowerCase(),
         })
@@ -114,14 +114,14 @@ const Countdown = function Countdown () {
     ) {
       self.accept(client, message, args[0]); // move accept in here
     } else if (
-      !_.contains(self.challenges, {
+      !_.includes(self.challenges, {
         challenger: message.nick.toLowerCase(),
         challenged: args[0].toLowerCase(),
       })
     ) {
       for (let i = 1; i < args.length; i++) {
         const arg = args[i].split(':');
-        if (_.reject(arg[1], number => _.contains(validNumbers, number) === true).length !== 0) {
+        if (_.reject(arg[1], number => _.includes(validNumbers, number) === true).length !== 0) {
           client.say(channel, `The ${arg[0]} isnt valid`);
           if (arg[0].toLowerCase() === 'letters') {
             letterTime = self.config.roundOptions.lettersRoundMinutes;
