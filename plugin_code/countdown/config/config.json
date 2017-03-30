@@ -59,9 +59,9 @@
     },
 
     "pluginOptions": {
-      "channels": ["#CountdownDev"],
-      "channelsToExclude": ["#cardsagainsthumanityDev", "#DakDak", "#UnoDev"],
-      "channelsToJoin": ["#CountdownDev"]
+      "channels": ["#botdev"],
+      "channelsToExclude": [],
+      "channelsToJoin": ["#botdev"]
     }
   },
 
@@ -118,8 +118,7 @@
 
     "gameOptions": {
       "setTopic":      true,
-
-      "topicBase":     "|| wiki: https://github.com/creadak/creabot/wiki/Countdown",
+      "topicBase":     "|| wiki: https://github.com/butlerx/butlerbot/wiki/Countdown",
       "notifyUsers":   false,
       "minutesBeforeStart": 2,
       "maxIdleCount": 3
@@ -127,7 +126,7 @@
 
     "pluginOptions": {
       "channels": ["#Countdown"],
-      "channelsToExclude": ["#cardsagainsthumanity", "#Bots", "#uno"],
+      "channelsToExclude": ["#CardsAgainstHumanity", "#bots", "#Uno", "#BookClub"],
       "channelsToJoin": ["#Countdown"]
     }
   }

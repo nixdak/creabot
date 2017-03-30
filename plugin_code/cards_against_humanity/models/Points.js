@@ -1,30 +1,33 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('Points',
-    {
-      player_id: {
-        type: DataTypes.INTEGER,
-        references: 'players',
-        referencesKey: 'id',
-        primaryKey: true,
-        autoIncrement: false
+module.exports = (sequelize, { INTEGER, BOOLEAN }) => sequelize.define(
+  'Points',
+  {
+    player_id: {
+      type         : INTEGER,
+      primaryKey   : true,
+      autoIncrement: false,
+      references   : {
+        model: 'players',
+        key  : 'id',
       },
-      game_id: {
-        type: DataTypes.INTEGER,
-        references: 'games',
-        referencesKey: 'id',
-        primaryKey: true,
-        autoIncrement: false
-      },
-      is_active: {
-        type: DataTypes.BOOLEAN
-      },
-      points: {
-        type: DataTypes.INTEGER
-      }
     },
-    {
-      tableName: 'points',
-      timestamps: false
-    }
-  );
-}
+    game_id: {
+      type         : INTEGER,
+      primaryKey   : true,
+      autoIncrement: false,
+      references   : {
+        model: 'games',
+        key  : 'id',
+      },
+    },
+    is_active: {
+      type: BOOLEAN,
+    },
+    points: {
+      type: INTEGER,
+    },
+  },
+  {
+    tableName : 'points',
+    timestamps: false,
+  }
+);

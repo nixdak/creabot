@@ -1,34 +1,39 @@
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('CardCombo',
-    {
-      game_id: {
-        type: DataTypes.INTEGER,
-        references: 'games',
-        referencesKey: 'id',
-        primaryKey: true,
-        autoIncrement: false
-      },
-      player_id: {
-        type: DataTypes.INTEGER,
-        references: 'player',
-        referencesKey: 'id',
-        primaryKey: true,
-        autoIncrement: false
-      },
-      question_id: {
-        type: DataTypes.INTEGER,
-        references: 'cards',
-        referencesKey: 'id',
-        primaryKey: true,
-        autoIncrement: false
-      },
-      answer_ids: {
-        type: DataTypes.STRING
+module.exports = (sequelize, { INTEGER, STRING }) => sequelize.define(
+  'CardCombo',
+  {
+    game_id: {
+      type         : INTEGER,
+      primaryKey   : true,
+      autoIncrement: false,
+      references   : {
+        model: 'games',
+        key  : 'id',
       },
     },
-    {
-      tableName: 'card_combos',
-      timestamps: false
-    }
-  );
-};
+    player_id: {
+      type         : INTEGER,
+      primaryKey   : true,
+      autoIncrement: false,
+      references   : {
+        model: 'player',
+        key  : 'id',
+      },
+    },
+    question_id: {
+      type         : INTEGER,
+      primaryKey   : true,
+      autoIncrement: false,
+      references   : {
+        model: 'cards',
+        key  : 'id',
+      },
+    },
+    answer_ids: {
+      type: STRING,
+    },
+  },
+  {
+    tableName : 'card_combos',
+    timestamps: false,
+  }
+);

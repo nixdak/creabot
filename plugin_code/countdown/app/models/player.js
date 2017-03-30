@@ -1,7 +1,7 @@
-var _ = require('underscore');
+const _ = require('lodash');
 
-var Player = function Player(nick, user, hostname, joined) {
-  var self = this;
+const Player = function Player (nick, user, hostname, joined) {
+  const self = this;
 
   self.id = _.uniqueId('player');
   self.nick = nick;

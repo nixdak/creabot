@@ -1,37 +1,35 @@
 {
   "production": {
     "server":        "localhost",
-    "nick":          "DakDak",
+    "nick":          "butlerbot",
 
-    "connectCommands": [
-          {
-              "target": "",
-              "message": ""
-          }
-      ],
+    "connectCommands": [{
+      "target": "nickserv",
+      "message": "identify"
+    }],
 
     "clientOptions": {
-        "userName":             "creadak",
-        "floodProtection":      true,
-        "floodProtectionDelay": 175
+      "userName":             "butlerx",
+      "port":                 "6697",
+      "floodProtection":      true,
+      "floodProtectionDelay": 175
     }
   },
 
   "development": {
     "server":        "localhost",
-    "nick":          "DakDak1",
+    "nick":          "butlerDev",
 
-    "connectCommands": [
-          {
-              "target": "",
-              "message": ""
-          }
-      ],
+    "connectCommands": [{
+      "target": "",
+      "message": ""
+    }],
 
     "clientOptions": {
-        "userName":             "creadak",
-        "floodProtection":      true,
-        "floodProtectionDelay": 175
+      "userName":             "butlerx",
+      "port":                 "6697",
+      "floodProtection":      true,
+      "floodProtectionDelay": 175
     }
   }
 }
