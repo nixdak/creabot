@@ -146,7 +146,7 @@ exports.init = function () {
               // If the channel matches the command channels or is set to respond on all channels and is not in the
               // commands excluded channels
               if (_.includes(c.channel, to) || c.channel === 'all') {
-                if (_.isUndefined(c.exclude) || _.includes(c.exclude, to)) {
+                if (_.isUndefined(c.exclude) || !_.includes(c.exclude, to)) {
                   console.log(`command: ${c.cmd}`);
                   // check user mode
                   if (checkUserMode(message, c.mode)) {

@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "node app",
-    "test": "npm run lint",
+    "test": "yarn lint",
     "lint": "eslint .",
     "fix": "eslint . --fix"
   },
