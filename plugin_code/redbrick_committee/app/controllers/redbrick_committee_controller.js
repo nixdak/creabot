@@ -22,35 +22,32 @@ const RedbrickCommittee = function RedbrickCommittee () {
   self.fyr       = true;
 
   self.reload = () => {
-    http.get('http://redbrick.dcu.ie/api/committee', (res) => {
-      const { statusCode } = res;
-      const contentType = res.headers['content-type'];
-      let error;
-      if (statusCode !== 200) {
-        error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
-      } else if (!/^application\/json/.test(contentType)) {
-        error = new Error(`Invalid content-type.\n Expected application/json but received ${contentType}`);
-      }
-      if (error) {
-        console.error(error.message);
-        res.resume();
-        return null;
-      }
-      res.setEncoding('utf8');
-      let rawData = '';
-      res.on('data', (chunk) => { rawData += chunk; });
-      res.on('end', () => {
-        try {
-          const parsedData = JSON.parse(rawData);
-          return parsedData;
-        } catch (e) {
-          console.error(e.message);
-          return null;
+    return new Promise((resolve, reject) => {
+      http.get('http://redbrick.dcu.ie/api/committee', (res) => {
+        const { statusCode } = res;
+        const contentType = res.headers['content-type'];
+        let error;
+        if (statusCode !== 200) {
+          error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
+        } else if (!/^application\/json/.test(contentType)) {
+          error = new Error(`Invalid content-type.\n Expected application/json but received ${contentType}`);
         }
+        if (error) {
+          reject(error);
+        }
+        res.setEncoding('utf8');
+        let rawData = '';
+        res.on('data', (chunk) => { rawData += chunk; });
+        res.on('end', () => {
+          try {
+            resolve(JSON.parse(rawData));
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }).on('error', (error) => {
+        reject(error);
       });
-    }).on('error', (e) => {
-      console.error(`Got error: ${e.message}`);
-      return null;
     });
   };
 
@@ -58,8 +55,18 @@ const RedbrickCommittee = function RedbrickCommittee () {
     if (self.cache) {
       return self.cmt;
     } else {
-      self.cmt = self.reload();
-      return self.cmt;
+      self.reload().then((committee) => {
+        self.cmt = committee;
+        self.cache = true;
+        self.cacheCmt = setTimeout(() => {
+          clearTimeout(self.cacheCmt);
+          self.cache = false;
+        }, 60 * 10000 * self.config.waitTime);
+        return committee;
+      })
+      .catch(() => {
+        return self.cmt;
+      });
     }
   };
 
