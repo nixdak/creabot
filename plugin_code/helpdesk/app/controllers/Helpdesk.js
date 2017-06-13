@@ -1,21 +1,13 @@
 'use strict';
 
-const _ = require('lodash');
 const request = require('request');
 const cheerio = require('cheerio');
-const committee = require('../../../redbrick_committee/config/committee.json');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../config/config.json')[env];
 
 const Helpdesk = function Helpdesk () {
   const self = this;
   self.config = config;
-  self.helpdesk = [];
-
-  const helpdesk = _.filter(committee, { role: 'Helpdesk' });
-  if (!_.isUndefined(helpdesk)) {
-    self.helpdesk.push(_.map(helpdesk, ({ nick }) => nick));
-  }
 
   self.help = (client, { args, nick }, cmdArgs) => {
     let channel = args[0];

@@ -7,7 +7,7 @@
 
   "production": {
     "channels": ["#bots"],
-    "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub"],
+    "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub", "#helpdesk"],
     "channelsToJoin": ["#bots"]
   }
 }

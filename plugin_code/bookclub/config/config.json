@@ -15,7 +15,7 @@
     "awsId": "",
     "awsSecret  ": "",
     "channels": ["#BookClub"],
-    "channelsToExclude": ["#Uno", "#CardsAgainstHumanity", "#Countdown", "bots"],
+    "channelsToExclude": ["#Uno", "#CardsAgainstHumanity", "#Countdown", "bots", "helpdesk"],
     "channelsToJoin": ["#BookClub"]
   }
 }
