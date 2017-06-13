@@ -1,3 +1,5 @@
+'use strict';
+
 const Uno = require('./app/controllers/uno_controller.js');
 
 module.exports = app => {

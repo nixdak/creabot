@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (sequelize, { INTEGER, BOOLEAN }) => sequelize.define(
   'Points',
   {

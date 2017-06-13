@@ -1,3 +1,6 @@
+'use strict';
+/*eslint-env and, mocha */
+
 const assert = require('assert');
 const config = require('../config/config');
 const _ = require('lodash');

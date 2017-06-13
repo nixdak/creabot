@@ -5,6 +5,7 @@
  * @author creadak <creadak@gmail.com>
  * @version 1.1.0
  */
+'use strict';
 console.log('butlerbot');
 
 // Set node env

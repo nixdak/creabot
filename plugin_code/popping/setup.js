@@ -1,3 +1,5 @@
+'use strict';
+
 const Popping = require('./app/controllers/popping.js');
 
 module.exports = app => {

@@ -1,6 +1,8 @@
+'use strict';
+
 const _ = require('lodash');
 
-const Player = function Player (nick, user, hostname, joined) {
+const Player = function Player (nick) {
   const self = this;
 
   self.id = _.uniqueId('player');

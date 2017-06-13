@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   up (queryInterface, { INTEGER, STRING }) {
     return queryInterface.createTable('card_combos', {
@@ -34,7 +36,7 @@ module.exports = {
     });
   },
 
-  down (queryInterface, Sequelize) {
+  down (queryInterface) {
     return queryInterface.dropTable('card_combos');
   },
 };

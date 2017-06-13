@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const Game = require('./game');
 const Player = require('../models/player');
@@ -344,7 +346,7 @@ const CardsAgainstHumanity = function CardsAgainstHumanity () {
     }
   };
 
-  self.wiki = (client, { args, nick }, cmdArgs) => {
+  self.wiki = (client, { args, nick }) => {
     if (client.nick.toLowerCase() === args[0].toLowerCase()) {
       client.say(nick, 'https://github.com/butlerx/butlerbot/wiki/Cards-Against-Humanity');
     } else {

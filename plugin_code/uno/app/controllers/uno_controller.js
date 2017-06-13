@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const Game = require('../models/game');
 const Player = require('../models/player');
@@ -8,7 +10,7 @@ const Uno = function Uno () {
   const self = this;
   self.config = config;
 
-  self.cards = (client, { nick }, cmdArgs) => {
+  self.cards = (client, { nick }) => {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
@@ -17,7 +19,7 @@ const Uno = function Uno () {
     self.game.showCards(player);
   };
 
-  self.challenge = (client, { nick }, cmdArgs) => {
+  self.challenge = (client, { nick }) => {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
@@ -25,7 +27,7 @@ const Uno = function Uno () {
     self.game.challenge(nick);
   };
 
-  self.draw = (client, { nick }, cmdArgs) => {
+  self.draw = (client, { nick }) => {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
@@ -33,7 +35,7 @@ const Uno = function Uno () {
     self.game.draw(nick);
   };
 
-  self.end = (client, { nick }, cmdArgs) => {
+  self.end = (client, { nick }) => {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.PLAYABLE) {
       return false;
     }
@@ -66,7 +68,7 @@ const Uno = function Uno () {
     self.game.addPlayer(player);
   };
 
-  self.quit = (client, { nick }, cmdArgs) => {
+  self.quit = (client, { nick }) => {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.FINISHED) {
       return false;
     }
@@ -74,7 +76,7 @@ const Uno = function Uno () {
     self.game.removePlayer(nick);
   };
 
-  self.score = (client, message, cmdArgs) => {
+  self.score = () => {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       return false;
     }
@@ -82,7 +84,7 @@ const Uno = function Uno () {
     self.game.showScores();
   };
 
-  self.start = (client, { nick }, cmdArgs) => {
+  self.start = (client, { nick }) => {
     if (_.isUndefined(self.game) || self.game.state !== Game.STATES.WAITING) {
       return false;
     }
@@ -90,7 +92,7 @@ const Uno = function Uno () {
     self.game.start(nick);
   };
 
-  self.stop = (client, { nick }, cmdArgs) => {
+  self.stop = (client, { nick }) => {
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.FINISHED) {
       return false;
     }
@@ -118,7 +120,7 @@ const Uno = function Uno () {
     self.game.uno(nick, cmdArgs[0], cmdArgs[1]);
   };
 
-  self.status = (client, { args }, cmdArgs) => {
+  self.status = (client, { args }) => {
     const channel = args[0];
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
       client.say(channel, 'No game running. Start the game by typing !j.');
@@ -127,7 +129,7 @@ const Uno = function Uno () {
     }
   };
 
-  self.wiki = (client, { args, nick }, cmdArgs) => {
+  self.wiki = (client, { args, nick }) => {
     if (client.nick.toLowerCase() === args[0].toLowerCase()) {
       client.say(nick, 'https://github.com/butlerx/butlerbot/wiki/Uno');
     } else {

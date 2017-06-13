@@ -1,3 +1,5 @@
+'use strict';
+
 const RedbrickCommittee = require('./app/controllers/redbrick_committee_controller.js');
 
 module.exports = app => {

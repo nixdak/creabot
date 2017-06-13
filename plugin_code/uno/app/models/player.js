@@ -1,3 +1,5 @@
+'use strict';
+
 const Deck = require('../controllers/deck.js');
 
 const Player = function (nick, user, hostname) {

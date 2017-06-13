@@ -1,3 +1,5 @@
+'use strict';
+
 const Countdown = require('./app/controllers/countdown_controller.js');
 
 module.exports = app => {

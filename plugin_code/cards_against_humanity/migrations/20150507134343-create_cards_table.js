@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   up (queryInterface, { INTEGER, BOOLEAN }) {
     return queryInterface.createTable('cards', {
@@ -18,7 +20,7 @@ module.exports = {
     });
   },
 
-  down (queryInterface, Sequelize) {
+  down (queryInterface) {
     return queryInterface.dropTable('cards');
   },
 };

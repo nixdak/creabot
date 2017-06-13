@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   up (queryInterface, { INTEGER }) {
     return queryInterface.createTable('rounds', {
@@ -30,7 +32,7 @@ module.exports = {
     });
   },
 
-  down (queryInterface, Sequelize) {
+  down (queryInterface) {
     return queryInterface.dropTable('rounds');
   },
 };

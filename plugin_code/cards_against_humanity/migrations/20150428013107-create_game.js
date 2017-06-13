@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   up (queryInterface, { INTEGER, DATE }) {
     return queryInterface.createTable('games', {
@@ -18,7 +20,7 @@ module.exports = {
     });
   },
 
-  down (queryInterface, Sequelize) {
+  down (queryInterface) {
     return queryInterface.dropTable('games');
   },
 };

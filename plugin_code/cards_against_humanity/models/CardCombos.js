@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (sequelize, { INTEGER, STRING }) => sequelize.define(
   'CardCombo',
   {

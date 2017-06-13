@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   up (queryInterface, { INTEGER }) {
     return queryInterface.addColumn('games', 'num_rounds', {
@@ -5,7 +7,7 @@ module.exports = {
     });
   },
 
-  down (queryInterface, Sequelize) {
+  down (queryInterface) {
     return queryInterface.removeColumn('games', 'num_rounds');
   },
 };

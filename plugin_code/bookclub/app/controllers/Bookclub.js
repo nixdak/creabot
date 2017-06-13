@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const fs = require('fs');
 const schedule = require('node-schedule');
@@ -38,7 +40,7 @@ const Bookclub = function Bookclub () {
     }
   });
 
-  self.thisMonth = (client, { args }, cmdArgs) => {
+  self.thisMonth = (client, { args }) => {
     console.log('in thisMonth');
     const month = self.date.getMonth();
     self.client = client;
@@ -52,7 +54,7 @@ const Bookclub = function Bookclub () {
     }
   };
 
-  self.nextMonth = (client, { args }, cmdArgs) => {
+  self.nextMonth = (client, { args }) => {
     console.log('in nextMonth');
     const month = self.date.getMonth();
     self.client = client;
@@ -187,7 +189,7 @@ const Bookclub = function Bookclub () {
     });
   };
 
-  self.showBooks = (client, { nick }, cmdArgs) => {
+  self.showBooks = (client, { nick }) => {
     self.client = client;
     for (let i = 0; i < self.booksToRead.length; i++) {
       client.say(
@@ -197,47 +199,47 @@ const Bookclub = function Bookclub () {
     }
   };
 
-  self.showRead = (client, { nick }, cmdArgs) => {
+  self.showRead = (client, { nick }) => {
     self.client = client;
     for (let i = 0; i < self.booksRead.length; i++) {
       let month = 'No Month';
       switch (self.booksRead[i].month) {
-        case 0:
-          month = 'January';
-          break;
-        case 1:
-          month = 'Febuary';
-          break;
-        case 2:
-          month = 'March';
-          break;
-        case 3:
-          month = 'April';
-          break;
-        case 4:
-          month = 'May';
-          break;
-        case 5:
-          month = 'June';
-          break;
-        case 6:
-          month = 'July';
-          break;
-        case 7:
-          month = 'August';
-          break;
-        case 8:
-          month = 'September';
-          break;
-        case 9:
-          month = 'October';
-          break;
-        case 10:
-          month = 'November';
-          break;
-        case 11:
-          month = 'December';
-          break;
+      case 0:
+        month = 'January';
+        break;
+      case 1:
+        month = 'Febuary';
+        break;
+      case 2:
+        month = 'March';
+        break;
+      case 3:
+        month = 'April';
+        break;
+      case 4:
+        month = 'May';
+        break;
+      case 5:
+        month = 'June';
+        break;
+      case 6:
+        month = 'July';
+        break;
+      case 7:
+        month = 'August';
+        break;
+      case 8:
+        month = 'September';
+        break;
+      case 9:
+        month = 'October';
+        break;
+      case 10:
+        month = 'November';
+        break;
+      case 11:
+        month = 'December';
+        break;
       }
       client.say(
         nick,
@@ -292,7 +294,7 @@ const Bookclub = function Bookclub () {
         const month = self.date.getMonth() - 1;
         self.changeBook(self.client, month, self.config.channels[0]);
       } else {
-        self.client.say(self.config.channels[0], "You've voted to keep this months book");
+        self.client.say(self.config.channels[0], 'You\'ve voted to keep this months book');
       }
       self.keep = 0;
       self.new = 0;

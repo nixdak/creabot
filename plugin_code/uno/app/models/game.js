@@ -1,3 +1,5 @@
+'use strict';
+
 const c = require('irc-colors');
 const _ = require('lodash');
 const inflection = require('inflection');
@@ -412,18 +414,18 @@ const Game = function (channel, client, config, cmdArgs) {
     if (pickedCard.color === 'WILD') {
       playString += `${player.nick} has changed the color to `;
       switch (color.toUpperCase()) {
-        case 'YELLOW':
-          playString += `${c.bold.yellow(color)}. `;
-          break;
-        case 'GREEN':
-          playString += `${c.bold.green(color)}. `;
-          break;
-        case 'BLUE':
-          playString += `${c.bold.blue(color)}. `;
-          break;
-        case 'RED':
-          playString += `${c.bold.red(color)}. `;
-          break;
+      case 'YELLOW':
+        playString += `${c.bold.yellow(color)}. `;
+        break;
+      case 'GREEN':
+        playString += `${c.bold.green(color)}. `;
+        break;
+      case 'BLUE':
+        playString += `${c.bold.blue(color)}. `;
+        break;
+      case 'RED':
+        playString += `${c.bold.red(color)}. `;
+        break;
       }
       pickedCard.color = color.toUpperCase();
     }
@@ -605,22 +607,22 @@ const Game = function (channel, client, config, cmdArgs) {
     }
   };
 
-  self.playerPartHandler = (channel, nick, reason, message) => {
+  self.playerPartHandler = (channel, nick) => {
     console.log(`${nick} left. Removing from game.`);
     self.findAndRemoveIfPlaying(nick);
   };
 
-  self.playerKickHandler = (nick, by, reason, message) => {
-    console.log(`${nick} was kicked. Removing from game.`);
+  self.playerKickHandler = (nick, by) => {
+    console.log(`${nick} was kicked by ${by}. Removing from game.`);
     self.findAndRemoveIfPlaying(nick);
   };
 
-  self.playerQuitHandler = (nick, reason, channel, message) => {
+  self.playerQuitHandler = (nick) => {
     console.log(`${nick} has quit. Removing from game.`);
     self.findAndRemoveIfPlaying(nick);
   };
 
-  self.playerNickChangeHandler = (oldnick, newnick, channel, message) => {
+  self.playerNickChangeHandler = (oldnick, newnick) => {
     console.log(`${oldnick} has changed to ${newnick}. Updating player.`);
 
     const player = self.getPlayer({ nick: oldnick });

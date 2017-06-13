@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const Game = require('./game');
 const Player = require('../models/player');
@@ -101,9 +103,9 @@ const Countdown = function Countdown () {
     if (args[0] === '') {
       client.say(channel, 'Please supply a nick with this command');
     } else if (client.nick.toLowerCase() === args[0].toLowerCase()) {
-      client.say(channel, "You can't challenge the bot");
+      client.say(channel, 'You can\'t challenge the bot');
     } else if (message.nick.toLowerCase() === args[0].toLowerCase()) {
-      client.say(channel, "You can't challenge yourself");
+      client.say(channel, 'You can\'t challenge yourself');
     } else if (
       !_.isUndefined(
         _.find(self.challenges, {
@@ -158,7 +160,7 @@ const Countdown = function Countdown () {
     }
   };
 
-  self.join = (client, { nick, user, host, args }, cmdArgs) => {
+  self.join = (client, { nick, user, host, args }) => {
     if (!_.isUndefined(self.game) && self.game.state === Game.STATES.WAITING) {
       const player = new Player(nick, user, host);
       self.game.addPlayer(player);
@@ -173,7 +175,7 @@ const Countdown = function Countdown () {
     }
   };
 
-  self.list = (client, { args, nick }, cmdArgs) => {
+  self.list = (client, { args, nick }) => {
     if (self.challenges.length === 0) {
       client.say(args[0], 'No challenges have been issued.');
     } else {
@@ -206,7 +208,7 @@ const Countdown = function Countdown () {
     }
   };
 
-  self.lock = (client, { nick, args }, cmdArgs) => {
+  self.lock = (client, { nick, args }) => {
     if (
       !_.isUndefined(self.game) &&
       (self.game.state === Game.STATES.PLAY_LETTERS || self.game.state === Game.STATES.PLAY_NUMBERS)
@@ -259,7 +261,7 @@ const Countdown = function Countdown () {
     }
   };
 
-  self.stop = (client, message, cmdArgs) => {
+  self.stop = (client, message) => {
     const channel = message.args[0];
 
     if (_.isUndefined(self.game) || self.game.state === Game.STATES.STOPPED) {
@@ -273,7 +275,7 @@ const Countdown = function Countdown () {
     }
   };
 
-  self.wiki = (client, { args, nick }, cmdArgs) => {
+  self.wiki = (client, { args, nick }) => {
     if (client.nick.toLowerCase() === args[0].toLowerCase()) {
       client.say(nick, 'https://github.com/butlerx/butlerbot/wiki/Countdown');
     } else {

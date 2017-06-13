@@ -1,3 +1,5 @@
+'use strict';
+
 const c = require('irc-colors');
 const _ = require('lodash');
 const util = require('util');
@@ -468,7 +470,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   /**
      * Deal cards to fill players' hands
      */
-  self.deal = function (player, num) {
+  self.deal = (player, num) => {
     if (_.isUndefined(player)) {
       _.forEach(self.players, _.bind(player => {
         if (player.isActive) {
@@ -499,7 +501,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   /**
      * Clean up table after round is complete
      */
-  self.clean = function () {
+  self.clean = () => {
     // move cards from table to discard
     self.discards.question.addCard(self.table.question);
     self.table.question = null;
@@ -1040,9 +1042,8 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
 
   /**
      * Check for inactive players
-     * @param options
      */
-  self.markInactivePlayers = function (options) {
+  self.markInactivePlayers = () => {
     _.forEach(self.getNotPlayed(), _.bind(player => {
       player.inactiveRounds++;
     }, this));
@@ -1052,7 +1053,7 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * Show players cards to player
      * @param player
      */
-  self.showCards = function (player) {
+  self.showCards = (player) => {
     if (!_.isUndefined(player)) {
       let cardsZeroToSix = 'Your cards are:';
       let cardsSevenToTwelve = '';
@@ -1095,33 +1096,33 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
 
     const notPlayed = _.filter(activePlayers, { isCzar: false, hasPlayed: false, isActive: true });
     switch (self.state) {
-      case STATES.PLAYABLE:
-        self.say(
+    case STATES.PLAYABLE:
+      self.say(
           `${c.bold('Status: ') + self.czar.nick} is the czar. Waiting for ${inflection.inflect(
             'players',
             _.map(notPlayed, 'nick').length
           )} to play: ${_.map(notPlayed, 'nick').join(', ')}`
         );
-        break;
-      case STATES.PLAYED:
-        self.say(`${c.bold('Status: ')}Waiting for ${self.czar.nick} to select the winner.`);
-        break;
-      case STATES.ROUND_END:
-        self.say(`${c.bold('Status: ')}Round has ended and next one is starting.`);
-        break;
-      case STATES.STARTED:
-        self.say(
+      break;
+    case STATES.PLAYED:
+      self.say(`${c.bold('Status: ')}Waiting for ${self.czar.nick} to select the winner.`);
+      break;
+    case STATES.ROUND_END:
+      self.say(`${c.bold('Status: ')}Round has ended and next one is starting.`);
+      break;
+    case STATES.STARTED:
+      self.say(
           `${c.bold('Status: ')}Game starts in ${timeLeft} ${inflection.inflect(
             'seconds',
             timeLeft
           )}. Need ${playersNeeded} more ${inflection.inflect('players', playersNeeded)} to start.`
         );
-        break;
-      case STATES.STOPPED:
-        self.say(`${c.bold('Status: ')}Game has been stopped.`);
-        break;
-      case STATES.WAITING:
-        self.say(
+      break;
+    case STATES.STOPPED:
+      self.say(`${c.bold('Status: ')}Game has been stopped.`);
+      break;
+    case STATES.WAITING:
+      self.say(
           `${c.bold(
             'Status: '
           )}Not enough players to start. Need ${playersNeeded} more ${inflection.inflect(
@@ -1129,10 +1130,10 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
             playersNeeded
           )} to start.`
         );
-        break;
-      case STATES.PAUSED:
-        self.say(`${c.bold('Status: ')}Game is paused.`);
-        break;
+      break;
+    case STATES.PAUSED:
+      self.say(`${c.bold('Status: ')}Game is paused.`);
+      break;
     }
   };
 
@@ -1182,10 +1183,8 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * Handle player parts
      * @param channel
      * @param nick
-     * @param reason
-     * @param message
      */
-  self.playerPartHandler = (channel, nick, reason, message) => {
+  self.playerPartHandler = (channel, nick) => {
     console.log(`Player ${nick} left`);
     self.findAndRemoveIfPlaying(nick);
   };
@@ -1194,10 +1193,8 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * Handle player kicks
      * @param nick
      * @param by
-     * @param reason
-     * @param message
      */
-  self.playerKickHandler = (nick, by, reason, message) => {
+  self.playerKickHandler = (nick, by) => {
     console.log(`Player ${nick} was kicked by ${by}`);
     self.findAndRemoveIfPlaying(nick);
   };
@@ -1205,11 +1202,8 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
   /**
      * Handle player kicks
      * @param nick
-     * @param reason
-     * @param channel
-     * @param message
      */
-  self.playerQuitHandler = (nick, reason, channel, message) => {
+  self.playerQuitHandler = (nick) => {
     console.log(`Player ${nick} left`);
     self.findAndRemoveIfPlaying(nick);
   };
@@ -1218,10 +1212,8 @@ const Game = function Game (channel, client, config, cmdArgs, dbModels) {
      * Handle player nick changes
      * @param oldnick
      * @param newnick
-     * @param channels
-     * @param message
      */
-  self.playerNickChangeHandler = (oldnick, newnick, channels, message) => {
+  self.playerNickChangeHandler = (oldnick, newnick) => {
     console.log(`Player changed nick from ${oldnick} to ${newnick}`);
     const player = self.getPlayer({ nick: oldnick });
     if (!_.isUndefined(player)) {

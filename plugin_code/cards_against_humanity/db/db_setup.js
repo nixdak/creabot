@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const JaySchema = require('jayschema');
 const _ = require('lodash');

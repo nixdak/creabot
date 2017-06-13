@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const tabletojson = require('tabletojson');
 const config = require('../../config/config.json');

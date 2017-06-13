@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const irc = require('irc');
 const env = process.env.NODE_ENV || 'development';
@@ -6,7 +8,7 @@ let client;
 const commands = [];
 const msgs = [];
 
-function checkUserMode (message, mode) {
+function checkUserMode () {
   return true;
 }
 
@@ -85,7 +87,7 @@ exports.init = function () {
   });
 
   // handle joins to channels for logging
-  client.addListener('join', (channel, nick, message) => {
+  client.addListener('join', (channel, nick) => {
     console.log(`Joined ${channel} as ${nick}`);
     // Send join command after joining a channel
     if (!_.isUndefined(config.joinCommands) && config.joinCommands.hasOwnProperty(channel) && config.joinCommands[channel].length > 0) {

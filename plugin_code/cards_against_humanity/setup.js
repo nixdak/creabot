@@ -1,3 +1,5 @@
+'use strict';
+
 const CardsAgainstHumanity = require('./app/controllers/cards_against_humanity_controller.js');
 
 module.exports = app => {

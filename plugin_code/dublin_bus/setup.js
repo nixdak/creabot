@@ -1,3 +1,5 @@
+'use strict';
+
 const DublinBusInfo = require('./app/controllers/dublin_bus_info.js');
 
 module.exports = app => {

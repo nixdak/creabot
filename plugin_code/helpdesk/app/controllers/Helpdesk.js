@@ -1,4 +1,5 @@
-const fs = require('fs');
+'use strict';
+
 const _ = require('lodash');
 const request = require('request');
 const cheerio = require('cheerio');
@@ -9,11 +10,9 @@ const config = require('../../config/config.json')[env];
 const Helpdesk = function Helpdesk () {
   const self = this;
   self.config = config;
-  self.fileName = '../toUpdateOnWiki.txt';
-  self.committee = committee;
   self.helpdesk = [];
 
-  const helpdesk = _.filter(self.committee, { role: 'Helpdesk' });
+  const helpdesk = _.filter(committee, { role: 'Helpdesk' });
   if (!_.isUndefined(helpdesk)) {
     self.helpdesk.push(_.map(helpdesk, ({ nick }) => nick));
   }
@@ -43,14 +42,7 @@ const Helpdesk = function Helpdesk () {
           client.say(nick, text);
         });
         $page('.noarticletext').filter(() => {
-          client.say(channel, 'Sorry theres no help for that, but helpdesk has been told');
-          fs.appendFile(self.fileName, input[0], err => {
-            if (err) return console.log(err);
-            console.log(`writing to ${self.fileName}`);
-          });
-          for (let i = 0; i < self.helpdesk.length; i++) {
-            client.say(self.helpdesk[i], `${input[0]} needs to be added to the wiki`);
-          }
+          client.say(channel, 'Sorry theres no help for that');
         });
       } else {
         console.log(`We’ve encountered an error: ${error}`);
@@ -58,7 +50,7 @@ const Helpdesk = function Helpdesk () {
     });
   };
 
-  self.list = (client, { args, nick }, cmdArgs) => {
+  self.list = (client, { args, nick }) => {
     let channel = args[0];
     if (channel === client.nick) {
       channel = nick;
@@ -80,10 +72,6 @@ const Helpdesk = function Helpdesk () {
       }
     }
     client.say(channel, `The commands are ${commands} and pm only commands are ${pmCommands}`);
-  };
-
-  self.email = (client, message, cmdArgs) => {
-    return _.noop();
   };
 };
 

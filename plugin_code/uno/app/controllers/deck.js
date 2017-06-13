@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const Card = require('../models/card');
 const cards = require('../../config/cards.json');

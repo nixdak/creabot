@@ -1,3 +1,5 @@
+'use strict';
+
 const Bookclub = require('./app/controllers/Bookclub.js');
 
 module.exports = app => {

@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const inflection = require('inflection');
 const mathjs = require('mathjs');
@@ -188,7 +190,7 @@ const Game = function Game (
         )}! Congratulations!`
       );
     } else {
-      self.say("The game has ended in a tie! Perhaps there'll be a rematch?");
+      self.say('The game has ended in a tie! Perhaps there\'ll be a rematch?');
     }
     self.stop(null, true);
   };
@@ -983,9 +985,9 @@ const Game = function Game (
         Math.min(self.challenger.points, self.challenged.points) <=
       10
     ) {
-      self.say("Fingers on buzzers for today's crucial countdown conundrum");
+      self.say('Fingers on buzzers for today\'s crucial countdown conundrum');
     } else {
-      self.say("Fingers on buzzers for today's countdown conundrum");
+      self.say('Fingers on buzzers for today\'s countdown conundrum');
     }
     self.say('Use !buzz word to guess the conundrum.');
     self.say(`Conundrum: ${_.shuffle(self.table.conundrum).join(' ')}`);
@@ -1208,7 +1210,7 @@ const Game = function Game (
 
   self.showPoints = () => {
     if (self.round === 0) {
-      self.say("The game hasn't begun yet");
+      self.say('The game hasn\'t begun yet');
     } else {
       self.setTopic(
         `Round ${self.round}: ${self.challenged.nick} has ${self.challenged.points} points while ${self.challenger.nick} has ${self.challenger.points} points.`
@@ -1221,6 +1223,7 @@ const Game = function Game (
    */
   self.findAndRemoveIfPlaying = nick => {
     if (self.challenger.nick === nick || self.challenged.nick === nick) {
+      self.stop(nick, false);
     }
   };
 
@@ -1231,7 +1234,7 @@ const Game = function Game (
    * @param reason
    * @param message
    */
-  self.playerPartHandler = (channel, nick, reason, message) => {
+  self.playerPartHandler = (channel, nick) => {
     console.log(`Player ${nick} left`);
     self.findAndRemoveIfPlaying(nick);
   };
@@ -1243,7 +1246,7 @@ const Game = function Game (
    * @param reason
    * @param message
    */
-  self.playerKickHandler = (nick, by, reason, message) => {
+  self.playerKickHandler = (nick, by) => {
     console.log(`Player ${nick} was kicked by ${by}`);
     self.findAndRemoveIfPlaying(nick);
   };
@@ -1255,7 +1258,7 @@ const Game = function Game (
    * @param channel
    * @param message
    */
-  self.playerQuitHandler = (nick, reason, channel, message) => {
+  self.playerQuitHandler = (nick) => {
     console.log(`Player ${nick} left`);
     self.findAndRemoveIfPlaying(nick);
   };
@@ -1267,7 +1270,7 @@ const Game = function Game (
    * @param channels
    * @param message
    */
-  self.playerNickChangeHandler = (oldnick, newnick, channels, message) => {
+  self.playerNickChangeHandler = (oldnick, newnick) => {
     if (self.challenger.nick === oldnick) {
       self.challenger.nick = newnick;
       return true;
