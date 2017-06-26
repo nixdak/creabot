@@ -20,7 +20,7 @@ const DublinBusInfo = function DublinBusInfo () {
         dBus.getStopInfo(cmdArgs[0]).then(({ stop, buses }) => {
           client.say(args[0], `Stop address: ${stop}`);
           for (let i = 0; i < 5 && i < buses.length; i++) {
-            if (buses[i].expected === 0) {
+            if (buses[i].expected === 'Due') {
               client.say(args[0], `${buses[i].num} to ${buses[i].route} is due now`);
             } else {
               client.say(args[0], `${buses[i].num} to ${buses[i].route} expected at ${buses[i].expected}`);
@@ -34,7 +34,7 @@ const DublinBusInfo = function DublinBusInfo () {
         dBus.getStopInfoForBuses(cmdArgs[0], busArgs).then(({ stop, buses }) => {
           client.say(args[0], `Stop address: ${stop}`);
           for (let i = 0; i < 5 && i < buses.length; i++) {
-            if (buses[i].expected === 0) {
+            if (buses[i].expected === 'Due') {
               client.say(args[0], `${buses[i].num} to ${buses[i].route} is due now`);
             } else {
               client.say(args[0], `${buses[i].num} to ${buses[i].route} expected at ${buses[i].expected}`);
