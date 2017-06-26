@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const http = require('http');
+const request = require('request-promise-native');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../config/config.json')[env];
@@ -23,31 +23,14 @@ const RedbrickCommittee = function RedbrickCommittee () {
 
   self.reload = () => {
     return new Promise((resolve, reject) => {
-      http.get('http://redbrick.dcu.ie/api/committee', (res) => {
-        const { statusCode } = res;
-        const contentType = res.headers['content-type'];
-        let error;
-        if (statusCode !== 200) {
-          error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
-        } else if (!/^application\/json/.test(contentType)) {
-          error = new Error(`Invalid content-type.\n Expected application/json but received ${contentType}`);
-        }
-        if (error) {
-          reject(error);
-        }
-        res.setEncoding('utf8');
-        let rawData = '';
-        res.on('data', (chunk) => { rawData += chunk; });
-        res.on('end', () => {
-          try {
-            resolve(JSON.parse(rawData));
-          } catch (error) {
-            reject(error);
-          }
-        });
-      }).on('error', (error) => {
-        reject(error);
-      });
+      request({
+        uri    : 'http://redbrick.dcu.ie/api/committee',
+        headers: {
+          'User-Agent': 'Request-Promise',
+        },
+        json: true,
+      }).then((cmt => resolve(cmt)))
+      .catch((error => reject(error)));
     });
   };
 

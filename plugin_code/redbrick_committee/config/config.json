@@ -1,13 +1,13 @@
 {
   "production": {
-    "waitTime": 1,
+    "waitTime": 0,
     "channels": ["#bots", "#helpdesk"],
     "channelsToExclude": ["#CardsAgainstHumanity", "#Countdown", "#Uno", "#BookClub"],
     "channelsToJoin": [ "#bots", "#helpdesk"]
   },
 
   "development": {
-    "waitTime": 1,
+    "waitTime": 0,
     "channels": "all",
     "channelsToExclude": [],
     "channelsToJoin": [ "#botdev" ]
