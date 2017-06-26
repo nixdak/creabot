@@ -10,7 +10,7 @@ const DublinBusInfo = function DublinBusInfo () {
 
   self.showStopInfo = (client, { args, nick }, cmdArgs) => {
     if (cmdArgs !== '') {
-      cmdArgs = _.invokeMap(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
+      cmdArgs = _.map(cmdArgs.match(/(\w+)\s?/gi), str => str.trim());
     }
 
     if (cmdArgs.length < 1 || isNaN(cmdArgs[0])) {
