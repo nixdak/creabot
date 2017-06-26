@@ -7,6 +7,7 @@ const r = new snoowrap(config.reddit);
 
 const Popping = function Popping () {
   const self = this;
+  self.config = config;
 
   self.pop = (client, { args }) => {
     r.getRandomSubmission('popping').then((listing) => {
