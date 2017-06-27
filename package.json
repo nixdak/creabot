@@ -31,13 +31,11 @@
     "mathjs": "^3.10.1",
     "mysql": "^2.13.0",
     "node-schedule": "^1.2.1",
-    "nodemon": "^1.11.0",
     "plug": "https://github.com/butlerx/plug.git",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
     "sequelize": "^3.30.4",
-    "snoowrap": "^1.14.0",
-    "tabletojson": "^0.4.0"
+    "snoowrap": "^1.14.0"
   },
   "devDependencies": {
     "eslint": "3.16.1",
