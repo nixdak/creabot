@@ -20,29 +20,25 @@ const DublinBusInfo = function DublinBusInfo () {
         dBus.getStopInfo(cmdArgs[0]).then(({ stop, buses }) => {
           client.say(args[0], `Stop address: ${stop}`);
           for (let i = 0; i < 5 && i < buses.length; i++) {
-            if (buses[i].expected === 'Due') {
+            if (buses[i].due === 'Due') {
               client.say(args[0], `${buses[i].num} to ${buses[i].route} is due now`);
             } else {
-              client.say(args[0], `${buses[i].num} to ${buses[i].route} expected at ${buses[i].expected}`);
+              client.say(args[0], `${buses[i].num} to ${buses[i].route} expected in ${buses[i].due} min, at ${buses[i].expected}`);
             }
           }
-        }).catch(reason => {
-          client.say(args[0], `${nick}: Sorry, ${reason}.`);
-        });
+        }).catch(reason => client.say(args[0], `${nick}: Sorry, ${reason}.`));
       } else {
         const busArgs = cmdArgs.splice(1);
         dBus.getStopInfoForBuses(cmdArgs[0], busArgs).then(({ stop, buses }) => {
           client.say(args[0], `Stop address: ${stop}`);
           for (let i = 0; i < 5 && i < buses.length; i++) {
-            if (buses[i].expected === 'Due') {
+            if (buses[i].due === 'Due') {
               client.say(args[0], `${buses[i].num} to ${buses[i].route} is due now`);
             } else {
-              client.say(args[0], `${buses[i].num} to ${buses[i].route} expected at ${buses[i].expected}`);
+              client.say(args[0], `${buses[i].num} to ${buses[i].route} expected in ${buses[i].due} min, at ${buses[i].expected}`);
             }
           }
-        }).catch(reason => {
-          client.say(args[0], `${nick}: Sorry, ${reason}.`);
-        });
+        }).catch(reason => client.say(args[0], `${nick}: Sorry, ${reason}.`));
       }
     }
   };

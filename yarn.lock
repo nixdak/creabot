@@ -543,12 +543,13 @@ dottie@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/dottie/-/dottie-1.1.1.tgz#45c2a3f48bd6528eeed267a69a848eaaca6faa6a"
 
-dublin-bus.js@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/dublin-bus.js/-/dublin-bus.js-1.1.1.tgz#4341a4ba89087a19da83844638a22e57d2cdd3f0"
+dublin-bus.js@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/dublin-bus.js/-/dublin-bus.js-1.2.0.tgz#13d166b19c4361e6494e7f443ba8f0ba87e836df"
   dependencies:
     lodash "^4.17.4"
-    tabletojson "^0.6.0"
+    request "^2.81.0"
+    request-promise-native "^1.0.4"
 
 duplexer@~0.1.1:
   version "0.1.1"
@@ -2081,7 +2082,7 @@ request@2.53.0:
     tough-cookie ">=0.12.0"
     tunnel-agent "~0.4.0"
 
-request@2.67.0, request@^2.34:
+request@2.67.0:
   version "2.67.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.67.0.tgz#8af74780e2bf11ea0ae9aa965c11f11afd272742"
   dependencies:
@@ -2106,7 +2107,7 @@ request@2.67.0, request@^2.34:
     tough-cookie "~2.2.0"
     tunnel-agent "~0.4.1"
 
-request@^2.81.0:
+request@^2.34, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -2390,14 +2391,6 @@ table@^3.7.8:
 tabletojson@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/tabletojson/-/tabletojson-0.4.0.tgz#fcfa6d2291ddec5f5ad945304775c2db91aa493f"
-  dependencies:
-    cheerio "0.19.0"
-    q "1.4.1"
-    request "2.67.0"
-
-tabletojson@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/tabletojson/-/tabletojson-0.6.0.tgz#15bb55d68d78b53edc8c42c21afe82cfcd7ca06e"
   dependencies:
     cheerio "0.19.0"
     q "1.4.1"
