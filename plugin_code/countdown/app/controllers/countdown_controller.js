@@ -23,7 +23,7 @@ const Countdown = function Countdown () {
         self.challenges,
         challenge => challenge.challenged.toLowerCase() === message.nick.toLowerCase()
       );
-      const challengers = _.map(games, ({ challenge }) => challenge.challenger);
+      const challengers = _.map(games, ({ challenger }) => challenger);
       const letterTimes = _.map(games, ({ letter }) => letter);
       const numberTimes = _.map(games, ({ number }) => number);
       const conundrumTimes = _.map(games, ({ conundrum }) => conundrum);

@@ -74,7 +74,7 @@ const Game = function Game (
   self.dictionary = require('../../config/dictionary.json')['words'];
   self.conundrums = require('../../config/conundrums.json')['words'];
   self.countdown_words = _.filter(self.dictionary, ({ length }) => length <= 9);
-  self.conundrum_words = _.shuffle(_.invokeMap(self.conundrums, word => word.toUpperCase()));
+  self.conundrum_words = _.shuffle(_.map(self.conundrums, word => word.toUpperCase()));
 
   console.log('loading alphabet');
 
