@@ -5,7 +5,7 @@ const dBus = require('dublin-bus.js');
 const config = require('../../config/config.json');
 
 const printBuses = ({ stop, buses }, client, channel) => {
-  console.log(`Stop address: ${stop}`);
+  client.say(channel, `Stop address: ${stop}`);
   for (const i in buses) {
     if (buses[i].due === 'Due') {
       client.say(channel, `${buses[i].route} to ${buses[i].destination} is due now`);
