@@ -9,11 +9,11 @@ const Popping = function Popping () {
   const self = this;
   self.config = config;
 
-  self.pop = (client, { args }) => {
-    r.getRandomSubmission('popping').then((listing) => {
-      client.say(args[0], `NSFW! (most likely) ${listing[0].url}`);
-    });
-  };
+  self.pop = (client, { args }) =>
+    r.getRandomSubmission('popping')
+      .then((listing) => {
+        client.say(args[0], `NSFW! (most likely) ${listing[Math.floor(Math.random() * listing.length)].url}`);
+      });
 };
 
 exports = module.exports = Popping;

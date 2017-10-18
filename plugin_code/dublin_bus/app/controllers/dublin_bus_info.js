@@ -4,15 +4,15 @@ const _ = require('lodash');
 const dBus = require('dublin-bus.js');
 const config = require('../../config/config.json');
 
-const printBuses = ({ stop, buses }, client, channel) => {
+const printBuses = ({stop, buses}, client, channel) => {
   client.say(channel, `Stop address: ${stop}`);
-  for (const i in buses) {
-    if (buses[i].due === 'Due') {
-      client.say(channel, `${buses[i].route} to ${buses[i].destination} is due now`);
+  buses.forEach(({due, route, destination, expected}) => {
+    if (due === 'Due') {
+      client.say(channel, `${route} to ${destination} is due now`);
     } else {
-      client.say(channel, `${buses[i].route} to ${buses[i].destination} expected in ${buses[i].due} min, at ${buses[i].expected}`);
+      client.say(channel, `${route} to ${destination} expected in ${due} min, at ${expected}`);
     }
-  }
+  })
 };
 
 const DublinBusInfo = function DublinBusInfo () {
