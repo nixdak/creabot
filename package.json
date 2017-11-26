@@ -1,8 +1,8 @@
 {
   "name": "butlerbot",
-  "version": "1.2.0",
-  "description": "Butlerbot",
-  "main": "app.js",
+  "version": "2.0.0",
+  "description": "IRC Game Bot",
+  "main": "index.js",
   "author": "butlerx <butlerx@redbrick.dcu.ie>",
   "repository": {
     "type": "git",
@@ -12,36 +12,50 @@
     "url": "http://github.com/butlerx/butlerbot/issues"
   },
   "scripts": {
-    "start": "node app",
+    "start": "node index.js",
     "test": "yarn lint",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "fix": "eslint . --fix",
+    "format": "prettier-eslint --write \"**/*.js\" \"**/*.json\"",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js*": ["prettier-eslint --write", "git add"]
+  },
+  "@std/esm": {
+    "esm": "js",
+    "cjs": "true"
   },
   "license": "CC-BY-NC-SA-2.0",
   "dependencies": {
-    "amazon-product-api": "^0.4.3",
-    "cheerio": "^0.22.0",
-    "dublin-bus.js": "^1.3.2",
-    "es6-promise": "^4.0.5",
-    "inflection": "^1.12.0",
+    "@std/esm": "^0.2.2",
+    "butlerbot-announce": "^1.0.0",
+    "butlerbot-bookclub": "^1.0.0",
+    "butlerbot-cards-against-humanity": "^1.1.1",
+    "butlerbot-countdown": "^1.0.0",
+    "butlerbot-dublin-bus": "^1.0.1",
+    "butlerbot-helpdesk": "^1.0.0",
+    "butlerbot-popping": "^1.0.0",
+    "butlerbot-redbrick-committee": "^1.0.2",
+    "butlerbot-uno": "^1.0.0",
+    "glob": "^7.1.2",
     "irc": "^0.5.2",
-    "irc-colors": "^1.3.3",
-    "jayschema": "^0.3.1",
     "lodash": "^4.17.4",
-    "mathjs": "^3.10.1",
-    "mysql": "^2.13.0",
-    "node-schedule": "^1.2.1",
-    "plug": "https://github.com/butlerx/plug.git",
-    "request": "^2.81.0",
-    "request-promise-native": "^1.0.4",
-    "sequelize": "^3.30.4",
-    "snoowrap": "^1.14.0"
+    "request": "2.34"
   },
   "devDependencies": {
-    "eslint": "3.16.1",
-    "eslint-config-standard": "6.2.1",
-    "eslint-plugin-lodash": "^2.3.5",
-    "eslint-plugin-promise": "3.5.0",
-    "eslint-plugin-standard": "2.1.0"
+    "eslint": "^4.6.0",
+    "eslint-config-coderdojo": "^1.0.6",
+    "eslint-plugin-chai-friendly": "^0.4.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-lodash": "^2.4.4",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.3.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.3",
+    "prettier-eslint-cli": "^4.1.1"
   }
 }

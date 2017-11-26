@@ -4,8 +4,8 @@ services:
     image: 'butlerx/butlerbot:latest'
     restart: 'always'
     volumes:
-      - ./bookclub:/usr/src/app/plugin_code/bookclub/config
-      - ./pop:/usr/src/app/plugin_code/poping/config
+      - ./bookclub:/usr/src/app/pluginCode/bookclub/config
+      - ./countdown:/usr/src/app/pluginCode/countdown/config
     environment:
       SERVER: localhost
       PORT: 6697

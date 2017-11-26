@@ -1,1 +1,0 @@
-../plugins/redbrick_committee.js

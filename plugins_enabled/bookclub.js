@@ -1,1 +1,0 @@
-../plugins/bookclub.js

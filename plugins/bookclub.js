@@ -1,6 +1,24 @@
-'use strict';
+import bookclub from 'butlerbot-bookclub';
 
-exports.connect = (app, callback) => {
-  require('../plugin_code/bookclub/setup.js')(app);
-  callback();
-};
+export default bookclub({
+  development: {
+    setTopic: true,
+    topicBase: '|| Dev Bot || Expect spam || Expect breakings',
+    awsId: '',
+    awsSecret: '',
+    channels: ['#botdev'],
+    channelsToExclude: [],
+    channelsToJoin: ['#botdev'],
+  },
+
+  production: {
+    setTopic: true,
+    topicBase:
+      ' || Welcome to Bookclub check out https://github.com/butlerx/butlerbot/wiki/bookclub for commands',
+    awsId: '',
+    awsSecret: '',
+    channels: ['#BookClub'],
+    channelsToExclude: ['#Uno', '#CardsAgainstHumanity', '#Countdown', 'bots', 'helpdesk'],
+    channelsToJoin: ['#BookClub'],
+  },
+});

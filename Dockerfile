@@ -1,8 +1,8 @@
-FROM node:6-alpine
+FROM node:alpine
+MAINTAINER butlerx@notthe.cloud
 ENV NODE_ENV=production
 WORKDIR /usr/src/app
-ADD . /usr/src/app/
-RUN apk add --no-cache git build-base file nasm autoconf libpng-dev openssl &&\
-    yarn
-VOLUME /usr/src/app/plugin_code/bookclub/config /usr/src/app/plugin_code/poping/config
+COPY . /usr/src/app/
+RUN apk add --no-cache git build-base file nasm autoconf libpng-dev openssl && yarn
+VOLUME /usr/src/app/pluginCode/bookclub/config /usr/src/app/pluginCode/countdown/config
 CMD yarn start
