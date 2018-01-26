@@ -41,14 +41,16 @@
     "glob": "^7.1.2",
     "irc": "^0.5.2",
     "lodash": "^4.17.4",
-    "request": "2.34"
+    "request": "2.34",
+    "winston": "^3.0.0-rc1"
   },
   "devDependencies": {
+    "babel-eslint": "7",
     "eslint": "^4.6.0",
-    "eslint-config-coderdojo": "^1.0.6",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-chai-friendly": "^0.4.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-lodash": "^2.4.4",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",

@@ -2,11 +2,19 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
   },
+  parser: 'babel-eslint',
   root: true,
-  extends: ['coderdojo'],
+  env: {
+    es6: true,
+    node: true,
+  },
+  extends: ['airbnb'],
   rules: {
-    'no-console': ['error', { allow: ['warn', 'trace', 'log', 'error'] }],
-    'class-methods-use-this': 0,
+    'linebreak-style': ['error', 'unix'],
+    'arrow-parens': ['error', 'as-needed'],
+    'no-param-reassign': ['error', { props: false }],
+    'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
+    'no-use-before-define': ['error', { functions: false }],
     'consistent-return': 0,
   },
 };

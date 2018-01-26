@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import irc from 'irc';
-import config from '../config/config.json';
+import config from '../config';
+import Logger from './logger';
 
 const env = process.env.NODE_ENV || 'development';
 const checkUserMode = () => true;
@@ -10,14 +11,15 @@ export default class Bot {
   /**
    * Initialize the bot
    */
-  constructor() {
+  constructor(conf, logger = Logger(config[env].nick)) {
     // Don't join channels until registered on the server
     this.registered = false;
     this.delayedChannels = [];
     this.commands = [];
     this.msgs = [];
-    this.config = config[env];
-    console.log('Initializing...');
+    this.config = _.merge(config[env], conf);
+    this.logger = logger;
+    this.logger.info('Initializing...');
     // init irc client
     this.config.server = process.env.SERVER || this.config.server;
     this.config.nick = process.env.NICK || this.config.nick;
@@ -38,7 +40,7 @@ export default class Bot {
   joinChannels(channels) {
     if (!_.isUndefined(channels)) {
       if (this.registered) {
-        _.forEach(channels, (channel) => {
+        _.forEach(channels, channel => {
           this.client.join(channel);
         });
       } else {
@@ -60,12 +62,13 @@ export default class Bot {
   /**
    * Initialize the bot and connect to irc server
    */
-  init() {
-    console.log(`Connecting to ${this.config.server} as ${this.config.nick}...`);
+  connect() {
+    this.logger.info(`Connecting to ${this.config.server} as ${this.config.nick}...`);
     this.client = new irc.Client(this.config.server, this.config.nick, this.config.clientOptions);
+    this.client.logger = this.logger;
     // handle connection to server for logging
     this.client.addListener('registered', ({ server }) => {
-      console.log(`Connected to server ${server}`);
+      this.logger.info(`Connected to server ${server}`);
       this.registered = true;
 
       // Send connect commands after joining a server
@@ -81,7 +84,7 @@ export default class Bot {
 
     // handle joins to channels for logging
     this.client.addListener('join', (channel, nick) => {
-      console.log(`Joined ${channel} as ${nick}`);
+      this.logger.info(`Joined ${channel} as ${nick}`);
       // Send join command after joining a channel
       if (
         !_.isUndefined(this.config.joinCommands) &&
@@ -95,26 +98,26 @@ export default class Bot {
     });
 
     // output errors
-    this.client.addListener('error', message => console.warn('IRC client error: ', message));
+    this.client.addListener('error', message => this.logger.warn('IRC client error: ', message));
 
-    this.client.addListener('message', function messageListener(from, to, text, message) {
-      console.log(`message from ${from} to ${to}: ${text}`);
+    this.client.addListener('message', (from, to, text, message) => {
+      this.logger.debug(`message from ${from} to ${to}: ${text}`);
       // parse command
       const cmdArr = text.trim().match(/^[.|!](\w+)\s?(.*)$/i);
       if (!cmdArr || cmdArr.length <= 1) return false;
       const command = cmdArr[1].toLowerCase();
       // parse arguments
       const cmdArgs = cmdArr[2];
-      console.log(cmdArr);
+      this.logger.debug(cmdArr);
 
       // build callback options
       if (this.config.nick === to) {
         // private message commands
         _.forEach(
           this.msgs,
-          _.bind((c) => {
+          _.bind(c => {
             if (command === c.cmd) {
-              console.log(`command: ${c.cmd}`);
+              this.logger.debug(`command: ${c.cmd}`);
               // check user mode
               if (checkUserMode(message, c.mode)) c.callback(this.client, message, cmdArgs);
             }
@@ -124,17 +127,18 @@ export default class Bot {
         // public commands
         _.forEach(
           this.commands,
-          _.bind((c) => {
+          _.bind(c => {
             // If the command matches
             if (command === c.cmd) {
               // If the channel matches the command channels or is set to respond on all
               // channels and is not in the commands excluded channels
-              if (_.includes(c.channel, to) || c.channel === 'all') {
-                if (_.isUndefined(c.exclude) || !_.includes(c.exclude, to)) {
-                  console.log(`command: ${c.cmd}`);
-                  // check user mode
-                  if (checkUserMode(message, c.mode)) c.callback(this.client, message, cmdArgs);
-                }
+              if (
+                (_.includes(c.channel, to) || c.channel === 'all') &&
+                (_.isUndefined(c.exclude) || !_.includes(c.exclude, to))
+              ) {
+                this.logger.debug(`command: ${c.cmd}`);
+                // check user mode
+                if (checkUserMode(message, c.mode)) c.callback(this.client, message, cmdArgs);
               }
             }
           }, this),
